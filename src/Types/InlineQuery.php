@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  * @package TelegramBotsApi\Types
@@ -35,6 +38,10 @@ class InlineQuery implements TypeInterface
      */
     public $offset;
 
+    /**
+     * InlineQuery constructor.
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
@@ -48,6 +55,9 @@ class InlineQuery implements TypeInterface
         $this->offset = $data['offset'];
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
         return [
@@ -59,6 +69,13 @@ class InlineQuery implements TypeInterface
         ];
     }
 
+    /**
+     * @param string $id
+     * @param User $from
+     * @param string $query
+     * @param string $offset
+     * @return InlineQuery
+     */
     public static function make(string $id, User $from, string $query, string $offset): self
     {
         return new self([

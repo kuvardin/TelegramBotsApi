@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this class represents a chat.
  * @package TelegramBotsApi\Types
@@ -82,14 +85,14 @@ class Chat implements TypeInterface
     /**
      * Chat constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->setType($data['type']);
         $this->title = $data['title'] ?? null;
-        $this->username = isset($data['username']) ? new \TelegramBotsApi\Username($data['username']) : null;
+        $this->username = isset($data['username']) ? new TelegramBotsApi\Username($data['username']) : null;
         $this->first_name = $data['first_name'] ?? null;
         $this->last_name = $data['last_name'] ?? null;
         $this->all_members_are_administrators = $data['all_members_are_administrators'] ?? null;
@@ -110,7 +113,6 @@ class Chat implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'id' => $this->id,
             'type' => $this->type,
@@ -130,7 +132,7 @@ class Chat implements TypeInterface
     /**
      * @param string $type
      * @return Chat
-     * @throws \Exception
+     * @throws Error
      */
     private function setType(string $type): self
     {
@@ -142,7 +144,7 @@ class Chat implements TypeInterface
                 $this->type = $type;
                 break;
             default:
-                throw new \Exception("Unknown type: {$type}");
+                throw new Error("Unknown type: {$type}");
         }
         return $this;
     }
@@ -151,7 +153,7 @@ class Chat implements TypeInterface
      * @param string $id
      * @param string $type
      * @return Chat
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $type): self
     {

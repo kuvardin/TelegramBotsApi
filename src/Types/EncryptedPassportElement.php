@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Contains information about documents or other Telegram Passport elements shared with the bot by the user.
  * @package TelegramBotsApi\Types
@@ -76,7 +79,7 @@ class EncryptedPassportElement implements TypeInterface
     /**
      * EncryptedPassportElement constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -140,7 +143,7 @@ class EncryptedPassportElement implements TypeInterface
     /**
      * @param string $type
      * @return EncryptedPassportElement
-     * @throws \Exception
+     * @throws Error
      */
     public function setType(string $type): self
     {
@@ -161,7 +164,7 @@ class EncryptedPassportElement implements TypeInterface
                 $this->type = $type;
                 break;
             default:
-                throw new \Exception("Unknown type: {$type}");
+                throw new Error("Unknown type: {$type}");
         }
 
         return $this;
@@ -171,6 +174,7 @@ class EncryptedPassportElement implements TypeInterface
      * @param string $type
      * @param string $hash
      * @return EncryptedPassportElement
+     * @throws Error
      */
     public static function make(string $type, string $hash): self
     {

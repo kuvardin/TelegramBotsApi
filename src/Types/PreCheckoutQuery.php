@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class contains information about an incoming pre-checkout query.
@@ -62,7 +64,6 @@ class PreCheckoutQuery implements TypeInterface
 
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'id' => $this->id,
             'from' => $this->from,

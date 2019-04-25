@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * This object represents one row of the high scores table for a game.
  * @package TelegramBotsApi\Types

@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
@@ -48,7 +50,7 @@ class CallbackQuery implements TypeInterface
     /**
      * CallbackQuery constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -70,7 +72,6 @@ class CallbackQuery implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'id' => $this->id,
             'from' => $this->from,
@@ -87,7 +88,7 @@ class CallbackQuery implements TypeInterface
      * @param User $from
      * @param string $chat_instance
      * @return CallbackQuery
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(int $id, User $from, string $chat_instance): self
     {

@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a video message (available in Telegram apps as of v.4.0).
  * @package TelegramBotsApi\Types
@@ -51,7 +54,6 @@ class VideoNote implements TypeInterface
 
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'length' => $this->length,

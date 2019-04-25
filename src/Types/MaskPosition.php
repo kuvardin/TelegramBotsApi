@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this class describes the position on faces where a mask should be placed by default.
  * @package TelegramBotsApi\Types
@@ -37,7 +40,7 @@ class MaskPosition implements TypeInterface
     /**
      * MaskPosition constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -50,7 +53,7 @@ class MaskPosition implements TypeInterface
     /**
      * @param string $point
      * @return MaskPosition
-     * @throws \Exception
+     * @throws Error
      */
     private function setPoint(string $point): self
     {
@@ -62,11 +65,14 @@ class MaskPosition implements TypeInterface
                 $this->point = $point;
                 break;
             default:
-                throw new \Exception("Unknown point: {$point}");
+                throw new Error("Unknown point: {$point}");
         }
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
         return [
@@ -83,7 +89,7 @@ class MaskPosition implements TypeInterface
      * @param float $y_shift
      * @param float $scale
      * @return MaskPosition
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $point, float $x_shift, float $y_shift, float $scale): self
     {

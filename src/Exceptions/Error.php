@@ -3,7 +3,7 @@
 namespace TelegramBotsApi\Exceptions;
 
 
-class ApiException extends \Exception
+class Error extends \Exception
 {
 
 }

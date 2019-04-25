@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:
  * @package TelegramBotsApi\Types
@@ -38,7 +41,7 @@ class PassportElementError implements TypeInterface
     /**
      * PassportElementError constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -66,7 +69,7 @@ class PassportElementError implements TypeInterface
     /**
      * @param string $type
      * @return PassportElementError
-     * @throws \Exception
+     * @throws Error
      */
     public function setType(string $type): self
     {
@@ -80,7 +83,7 @@ class PassportElementError implements TypeInterface
                 $this->type = $type;
                 break;
             default:
-                throw new \Exception("Unknown or unsupported type: {$type}");
+                throw new Error("Unknown or unsupported type: {$type}");
         }
 
         return $this;
@@ -93,6 +96,7 @@ class PassportElementError implements TypeInterface
      * @param string $data_hash
      * @param string $message
      * @return PassportElementError
+     * @throws Error
      */
     public static function make(string $source, string $type, string $field_name, string $data_hash, string $message): self
     {

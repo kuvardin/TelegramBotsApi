@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represent a user's profile pictures
  * @package TelegramBotsApi\Types
@@ -42,7 +45,6 @@ class UserProfilePhotos implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'total_count' => $this->total_count,
             'photos' => $this->photos,

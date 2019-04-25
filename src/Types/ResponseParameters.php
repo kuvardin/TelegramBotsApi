@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Contains information about why a request was unsuccessful.
@@ -35,7 +37,6 @@ class ResponseParameters implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'migrate_to_chat_id' => $this->migrate_to_chat_id,
             'retry_after' => $this->retry_after,

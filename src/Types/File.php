@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile.
  * @package TelegramBotsApi\Types
@@ -40,7 +43,6 @@ class File implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'file_size' => $this->file_size,

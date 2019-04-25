@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents information about an order.
@@ -48,7 +50,6 @@ class OrderInfo implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'name' => $this->name,
             'phone_number' => $this->phone_number,

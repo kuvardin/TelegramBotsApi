@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this object contains information about one member of a chat.
@@ -100,7 +102,7 @@ class ChatMember implements TypeInterface
     /**
      * ChatMember constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -124,7 +126,7 @@ class ChatMember implements TypeInterface
 
     /**
      * @param string $status
-     * @throws \Exception
+     * @throws Error
      */
     public function setStatus(string $status): void
     {
@@ -138,7 +140,7 @@ class ChatMember implements TypeInterface
                 $this->status = $status;
                 break;
             default:
-                throw new \Exception("Unknown status: {$status}");
+                throw new Error("Unknown status: {$status}");
         }
     }
 
@@ -147,7 +149,6 @@ class ChatMember implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'user' => $this->user,
             'status' => $this->status,
@@ -172,7 +173,7 @@ class ChatMember implements TypeInterface
      * @param User $user
      * @param string $status
      * @return ChatMember
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(User $user, string $status): self
     {

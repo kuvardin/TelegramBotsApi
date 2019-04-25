@@ -1,9 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo.
@@ -77,13 +77,13 @@ class Photo extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
     /**
      * Photo constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -99,7 +99,7 @@ class Photo extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -109,7 +109,7 @@ class Photo extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
         }
     }
 
@@ -118,7 +118,6 @@ class Photo extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'type' => $this->type,
             'id' => $this->id,
@@ -140,7 +139,7 @@ class Photo extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
      * @param string $photo_url
      * @param string $thumb_url
      * @return Photo
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $photo_url, string $thumb_url): self
     {

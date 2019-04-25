@@ -1,9 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types\InputMedia;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a general file to be sent.
@@ -42,13 +42,13 @@ class Document extends TelegramBotsApi\Types\InputMedia implements TelegramBotsA
     /**
      * InputMediaDocument constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception('Element with key "type" must be self::TYPE or undefined');
+                throw new Error('Element with key "type" must be self::TYPE or undefined');
             }
             $this->type = $data['type'];
         }
@@ -59,7 +59,7 @@ class Document extends TelegramBotsApi\Types\InputMedia implements TelegramBotsA
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -70,7 +70,6 @@ class Document extends TelegramBotsApi\Types\InputMedia implements TelegramBotsA
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'type' => $this->type,
             'media' => $this->media,
@@ -84,7 +83,7 @@ class Document extends TelegramBotsApi\Types\InputMedia implements TelegramBotsA
      * @param string $media
      * @param string $type
      * @return Document
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $media, string $type = self::TYPE): self
     {

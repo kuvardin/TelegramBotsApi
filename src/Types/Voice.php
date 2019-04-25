@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a voice note
  * @package TelegramBotsApi\Types
@@ -46,7 +49,6 @@ class Voice implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'duration' => $this->duration,

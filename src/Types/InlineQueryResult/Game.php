@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a Game.
@@ -36,13 +37,13 @@ class Game extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBo
     /**
      * Game constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -72,7 +73,7 @@ class Game extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBo
      * @param string $id
      * @param string $game_short_name
      * @return Game
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $game_short_name): self
     {

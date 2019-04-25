@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents a sticker.
@@ -53,7 +55,7 @@ class Sticker implements TypeInterface
     /**
      * Sticker constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -80,7 +82,6 @@ class Sticker implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'width' => $this->width,
@@ -99,7 +100,7 @@ class Sticker implements TypeInterface
      * @param int $width
      * @param int $height
      * @return Sticker
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $file_id, int $width, int $height): self
     {

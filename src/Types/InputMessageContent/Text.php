@@ -3,11 +3,12 @@
 namespace TelegramBotsApi\Types\InputMessageContent;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 class Text extends TelegramBotsApi\Types\InputMessageContent implements TelegramBotsApi\Types\TypeInterface
 {
     public const TYPE = TelegramBotsApi\Types\InputMessageContent::TYPE_TEXT;
-    
+
     /**
      * @var string Text of the message to be sent, 1-4096 characters
      */
@@ -26,7 +27,7 @@ class Text extends TelegramBotsApi\Types\InputMessageContent implements Telegram
     /**
      * Text constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -34,7 +35,7 @@ class Text extends TelegramBotsApi\Types\InputMessageContent implements Telegram
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -47,7 +48,6 @@ class Text extends TelegramBotsApi\Types\InputMessageContent implements Telegram
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'message_text' => $this->message_text,
             'parse_mode' => $this->parse_mode,
@@ -58,7 +58,7 @@ class Text extends TelegramBotsApi\Types\InputMessageContent implements Telegram
     /**
      * @param string $message_text
      * @return Text
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $message_text): self
     {

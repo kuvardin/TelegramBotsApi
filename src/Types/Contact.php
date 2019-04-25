@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of thhis object represents a phone contact
  * @package TelegramBotsApi\Types
@@ -53,7 +56,6 @@ class Contact implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'phone_number' => $this->phone_number,
             'first_name' => $this->first_name,

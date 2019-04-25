@@ -28,7 +28,7 @@ class Response
      * Response constructor.
      * @param string $method
      * @param array $result
-     * @param array|null $infos
+     * @param array|null $info
      */
     public function __construct(string $method, array $result, array $info = null)
     {
@@ -36,5 +36,4 @@ class Response
         $this->info = $info;
         $this->data = $result['result'];
     }
-
 }

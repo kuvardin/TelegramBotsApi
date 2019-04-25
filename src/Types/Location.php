@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a point on the map
  * @package TelegramBotsApi\Types
@@ -19,15 +22,21 @@ class Location implements TypeInterface
      */
     public $latitude;
 
+    /**
+     * Location constructor.
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->longitude = $data['longitude'];
         $this->latitude = $data['latitude'];
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'longitude' => $this->longitude,
             'latitude' => $this->latitude,

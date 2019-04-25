@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this class represents a message.
  * @package TelegramBotsApi\Types
@@ -233,7 +236,7 @@ class Message implements TypeInterface
     /**
      * Message constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -381,7 +384,6 @@ class Message implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'message_id' => $this->id,
             'from' => $this->from,
@@ -435,7 +437,7 @@ class Message implements TypeInterface
      * @param Chat $chat
      * @param int $date
      * @return Message
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(int $id, Chat $chat, int $date): self
     {

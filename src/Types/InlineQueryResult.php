@@ -1,8 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 class InlineQueryResult
 {
@@ -25,12 +26,13 @@ class InlineQueryResult
      */
     private function __construct()
     {
+
     }
 
     /**
      * @param array $data
      * @return object
-     * @throws \Exception
+     * @throws Error
      */
     public static function new(array $data): object
     {
@@ -60,7 +62,7 @@ class InlineQueryResult
             case self::TYPE_GAME:
                 return new InlineQueryResult\Game($data);
             default:
-                throw new \Exception("Unknown type: {$data['type']}");
+                throw new Error("Unknown type: {$data['type']}");
         }
     }
 

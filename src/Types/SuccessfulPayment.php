@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class contains basic information about a successful payment.
@@ -69,7 +71,6 @@ class SuccessfulPayment implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'currency' => $this->currency,
             'total_amount' => $this->total_amount,

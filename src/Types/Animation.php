@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound)
  * @package TelegramBotsApi\Types
@@ -72,7 +75,6 @@ class Animation implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'width' => $this->width,

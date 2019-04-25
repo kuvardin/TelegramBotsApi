@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Contains information about Telegram Passport data shared with the bot by the user.
  * @package TelegramBotsApi\Types
@@ -23,6 +26,7 @@ class PassportData implements TypeInterface
     /**
      * PassportData constructor.
      * @param array $data
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -49,6 +53,7 @@ class PassportData implements TypeInterface
      * @param array $data
      * @param EncryptedCredentials $credentials
      * @return PassportData
+     * @throws Error
      */
     public static function make(array $data, EncryptedCredentials $credentials): self
     {

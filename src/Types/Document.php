@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a general file (as opposed to photos, voice messages and audio files).
  * @package TelegramBotsApi\Types
@@ -52,7 +55,6 @@ class Document implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'file_id' => $this->file_id,
             'thumb' => $this->thumb,

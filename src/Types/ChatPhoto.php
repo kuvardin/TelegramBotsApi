@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this object represents a chat photo.
@@ -35,7 +37,6 @@ class ChatPhoto implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'small_file_id' => $this->small_file_id,
             'big_file_id' => $this->big_file_id,

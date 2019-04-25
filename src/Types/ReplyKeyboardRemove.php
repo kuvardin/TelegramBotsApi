@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Upon receiving a message with onstance of this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup).
  * @package TelegramBotsApi\Types
@@ -22,12 +25,12 @@ class ReplyKeyboardRemove implements TypeInterface
     /**
      * ReplyKeyboardRemove constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['remove_keyboard']) && $data['remove_keyboard'] !== true) {
-            throw new \Exception('Parameter "remove_keyboard" must be true');
+            throw new Error('Parameter "remove_keyboard" must be true');
         }
         $this->remove_keyboard = true;
         $this->selective = $data['selective'] ?? null;
@@ -38,7 +41,6 @@ class ReplyKeyboardRemove implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'remove_keyboard' => $this->remove_keyboard,
             'selective' => $this->selective,
@@ -47,7 +49,7 @@ class ReplyKeyboardRemove implements TypeInterface
 
     /**
      * @return ReplyKeyboardRemove
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(): self
     {

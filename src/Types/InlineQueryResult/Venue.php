@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue.
@@ -81,13 +82,13 @@ class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
     /**
      * Venue constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -105,7 +106,7 @@ class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
         }
 
         $this->thumb_url = $data['thumb_url'] ?? null;
@@ -113,6 +114,9 @@ class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
         $this->thumb_height = $data['thumb_height'] ?? null;
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
         return [
@@ -132,6 +136,15 @@ class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
         ];
     }
 
+    /**
+     * @param string $id
+     * @param float $latitude
+     * @param float $longitude
+     * @param string $title
+     * @param string $address
+     * @return Venue
+     * @throws Error
+     */
     public static function make(string $id, float $latitude, float $longitude, string $title, string $address): self
     {
         return new self([

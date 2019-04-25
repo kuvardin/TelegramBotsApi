@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TelegramBotsApi\Exceptions;
 
 

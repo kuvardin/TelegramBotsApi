@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents one button of an inline keyboard. You must use exactly one of the optional fields.
  * @package TelegramBotsApi\Types
@@ -59,9 +62,11 @@ class InlineKeyboardButton implements TypeInterface
         $this->pay = $data['pay'] ?? null;
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'text' => $this->text,
             'url' => $this->url,
@@ -75,12 +80,79 @@ class InlineKeyboardButton implements TypeInterface
 
     /**
      * @param string $text
+     * @param string $url
      * @return InlineKeyboardButton
      */
-    public static function make(string $text): self
+    public static function makeWithUrl(string $text, string $url): self
     {
         return new self([
             'text' => $text,
+            'url' => $url,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param string $callback_data
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithCallbackData(string $text, string $callback_data): self
+    {
+        return new self([
+            'text' => $text,
+            'callback_data' => $callback_data,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param string $switch_inline_query
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithSwitchInlineQuery(string $text, string $switch_inline_query): self
+    {
+        return new self([
+            'text' => $text,
+            'switch_inline_query' => $switch_inline_query,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param string $switch_inline_query_current_chat
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithSwitchInlineQueryCurrentChat(string $text, string $switch_inline_query_current_chat): self
+    {
+        return new self([
+            'text' => $text,
+            'switch_inline_query_current_chat' => $switch_inline_query_current_chat,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param string $callback_game
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithCallbackGame(string $text, string $callback_game): self
+    {
+        return new self([
+            'text' => $text,
+            'callback_game' => $callback_game,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param string $pay
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithPay(string $text, string $pay): self
+    {
+        return new self([
+            'text' => $text,
+            'pay' => $pay,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message.
@@ -56,13 +57,13 @@ class CachedVoice extends TelegramBotsApi\Types\InlineQueryResult implements Tel
     /**
      * CachedVoice constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -74,7 +75,7 @@ class CachedVoice extends TelegramBotsApi\Types\InlineQueryResult implements Tel
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -84,7 +85,7 @@ class CachedVoice extends TelegramBotsApi\Types\InlineQueryResult implements Tel
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
         }
     }
 
@@ -110,7 +111,7 @@ class CachedVoice extends TelegramBotsApi\Types\InlineQueryResult implements Tel
      * @param string $voice_file_id
      * @param string $title
      * @return CachedVoice
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $voice_file_id, string $title): self
     {

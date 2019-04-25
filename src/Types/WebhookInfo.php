@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Contains information about the current status of a webhook.
@@ -65,7 +67,6 @@ class WebhookInfo implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'url' => $this->url,
             'has_custom_certificate' => $this->has_custom_certificate,

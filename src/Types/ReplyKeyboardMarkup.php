@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents a custom keyboard with reply options (see Introduction to bots for details and examples)
  * @package TelegramBotsApi\Types
@@ -55,7 +58,6 @@ class ReplyKeyboardMarkup implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'keyboard' => $this->keyboard,
             'resize_keyboard' => $this->resize_keyboard,

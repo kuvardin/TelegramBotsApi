@@ -1,9 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 class Mpeg4Gif extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
 {
@@ -69,12 +69,17 @@ class Mpeg4Gif extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
      */
     public $input_message_content;
 
+    /**
+     * Mpeg4Gif constructor.
+     * @param array $data
+     * @throws Error
+     */
     public function __construct(array $data)
     {
 
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -90,7 +95,7 @@ class Mpeg4Gif extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -99,10 +104,13 @@ class Mpeg4Gif extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
             $this->reply_markup = $data['reply_markup'] instanceof TelegramBotsApi\Types\InlineKeyboardMarkup ? $data['reply_markup'] : TelegramBotsApi\Types\InlineKeyboardMarkup($data['reply_markup']);
         }
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
         }
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
         return [
@@ -121,6 +129,13 @@ class Mpeg4Gif extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
         ];
     }
 
+    /**
+     * @param string $id
+     * @param string $mpeg4_url
+     * @param string $thumb_url
+     * @return Mpeg4Gif
+     * @throws Error
+     */
     public static function make(string $id, string $mpeg4_url, string $thumb_url): self
     {
         return new self([

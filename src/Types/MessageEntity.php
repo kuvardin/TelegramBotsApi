@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
  * @package TelegramBotsApi\Types
@@ -52,7 +55,7 @@ class MessageEntity implements TypeInterface
     /**
      * MessageEntity constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -66,7 +69,7 @@ class MessageEntity implements TypeInterface
     /**
      * @param string $type
      * @return MessageEntity
-     * @throws \Exception
+     * @throws Error
      */
     private function setType(string $type): self
     {
@@ -87,7 +90,7 @@ class MessageEntity implements TypeInterface
                 $this->type = $type;
                 break;
             default:
-                throw new \Exception("Unknown message entity type: {$type}");
+                throw new Error("Unknown message entity type: {$type}");
         }
     }
 
@@ -96,7 +99,6 @@ class MessageEntity implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'type' => $this->type,
             'offset' => $this->offset,
@@ -111,7 +113,7 @@ class MessageEntity implements TypeInterface
      * @param int $offset
      * @param int $length
      * @return MessageEntity
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $type, int $offset, int $length): self
     {
@@ -121,5 +123,4 @@ class MessageEntity implements TypeInterface
             'length' => $length,
         ]);
     }
-
 }

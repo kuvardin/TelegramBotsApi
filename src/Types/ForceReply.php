@@ -1,7 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
+
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Upon receiving a message with instance of this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
@@ -23,12 +25,12 @@ class ForceReply implements TypeInterface
     /**
      * ForceReply constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (!isset($data['force_reply']) || $data['force_reply'] !== true) {
-            throw new \Exception('Force reply must be true');
+            throw new Error('Force reply must be true');
         }
         $this->force_reply = true;
         $this->selective = $data['selective'] ?? null;
@@ -39,7 +41,6 @@ class ForceReply implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'force_reply' => $this->force_reply,
             'selective' => $this->selective,
@@ -48,7 +49,7 @@ class ForceReply implements TypeInterface
 
     /**
      * @return ForceReply
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(): self
     {

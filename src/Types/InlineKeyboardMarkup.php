@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents an inline keyboard that appears right next to the message it belongs to
  * @package TelegramBotsApi\Types
@@ -35,7 +38,6 @@ class InlineKeyboardMarkup implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'inline_keyboard' => $this->inline_keyboard,
         ];

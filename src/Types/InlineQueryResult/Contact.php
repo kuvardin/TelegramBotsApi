@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
@@ -71,13 +72,13 @@ class Contact extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
     /**
      * Contact constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -93,7 +94,7 @@ class Contact extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
         }
 
         $this->thumb_url = $data['thumb_url'] ?? null;
@@ -126,7 +127,7 @@ class Contact extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
      * @param string $phone_number
      * @param string $first_name
      * @return Contact
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $phone_number, string $first_name): self
     {

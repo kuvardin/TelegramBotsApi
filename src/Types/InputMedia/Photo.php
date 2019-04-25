@@ -1,9 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types\InputMedia;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a photo to be sent.
@@ -37,13 +37,13 @@ class Photo extends TelegramBotsApi\Types\InputMedia implements TelegramBotsApi\
     /**
      * InputMediaPhoto constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception('Element with key "type" must be self::TYPE or undefined');
+                throw new Error('Element with key "type" must be self::TYPE or undefined');
             }
             $this->type = $data['type'];
         }
@@ -53,7 +53,7 @@ class Photo extends TelegramBotsApi\Types\InputMedia implements TelegramBotsApi\
 
         if (isset($data['parse_mode'])) {
             if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new \Exception("Unknown parse mode: {$data['parse_mode']}");
+                throw new Error("Unknown parse mode: {$data['parse_mode']}");
             }
             $this->parse_mode = $data['parse_mode'];
         }
@@ -76,7 +76,7 @@ class Photo extends TelegramBotsApi\Types\InputMedia implements TelegramBotsApi\
      * @param string $media
      * @param string $type
      * @return Photo
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $media, string $type = self::TYPE): self
     {

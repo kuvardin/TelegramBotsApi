@@ -2,6 +2,9 @@
 
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
+
 /**
  * Instance of this object represents an incoming update. At most one of the optional parameters can be present in any given update.
  * @package TelegramBotsApi
@@ -72,7 +75,7 @@ class Update implements TypeInterface
     /**
      * Update constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -148,7 +151,6 @@ class Update implements TypeInterface
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'update_id' => $this->id,
             'message' => $this->message,

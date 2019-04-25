@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a link to an article or web page.
@@ -71,13 +72,13 @@ class Article extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
     /**
      * Article constructor.
      * @param array $data
-     * @throws \Exception
+     * @throws Error
      */
     public function __construct(array $data)
     {
         if (isset($data['type'])) {
             if ($data['type'] !== self::TYPE) {
-                throw new \Exception("Unknown type: {$data['type']}. Type must be self::TYPE.");
+                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
             }
             $this->type = $data['type'];
         }
@@ -103,7 +104,6 @@ class Article extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
      */
     public function getRequestArray(): array
     {
-        // TODO: Implement getRequestArray() method.
         return [
             'type' => $this->type,
             'id' => $this->id,
@@ -124,7 +124,7 @@ class Article extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
      * @param string $title
      * @param TelegramBotsApi\Types\InputMessageContent $input_message_content
      * @return Article
-     * @throws \Exception
+     * @throws Error
      */
     public static function make(string $id, string $title, TelegramBotsApi\Types\InputMessageContent $input_message_content): self
     {

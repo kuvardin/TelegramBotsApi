@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
@@ -42,6 +43,10 @@ class Game implements TypeInterface
      */
     public $animation;
 
+    /**
+     * Game constructor.
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->title = $data['title'];
@@ -64,6 +69,9 @@ class Game implements TypeInterface
         }
     }
 
+    /**
+     * @return array
+     */
     public function getRequestArray(): array
     {
         return [
@@ -76,6 +84,12 @@ class Game implements TypeInterface
         ];
     }
 
+    /**
+     * @param string $title
+     * @param string $description
+     * @param array $photo
+     * @return Game
+     */
     public static function make(string $title, string $description, array $photo): self
     {
         return new self([

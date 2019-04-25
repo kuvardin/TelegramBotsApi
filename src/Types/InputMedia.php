@@ -1,8 +1,9 @@
 <?php
 
-
 namespace TelegramBotsApi\Types;
 
+use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents the content of a media message to be sent. It should be one of
@@ -27,12 +28,13 @@ class InputMedia
      */
     private function __construct(array $data)
     {
+
     }
 
     /**
      * @param array $data
      * @return string
-     * @throws \Exception
+     * @throws Error
      */
     public static function getType(array $data): string
     {
@@ -48,7 +50,7 @@ class InputMedia
             case self::TYPE_VIDEO:
                 return self::TYPE_VIDEO;
             default:
-                throw new \Exception("Unknown type: {$data['type']}");
+                throw new Error("Unknown type: {$data['type']}");
         }
     }
 
@@ -72,7 +74,7 @@ class InputMedia
     /**
      * @param array $data
      * @return object
-     * @throws \Exception
+     * @throws Error
      */
     public static function new(array $data): object
     {
@@ -88,10 +90,16 @@ class InputMedia
             case self::TYPE_VIDEO:
                 return new InputMedia\Video($data);
             default:
-                throw new \Exception("Unknown media type: {$data['type']}");
+                throw new Error("Unknown media type: {$data['type']}");
         }
     }
 
+    /**
+     * @param string $media
+     * @param string $type
+     * @return InputMedia\Animation|InputMedia\Audio|InputMedia\Document|InputMedia\Photo|InputMedia\Video
+     * @throws Error
+     */
     public static function make(string $media, string $type)
     {
         switch ($type) {
@@ -106,7 +114,7 @@ class InputMedia
             case self::TYPE_VIDEO:
                 return InputMedia\Video::make($media);
             default:
-                throw new \Exception("Unknown media type: {$data['type']}");
+                throw new Error("Unknown media type: {$type}");
         }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace TelegramBotsApi;
 
+use TelegramBotsApi\Exceptions\Error;
+
 /**
  * Class Bot
  * @package TelegramBotsApi
@@ -11,6 +13,7 @@ class Bot
 {
     public const PARSE_MODE_HTML = 'HTML';
     public const PARSE_MODE_MARKDOWN = 'markdown';
+    public const PARSE_MODE_DEFAULT = self::PARSE_MODE_HTML;
 
     public const ACTION_TYPING = 'typing';
     public const ACTION_UPLOADING_PHOTO = 'upload_photo';
@@ -49,7 +52,7 @@ class Bot
     /**
      * @var string
      */
-    private $default_parse_mode = self::PARSE_MODE_HTML;
+    private $default_parse_mode = self::PARSE_MODE_DEFAULT;
 
     /**
      * Bot constructor.
@@ -65,12 +68,12 @@ class Bot
     /**
      * @param string $parse_mode
      * @return Bot
-     * @throws \Exception
+     * @throws Error
      */
     public function setDefaultParseMode(string $parse_mode): self
     {
         if (!self::checkParseMode($parse_mode)) {
-            throw new \Exception("Unknown parse mode: {$parse_mode}");
+            throw new Error("Unknown parse mode: {$parse_mode}");
         }
         $this->default_parse_mode = $parse_mode;
         return $this;
@@ -152,7 +155,7 @@ class Bot
      * @param string $chat_id
      * @param string $text
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendMessage(string $chat_id, string $text): Request
     {
@@ -193,7 +196,7 @@ class Bot
      * @param string $photo
      * @param string|null $caption
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendPhoto(string $chat_id, string $photo, string $caption = null): Request
     {
@@ -216,7 +219,7 @@ class Bot
      * @param string|null $title
      * @param string|null $performer
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendAudio(string $chat_id, string $audio, string $caption = null, string $thumb = null, int $duration = null, string $title = null, string $performer = null): Request
     {
@@ -240,7 +243,7 @@ class Bot
      * @param string|null $caption
      * @param string|null $thumb
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendDocument(string $chat_id, string $document, string $caption = null, string $thumb = null): Request
     {
@@ -265,7 +268,7 @@ class Bot
      * @param int|null $height
      * @param bool|null $supports_streaming
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendVideo(string $chat_id, string $video, string $caption = null, string $thumb = null, int $duration = null, int $width = null, int $height = null, bool $supports_streaming = null): Request
     {
@@ -293,7 +296,7 @@ class Bot
      * @param int|null $width
      * @param int|null $height
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendAnimation(string $chat_id, string $animation, string $caption = null, string $thumb = null, int $duration = null, int $width = null, int $height = null): Request
     {
@@ -317,7 +320,7 @@ class Bot
      * @param string|null $caption
      * @param int|null $duration
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function sendVoice(string $chat_id, string $voice, string $caption = null, int $duration = null): Request
     {
@@ -340,7 +343,6 @@ class Bot
      * @param int|null $duration
      * @param int|null $length
      * @return Request
-     * @throws \Exception
      */
     public function sendVideoNote(string $chat_id, string $video_note, string $caption = null, string $thumb = null, int $duration = null, int $length = null): Request
     {
@@ -374,7 +376,6 @@ class Bot
      * @param float $longitude
      * @param int|null $live_period
      * @return Request
-     * @throws \Exception
      */
     public function sendLocation(string $chat_id, float $latitude, float $longitude, int $live_period = null): Request
     {
@@ -389,25 +390,34 @@ class Bot
     /**
      * Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned by this API method.
      * @param string $chat_id
+     * @param int|null $message_id
      * @param float $latitude
      * @param float $longitude
-     * @param int|null $message_id
-     * @param string|null $inline_message_id
      * @return Request
-     * @throws \Exception
      */
-    public function editMessageLiveLocation(string $chat_id, float $latitude, float $longitude, int $message_id = null, string $inline_message_id = null): Request
+    public function editMessageLiveLocation(string $chat_id, int $message_id, float $latitude, float $longitude): Request
     {
-        if ($message_id === null && $inline_message_id === null) {
-            throw new \Exception('$message_id or $inline_message_id arguments must be not null');
-        }
-
         return $this->request('editMessageLiveLocation', [
             'chat_id' => $chat_id,
+            'message_id' => $message_id,
             'latitude' => $latitude,
             'longitude' => $longitude,
-            'message_id' => $message_id,
+        ], Request::CAN_ADD_REPLY_MARKUP);
+    }
+
+    /**
+     * Inline version of editMessageLiveLocation method
+     * @param string $inline_message_id
+     * @param float $latitude
+     * @param float $longitude
+     * @return Request
+     */
+    public function editMessageLiveLocationInline(string $inline_message_id, float $latitude, float $longitude): Request
+    {
+        return $this->request('editMessageLiveLocation', [
             'inline_message_id' => $inline_message_id,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ], Request::CAN_ADD_REPLY_MARKUP);
     }
 
@@ -416,7 +426,6 @@ class Bot
      * @param string $chat_id
      * @param int|null $message_id
      * @return Request
-     * @throws \Exception
      */
     public function stopMessageLiveLocation(string $chat_id, int $message_id): Request
     {
@@ -479,7 +488,7 @@ class Bot
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). This API method returns True on success.
      * @param string $chat_id
-     * @param string $action
+     * @param string $action Must be self::ACTION_*
      * @return Request
      */
     public function sendChatAction(string $chat_id, string $action): Request
@@ -563,7 +572,7 @@ class Bot
      * @param int|null $until_date
      * @param array|null $permissions
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function restrictChatMember(string $chat_id, int $user_id, int $until_date = null, array $permissions = null): Request
     {
@@ -592,7 +601,7 @@ class Bot
      * @param int $user_id
      * @param array|null $permissions
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function promoteChatMember(string $chat_id, int $user_id, array $permissions = null): Request
     {
@@ -808,7 +817,7 @@ class Bot
      * @param string $text
      * @param int|null $message_id
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function editMessageText(string $chat_id, int $message_id, string $text): Request
     {
@@ -826,7 +835,7 @@ class Bot
      * @param string $inline_message_id
      * @param string $text
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function editMessageTextInline(string $inline_message_id, string $text): Request
     {
@@ -844,7 +853,7 @@ class Bot
      * @param string $caption
      * @param int|null $message_id
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function editMessageCaption(string $chat_id, int $message_id, string $caption): Request
     {
@@ -862,7 +871,7 @@ class Bot
      * @param string $inline_message_id
      * @param string $caption
      * @return Request
-     * @throws \Exception
+     * @throws Error
      */
     public function editMessageCaptionInline(string $inline_message_id, string $caption): Request
     {
@@ -956,11 +965,10 @@ class Bot
      */
     public function sendSticker(string $chat_id, string $sticker): Request
     {
-        return $this
-            ->request('sendSticker', [
-                'chat_id' => $chat_id,
-                'sticker' => $sticker,
-            ], Request::CAN_DISABLE_NOTIFICATION | Request::CAN_REPLY_TO_MESSAGE | Request::CAN_ADD_REPLY_MARKUP);
+        return $this->request('sendSticker', [
+            'chat_id' => $chat_id,
+            'sticker' => $sticker,
+        ], Request::CAN_DISABLE_NOTIFICATION | Request::CAN_REPLY_TO_MESSAGE | Request::CAN_ADD_REPLY_MARKUP);
     }
 
     /**
@@ -1168,11 +1176,10 @@ class Bot
      */
     public function sendGame(string $chat_id, string $game_short_name): Request
     {
-        return $this
-            ->request('game_short_name', [
-                'chat_id' => $chat_id,
-                'game_short_name' => $game_short_name,
-            ], Request::CAN_DISABLE_NOTIFICATION);
+        return $this->request('game_short_name', [
+            'chat_id' => $chat_id,
+            'game_short_name' => $game_short_name,
+        ], Request::CAN_DISABLE_NOTIFICATION);
     }
 
     /**
@@ -1275,17 +1282,21 @@ class Bot
     }
 
     /**
-     * Strings filter
      * @param string $text
+     * @param string $parse_mode
      * @return string
+     * @throws Error
      */
-    public static function filterString(string $text): string
+    public static function filterString(string $text, string $parse_mode = self::PARSE_MODE_DEFAULT): string
     {
-        return str_replace(
-            ['<', '>', '&', '"'],
-            ['&lt;', '&gt;', '&amp;', '&quot;'],
-            $text
-        );
+        switch ($parse_mode) {
+            case self::PARSE_MODE_HTML:
+                return str_replace(['<', '>', '&', '"'], ['&lt;', '&gt;', '&amp;', '&quot;'], $text);
+            case self::PARSE_MODE_MARKDOWN:
+                return $text;
+        }
+
+        throw new Error("Unknown parse mode: {$parse_mode}");
     }
 
     /**
@@ -1301,7 +1312,7 @@ class Bot
      * @param array $permissions
      * @param array $available_permissions
      * @return array
-     * @throws \Exception
+     * @throws Error
      */
     private function getPermissions(array $permissions, array $available_permissions): array
     {
@@ -1311,23 +1322,22 @@ class Bot
             if ($permissions !== array_values($permissions)) {
                 foreach ($permissions as $permission_name => $permission_access) {
                     if (!in_array($permission_name, $available_permissions, true)) {
-                        throw new \Exception("Permission \"{$permission_name}\" are not supported by this method");
+                        throw new Error("Permission \"{$permission_name}\" are not supported by this method");
                     }
                     if (!is_bool($permission_access)) {
-                        throw new \Exception("Permission value \"{$permission_access}\" are not boolean");
+                        throw new Error("Permission value \"{$permission_access}\" are not boolean");
                     }
                     $result[$permission_name] = $permission_access;
                 }
             } else {
                 foreach ($permissions as $permission_name) {
                     if (!in_array($permission_name, $available_permissions, true)) {
-                        throw new \Exception("Permission \"{$permission_name}\" are not supported by this method");
+                        throw new Error("Permission \"{$permission_name}\" are not supported by this method");
                     }
                     $result[$permission_name] = true;
                 }
             }
         }
-
         return $result;
     }
 }

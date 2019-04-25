@@ -3,6 +3,7 @@
 namespace TelegramBotsApi\Types\InputMessageContent;
 
 use \TelegramBotsApi;
+use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents the content of a venue message to be sent as the result of an inline query.
