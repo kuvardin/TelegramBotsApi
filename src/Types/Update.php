@@ -21,6 +21,7 @@ class Update implements TypeInterface
     public const ACT_CALLBACK_QUERY = 'callback_query';
     public const ACT_SHIPING_QUERY = 'shipping_query';
     public const ACT_PRE_CHECKOUT_QUERY = 'pre_checkout_query';
+    public const ACT_POLL = 'poll';
 
     /**
      * @var int The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
@@ -73,6 +74,11 @@ class Update implements TypeInterface
     public $pre_checkout_query;
 
     /**
+     * @var Poll|null New poll state. Bots receive only updates about polls, which are sent or stopped by the bot
+     */
+    public $poll;
+
+    /**
      * Update constructor.
      * @param array $data
      * @throws Error
@@ -116,6 +122,10 @@ class Update implements TypeInterface
         if (isset($data['pre_checkout_query'])) {
             $this->pre_checkout_query = $data['pre_checkout_query'] instanceof PreCheckoutQuery ? $data['pre_checkout_query'] : new PreCheckoutQuery($data['pre_checkout_query']);
         }
+
+        if (isset($data['poll'])) {
+            $this->poll = $data['poll'] instanceof Poll ? $data['poll'] : new Poll($data['poll']);
+        }
     }
 
     /**
@@ -142,6 +152,8 @@ class Update implements TypeInterface
                 return self::ACT_SHIPING_QUERY;
             case $this->pre_checkout_query instanceof PreCheckoutQuery:
                 return self::ACT_PRE_CHECKOUT_QUERY;
+            case $this->poll instanceof Poll:
+                return self::ACT_POLL;
         }
         return false;
     }
@@ -162,6 +174,7 @@ class Update implements TypeInterface
             'callback_query' => $this->callback_query,
             'shipping_query' => $this->shipping_query,
             'pre_checkout_query' => $this->pre_checkout_query,
+            'poll' => $this->poll,
         ];
     }
 
@@ -181,6 +194,7 @@ class Update implements TypeInterface
             case self::ACT_CALLBACK_QUERY:
             case self::ACT_SHIPING_QUERY:
             case self::ACT_PRE_CHECKOUT_QUERY:
+            case self::ACT_POLL:
                 return true;
         }
 
