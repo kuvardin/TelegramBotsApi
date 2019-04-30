@@ -164,4 +164,26 @@ class Update implements TypeInterface
             'pre_checkout_query' => $this->pre_checkout_query,
         ];
     }
+
+    /**
+     * @param string $action
+     * @return bool
+     */
+    public static function checkAction(string $action): bool
+    {
+        switch ($action) {
+            case self::ACT_MESSAGE:
+            case self::ACT_EDITED_MESSAGE:
+            case self::ACT_CHANNEL_POST:
+            case self::ACT_EDITED_CHANNEL_POST:
+            case self::ACT_INLINE_QUERY:
+            case self::ACT_CHOSEN_INLINE_RESULT:
+            case self::ACT_CALLBACK_QUERY:
+            case self::ACT_SHIPING_QUERY:
+            case self::ACT_PRE_CHECKOUT_QUERY:
+                return true;
+        }
+
+        return false;
+    }
 }
