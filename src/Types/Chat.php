@@ -68,7 +68,7 @@ class Chat implements TypeInterface
     public $invite_link;
 
     /**
-     * @var Message|null Pinned message, for supergroups and channel chats. Returned only in getChat.
+     * @var Message|null Pinned message, for groups, supergroups and channels. Returned only in getChat.
      */
     public $pinned_message;
 

@@ -486,6 +486,36 @@ class Bot
     }
 
     /**
+     * Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned by this method.
+     * @param string $chat_id
+     * @param string $question
+     * @param string[] $options
+     * @return Request
+     */
+    public function sendPoll(string $chat_id, string $question, array $options): Request
+    {
+        return $this->request('sendPoll', [
+            'chat_id' => $chat_id,
+            'question' => $question,
+            'options' => $options,
+        ], Request::CAN_DISABLE_NOTIFICATION | Request::CAN_REPLY_TO_MESSAGE | Request::CAN_ADD_REPLY_MARKUP);
+    }
+
+    /**
+     * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+     * @param string $chat_id
+     * @param int $message_id
+     * @return Request
+     */
+    public function stopPoll(string $chat_id, int $message_id): Request
+    {
+        return $this->request('stopPoll', [
+            'chat_id' => $chat_id,
+            'message_id' => $message_id,
+        ], Request::CAN_ADD_INLINE_KEYBOARD_MARKUP);
+    }
+
+    /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). This API method returns True on success.
      * @param string $chat_id
      * @param string $action Must be self::ACTION_*
@@ -690,9 +720,9 @@ class Bot
     }
 
     /**
-     * Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. This API method returns True on success.
-     * @param string $chat_id
-     * @param int $message_id
+     * Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int $message_id Identifier of a message to pin
      * @return Request
      */
     public function pinChatMessage(string $chat_id, int $message_id): Request
@@ -704,8 +734,8 @@ class Bot
     }
 
     /**
-     * Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. This API method returns True on success.
-     * @param string $chat_id
+     * Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
+     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @return Request
      */
     public function unpinChatMessage(string $chat_id): Request
@@ -944,7 +974,14 @@ class Bot
     }
 
     /**
-     * Use this method to delete a message, including service messages. This API method returns True on success.
+     * Use this method to delete a message, including service messages, with the following limitations:
+     * - A message can only be deleted if it was sent less than 48 hours ago.
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+     * - Bots can delete incoming messages in private chats.
+     * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+     * - If the bot is an administrator of a group, it can delete any message there.
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * Returns True on success.
      * @param string $chat_id
      * @param int $message_id
      * @return Request

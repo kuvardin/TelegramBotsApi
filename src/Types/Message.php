@@ -54,6 +54,11 @@ class Message implements TypeInterface
     public $forward_signature;
 
     /**
+     * @var string|null Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
+     */
+    public $forward_sender_name;
+
+    /**
      * @var int|null For forwarded messages, date the original message was sent in Unix time
      */
     public $forward_date;
@@ -259,6 +264,7 @@ class Message implements TypeInterface
 
         $this->forward_from_message_id = $data['forward_from_message_id'] ?? null;
         $this->forward_signature = $data['forward_signature'] ?? null;
+        $this->forward_sender_name = $data['forward_sender_name'] ?? null;
         $this->forward_date = $data['forward_date'] ?? null;
 
         if (isset($data['reply_to_message'])) {
@@ -393,6 +399,7 @@ class Message implements TypeInterface
             'forward_from_chat' => $this->forward_from_chat,
             'forward_from_message_id' => $this->forward_from_message_id,
             'forward_signature' => $this->forward_signature,
+            'forward_sender_name' => $this->forward_sender_name,
             'forward_date' => $this->forward_date,
             'reply_to_message' => $this->reply_to_message,
             'edit_date' => $this->edit_date,

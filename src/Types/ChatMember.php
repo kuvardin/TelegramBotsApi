@@ -80,6 +80,11 @@ class ChatMember implements TypeInterface
     public $can_promote_members;
 
     /**
+     * @var bool|null Restricted only. True, if the user is a member of the chat at the moment of the request
+     */
+    public $is_member;
+
+    /**
      * @var bool|null Restricted only. True, if the user can send text messages, contacts, locations and venues
      */
     public $can_send_messages;
@@ -118,6 +123,7 @@ class ChatMember implements TypeInterface
         $this->can_restrict_members = $data['can_restrict_members'] ?? null;
         $this->can_pin_messages = $data['can_pin_messages'] ?? null;
         $this->can_promote_members = $data['can_promote_members'] ?? null;
+        $this->is_member = $data['is_member'] ?? null;
         $this->can_send_messages = $data['can_send_messages'] ?? null;
         $this->can_send_media_messages = $data['can_send_media_messages'] ?? null;
         $this->can_send_other_messages = $data['can_send_other_messages'] ?? null;
@@ -162,6 +168,7 @@ class ChatMember implements TypeInterface
             'can_restrict_members' => $this->can_restrict_members,
             'can_pin_messages' => $this->can_pin_messages,
             'can_promote_members' => $this->can_promote_members,
+            'is_member' => $this->is_member,
             'can_send_messages' => $this->can_send_messages,
             'can_send_media_messages' => $this->can_send_media_messages,
             'can_send_other_messages' => $this->can_send_other_messages,
@@ -181,5 +188,23 @@ class ChatMember implements TypeInterface
             'user' => $user,
             'status' => $status,
         ]);
+    }
+
+    /**
+     * @param string $status
+     * @return bool
+     */
+    public static function checkStatus(string $status): bool
+    {
+        switch ($status) {
+            case self::STATUS_CREATOR:
+            case self::STATUS_ADMINISTRATOR:
+            case self::STATUS_MEMBER:
+            case self::STATUS_RESTRICTED:
+            case self::STATUS_LEFT:
+            case self::STATUS_KICKED:
+                return true;
+        }
+        return false;
     }
 }
