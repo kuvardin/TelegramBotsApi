@@ -164,6 +164,11 @@ class Message implements TypeInterface
     public $venue;
 
     /**
+     * @var Poll|null Message is a native poll, information about the poll
+     */
+    public $poll;
+
+    /**
      * @var User[]|null New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
      */
     public $new_chat_members;
@@ -339,6 +344,10 @@ class Message implements TypeInterface
             $this->venue = $data['venue'] instanceof Venue ? $data['venue'] : new Venue($data['venue']);
         }
 
+        if (isset($data['poll'])) {
+            $this->poll = $data['poll'] instanceof Poll ? $data['poll'] : new Poll($data['poll']);
+        }
+
         if (isset($data['new_chat_members'])) {
             $this->new_chat_members = [];
             foreach ($data['new_chat_members'] as $new_chat_member) {
@@ -421,6 +430,7 @@ class Message implements TypeInterface
             'caption' => $this->caption,
             'location' => $this->location,
             'venue' => $this->venue,
+            'poll' => $this->poll,
             'new_chat_members' => $this->new_chat_members,
             'left_chat_member' => $this->left_chat_member,
             'new_chat_title' => $this->new_chat_title,
