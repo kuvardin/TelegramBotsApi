@@ -54,7 +54,7 @@ class User implements TypeInterface
         $this->first_name = $data['first_name'];
         $this->last_name = $data['last_name'] ?? null;
         $this->username = !empty($data['username']) ? new \TelegramBotsApi\Username($data['username']) : null;
-        $this->is_bot = $data['is_bot'] ?? null;
+        $this->is_bot = $data['is_bot'];
         $this->language_code = $data['language_code'] ?? null;
     }
 
