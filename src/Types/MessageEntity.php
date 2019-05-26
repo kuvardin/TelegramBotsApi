@@ -92,6 +92,8 @@ class MessageEntity implements TypeInterface
             default:
                 throw new Error("Unknown message entity type: {$type}");
         }
+
+        return $this;
     }
 
     /**
