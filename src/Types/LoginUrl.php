@@ -3,7 +3,6 @@
 namespace TelegramBotsApi\Types;
 
 use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the Telegram Login Widget when the user is coming from Telegram.
