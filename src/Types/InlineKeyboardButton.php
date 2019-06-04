@@ -2,8 +2,7 @@
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
  * Instance of this object represents one button of an inline keyboard. You must use exactly one of the optional fields.
@@ -21,6 +20,11 @@ class InlineKeyboardButton implements TypeInterface
      * @var string|null HTTP or tg:// url to be opened when button is pressed
      */
     public $url;
+
+    /**
+     * @var LoginUrl|null An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.
+     */
+    public $login_url;
 
     /**
      * @var string|null Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
@@ -55,6 +59,11 @@ class InlineKeyboardButton implements TypeInterface
     {
         $this->text = $data['text'];
         $this->url = $data['url'] ?? null;
+
+        if (isset($data['login_url'])) {
+            $this->login_url = $data['login_url'] instanceof LoginUrl ? $data['login_url'] : new LoginUrl($data['login_url']);
+        }
+
         $this->callback_data = $data['callback_data'] ?? null;
         $this->switch_inline_query = $data['switch_inline_query'] ?? null;
         $this->switch_inline_query_current_chat = $data['switch_inline_query_current_chat'] ?? null;
@@ -70,6 +79,7 @@ class InlineKeyboardButton implements TypeInterface
         return [
             'text' => $this->text,
             'url' => $this->url,
+            'login_url' => $this->login_url,
             'callback_data' => $this->callback_data,
             'switch_inline_query' => $this->switch_inline_query,
             'switch_inline_query_current_chat' => $this->switch_inline_query_current_chat,
@@ -153,6 +163,19 @@ class InlineKeyboardButton implements TypeInterface
         return new self([
             'text' => $text,
             'pay' => $pay,
+        ]);
+    }
+
+    /**
+     * @param string $text
+     * @param LoginUrl $login_url
+     * @return InlineKeyboardButton
+     */
+    public static function makeWithLoginUrl(string $text, LoginUrl $login_url): self
+    {
+        return new self([
+            'text' => $text,
+            'login_url' => $login_url,
         ]);
     }
 }

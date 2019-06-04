@@ -244,6 +244,11 @@ class Message implements TypeInterface
     public $passport_data;
 
     /**
+     * @var InlineKeyboardMarkup|null Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons
+     */
+    public $reply_markup;
+
+    /**
      * Message constructor.
      * @param array $data
      * @throws Error
@@ -392,6 +397,10 @@ class Message implements TypeInterface
         if (isset($data['passport_data'])) {
             $this->passport_data = $data['passport_data'] instanceof PassportData ? $data['passport_data'] : new PassportData($data['passport_data']);
         }
+
+        if (isset($data['reply_markup'])) {
+            $this->reply_markup = $data['reply_markup'] instanceof InlineKeyboardMarkup ? $data['reply_markup'] : new InlineKeyboardMarkup($data['reply_markup']);
+        }
     }
 
     /**
@@ -446,6 +455,7 @@ class Message implements TypeInterface
             'successful_payment' => $this->successful_payment,
             'connected_website' => $this->connected_website,
             'passport_data' => $this->passport_data,
+            'reply_markup' => $this->reply_markup,
         ];
     }
 
