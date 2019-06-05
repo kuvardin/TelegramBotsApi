@@ -164,7 +164,7 @@ class Update implements TypeInterface
     public function getStartCommand(): ?string
     {
         if ($this->message !== null && $this->message->text !== null && mb_strpos($this->message->text, '/start') === 0) {
-            return mb_substr($this->message->text, 6);
+            return mb_strlen($this->message->text) > 7 ? mb_substr($this->message->text, 6) : null;
         }
         return null;
     }
