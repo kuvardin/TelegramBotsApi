@@ -159,6 +159,17 @@ class Update implements TypeInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getStartCommand(): ?string
+    {
+        if ($this->message !== null && $this->message->text !== null && mb_strpos($this->message->text, '/start') === 0) {
+            return mb_substr($this->message->text, 6);
+        }
+        return null;
+    }
+
+    /**
      * @return array
      */
     public function getRequestArray(): array

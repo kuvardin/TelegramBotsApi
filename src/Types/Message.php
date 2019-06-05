@@ -2,8 +2,8 @@
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents a message.
@@ -12,7 +12,6 @@ use \TelegramBotsApi\Exceptions\Error;
  */
 class Message implements TypeInterface
 {
-
     /**
      * @var int Unique message identifier inside this chat
      */
