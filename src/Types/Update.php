@@ -199,6 +199,30 @@ class Update implements TypeInterface
     }
 
     /**
+     * @return Chat|null
+     */
+    public function getChat(): ?Chat
+    {
+        switch ($this->getAction()) {
+            case self::ACT_EDITED_CHANNEL_POST:
+                return $this->edited_channel_post->chat;
+            case self::ACT_CHANNEL_POST:
+                return $this->channel_post->chat;
+            case self::ACT_EDITED_MESSAGE:
+                return $this->edited_message->chat;
+            case self::ACT_MESSAGE:
+                return $this->message->chat;
+            case self::ACT_INLINE_QUERY:
+            case self::ACT_POLL:
+            case self::ACT_PRE_CHECKOUT_QUERY:
+            case self::ACT_SHIPING_QUERY:
+            case self::ACT_CALLBACK_QUERY:
+            case self::ACT_CHOSEN_INLINE_RESULT:
+                return null;
+        }
+    }
+
+    /**
      * @return array
      */
     public function getRequestArray(): array
