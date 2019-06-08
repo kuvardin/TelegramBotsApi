@@ -245,35 +245,34 @@ class Request
             throw new Error('The number of attempts can not be less than one');
         }
 
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => self::CONNECT_TIMEOUT,
+            CURLOPT_TIMEOUT => self::REQUEST_TIMEOUT,
+            CURLOPT_POSTFIELDS => json_encode($this->getRequest()),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+            ],
+        ]);
+
+        $result = false;
         for ($i = 1; $i <= $attempts; $i++) {
-            $ch = curl_init($url);
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_CONNECTTIMEOUT => self::CONNECT_TIMEOUT,
-                CURLOPT_TIMEOUT => self::REQUEST_TIMEOUT,
-                CURLOPT_POSTFIELDS => json_encode($this->getRequest()),
-                CURLOPT_HTTPHEADER => [
-                    'Content-Type: application/json',
-                ],
-            ]);
-
             $result = curl_exec($ch);
-            if (curl_errno($ch)) {
-                curl_close($ch);
+            if ($result !== false) {
+                break;
             }
-
-            break;
         }
 
-        $result_decoded = json_decode($result, true);
-        $info = curl_getinfo($ch);
-
-        if (curl_errno($ch)) {
+        if ($result === false) {
             $error_code = curl_error($ch);
             $error_description = curl_errno($ch);
             curl_close($ch);
             throw new Exceptions\CurlException($error_code, $error_description);
         }
+
+        $result_decoded = json_decode($result, true);
+        $info = curl_getinfo($ch);
 
         curl_close($ch);
 
