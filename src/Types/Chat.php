@@ -2,8 +2,8 @@
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents a chat.
@@ -136,17 +136,28 @@ class Chat implements TypeInterface
      */
     private function setType(string $type): self
     {
+        if (!self::checkType($type)) {
+            throw new Error("Unknown type: $type");
+        }
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public static function checkType(string $type): bool
+    {
         switch ($type) {
+            case self::TYPE_CHANNEL:
             case self::TYPE_PRIVATE:
             case self::TYPE_GROUP:
-            case self::TYPE_CHANNEL:
             case self::TYPE_SUPERGROUP:
-                $this->type = $type;
-                break;
-            default:
-                throw new Error("Unknown type: {$type}");
+                return true;
         }
-        return $this;
+        return false;
     }
 
     /**
