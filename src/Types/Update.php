@@ -170,6 +170,35 @@ class Update implements TypeInterface
     }
 
     /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        switch ($this->getAction()) {
+            case self::ACT_PRE_CHECKOUT_QUERY:
+                return $this->pre_checkout_query->from;
+            case self::ACT_SHIPING_QUERY:
+                return $this->shipping_query->from;
+            case self::ACT_CALLBACK_QUERY:
+                return $this->callback_query->from;
+            case self::ACT_CHOSEN_INLINE_RESULT:
+                return $this->chosen_inline_result->from;
+            case self::ACT_INLINE_QUERY:
+                return $this->inline_query->from;
+            case self::ACT_EDITED_CHANNEL_POST:
+                return $this->edited_channel_post->from;
+            case self::ACT_CHANNEL_POST:
+                return $this->channel_post->from;
+            case self::ACT_EDITED_MESSAGE:
+                return $this->edited_message->from;
+            case self::ACT_MESSAGE:
+                return $this->message->from;
+            case self::ACT_POLL:
+                return null;
+        }
+    }
+
+    /**
      * @return array
      */
     public function getRequestArray(): array
