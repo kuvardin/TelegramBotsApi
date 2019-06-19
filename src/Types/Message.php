@@ -340,6 +340,10 @@ class Message implements TypeInterface
 
         $this->caption = $data['caption'] ?? null;
 
+        if (isset($data['contact'])) {
+            $this->contact = $data['contact'] instanceof Contact ? $data['contact'] : new Contact($data['contact']);
+        }
+
         if (isset($data['location'])) {
             $this->location = $data['location'] instanceof Location ? $data['location'] : new Location($data['location']);
         }
