@@ -12,7 +12,6 @@ use \TelegramBotsApi\Exceptions\Error;
  */
 class User implements TypeInterface
 {
-    public const USER_URL_FORMAT = 'tg://user?id=%s';
 
     /**
      * @var int
@@ -61,9 +60,9 @@ class User implements TypeInterface
     /**
      * @return string
      */
-    public function getUrlWithId(): string
+    public function getUrl(): string
     {
-        return sprintf(self::USER_URL_FORMAT, $this->id);
+        return self::getUrlWithId($this->id);
     }
 
     /**
@@ -79,6 +78,15 @@ class User implements TypeInterface
             'username' => $this->username,
             'language_code' => $this->language_code,
         ];
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public static function getUrlWithId(int $id): string
+    {
+        return 'tg://user?id=' . $id;
     }
 
     /**
