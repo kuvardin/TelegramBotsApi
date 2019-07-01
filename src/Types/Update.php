@@ -159,12 +159,21 @@ class Update implements TypeInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isStart(): bool
+    {
+        return $this->message !== null && isset($this->message->entities[0]) && $this->message->entities[0]->type === MessageEntity::TYPE_BOT_COMMAND && mb_strpos($this->message->text, '/start') === 0;
+    }
+
+    /**
      * @return string|null
      */
     public function getStartCommand(): ?string
     {
-        if ($this->message !== null && $this->message->text !== null && mb_strpos($this->message->text, '/start') === 0) {
-            return mb_strlen($this->message->text) > 7 ? mb_substr($this->message->text, 6) : null;
+        if ($this->isStart()) {
+            $start_command = trim(mb_substr($this->message->text, $this->message->entities[0]->length));
+            return empty($start_command) ? null : $start_command;
         }
         return null;
     }
