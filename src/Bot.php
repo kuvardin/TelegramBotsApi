@@ -1377,4 +1377,24 @@ class Bot
         }
         return $result;
     }
+
+    /**
+     * @param string $url
+     * @param string $text
+     * @param string $parse_mode
+     * @return string
+     * @throws Error
+     */
+    public static function genLink(string $url, string $text, string $parse_mode = self::PARSE_MODE_DEFAULT): string
+    {
+        switch ($parse_mode) {
+            case self::PARSE_MODE_HTML:
+                return "<a href=\"$url\">$text</a>";
+
+            case self::PARSE_MODE_MARKDOWN:
+                return "[$text]($url)";
+        }
+
+        throw new Error("Unknown parse mode: $parse_mode");
+    }
 }
