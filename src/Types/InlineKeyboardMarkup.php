@@ -27,7 +27,7 @@ class InlineKeyboardMarkup implements TypeInterface
         foreach ($data['inline_keyboard'] as $inline_keyboard_row) {
             $inline_keyboard_items = [];
             foreach ($inline_keyboard_row as $inline_keyboard_button) {
-                $inline_keyboard_items[] = new InlineKeyboardButton($inline_keyboard_button);
+                $inline_keyboard_items[] = $inline_keyboard_button instanceof InlineKeyboardButton ? $inline_keyboard_button : new InlineKeyboardButton($inline_keyboard_button);
             }
             $this->inline_keyboard[] = $inline_keyboard_items;
         }
@@ -44,7 +44,7 @@ class InlineKeyboardMarkup implements TypeInterface
     }
 
     /**
-     * @param array $inline_keyboard
+     * @param InlineKeyboardButton[][] $inline_keyboard
      * @return InlineKeyboardMarkup
      */
     public static function make(array $inline_keyboard): self
