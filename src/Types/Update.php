@@ -6,7 +6,9 @@ use \TelegramBotsApi;
 use \TelegramBotsApi\Exceptions\Error;
 
 /**
- * Instance of this object represents an incoming update. At most one of the optional parameters can be present in any given update.
+ * Instance of this object represents an incoming update. At most one of the optional parameters can be present in any
+ * given update.
+ *
  * @package TelegramBotsApi
  * @author Maxim Kuvardin <kuvard.in@mail.ru>
  */
@@ -24,7 +26,11 @@ class Update implements TypeInterface
     public const ACT_POLL = 'poll';
 
     /**
-     * @var int The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+     * @var int The update‘s unique identifier. Update identifiers start from a certain positive number and increase
+     *     sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore
+     *     repeated updates or to restore the correct update sequence, should they get out of order. If there are no
+     *     new updates for at least a week, then identifier of the next update will be chosen randomly instead of
+     *     sequentially.
      */
     public $id;
 
@@ -54,7 +60,9 @@ class Update implements TypeInterface
     public $inline_query;
 
     /**
-     * @var ChosenInlineResult|null The result of an inline query that was chosen by a user and sent to their chat partner. Please see our documentation on the feedback collecting for details on how to enable these updates for your bot.
+     * @var ChosenInlineResult|null The result of an inline query that was chosen by a user and sent to their chat
+     *     partner. Please see our documentation on the feedback collecting for details on how to enable these updates
+     *     for your bot.
      */
     public $chosen_inline_result;
 
@@ -80,6 +88,7 @@ class Update implements TypeInterface
 
     /**
      * Update constructor.
+     *
      * @param array $data
      * @throws Error
      */
@@ -173,7 +182,7 @@ class Update implements TypeInterface
     {
         if ($this->isStart()) {
             $start_command = trim(mb_substr($this->message->text, $this->message->entities[0]->length));
-            return empty($start_command) ? '' : $start_command;
+            return $start_command;
         }
         return null;
     }
