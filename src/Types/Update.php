@@ -173,7 +173,7 @@ class Update implements TypeInterface
     {
         if ($this->isStart()) {
             $start_command = trim(mb_substr($this->message->text, $this->message->entities[0]->length));
-            return empty($start_command) ? null : $start_command;
+            return empty($start_command) ? '' : $start_command;
         }
         return null;
     }
