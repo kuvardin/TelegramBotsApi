@@ -6,7 +6,11 @@ use \TelegramBotsApi;
 use \TelegramBotsApi\Exceptions\Error;
 
 /**
- * Instance of this object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
+ * Instance of this object represents an incoming callback query from a callback button in an inline keyboard. If the
+ * button that originated the query was attached to a message sent by the bot, the field message will be present. If
+ * the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present.
+ * Exactly one of the fields data or game_short_name will be present.
+ *
  * @package TelegramBotsApi\Types
  * @author Maxim Kuvardin <kuvard.in@mail.ru>
  */
@@ -23,7 +27,8 @@ class CallbackQuery implements TypeInterface
     public $from;
 
     /**
-     * @var Message|null Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
+     * @var Message|null Message with the callback button that originated the query. Note that message content and
+     *     message date will not be available if the message is too old
      */
     public $message;
 
@@ -33,12 +38,14 @@ class CallbackQuery implements TypeInterface
     public $inline_message_id;
 
     /**
-     * @var string Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
+     * @var string Global identifier, uniquely corresponding to the chat to which the message with the callback button
+     *     was sent. Useful for high scores in games.
      */
     public $chat_instance;
 
     /**
-     * @var string|null Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
+     * @var string|null Data associated with the callback button. Be aware that a bad client can send arbitrary data in
+     *     this field.
      */
     public $data;
 
@@ -49,6 +56,7 @@ class CallbackQuery implements TypeInterface
 
     /**
      * CallbackQuery constructor.
+     *
      * @param array $data
      * @throws Error
      */
@@ -57,8 +65,8 @@ class CallbackQuery implements TypeInterface
         $this->id = $data['id'];
         $this->from = $data['from'] instanceof User ? $data['from'] : new User($data['from']);
 
-        if (isset($this['message'])) {
-            $this->message = $this['message'] instanceof Message ? $this['message'] : new Message($this['message']);
+        if (isset($data['message'])) {
+            $this->message = $data['message'] instanceof Message ? $data['message'] : new Message($data['message']);
         }
 
         $this->inline_message_id = $data['inline_message_id'] ?? null;
