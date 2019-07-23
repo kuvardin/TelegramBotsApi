@@ -7,6 +7,7 @@ use \TelegramBotsApi\Exceptions\Error;
 
 /**
  * Instance of this class represents a sticker.
+ *
  * @package TelegramBotsApi\Types
  * @author Maxim Kuvardin <kuvard.in@mail.ru>
  */
@@ -54,6 +55,7 @@ class Sticker implements TypeInterface
 
     /**
      * Sticker constructor.
+     *
      * @param array $data
      * @throws Error
      */
@@ -70,7 +72,7 @@ class Sticker implements TypeInterface
         $this->emoji = $data['emoji'] ?? null;
         $this->set_name = $data['set_name'] ?? null;
 
-        if (empty($data['mask_position'])) {
+        if (isset($data['mask_position'])) {
             $this->mask_position = $data['mask_position'] instanceof MaskPosition ? $data['mask_position'] : new MaskPosition($data['mask_position']);
         }
 
