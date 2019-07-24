@@ -6,6 +6,7 @@ use TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class Bot
+ *
  * @package TelegramBotsApi
  * @author Maxim Kuvardin <kuvard.in@mail.ru>
  */
@@ -56,6 +57,7 @@ class Bot
 
     /**
      * Bot constructor.
+     *
      * @param string $token
      * @param string $bot_username
      */
@@ -81,6 +83,7 @@ class Bot
 
     /**
      * Request to Telegram Bots API method with your bot's token.
+     *
      * @param string $method
      * @param array $params
      * @param int $permissions
@@ -92,7 +95,9 @@ class Bot
     }
 
     /**
-     * Use this method to receive incoming updates using long polling. An Array of Update objects is returned by this API method.
+     * Use this method to receive incoming updates using long polling. An Array of Update objects is returned by this
+     * API method.
+     *
      * @param int|null $offset
      * @param int|null $limit
      * @return Request
@@ -106,7 +111,9 @@ class Bot
     }
 
     /**
-     * A simple method for testing your bot's auth token. API method returns basic information about the bot in form of a User object.
+     * A simple method for testing your bot's auth token. API method returns basic information about the bot in form of
+     * a User object.
+     *
      * @return Request
      */
     public function getMe(): Request
@@ -115,7 +122,11 @@ class Bot
     }
 
     /**
-     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. API method returns True on success.
+     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an
+     * update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized
+     * Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. API method
+     * returns True on success.
+     *
      * @param string $url
      * @param string|null $certificate
      * @param int|null $max_connections
@@ -133,7 +144,9 @@ class Bot
     }
 
     /**
-     * Use this method to remove webhook integration if you decide to switch back to getUpdates. This API method returns True on success.
+     * Use this method to remove webhook integration if you decide to switch back to getUpdates. This API method
+     * returns True on success.
+     *
      * @return Request
      */
     public function deleteWebhook(): Request
@@ -142,7 +155,9 @@ class Bot
     }
 
     /**
-     * Use this method to get current webhook status. Requires no parameters. On success, this API method returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
+     * Use this method to get current webhook status. Requires no parameters. On success, this API method returns a
+     * WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
+     *
      * @return Request
      */
     public function getWebhookInfo(): Request
@@ -152,6 +167,7 @@ class Bot
 
     /**
      * Use this method to send text messages. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $text
      * @return Request
@@ -176,6 +192,7 @@ class Bot
 
     /**
      * Use this method to forward messages of any kind. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $from_chat_id
      * @param int $message_id
@@ -192,6 +209,7 @@ class Bot
 
     /**
      * Use this method to send photos. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $photo
      * @param string|null $caption
@@ -210,7 +228,10 @@ class Bot
     }
 
     /**
-     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your
+     * audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files
+     * of up to 50 MB in size, this limit may be changed in the future.
+     *
      * @param string $chat_id
      * @param string $audio
      * @param string|null $caption
@@ -237,7 +258,9 @@ class Bot
     }
 
     /**
-     * Use this method to send general files. On success, the sent Message is returned by this API method. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     * Use this method to send general files. On success, the sent Message is returned by this API method. Bots can
+     * currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
      * @param string $chat_id
      * @param string $document
      * @param string|null $caption
@@ -258,7 +281,9 @@ class Bot
     }
 
     /**
-     * Use this method to send general files. On success, the sent Message is returned by this API method. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     * Use this method to send general files. On success, the sent Message is returned by this API method. Bots can
+     * currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
      * @param string $chat_id
      * @param string $video
      * @param string|null $caption
@@ -287,7 +312,10 @@ class Bot
     }
 
     /**
-     * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned by this API method. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+     * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent
+     * Message is returned by this API method. Bots can currently send animation files of up to 50 MB in size, this
+     * limit may be changed in the future.
+     *
      * @param string $chat_id
      * @param string $animation
      * @param string|null $caption
@@ -314,7 +342,11 @@ class Bot
     }
 
     /**
-     * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned by this API method. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+     * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice
+     * message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as
+     * Audio or Document). On success, the sent Message is returned by this API method. Bots can currently send voice
+     * messages of up to 50 MB in size, this limit may be changed in the future.
+     *
      * @param string $chat_id
      * @param string $voice
      * @param string|null $caption
@@ -335,7 +367,9 @@ class Bot
     }
 
     /**
-     * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned by this API method.
+     * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send
+     * video messages. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $video_note
      * @param string|null $caption
@@ -357,8 +391,10 @@ class Bot
     }
 
     /**
-     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param Types\InputMedia[] $media A JSON-serialized array describing photos and videos to be sent, must include 2–10 items
+     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format
+     * @channelusername)
+     * @param Types\InputMedia[] $media A JSON-serialized array describing photos and videos to be sent, must include
+     *     2–10 items
      * @return Request
      */
     public function sendMediaGroup(string $chat_id, array $media): Request
@@ -371,6 +407,7 @@ class Bot
 
     /**
      * Use this method to send point on the map. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param float $latitude
      * @param float $longitude
@@ -388,7 +425,11 @@ class Bot
     }
 
     /**
-     * Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned by this API method.
+     * Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can
+     * be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation.
+     * On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is
+     * returned by this API method.
+     *
      * @param string $chat_id
      * @param int|null $message_id
      * @param float $latitude
@@ -407,6 +448,7 @@ class Bot
 
     /**
      * Inline version of editMessageLiveLocation method
+     *
      * @param string $inline_message_id
      * @param float $latitude
      * @param float $longitude
@@ -422,7 +464,10 @@ class Bot
     }
 
     /**
-     * Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned by this API method.
+     * Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before
+     * live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise
+     * True is returned by this API method.
+     *
      * @param string $chat_id
      * @param int|null $message_id
      * @return Request
@@ -437,6 +482,7 @@ class Bot
 
     /**
      * Inline version of stopMessageLiveLocation method
+     *
      * @param string $inline_message_id
      * @return Request
      */
@@ -449,6 +495,7 @@ class Bot
 
     /**
      * Use this method to send information about a venue. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param float $latitude
      * @param float $longitude
@@ -469,6 +516,7 @@ class Bot
 
     /**
      * Use this method to send phone contacts. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $phone_number
      * @param string $first_name
@@ -486,7 +534,9 @@ class Bot
     }
 
     /**
-     * Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned by this method.
+     * Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent
+     * Message is returned by this method.
+     *
      * @param string $chat_id
      * @param string $question
      * @param string[] $options
@@ -502,7 +552,9 @@ class Bot
     }
 
     /**
-     * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+     * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is
+     * returned.
+     *
      * @param string $chat_id
      * @param int $message_id
      * @return Request
@@ -516,7 +568,10 @@ class Bot
     }
 
     /**
-     * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). This API method returns True on success.
+     * Use this method when you need to tell the user that something is happening on the bot's side. The status is set
+     * for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). This API
+     * method returns True on success.
+     *
      * @param string $chat_id
      * @param string $action Must be self::ACTION_*
      * @return Request
@@ -531,6 +586,7 @@ class Bot
 
     /**
      * Use this method to get a list of profile pictures for a user. This API method returns a UserProfilePhotos object.
+     *
      * @param int $user_id
      * @param int|null $limit
      * @param int|null $offset
@@ -546,7 +602,12 @@ class Bot
     }
 
     /**
-     * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+     * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download
+     * files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link
+     * https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is
+     * guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by
+     * calling getFile again.
+     *
      * @param string $file_id
      * @return Request
      */
@@ -557,6 +618,7 @@ class Bot
 
     /**
      * Getting the file url for downloading
+     *
      * @param string $file_path
      * @return string
      */
@@ -566,7 +628,11 @@ class Bot
     }
 
     /**
-     * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success by this API method.
+     * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels,
+     * the user will not be able to return to the group on their own using invite links, etc., unless unbanned first.
+     * The bot must be an administrator in the chat for this to work and must have the appropriate admin rights.
+     * Returns True on success by this API method.
+     *
      * @param string $chat_id
      * @param int $user_id
      * @param int|null $until_date
@@ -582,7 +648,10 @@ class Bot
     }
 
     /**
-     * Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. This API method returns True on success.
+     * Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the
+     * group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for
+     * this to work. This API method returns True on success.
+     *
      * @param string $chat_id
      * @param int $user_id
      * @return Request
@@ -596,7 +665,10 @@ class Bot
     }
 
     /**
-     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. This API method returns True on success.
+     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
+     * to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions
+     * from a user. This API method returns True on success.
+     *
      * @param string $chat_id
      * @param int $user_id
      * @param int|null $until_date
@@ -626,7 +698,10 @@ class Bot
     }
 
     /**
-     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. This API method returns True on success.
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in
+     * the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to
+     * demote a user. This API method returns True on success.
+     *
      * @param string $chat_id
      * @param int $user_id
      * @param array|null $permissions
@@ -658,7 +733,10 @@ class Bot
     }
 
     /**
-     * Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. This API method returns the new invite link as String on success.
+     * Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must
+     * be an administrator in the chat for this to work and must have the appropriate admin rights. This API method
+     * returns the new invite link as String on success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -668,7 +746,10 @@ class Bot
     }
 
     /**
-     * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. This API method returns True on success.
+     * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must
+     * be an administrator in the chat for this to work and must have the appropriate admin rights. This API method
+     * returns True on success.
+     *
      * @param string $chat_id
      * @param string $photo
      * @return Request
@@ -682,7 +763,10 @@ class Bot
     }
 
     /**
-     * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. This API method returns True on success.
+     * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights. This API method returns
+     * True on success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -692,7 +776,10 @@ class Bot
     }
 
     /**
-     * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. This API method returns True on success.
+     * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights. This API method returns
+     * True on success.
+     *
      * @param string $chat_id
      * @param string $title
      * @return Request
@@ -706,7 +793,9 @@ class Bot
     }
 
     /**
-     * Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. This API method returns True on success.
+     * Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the appropriate admin rights. This API method returns True on success.
+     *
      * @param string $chat_id
      * @param string|null $description
      * @return Request
@@ -720,8 +809,12 @@ class Bot
     }
 
     /**
-     * Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
-     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’
+     * admin right in the channel. Returns True on success.
+     *
+     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format
+     * @channelusername)
      * @param int $message_id Identifier of a message to pin
      * @return Request
      */
@@ -734,8 +827,12 @@ class Bot
     }
 
     /**
-     * Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
-     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in
+     * the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or
+     * ‘can_edit_messages’ admin right in the channel. Returns True on success.
+     *
+     * @param string $chat_id Unique identifier for the target chat or username of the target channel (in the format
+     * @channelusername)
      * @return Request
      */
     public function unpinChatMessage(string $chat_id): Request
@@ -745,6 +842,7 @@ class Bot
 
     /**
      * Use this method for your bot to leave a group, supergroup or channel. This API method returns True on success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -754,7 +852,10 @@ class Bot
     }
 
     /**
-     * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). This API method returns a Chat object on success.
+     * Use this method to get up to date information about the chat (current name of the user for one-on-one
+     * conversations, current username of a user, group or channel, etc.). This API method returns a Chat object on
+     * success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -764,7 +865,10 @@ class Bot
     }
 
     /**
-     * Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned by this API method.
+     * Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects
+     * that contains information about all chat administrators except other bots. If the chat is a group or a
+     * supergroup and no administrators were appointed, only the creator will be returned by this API method.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -775,6 +879,7 @@ class Bot
 
     /**
      * Use this method to get the number of members in a chat. This API method returns Int on success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -784,7 +889,9 @@ class Bot
     }
 
     /**
-     * Use this method to get information about a member of a chat. This API method returns a ChatMember object on success.
+     * Use this method to get information about a member of a chat. This API method returns a ChatMember object on
+     * success.
+     *
      * @param string $chat_id
      * @param int $user_id
      * @return Request
@@ -798,7 +905,10 @@ class Bot
     }
 
     /**
-     * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. This API method returns True on success.
+     * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat
+     * for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally
+     * returned in getChat requests to check if the bot can use this method. This API method returns True on success.
+     *
      * @param string $chat_id
      * @param string $sticker_set_name
      * @return Request
@@ -812,7 +922,10 @@ class Bot
     }
 
     /**
-     * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. This API method returns True on success.
+     * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat
+     * for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally
+     * returned in getChat requests to check if the bot can use this method. This API method returns True on success.
+     *
      * @param string $chat_id
      * @return Request
      */
@@ -822,7 +935,10 @@ class Bot
     }
 
     /**
-     * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned by this API method.
+     * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to
+     * the user as a notification at the top of the chat screen or as an alert. On success, True is returned by this
+     * API method.
+     *
      * @param string $callback_query_id
      * @param string|null $text
      * @param bool|null $show_alert
@@ -842,7 +958,10 @@ class Bot
     }
 
     /**
-     * Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned by this API method.
+     * Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if
+     * edited message is sent by the bot, the edited Message is returned, otherwise True is returned by this API
+     * method.
+     *
      * @param string $chat_id
      * @param string $text
      * @param int|null $message_id
@@ -862,6 +981,7 @@ class Bot
 
     /**
      * Inline version of editMessageText method
+     *
      * @param string $inline_message_id
      * @param string $text
      * @return Request
@@ -878,7 +998,10 @@ class Bot
     }
 
     /**
-     * Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned by this API method.
+     * Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if
+     * edited message is sent by the bot, the edited Message is returned, otherwise True is returned by this API
+     * method.
+     *
      * @param string $chat_id
      * @param string $caption
      * @param int|null $message_id
@@ -898,6 +1021,7 @@ class Bot
 
     /**
      * Inline version of editMessageCaption method
+     *
      * @param string $inline_message_id
      * @param string $caption
      * @return Request
@@ -914,7 +1038,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a
+     * message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed
+     * arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its
+     * file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned,
+     * otherwise True is returned.
+     *
      * @param string $chat_id
      * @param int $message_id
      * @param Types\InputMedia $media
@@ -930,7 +1059,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a
+     * message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed
+     * arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its
+     * file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned,
+     * otherwise True is returned.
+     *
      * @param string $inline_message_id
      * @param Types\InputMedia $media
      * @return Request
@@ -944,7 +1078,9 @@ class Bot
     }
 
     /**
-     * Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On
+     * success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     *
      * @param string $chat_id
      * @param int $message_id
      * @param Types\InlineKeyboardMarkup $reply_markup
@@ -960,7 +1096,9 @@ class Bot
     }
 
     /**
-     * Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On
+     * success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     *
      * @param string $inline_message_id
      * @param Types\InlineKeyboardMarkup $reply_markup
      * @return Request
@@ -982,6 +1120,7 @@ class Bot
      * - If the bot is an administrator of a group, it can delete any message there.
      * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
      * Returns True on success.
+     *
      * @param string $chat_id
      * @param int $message_id
      * @return Request
@@ -996,6 +1135,7 @@ class Bot
 
     /**
      * Use this method to send .webp stickers.
+     *
      * @param string $chat_id
      * @param string $sticker
      * @return Request
@@ -1010,6 +1150,7 @@ class Bot
 
     /**
      * Use this method to get a sticker set. On success, a StickerSet object is returned by this API method.
+     *
      * @param string $name
      * @return Request
      */
@@ -1019,7 +1160,9 @@ class Bot
     }
 
     /**
-     * Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). This API method returns the uploaded File on success.
+     * Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet
+     * methods (can be used multiple times). This API method returns the uploaded File on success.
+     *
      * @param int $user_id
      * @param string $png_sticker
      * @return Request
@@ -1057,6 +1200,7 @@ class Bot
 
     /**
      * Use this method to add a new sticker to a set created by the bot. Returns True on success.
+     *
      * @param int $user_id
      * @param string $name
      * @param string $png_sticker
@@ -1077,6 +1221,7 @@ class Bot
 
     /**
      * Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.
+     *
      * @param string $sticker
      * @param int $position
      * @return Request
@@ -1091,6 +1236,7 @@ class Bot
 
     /**
      * Use this method to delete a sticker from a set created by the bot. Returns True on success.
+     *
      * @param string $sticker
      * @return Request
      */
@@ -1102,7 +1248,9 @@ class Bot
     }
 
     /**
-     * Use this method to send answers to an inline query. On success, True is returned. No more than 50 results per query are allowed.
+     * Use this method to send answers to an inline query. On success, True is returned. No more than 50 results per
+     * query are allowed.
+     *
      * @param string $inline_query_id
      * @param Types\InlineQueryResult[] $results
      * @param int|null $cache_time
@@ -1127,6 +1275,7 @@ class Bot
 
     /**
      * Use this method to send invoices. On success, the sent Message is returned.
+     *
      * @param int $chat_id
      * @param string $title
      * @param string $description
@@ -1207,6 +1356,7 @@ class Bot
 
     /**
      * Use this method to send a game. On success, the sent Message is returned by this API method.
+     *
      * @param string $chat_id
      * @param string $game_short_name
      * @return Request
@@ -1220,7 +1370,10 @@ class Bot
     }
 
     /**
-     * Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+     * Use this method to set the score of the specified user in a game. On success, if the message was sent by the
+     * bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than
+     * the user's current score in the chat and force is False.
+     *
      * @param int $chat_id
      * @param int $message_id
      * @param int $user_id
@@ -1243,6 +1396,7 @@ class Bot
 
     /**
      * Inline version of setGameScore method
+     *
      * @param string $inline_message_id
      * @param int $user_id
      * @param int $score
@@ -1262,7 +1416,9 @@ class Bot
     }
 
     /**
-     * Use this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of
+     * his neighbors in a game. On success, returns an Array of GameHighScore objects.
+     *
      * @param int $user_id
      * @param int $chat_id
      * @param int $message_id
@@ -1279,6 +1435,7 @@ class Bot
 
     /**
      * Inline version of getGameHighScores method
+     *
      * @param string $inline_message_id
      * @param string $user_id
      * @return Request
@@ -1293,6 +1450,7 @@ class Bot
 
     /**
      * Getting bot ID from token
+     *
      * @return int
      */
     public function getId(): int
@@ -1302,6 +1460,7 @@ class Bot
 
     /**
      * Getting bot token
+     *
      * @return string
      */
     public function getToken(): string
@@ -1311,6 +1470,7 @@ class Bot
 
     /**
      * Getting bot username
+     *
      * @return Username
      */
     public function getUsername(): Username
@@ -1396,5 +1556,27 @@ class Bot
         }
 
         throw new Error("Unknown parse mode: $parse_mode");
+    }
+
+    /**
+     * @param string|null $start_command
+     * @param bool|null $start_group
+     * @param string $url_format
+     * @return string
+     */
+    public function getBotUrl(string $start_command = null, bool $start_group = null, string $url_format = Username::URL_FORMAT_DEFAULT): string
+    {
+        $get_params = [];
+
+        if ($start_command !== null) {
+            $get_params['start'] = $start_command;
+        }
+
+        if ($start_group) {
+            $get_params['startgroup'] = 'true';
+        }
+
+        return $this->bot_username->getUrl($url_format) .
+            (empty($get_params) ? '' : '?' . http_build_query($get_params));
     }
 }
