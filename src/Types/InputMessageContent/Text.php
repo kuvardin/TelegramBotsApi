@@ -1,46 +1,65 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InputMessageContent;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Types;
 
-class Text extends TelegramBotsApi\Types\InputMessageContent implements TelegramBotsApi\Types\TypeInterface
+/**
+ * Represents the content of a text message to be sent as the result of an inline query.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
+class Text extends Types\InputMessageContent implements Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InputMessageContent::TYPE_TEXT;
+    public const TYPE = Types\InputMessageContent::TYPE_TEXT;
 
     /**
      * @var string Text of the message to be sent, 1-4096 characters
      */
-    public $message_text;
+    public string $message_text;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width
+     * text or inline URLs in your bot's message.
      */
-    public $parse_mode;
+    public ?string $parse_mode;
 
     /**
      * @var bool|null Disables link previews for links in the sent message
      */
-    public $disable_web_page_preview;
+    public ?bool $disable_web_page_preview;
 
     /**
      * Text constructor.
+     *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
+        parent::__construct($data);
+
         $this->message_text = $data['message_text'];
 
         if (isset($data['parse_mode'])) {
-            if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new Error("Unknown parse mode: {$data['parse_mode']}");
-            }
             $this->parse_mode = $data['parse_mode'];
         }
 
-        $this->disable_web_page_preview = $data['disable_web_page_preview'] ?? null;
+        if (isset($data['disable_web_page_preview'])) {
+            $this->disable_web_page_preview = $data['disable_web_page_preview'];
+        }
+    }
+
+    /**
+     * @param string $message_text Text of the message to be sent, 1-4096 characters
+     * @return Text
+     */
+    public static function make(string $message_text): self
+    {
+        return new self([
+            'message_text' => $message_text,
+        ]);
     }
 
     /**
@@ -53,17 +72,5 @@ class Text extends TelegramBotsApi\Types\InputMessageContent implements Telegram
             'parse_mode' => $this->parse_mode,
             'disable_web_page_preview' => $this->disable_web_page_preview,
         ];
-    }
-
-    /**
-     * @param string $message_text
-     * @return Text
-     * @throws Error
-     */
-    public static function make(string $message_text): self
-    {
-        return new self([
-            'message_text' => $message_text,
-        ]);
     }
 }

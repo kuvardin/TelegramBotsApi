@@ -1,47 +1,77 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represents a voice note
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a voice note.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Voice implements TypeInterface
 {
     /**
-     * @var string Unique identifier for this file
+     * @var string Identifier for this file, which can be used to download or reuse the file
      */
-    public $file_id;
+    public string $file_id;
 
     /**
-     * @var int Duration of the video in seconds as defined by sender
+     * @var string Unique identifier for this file, which is supposed to be the same over time and for different
+     * bots. Can't be used to download or reuse the file.
      */
-    public $duration;
+    public string $file_unique_id;
 
     /**
-     * @var string|null Mime type of a file as defined by sender
+     * @var int Duration of the audio in seconds as defined by sender
      */
-    public $mime_type;
+    public int $duration;
+
+    /**
+     * @var string|null MIME type of the file as defined by sender
+     */
+    public ?string $mime_type;
 
     /**
      * @var int|null File size
      */
-    public $file_size;
+    public ?int $file_size;
 
     /**
      * Voice constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->file_id = $data['file_id'];
+        $this->file_unique_id = $data['file_unique_id'];
         $this->duration = $data['duration'];
-        $this->mime_type = $data['mime_type'] ?? null;
-        $this->file_size = $data['file_size'] ?? null;
+
+        if (isset($data['mime_type'])) {
+            $this->mime_type = $data['mime_type'];
+        }
+
+        if (isset($data['file_size'])) {
+            $this->file_size = $data['file_size'];
+        }
+    }
+
+    /**
+     * @param string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time
+     * and for different bots. Can't be used to download or reuse the file.
+     * @param int $duration Duration of the audio in seconds as defined by sender
+     * @return Voice
+     */
+    public static function make(string $file_id, string $file_unique_id, int $duration): self
+    {
+        return new self([
+            'file_id' => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'duration' => $duration,
+        ]);
     }
 
     /**
@@ -51,17 +81,10 @@ class Voice implements TypeInterface
     {
         return [
             'file_id' => $this->file_id,
+            'file_unique_id' => $this->file_unique_id,
             'duration' => $this->duration,
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,
         ];
-    }
-
-    public static function make(string $file_id, int $duration): self
-    {
-        return new self([
-            'file_id' => $file_id,
-            'duration' => $duration,
-        ]);
     }
 }

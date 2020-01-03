@@ -1,62 +1,76 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InputMedia;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi\Types;
 
 /**
  * Represents a photo to be sent.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Photo extends TelegramBotsApi\Types\InputMedia implements TelegramBotsApi\Types\TypeInterface
+class Photo extends Types\InputMedia implements Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InputMedia::TYPE_PHOTO;
+    public const TYPE = Types\InputMedia::TYPE_PHOTO;
 
     /**
-     * @var string Type of the result, must be self::TYPE
+     * @var string File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended),
+     * pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>”
+     * to upload a new one using multipart/form-data under <file_attach_name> name
      */
-    public $type = self::TYPE;
-
-    /**
-     * @var string File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
-     */
-    public $media;
+    public string $media;
 
     /**
      * @var string|null Caption of the photo to be sent, 0-1024 characters
      */
-    public $caption;
+    public ?string $caption;
 
     /**
-     * @var static|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public $parse_mode;
+    public ?string $parse_mode;
 
     /**
-     * InputMediaPhoto constructor.
+     * Photo constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        if (isset($data['type'])) {
-            if ($data['type'] !== self::TYPE) {
-                throw new Error('Element with key "type" must be self::TYPE or undefined');
-            }
-            $this->type = $data['type'];
+        parent::__construct($data);
+
+        if ($data['type'] !== self::TYPE) {
+            throw new Error("Unknown type: {$data['type']} (must be self::TYPE)");
         }
 
         $this->media = $data['media'];
-        $this->caption = $data['caption'] ?? null;
+        if (isset($data['caption'])) {
+            $this->caption = $data['caption'];
+        }
 
         if (isset($data['parse_mode'])) {
-            if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new Error("Unknown parse mode: {$data['parse_mode']}");
-            }
             $this->parse_mode = $data['parse_mode'];
         }
+    }
+
+    /**
+     * @param string $type Type of the result, must be photo
+     * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
+     * (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
+     * “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name
+     * @return Photo
+     * @throws Error
+     */
+    public static function make(string $type, string $media): self
+    {
+        return new self([
+            'type' => $type,
+            'media' => $media,
+        ]);
     }
 
     /**
@@ -65,24 +79,10 @@ class Photo extends TelegramBotsApi\Types\InputMedia implements TelegramBotsApi\
     public function getRequestArray(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'media' => $this->media,
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
         ];
-    }
-
-    /**
-     * @param string $media
-     * @param string $type
-     * @return Photo
-     * @throws Error
-     */
-    public static function make(string $media, string $type = self::TYPE): self
-    {
-        return new self([
-            'type' => $type,
-            'media' => $media,
-        ]);
     }
 }

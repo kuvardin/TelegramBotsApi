@@ -1,49 +1,72 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InputMessageContent;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Types;
 
 /**
  * Represents the content of a contact message to be sent as the result of an inline query.
- * @package TelegramBotsApi\Types\InputMessageContent
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Contact extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Contact extends Types\InputMessageContent implements Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InputMessageContent::TYPE_CONTACT;
+    public const TYPE = Types\InputMessageContent::TYPE_CONTACT;
 
     /**
      * @var string Contact's phone number
      */
-    public $phone_number;
+    public string $phone_number;
 
     /**
      * @var string Contact's first name
      */
-    public $first_name;
+    public string $first_name;
 
     /**
      * @var string|null Contact's last name
      */
-    public $last_name;
+    public ?string $last_name;
 
     /**
      * @var string|null Additional data about the contact in the form of a vCard, 0-2048 bytes
      */
-    public $vcard;
+    public ?string $vcard;
 
     /**
      * Contact constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
+        parent::__construct($data);
+
         $this->phone_number = $data['phone_number'];
         $this->first_name = $data['first_name'];
-        $this->last_name = $data['last_name'] ?? null;
-        $this->vcard = $data['vcard'] ?? null;
+
+        if (isset($data['last_name'])) {
+            $this->last_name = $data['last_name'];
+        }
+
+        if (isset($data['vcard'])) {
+            $this->vcard = $data['vcard'];
+        }
+    }
+
+    /**
+     * @param string $phone_number Contact's phone number
+     * @param string $first_name Contact's first name
+     * @return Contact
+     */
+    public static function make(string $phone_number, string $first_name): self
+    {
+        return new self([
+            'phone_number' => $phone_number,
+            'first_name' => $first_name,
+        ]);
     }
 
     /**
@@ -57,18 +80,5 @@ class Contact extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
             'last_name' => $this->last_name,
             'vcard' => $this->vcard,
         ];
-    }
-
-    /**
-     * @param string $phone_number
-     * @param string $first_name
-     * @return Contact
-     */
-    public static function make(string $phone_number, string $first_name): self
-    {
-        return new self([
-            'phone_number' => $phone_number,
-            'first_name' => $first_name,
-        ]);
     }
 }

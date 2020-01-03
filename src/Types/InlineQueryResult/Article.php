@@ -1,102 +1,140 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi\Types;
+use TelegramBotsApi\Types\InlineQueryResult;
 
 /**
  * Represents a link to an article or web page.
- * @package TelegramBotsApi\Types\InlineQueryResult
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Article extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InlineQueryResult::TYPE_ARTICLE;
-
-    /**
-     * @var string Type of the result, must be self::TYPE
-     */
-    public $type = self::TYPE;
+    public const TYPE = InlineQueryResult::TYPE_ARTICLE;
 
     /**
      * @var string Unique identifier for this result, 1-64 Bytes
      */
-    public $id;
+    public string $id;
 
     /**
      * @var string Title of the result
      */
-    public $title;
+    public string $title;
 
     /**
-     * @var TelegramBotsApi\Types\InputMessageContent Content of the message to be sent
+     * @var Types\InputMessageContent Content of the message to be sent
      */
-    public $input_message_content;
+    public Types\InputMessageContent $input_message_content;
 
     /**
-     * @var TelegramBotsApi\Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
+     * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup;
 
     /**
      * @var string|null URL of the result
      */
-    public $url;
+    public ?string $url;
 
     /**
-     * @var bool Pass True, if you don't want the URL to be shown in the message
+     * @var bool|null Pass True, if you don't want the URL to be shown in the message
      */
-    public $hide_url;
+    public ?bool $hide_url;
 
     /**
      * @var string|null Short description of the result
      */
-    public $description;
+    public ?string $description;
 
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public $thumb_url;
+    public ?string $thumb_url;
 
     /**
      * @var int|null Thumbnail width
      */
-    public $thumb_width;
+    public ?int $thumb_width;
 
     /**
      * @var int|null Thumbnail height
      */
-    public $thumb_height;
+    public ?int $thumb_height;
 
     /**
      * Article constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        if (isset($data['type'])) {
-            if ($data['type'] !== self::TYPE) {
-                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
-            }
-            $this->type = $data['type'];
+        parent::__construct($data);
+
+        if ($data['type'] !== self::TYPE) {
+            throw new Error("Unknown type: {$data['type']} (must be self::TYPE");
         }
 
         $this->id = $data['id'];
         $this->title = $data['title'];
-        $this->input_message_content = $data['input_message_content'];
+        $this->input_message_content = $data['input_message_content'] instanceof Types\InputMessageContent
+            ? $data['input_message_content']
+            : Types\InputMessageContent::constructChild($data['input_message_content']);
 
         if (isset($data['reply_markup'])) {
-            $this->reply_markup = $data['reply_markup'] instanceof TelegramBotsApi\Types\InlineKeyboardMarkup ? $data['reply_markup'] : new TelegramBotsApi\Types\InlineKeyboardMarkup($data['reply_markup']);
+            $this->reply_markup = $data['reply_markup'] instanceof Types\InlineKeyboardMarkup
+                ? $data['reply_markup']
+                : new Types\InlineKeyboardMarkup($data['reply_markup']);
         }
 
-        $this->url = $data['url'] ?? null;
-        $this->hide_url = $data['hide_url'] ?? null;
-        $this->description = $data['description'] ?? null;
-        $this->thumb_url = $data['thumb_url'] ?? null;
-        $this->thumb_width = $data['thumb_width'] ?? null;
-        $this->thumb_height = $data['thumb_height'] ?? null;
+        if (isset($data['url'])) {
+            $this->url = $data['url'];
+        }
+
+        if (isset($data['hide_url'])) {
+            $this->hide_url = $data['hide_url'];
+        }
+
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+
+        if (isset($data['thumb_url'])) {
+            $this->thumb_url = $data['thumb_url'];
+        }
+
+        if (isset($data['thumb_width'])) {
+            $this->thumb_width = $data['thumb_width'];
+        }
+
+        if (isset($data['thumb_height'])) {
+            $this->thumb_height = $data['thumb_height'];
+        }
+    }
+
+    /**
+     * @param string $type Type of the result, must be article
+     * @param string $id Unique identifier for this result, 1-64 Bytes
+     * @param string $title Title of the result
+     * @param Types\InputMessageContent $input_message_content Content of the message to be sent
+     * @return self
+     * @throws Error
+     */
+    public static function make(string $type, string $id, string $title,
+        Types\InputMessageContent $input_message_content): self
+    {
+        return new self([
+            'type' => $type,
+            'id' => $id,
+            'title' => $title,
+            'input_message_content' => $input_message_content,
+        ]);
     }
 
     /**
@@ -105,7 +143,7 @@ class Article extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
     public function getRequestArray(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'id' => $this->id,
             'title' => $this->title,
             'input_message_content' => $this->input_message_content,
@@ -117,21 +155,5 @@ class Article extends TelegramBotsApi\Types\InlineQueryResult implements Telegra
             'thumb_width' => $this->thumb_width,
             'thumb_height' => $this->thumb_height,
         ];
-    }
-
-    /**
-     * @param string $id
-     * @param string $title
-     * @param TelegramBotsApi\Types\InputMessageContent $input_message_content
-     * @return Article
-     * @throws Error
-     */
-    public static function make(string $id, string $title, TelegramBotsApi\Types\InputMessageContent $input_message_content): self
-    {
-        return new self([
-            'id' => $id,
-            'title' => $title,
-            'input_message_content' => $input_message_content,
-        ]);
     }
 }

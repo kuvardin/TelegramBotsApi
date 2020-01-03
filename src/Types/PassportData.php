@@ -1,41 +1,61 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
  * Contains information about Telegram Passport data shared with the bot by the user.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class PassportData implements TypeInterface
 {
-
     /**
-     * @var EncryptedPassportElement[] Array with information about documents and other Telegram Passport elements that was shared with the bot
+     * @var EncryptedPassportElement[] Array with information about documents and other Telegram Passport
+     * elements that was shared with the bot
      */
-    public $data;
+    public array $data = [];
 
     /**
      * @var EncryptedCredentials Encrypted credentials required to decrypt the data
      */
-    public $credentials;
+    public EncryptedCredentials $credentials;
 
     /**
      * PassportData constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        $this->data = [];
-        foreach ($data['data'] as $encrypted_passport_element) {
-            $this->data[] = $encrypted_passport_element instanceof EncryptedPassportElement ? $encrypted_passport_element : new EncryptedPassportElement($encrypted_passport_element);
+        foreach ($data['data'] as $item) {
+            $this->data[] = $item instanceof EncryptedPassportElement
+                ? $item
+                : new EncryptedPassportElement($item);
         }
 
-        $this->credentials = $data['credentials'] instanceof EncryptedCredentials ? $data['credentials'] : new EncryptedCredentials($data['credentials']);
+        $this->credentials = $data['credentials'] instanceof EncryptedCredentials
+            ? $data['credentials']
+            : new EncryptedCredentials($data['credentials']);
+    }
+
+    /**
+     * @param EncryptedPassportElement[] $data Array with information about documents and other Telegram Passport
+     * elements that was shared with the bot
+     * @param EncryptedCredentials $credentials Encrypted credentials required to decrypt the data
+     * @return PassportData
+     * @throws Error
+     */
+    public static function make(array $data, EncryptedCredentials $credentials): self
+    {
+        return new self([
+            'data' => $data,
+            'credentials' => $credentials,
+        ]);
     }
 
     /**
@@ -47,19 +67,5 @@ class PassportData implements TypeInterface
             'data' => $this->data,
             'credentials' => $this->credentials,
         ];
-    }
-
-    /**
-     * @param array $data
-     * @param EncryptedCredentials $credentials
-     * @return PassportData
-     * @throws Error
-     */
-    public static function make(array $data, EncryptedCredentials $credentials): self
-    {
-        return new self([
-            'data' => $data,
-            'credentials' => $credentials,
-        ]);
     }
 }

@@ -1,36 +1,51 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represents an inline keyboard that appears right next to the message it belongs to
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents an inline keyboard that appears right next to the message it belongs to.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class InlineKeyboardMarkup implements TypeInterface
 {
     /**
-     * @var InlineKeyboardButton[][] Array of button rows, each represented by an Array of InlineKeyboardButton objects
+     * @var InlineKeyboardButton[][] Array of button rows, each represented by an Array of
+     * InlineKeyboardButton objects
      */
-    public $inline_keyboard;
+    public array $inline_keyboard = [];
 
     /**
      * InlineKeyboardMarkup constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
-        $this->inline_keyboard = [];
-        foreach ($data['inline_keyboard'] as $inline_keyboard_row) {
-            $inline_keyboard_items = [];
-            foreach ($inline_keyboard_row as $inline_keyboard_button) {
-                $inline_keyboard_items[] = $inline_keyboard_button instanceof InlineKeyboardButton ? $inline_keyboard_button : new InlineKeyboardButton($inline_keyboard_button);
+        foreach ($data['inline_keyboard'] as $row) {
+            $buttons_row = [];
+            foreach ($row as $button) {
+                $buttons_row[] = $button instanceof InlineKeyboardButton
+                    ? $button
+                    : new InlineKeyboardButton($button);
             }
-            $this->inline_keyboard[] = $inline_keyboard_items;
+            $this->inline_keyboard[] = $buttons_row;
         }
+    }
+
+    /**
+     * @param InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an
+     * Array of InlineKeyboardButton objects
+     * @return InlineKeyboardMarkup
+     */
+    public static function make(array $inline_keyboard): self
+    {
+        return new self([
+            'inline_keyboard' => $inline_keyboard,
+        ]);
     }
 
     /**
@@ -41,16 +56,5 @@ class InlineKeyboardMarkup implements TypeInterface
         return [
             'inline_keyboard' => $this->inline_keyboard,
         ];
-    }
-
-    /**
-     * @param InlineKeyboardButton[][] $inline_keyboard
-     * @return InlineKeyboardMarkup
-     */
-    public static function make(array $inline_keyboard): self
-    {
-        return new self([
-            'inline_keyboard' => $inline_keyboard,
-        ]);
     }
 }

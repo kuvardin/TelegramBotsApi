@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
@@ -6,9 +6,10 @@ use TelegramBotsApi;
 use TelegramBotsApi\Exceptions\Error;
 
 /**
- * Instance of this class represents a chat.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a chat.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Chat implements TypeInterface
 {
@@ -18,72 +19,84 @@ class Chat implements TypeInterface
     public const TYPE_CHANNEL = 'channel';
 
     /**
-     * @var string Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+     * @var int Unique identifier for this chat. This number may be greater than 32 bits and some programming
+     * languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits,
+     * so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
      */
-    public $id;
-
-    /**
-     * @var string Type of chat. One of self::TYPE_* constants
-     */
-    public $type;
+    public int $id;
 
     /**
      * @var string|null Title, for supergroups, channels and group chats
      */
-    public $title;
+    public ?string $title;
 
     /**
-     * @var string|null Username, for private chats, supergroups and channels if available
+     * @var TelegramBotsApi\Username|null Username, for private chats, supergroups and channels if available
      */
-    public $username;
+    public ?TelegramBotsApi\Username $username;
 
     /**
      * @var string|null First name of the other party in a private chat
      */
-    public $first_name;
+    public ?string $first_name;
 
     /**
      * @var string|null Last name of the other party in a private chat
      */
-    public $last_name;
-
-    /**
-     * @var bool|null True if a group has ‘All Members Are Admins’ enabled.
-     */
-    public $all_members_are_administrators;
+    public ?string $last_name;
 
     /**
      * @var ChatPhoto|null Chat photo. Returned only in getChat.
      */
-    public $photo;
+    public ?ChatPhoto $photo;
 
     /**
-     * @var string|null Description, for supergroups and channel chats. Returned only in getChat.
+     * @var string|null Description, for groups, supergroups and channel chats. Returned only in getChat.
      */
-    public $description;
+    public ?string $description;
 
     /**
-     * @var string|null Chat invite link, for supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.
+     * @var string|null Chat invite link, for groups, supergroups and channel chats. Each administrator
+     * in a chat generates their own invite links, so the bot must first generate the link using
+     * exportChatInviteLink. Returned only in getChat.
      */
-    public $invite_link;
+    public ?string $invite_link;
 
     /**
      * @var Message|null Pinned message, for groups, supergroups and channels. Returned only in getChat.
      */
-    public $pinned_message;
+    public ?Message $pinned_message;
+
+    /**
+     * @var ChatPermissions|null Default chat member permissions, for groups and supergroups.
+     * Returned only in getChat.
+     */
+    public ?ChatPermissions $permissions;
+
+    /**
+     * @var int|null For supergroups, the minimum allowed delay between consecutive messages sent by each
+     * unpriviledged user. Returned only in getChat.
+     */
+    public ?int $slow_mode_delay;
 
     /**
      * @var string|null For supergroups, name of group sticker set. Returned only in getChat.
      */
-    public $sticker_set_name;
+    public ?string $sticker_set_name;
 
     /**
      * @var bool|null True, if the bot can change the group sticker set. Returned only in getChat.
      */
-    public $can_set_sticker_set;
+    public ?bool $can_set_sticker_set;
+
+    /**
+     * @var string Type of chat, can be either self::TYPE_*
+     */
+    protected string $type;
 
     /**
      * Chat constructor.
+     *
      * @param array $data
      * @throws Error
      */
@@ -91,21 +104,108 @@ class Chat implements TypeInterface
     {
         $this->id = $data['id'];
         $this->setType($data['type']);
-        $this->title = $data['title'] ?? null;
-        $this->username = isset($data['username']) ? new TelegramBotsApi\Username($data['username']) : null;
-        $this->first_name = $data['first_name'] ?? null;
-        $this->last_name = $data['last_name'] ?? null;
-        $this->all_members_are_administrators = $data['all_members_are_administrators'] ?? null;
+
+        if (isset($data['title'])) {
+            $this->title = $data['title'];
+        }
+
+        if (isset($data['username'])) {
+            $this->username = new TelegramBotsApi\Username($data['username']);
+        }
+
+        if (isset($data['first_name'])) {
+            $this->first_name = $data['first_name'];
+        }
+
+        if (isset($data['last_name'])) {
+            $this->last_name = $data['last_name'];
+        }
+
         if (isset($data['photo'])) {
-            $this->photo = $data['photo'] instanceof ChatPhoto ? $data['photo'] : new ChatPhoto($data['photo']);
+            $this->photo = $data['photo'] instanceof ChatPhoto
+                ? $data['photo']
+                : new ChatPhoto($data['photo']);
         }
-        $this->description = $data['description'] ?? null;
-        $this->invite_link = $data['invite_link'] ?? null;
+
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
+
+        if (isset($data['invite_link'])) {
+            $this->invite_link = $data['invite_link'];
+        }
+
         if (isset($data['pinned_message'])) {
-            $this->pinned_message = $data['pinned_message'] instanceof Message ? $data['pinned_message'] : new Message($data['pinned_message']);
+            $this->pinned_message = $data['pinned_message'] instanceof Message
+                ? $data['pinned_message']
+                : new Message($data['pinned_message']);
         }
-        $this->sticker_set_name = $data['sticker_set_name'] ?? null;
-        $this->can_set_sticker_set = $data['can_set_sticker_set'] ?? null;
+
+        if (isset($data['permissions'])) {
+            $this->permissions = $data['permissions'] instanceof ChatPermissions
+                ? $data['permissions']
+                : new ChatPermissions($data['permissions']);
+        }
+
+        if (isset($data['slow_mode_delay'])) {
+            $this->slow_mode_delay = $data['slow_mode_delay'];
+        }
+
+        if (isset($data['sticker_set_name'])) {
+            $this->sticker_set_name = $data['sticker_set_name'];
+        }
+
+        if (isset($data['can_set_sticker_set'])) {
+            $this->can_set_sticker_set = $data['can_set_sticker_set'];
+        }
+    }
+
+    /**
+     * @param int $id Unique identifier for this chat. This number may be greater than 32 bits and some
+     * programming languages may have difficulty/silent defects in interpreting it. But it is smaller than
+     * 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier
+     * @param string $type Type of chat, can be either self::TYPE_*
+     * @return Chat
+     * @throws Error
+     */
+    public static function make(int $id, string $type): self
+    {
+        return new self([
+            'id' => $id,
+            'type' => $type,
+        ]);
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public static function checkType(string $type): bool
+    {
+        return $type === self::TYPE_CHANNEL ||
+            $type === self::TYPE_GROUP ||
+            $type === self::TYPE_PRIVATE ||
+            $type === self::TYPE_SUPERGROUP;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @throws Error
+     */
+    public function setType(string $type): void
+    {
+        if (!self::checkType($type)) {
+            throw new Error("Unknown chat type: $type");
+        }
+        $this->type = $type;
     }
 
     /**
@@ -117,60 +217,17 @@ class Chat implements TypeInterface
             'id' => $this->id,
             'type' => $this->type,
             'title' => $this->title,
-            'username' => !empty($this->username) ? $this->username->getShort() : null,
+            'username' => $this->username->getShort(),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'photo' => $this->photo,
             'description' => $this->description,
             'invite_link' => $this->invite_link,
             'pinned_message' => $this->pinned_message,
+            'permissions' => $this->permissions,
+            'slow_mode_delay' => $this->slow_mode_delay,
             'sticker_set_name' => $this->sticker_set_name,
             'can_set_sticker_set' => $this->can_set_sticker_set,
         ];
-    }
-
-    /**
-     * @param string $type
-     * @return Chat
-     * @throws Error
-     */
-    private function setType(string $type): self
-    {
-        if (!self::checkType($type)) {
-            throw new Error("Unknown type: $type");
-        }
-
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @param string $type
-     * @return bool
-     */
-    public static function checkType(string $type): bool
-    {
-        switch ($type) {
-            case self::TYPE_CHANNEL:
-            case self::TYPE_PRIVATE:
-            case self::TYPE_GROUP:
-            case self::TYPE_SUPERGROUP:
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param string $id
-     * @param string $type
-     * @return Chat
-     * @throws Error
-     */
-    public static function make(string $id, string $type): self
-    {
-        return new self([
-            'id' => $id,
-            'type' => $type,
-        ]);
     }
 }

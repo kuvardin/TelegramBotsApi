@@ -1,53 +1,89 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represents a general file (as opposed to photos, voice messages and audio files).
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a general file (as opposed to photos, voice messages and audio files).
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Document implements TypeInterface
 {
     /**
-     * @var string Unique file identifier
+     * @var string Identifier for this file, which can be used to download or reuse the file
      */
-    public $file_id;
+    public string $file_id;
+
+    /**
+     * @var string Unique identifier for this file, which is supposed to be the same over time and for
+     * different bots. Can't be used to download or reuse the file.
+     */
+    public string $file_unique_id;
 
     /**
      * @var PhotoSize|null Document thumbnail as defined by sender
      */
-    public $thumb;
+    public ?PhotoSize $thumb;
 
     /**
      * @var string|null Original filename as defined by sender
      */
-    public $file_name;
+    public ?string $file_name;
 
     /**
      * @var string|null MIME type of the file as defined by sender
      */
-    public $mime_type;
+    public ?string $mime_type;
 
     /**
      * @var int|null File size
      */
-    public $file_size;
+    public ?int $file_size;
 
     /**
      * Document constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->file_id = $data['file_id'];
-        $this->thumb = isset($data['thumb']) ? new PhotoSize($data['thumb']) : null;
-        $this->file_name = $data['file_name'] ?? null;
-        $this->mime_type = $data['mime_type'] ?? null;
-        $this->file_size = $data['file_size'] ?? null;
+        $this->file_unique_id = $data['file_unique_id'];
+
+        if (isset($data['thumb'])) {
+            $this->thumb = $data['thumb'] instanceof PhotoSize
+                ? $data['thumb']
+                : new PhotoSize($data['thumb']);
+        }
+
+        if (isset($data['file_name'])) {
+            $this->file_name = $data['file_name'];
+        }
+
+        if (isset($data['mime_type'])) {
+            $this->mime_type = $data['mime_type'];
+        }
+
+        if (isset($data['file_size'])) {
+            $this->file_size = $data['file_size'];
+        }
+    }
+
+    /**
+     * @param string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time
+     * and for different bots. Can't be used to download or reuse the file.
+     * @return Document
+     */
+    public static function make(string $file_id, string $file_unique_id): self
+    {
+        return new self([
+            'file_id' => $file_id,
+            'file_unique_id' => $file_unique_id,
+        ]);
     }
 
     /**
@@ -57,21 +93,11 @@ class Document implements TypeInterface
     {
         return [
             'file_id' => $this->file_id,
+            'file_unique_id' => $this->file_unique_id,
             'thumb' => $this->thumb,
             'file_name' => $this->file_name,
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,
         ];
-    }
-
-    /**
-     * @param string $file_id
-     * @return Document
-     */
-    public static function make(string $file_id): self
-    {
-        return new self([
-            'file_id' => $file_id,
-        ]);
     }
 }

@@ -1,105 +1,166 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi\Types;
+use TelegramBotsApi\Types\InlineQueryResult;
 
 /**
- * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
- * @package TelegramBotsApi\Types\InlineQueryResult
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * Represents a link to a page containing an embedded video player or a video file. By default, this video file
+ * will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send
+ * a message with the specified content instead of the video.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Video extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InlineQueryResult::TYPE_VIDEO;
-
-    /**
-     * @var string Type of the result, must be self::TYPE
-     */
-    public $type = self::TYPE;
+    public const TYPE = InlineQueryResult::TYPE_VIDEO;
 
     /**
      * @var string Unique identifier for this result, 1-64 bytes
      */
-    public $id;
+    public string $id;
 
     /**
-     * @var string A valid URL for the audio file
+     * @var string A valid URL for the embedded video player or video file
      */
-    public $audio_url;
+    public string $video_url;
 
     /**
-     * @var string Title
+     * @var string Mime type of the content of video url, “text/html” or “video/mp4”
      */
-    public $title;
+    public string $mime_type;
 
     /**
-     * @var string|null Caption, 0-1024 characters
+     * @var string URL of the thumbnail (jpeg only) for the video
      */
-    public $caption;
+    public string $thumb_url;
+
+    /**
+     * @var string Title for the result
+     */
+    public string $title;
+
+    /**
+     * @var string|null Caption of the video to be sent, 0-1024 characters
+     */
+    public ?string $caption;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public $parse_mode;
+    public ?string $parse_mode;
 
     /**
-     * @var string|null Performer
+     * @var int|null Video width
      */
-    public $performer;
+    public ?int $video_width;
 
     /**
-     * @var int|null Audio duration in seconds
+     * @var int|null Video height
      */
-    public $audio_duration;
+    public ?int $video_height;
 
     /**
-     * @var TelegramBotsApi\Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
+     * @var int|null Video duration in seconds
      */
-    public $reply_markup;
+    public ?int $video_duration;
 
     /**
-     * @var TelegramBotsApi\Types\InputMessageContent|null Content of the message to be sent instead of the audio
+     * @var string|null Short description of the result
      */
-    public $input_message_content;
+    public ?string $description;
+
+    /**
+     * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
+     */
+    public ?Types\InlineKeyboardMarkup $reply_markup;
+
+    /**
+     * @var Types\InputMessageContent|null Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+     */
+    public ?Types\InputMessageContent $input_message_content;
 
     /**
      * Video constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        if (isset($data['type'])) {
-            if ($data['type'] !== self::TYPE) {
-                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
-            }
-            $this->type = $data['type'];
+        parent::__construct($data);
+
+        if ($data['type'] !== self::TYPE) {
+            throw new Error("Unknown type: {$data['type']} (must be self::TYPE)");
         }
 
         $this->id = $data['id'];
-        $this->audio_url = $data['audio_url'];
+        $this->video_url = $data['video_url'];
+        $this->mime_type = $data['mime_type'];
+        $this->thumb_url = $data['thumb_url'];
         $this->title = $data['title'];
-        $this->caption = $data['caption'] ?? null;
+
+        if (isset($data['caption'])) {
+            $this->caption = $data['caption'];
+        }
 
         if (isset($data['parse_mode'])) {
-            if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new Error("Unknown parse mode: {$data['parse_mode']}");
-            }
             $this->parse_mode = $data['parse_mode'];
         }
 
-        $this->performer = $data['performer'] ?? null;
-        $this->audio_duration = $data['audio_duration'] ?? null;
+        if (isset($data['video_width'])) {
+            $this->video_width = $data['video_width'];
+        }
+
+        if (isset($data['video_height'])) {
+            $this->video_height = $data['video_height'];
+        }
+
+        if (isset($data['video_duration'])) {
+            $this->video_duration = $data['video_duration'];
+        }
+
+        if (isset($data['description'])) {
+            $this->description = $data['description'];
+        }
 
         if (isset($data['reply_markup'])) {
-            $this->reply_markup = $data['reply_markup'] instanceof TelegramBotsApi\Types\InlineKeyboardMarkup ? $data['reply_markup'] : new TelegramBotsApi\Types\InlineKeyboardMarkup($data['reply_markup']);
+            $this->reply_markup = $data['reply_markup'] instanceof Types\InlineKeyboardMarkup
+                ? $data['reply_markup']
+                : new Types\InlineKeyboardMarkup($data['reply_markup']);
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof Types\InputMessageContent
+                ? $data['input_message_content']
+                : Types\InputMessageContent::constructChild($data['input_message_content']);
         }
+    }
+
+    /**
+     * @param string $type Type of the result, must be video
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $video_url A valid URL for the embedded video player or video file
+     * @param string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
+     * @param string $thumb_url URL of the thumbnail (jpeg only) for the video
+     * @param string $title Title for the result
+     * @return self
+     * @throws Error
+     */
+    public static function make(string $type, string $id, string $video_url, string $mime_type, string $thumb_url, string $title): self
+    {
+        return new self([
+            'type' => $type,
+            'id' => $id,
+            'video_url' => $video_url,
+            'mime_type' => $mime_type,
+            'thumb_url' => $thumb_url,
+            'title' => $title,
+        ]);
     }
 
     /**
@@ -108,33 +169,20 @@ class Video extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
     public function getRequestArray(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'id' => $this->id,
-            'audio_url' => $this->audio_url,
+            'video_url' => $this->video_url,
+            'mime_type' => $this->mime_type,
+            'thumb_url' => $this->thumb_url,
             'title' => $this->title,
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
-            'performer' => $this->performer,
-            'audio_duration' => $this->audio_duration,
+            'video_width' => $this->video_width,
+            'video_height' => $this->video_height,
+            'video_duration' => $this->video_duration,
+            'description' => $this->description,
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,
         ];
     }
-
-    /**
-     * @param string $id
-     * @param string $audio_url
-     * @param string $title
-     * @return Video
-     * @throws Error
-     */
-    public static function make(string $id, string $audio_url, string $title): self
-    {
-        return new self([
-            'id' => $id,
-            'audio_url' => $audio_url,
-            'title' => $title,
-        ]);
-    }
-
 }

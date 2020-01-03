@@ -1,57 +1,68 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
- * Instance of this class represents a sticker.
+ * This object represents a sticker.
  *
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Sticker implements TypeInterface
 {
     /**
-     * @var string Unique identifier for this file
+     * @var string Identifier for this file, which can be used to download or reuse the file
      */
-    public $file_id;
+    public string $file_id;
+
+    /**
+     * @var string Unique identifier for this file, which is supposed to be the same over time and for
+     * different bots. Can't be used to download or reuse the file.
+     */
+    public string $file_unique_id;
 
     /**
      * @var int Sticker width
      */
-    public $width;
+    public int $width;
 
     /**
      * @var int Sticker height
      */
-    public $height;
+    public int $height;
+
+    /**
+     * @var bool True, if the sticker is animated
+     */
+    public bool $is_animated;
 
     /**
      * @var PhotoSize|null Sticker thumbnail in the .webp or .jpg format
      */
-    public $thumb;
+    public ?PhotoSize $thumb;
 
     /**
      * @var string|null Emoji associated with the sticker
      */
-    public $emoji;
+    public ?string $emoji;
 
     /**
      * @var string|null Name of the sticker set to which the sticker belongs
      */
-    public $set_name;
+    public ?string $set_name;
 
     /**
      * @var MaskPosition|null For mask stickers, the position where the mask should be placed
      */
-    public $mask_position;
+    public ?MaskPosition $mask_position;
 
     /**
      * @var int|null File size
      */
-    public $file_size;
+    public ?int $file_size;
 
     /**
      * Sticker constructor.
@@ -62,21 +73,55 @@ class Sticker implements TypeInterface
     public function __construct(array $data)
     {
         $this->file_id = $data['file_id'];
+        $this->file_unique_id = $data['file_unique_id'];
         $this->width = $data['width'];
         $this->height = $data['height'];
+        $this->is_animated = $data['is_animated'];
 
         if (isset($data['thumb'])) {
-            $this->thumb = $data['thumb'] instanceof PhotoSize ? $data['thumb'] : new PhotoSize($data['thumb']);
+            $this->thumb = $data['thumb'] instanceof PhotoSize
+                ? $data['thumb']
+                : new PhotoSize($data['thumb']);
         }
 
-        $this->emoji = $data['emoji'] ?? null;
-        $this->set_name = $data['set_name'] ?? null;
+        if (isset($data['emoji'])) {
+            $this->emoji = $data['emoji'];
+        }
+
+        if (isset($data['set_name'])) {
+            $this->set_name = $data['set_name'];
+        }
 
         if (isset($data['mask_position'])) {
-            $this->mask_position = $data['mask_position'] instanceof MaskPosition ? $data['mask_position'] : new MaskPosition($data['mask_position']);
+            $this->mask_position = $data['mask_position'] instanceof MaskPosition
+                ? $data['mask_position']
+                : new MaskPosition($data['mask_position']);
         }
 
-        $this->file_size = $data['file_size'] ?? null;
+        if (isset($data['file_size'])) {
+            $this->file_size = $data['file_size'];
+        }
+    }
+
+    /**
+     * @param string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time
+     * and for different bots. Can't be used to download or reuse the file.
+     * @param int $width Sticker width
+     * @param int $height Sticker height
+     * @param bool $is_animated True, if the sticker is animated
+     * @return Sticker
+     * @throws Error
+     */
+    public static function make(string $file_id, string $file_unique_id, int $width, int $height, bool $is_animated): self
+    {
+        return new self([
+            'file_id' => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'width' => $width,
+            'height' => $height,
+            'is_animated' => $is_animated,
+        ]);
     }
 
     /**
@@ -86,30 +131,15 @@ class Sticker implements TypeInterface
     {
         return [
             'file_id' => $this->file_id,
+            'file_unique_id' => $this->file_unique_id,
             'width' => $this->width,
             'height' => $this->height,
+            'is_animated' => $this->is_animated,
             'thumb' => $this->thumb,
             'emoji' => $this->emoji,
             'set_name' => $this->set_name,
             'mask_position' => $this->mask_position,
             'file_size' => $this->file_size,
-
         ];
-    }
-
-    /**
-     * @param string $file_id
-     * @param int $width
-     * @param int $height
-     * @return Sticker
-     * @throws Error
-     */
-    public static function make(string $file_id, int $width, int $height): self
-    {
-        return new self([
-            'file_id' => $file_id,
-            'width' => $width,
-            'height' => $height,
-        ]);
     }
 }

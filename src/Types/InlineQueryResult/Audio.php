@@ -1,105 +1,132 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi\Types;
+use TelegramBotsApi\Types\InlineQueryResult;
 
 /**
- * Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
- * @package TelegramBotsApi\Types\InlineQueryResult
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively,
+ * you can use input_message_content to send a message with the specified content instead of the audio.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Audio extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Audio extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InlineQueryResult::TYPE_AUDIO;
-
-    /**
-     * @var string Type of the result, must be self::TYPE
-     */
-    public $type;
+    public const TYPE = InlineQueryResult::TYPE_AUDIO;
 
     /**
      * @var string Unique identifier for this result, 1-64 bytes
      */
-    public $id;
+    public string $id;
 
     /**
      * @var string A valid URL for the audio file
      */
-    public $audio_url;
+    public string $audio_url;
 
     /**
      * @var string Title
      */
-    public $title;
+    public string $title;
 
     /**
      * @var string|null Caption, 0-1024 characters
      */
-    public $caption;
+    public ?string $caption;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width
+     * text or inline URLs in the media caption.
      */
-    public $parse_mode;
+    public ?string $parse_mode;
 
     /**
      * @var string|null Performer
      */
-    public $performer;
+    public ?string $performer;
 
     /**
      * @var int|null Audio duration in seconds
      */
-    public $audio_duration;
+    public ?int $audio_duration;
 
     /**
-     * @var TelegramBotsApi\Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
+     * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup;
 
     /**
-     * @var TelegramBotsApi\Types\InputMessageContent|null Content of the message to be sent instead of the audio
+     * @var Types\InputMessageContent|null Content of the message to be sent instead of the audio
      */
-    public $input_message_content;
+    public ?Types\InputMessageContent $input_message_content;
 
     /**
      * Audio constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        if (isset($data['type'])) {
-            if ($data['type'] !== self::TYPE) {
-                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
-            }
-            $this->type = $data['type'];
+        parent::__construct($data);
+
+        if ($data['type'] !== self::TYPE) {
+            throw new Error("Unknown type: {$data['type']} (must be self::TYPE");
         }
 
         $this->id = $data['id'];
         $this->audio_url = $data['audio_url'];
         $this->title = $data['title'];
-        $this->caption = $data['caption'] ?? null;
+
+        if (isset($data['caption'])) {
+            $this->caption = $data['caption'];
+        }
 
         if (isset($data['parse_mode'])) {
-            if (!TelegramBotsApi\Bot::checkParseMode($data['parse_mode'])) {
-                throw new Error("Unknown parse mode: {$data['parse_mode']}");
-            }
             $this->parse_mode = $data['parse_mode'];
         }
 
-        $this->performer = $data['performer'] ?? null;
-        $this->audio_duration = $data['audio_duration'] ?? null;
+        if (isset($data['performer'])) {
+            $this->performer = $data['performer'];
+        }
+
+        if (isset($data['audio_duration'])) {
+            $this->audio_duration = $data['audio_duration'];
+        }
 
         if (isset($data['reply_markup'])) {
-            $this->reply_markup = $data['reply_markup'] instanceof TelegramBotsApi\Types\InlineKeyboardMarkup ? $data['reply_markup'] : new TelegramBotsApi\Types\InlineKeyboardMarkup($data['reply_markup']);
+            $this->reply_markup = $data['reply_markup'] instanceof Types\InlineKeyboardMarkup
+                ? $data['reply_markup']
+                : new Types\InlineKeyboardMarkup($data['reply_markup']);
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : new TelegramBotsApi\Types\InputMessageContent();
+            $this->input_message_content = $data['input_message_content'] instanceof Types\InputMessageContent
+                ? $data['input_message_content']
+                : Types\InputMessageContent::constructChild($data['input_message_content']);
         }
+    }
+
+    /**
+     * @param string $type Type of the result, must be audio
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $audio_url A valid URL for the audio file
+     * @param string $title Title
+     * @return self
+     * @throws Error
+     */
+    public static function make(string $type, string $id, string $audio_url, string $title): self
+    {
+        return new self([
+            'type' => $type,
+            'id' => $id,
+            'audio_url' => $audio_url,
+            'title' => $title,
+        ]);
     }
 
     /**
@@ -108,7 +135,7 @@ class Audio extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
     public function getRequestArray(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'id' => $this->id,
             'audio_url' => $this->audio_url,
             'title' => $this->title,
@@ -119,21 +146,5 @@ class Audio extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,
         ];
-    }
-
-    /**
-     * @param string $id
-     * @param string $audio_url
-     * @param string $title
-     * @return Audio
-     * @throws Error
-     */
-    public static function make(string $id, string $audio_url, string $title): self
-    {
-        return new self([
-            'id' => $id,
-            'audio_url' => $audio_url,
-            'title' => $title,
-        ]);
     }
 }

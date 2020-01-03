@@ -1,18 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
- * This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 4 types:
- *    InputTextMessageContent
- *    InputLocationMessageContent
- *    InputVenueMessageContent
- *    InputContactMessageContent
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents the content of a message to be sent as a result of an inline query.
+ * Telegram clients currently support the following 4 types
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class InputMessageContent
 {
@@ -22,11 +20,20 @@ class InputMessageContent
     public const TYPE_CONTACT = 'contact';
 
     /**
+     * InputMessageContent constructor.
+     *
      * @param array $data
-     * @return Object
-     * @throws Error
      */
-    public static function new(array $data): Object
+    protected function __construct(array $data)
+    {
+    }
+
+    /**
+     * @param array $data
+     * @return InputMessageContent
+     * @throws TelegramBotsApi\Exceptions\Error
+     */
+    public static function constructChild(array $data): InputMessageContent
     {
         switch (true) {
             case isset($data['phone_number'], $data['first_name']):

@@ -1,41 +1,64 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields are mutually exclusive.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents one button of the reply keyboard. For simple text buttons String can be used instead
+ * of this object to specify text of the button. Optional fields are mutually exclusive.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class KeyboardButton implements TypeInterface
 {
     /**
-     * @var string Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed
+     * @var string Text of the button. If none of the optional fields are used, it will be sent as a message when
+     * the button is pressed
      */
-    public $text;
+    public string $text;
 
     /**
-     * @var bool|null If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only
+     * @var bool|null If True, the user's phone number will be sent as a contact when the button is pressed.
+     * Available in private chats only
      */
-    public $request_contact;
+    public ?bool $request_contact;
 
     /**
-     * @var bool|null If True, the user's current location will be sent when the button is pressed. Available in private chats only
+     * @var bool|null If True, the user's current location will be sent when the button is pressed. Available
+     * in private chats only
      */
-    public $request_location;
+    public ?bool $request_location;
 
     /**
      * KeyboardButton constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->text = $data['text'];
-        $this->request_contact = $data['request_contact'] ?? null;
-        $this->request_location = $data['request_location'] ?? null;
+
+        if (isset($data['request_contact'])) {
+            $this->request_contact = $data['request_contact'];
+        }
+
+        if (isset($data['request_location'])) {
+            $this->request_location = $data['request_location'];
+        }
+    }
+
+    /**
+     * @param string $text Text of the button. If none of the optional fields are used, it will be sent as
+     * a message when the button is pressed
+     * @return KeyboardButton
+     */
+    public static function make(string $text): self
+    {
+        return new self([
+            'text' => $text,
+        ]);
     }
 
     /**
@@ -48,16 +71,5 @@ class KeyboardButton implements TypeInterface
             'request_contact' => $this->request_contact,
             'request_location' => $this->request_location,
         ];
-    }
-
-    /**
-     * @param string $text
-     * @return KeyboardButton
-     */
-    public static function make(string $text): self
-    {
-        return new self([
-            'text' => $text,
-        ]);
     }
 }

@@ -1,36 +1,49 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Object of this class contains information about one answer option in a poll.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object contains information about one answer option in a poll.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class PollOption implements TypeInterface
 {
     /**
      * @var string Option text, 1-100 characters
      */
-    public $text;
+    public string $text;
 
     /**
      * @var int Number of users that voted for this option
      */
-    public $voter_count;
+    public int $voter_count;
 
     /**
      * PollOption constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->text = $data['text'];
         $this->voter_count = $data['voter_count'];
+    }
+
+    /**
+     * @param string $text Option text, 1-100 characters
+     * @param int $voter_count Number of users that voted for this option
+     * @return PollOption
+     */
+    public static function make(string $text, int $voter_count): self
+    {
+        return new self([
+            'text' => $text,
+            'voter_count' => $voter_count,
+        ]);
     }
 
     /**
@@ -42,18 +55,5 @@ class PollOption implements TypeInterface
             'text' => $this->text,
             'voter_count' => $this->voter_count,
         ];
-    }
-
-    /**
-     * @param string $text
-     * @param int $voter_count
-     * @return PollOption
-     */
-    public static function make(string $text, int $voter_count): self
-    {
-        return new self([
-            'text' => $text,
-            'voter_count' => $voter_count,
-        ]);
     }
 }

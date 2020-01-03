@@ -1,61 +1,89 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InputMessageContent;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Types;
 
 /**
  * Represents the content of a venue message to be sent as the result of an inline query.
- * @package TelegramBotsApi\Types\InputMessageContent
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Venue extends Types\InputMessageContent implements Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InputMessageContent::TYPE_VENUE;
+    public const TYPE = Types\InputMessageContent::TYPE_VENUE;
 
     /**
      * @var float Latitude of the venue in degrees
      */
-    public $latitude;
+    public float $latitude;
 
     /**
      * @var float Longitude of the venue in degrees
      */
-    public $longitude;
+    public float $longitude;
 
     /**
      * @var string Name of the venue
      */
-    public $title;
+    public string $title;
 
     /**
      * @var string Address of the venue
      */
-    public $address;
+    public string $address;
 
     /**
      * @var string|null Foursquare identifier of the venue, if known
      */
-    public $foursquare_id;
+    public ?string $foursquare_id;
 
     /**
-     * @var string|null Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+     * @var string|null Foursquare type of the venue, if known. (For example, “arts_entertainment/default”,
+     * “arts_entertainment/aquarium” or “food/icecream”.)
      */
-    public $foursquare_type;
+    public ?string $foursquare_type;
 
     /**
      * Venue constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
+        parent::__construct($data);
+
         $this->latitude = $data['latitude'];
         $this->longitude = $data['longitude'];
         $this->title = $data['title'];
         $this->address = $data['address'];
-        $this->foursquare_id = $data['foursquare_id'] ?? null;
-        $this->foursquare_type = $data['foursquare_type'] ?? null;
+
+        if (isset($data['foursquare_id'])) {
+            $this->foursquare_id = $data['foursquare_id'];
+        }
+
+        if (isset($data['foursquare_type'])) {
+            $this->foursquare_type = $data['foursquare_type'];
+        }
+    }
+
+    /**
+     * @param float $latitude Latitude of the venue in degrees
+     * @param float $longitude Longitude of the venue in degrees
+     * @param string $title Name of the venue
+     * @param string $address Address of the venue
+     * @return Venue
+     */
+    public static function make(float $latitude, float $longitude, string $title, string $address): self
+    {
+        return new self([
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'title' => $title,
+            'address' => $address,
+        ]);
     }
 
     /**
@@ -71,22 +99,5 @@ class Venue extends TelegramBotsApi\Types\InlineQueryResult implements TelegramB
             'foursquare_id' => $this->foursquare_id,
             'foursquare_type' => $this->foursquare_type,
         ];
-    }
-
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     * @param string $title
-     * @param string $address
-     * @return Venue
-     */
-    public static function make(float $latitude, float $longitude, string $title, string $address): self
-    {
-        return new self([
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'title' => $title,
-            'address' => $address,
-        ]);
     }
 }

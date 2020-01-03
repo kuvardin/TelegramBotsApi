@@ -1,44 +1,60 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this class represents one shipping option.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents one shipping option.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ShippingOption implements TypeInterface
 {
     /**
      * @var string Shipping option identifier
      */
-    public $id;
+    public string $id;
 
     /**
      * @var string Option title
      */
-    public $title;
+    public string $title;
 
     /**
      * @var LabeledPrice[] List of price portions
      */
-    public $prices;
+    public array $prices = [];
 
     /**
      * ShippingOption constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->id = $data['id'];
         $this->title = $data['title'];
-        $this->prices = [];
-        foreach ($data['prices'] as $price) {
-            $this->prices[] = $price instanceof LabeledPrice ? $price : new LabeledPrice($price);
+
+        foreach ($data['prices'] as $item) {
+            $this->prices[] = $item instanceof LabeledPrice ? $item : new LabeledPrice($item);
         }
+    }
+
+    /**
+     * @param string $id Shipping option identifier
+     * @param string $title Option title
+     * @param LabeledPrice[] $prices List of price portions
+     * @return ShippingOption
+     */
+    public static function make(string $id, string $title, array $prices): self
+    {
+        return new self([
+            'id' => $id,
+            'title' => $title,
+            'prices' => $prices,
+        ]);
     }
 
     /**
@@ -52,20 +68,4 @@ class ShippingOption implements TypeInterface
             'prices' => $this->prices,
         ];
     }
-
-    /**
-     * @param string $id
-     * @param string $title
-     * @param array $prices
-     * @return ShippingOption
-     */
-    public static function make(string $id, string $title, array $prices): self
-    {
-        return new self([
-            'id' => $id,
-            'title' => $title,
-            'prices' => $prices,
-        ]);
-    }
-
 }

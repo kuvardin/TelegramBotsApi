@@ -1,34 +1,49 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
 use TelegramBotsApi;
 
 /**
- * Instance of this object represents a point on the map
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a point on the map.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Location implements TypeInterface
 {
     /**
      * @var float Longitude as defined by sender
      */
-    public $longitude;
+    public float $longitude;
 
     /**
      * @var float Latitude as defined by sender
      */
-    public $latitude;
+    public float $latitude;
 
     /**
      * Location constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->longitude = $data['longitude'];
         $this->latitude = $data['latitude'];
+    }
+
+    /**
+     * @param float $longitude Longitude as defined by sender
+     * @param float $latitude Latitude as defined by sender
+     * @return Location
+     */
+    public static function make(float $longitude, float $latitude): self
+    {
+        return new self([
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+        ]);
     }
 
     /**
@@ -40,18 +55,5 @@ class Location implements TypeInterface
             'longitude' => $this->longitude,
             'latitude' => $this->latitude,
         ];
-    }
-
-    /**
-     * @param float $longitude
-     * @param float $latitude
-     * @return Location
-     */
-    public static function make(float $longitude, float $latitude): self
-    {
-        return new self([
-            'longitude' => $longitude,
-            'latitude' => $latitude,
-        ]);
     }
 }

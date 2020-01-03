@@ -1,50 +1,50 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this class represents a shipping address.
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a shipping address.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ShippingAddress implements TypeInterface
 {
-
     /**
      * @var string ISO 3166-1 alpha-2 country code
      */
-    public $country_code;
+    public string $country_code;
 
     /**
      * @var string State, if applicable
      */
-    public $state;
+    public string $state;
 
     /**
      * @var string City
      */
-    public $city;
+    public string $city;
 
     /**
      * @var string First line for the address
      */
-    public $street_line1;
+    public string $street_line1;
 
     /**
      * @var string Second line for the address
      */
-    public $street_line2;
+    public string $street_line2;
 
     /**
      * @var string Address post code
      */
-    public $post_code;
+    public string $post_code;
 
     /**
      * ShippingAddress constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
@@ -55,6 +55,27 @@ class ShippingAddress implements TypeInterface
         $this->street_line1 = $data['street_line1'];
         $this->street_line2 = $data['street_line2'];
         $this->post_code = $data['post_code'];
+    }
+
+    /**
+     * @param string $country_code ISO 3166-1 alpha-2 country code
+     * @param string $state State, if applicable
+     * @param string $city City
+     * @param string $street_line1 First line for the address
+     * @param string $street_line2 Second line for the address
+     * @param string $post_code Address post code
+     * @return ShippingAddress
+     */
+    public static function make(string $country_code, string $state, string $city, string $street_line1, string $street_line2, string $post_code): self
+    {
+        return new self([
+            'country_code' => $country_code,
+            'state' => $state,
+            'city' => $city,
+            'street_line1' => $street_line1,
+            'street_line2' => $street_line2,
+            'post_code' => $post_code,
+        ]);
     }
 
     /**
@@ -70,26 +91,5 @@ class ShippingAddress implements TypeInterface
             'street_line2' => $this->street_line2,
             'post_code' => $this->post_code,
         ];
-    }
-
-    /**
-     * @param string $country_code
-     * @param string $state
-     * @param string $city
-     * @param string $street_line1
-     * @param string $street_line2
-     * @param string $post_code
-     * @return ShippingAddress
-     */
-    public static function make(string $country_code, string $state, string $city, string $street_line1, string $street_line2, string $post_code): self
-    {
-        return new self([
-            'country_code' => $country_code,
-            'state' => $state,
-            'city' => $city,
-            'street_line1' => $street_line1,
-            'street_line2' => $street_line2,
-            'post_code' => $post_code,
-        ]);
     }
 }

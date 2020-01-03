@@ -1,43 +1,56 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represent a user's profile pictures
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represent a user's profile pictures.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class UserProfilePhotos implements TypeInterface
 {
     /**
      * @var int Total number of profile pictures the target user has
      */
-    public $total_count;
+    public int $total_count;
 
     /**
      * @var PhotoSize[][] Requested profile pictures (in up to 4 sizes each)
      */
-    public $photos;
+    public array $photos = [];
 
     /**
      * UserProfilePhotos constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->total_count = $data['total_count'];
-        $this->photos = [];
 
-        foreach ($data['photos'] as $photos) {
-            $photos_items = [];
-            foreach ($photos as $photo_size) {
-                $photos_items[] = $photo_size instanceof PhotoSize ? $photo_size : new PhotoSize($photo_size);
+        foreach ($data['photos'] as $photo_sizes) {
+            $photos = [];
+            foreach ($photo_sizes as $photo_size) {
+                $photos[] = $photo_size instanceof PhotoSize ? $photo_size : new PhotoSize($photo_size);
             }
-            $this->photos[] = $photos_items;
+            $this->photos[] = $photos;
         }
+    }
+
+    /**
+     * @param int $total_count Total number of profile pictures the target user has
+     * @param PhotoSize[][] $photos Requested profile pictures (in up to 4 sizes each)
+     * @return UserProfilePhotos
+     */
+    public static function make(int $total_count, array $photos): self
+    {
+        return new self([
+            'total_count' => $total_count,
+            'photos' => $photos,
+        ]);
     }
 
     /**
@@ -49,18 +62,5 @@ class UserProfilePhotos implements TypeInterface
             'total_count' => $this->total_count,
             'photos' => $this->photos,
         ];
-    }
-
-    /**
-     * @param int $total_count
-     * @param array $photos
-     * @return UserProfilePhotos
-     */
-    public static function make(int $total_count, array $photos): self
-    {
-        return new self([
-            'total_count' => $total_count,
-            'photos' => $photos,
-        ]);
     }
 }

@@ -1,65 +1,105 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
 
 /**
- * Instance of this object represents a video file
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * This object represents a video file.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Video implements TypeInterface
 {
     /**
-     * @var string Unique identifier for this file
+     * @var string Identifier for this file, which can be used to download or reuse the file
      */
-    public $file_id;
+    public string $file_id;
+
+    /**
+     * @var string Unique identifier for this file, which is supposed to be the same over time and for different
+     * bots. Can't be used to download or reuse the file.
+     */
+    public string $file_unique_id;
 
     /**
      * @var int Video width as defined by sender
      */
-    public $width;
+    public int $width;
 
     /**
      * @var int Video height as defined by sender
      */
-    public $height;
+    public int $height;
 
     /**
      * @var int Duration of the video in seconds as defined by sender
      */
-    public $duration;
+    public int $duration;
 
     /**
      * @var PhotoSize|null Video thumbnail
      */
-    public $thumb;
+    public ?PhotoSize $thumb;
 
     /**
      * @var string|null Mime type of a file as defined by sender
      */
-    public $mime_type;
+    public ?string $mime_type;
 
     /**
      * @var int|null File size
      */
-    public $file_size;
+    public ?int $file_size;
 
     /**
      * Video constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data)
     {
         $this->file_id = $data['file_id'];
+        $this->file_unique_id = $data['file_unique_id'];
         $this->width = $data['width'];
         $this->height = $data['height'];
         $this->duration = $data['duration'];
-        $this->thumb = isset($data['thumb']) ? new PhotoSize($data['thumb']) : null;
-        $this->mime_type = $data['mime_type'] ?? null;
-        $this->file_size = $data['file_size'] ?? null;
+
+        if (isset($data['thumb'])) {
+            $this->thumb = $data['thumb'] instanceof PhotoSize
+                ? $data['thumb']
+                : new PhotoSize($data['thumb']);
+        }
+
+        if (isset($data['mime_type'])) {
+            $this->mime_type = $data['mime_type'];
+        }
+
+        if (isset($data['file_size'])) {
+            $this->file_size = $data['file_size'];
+        }
+    }
+
+    /**
+     * @param string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time
+     * and for different bots. Can't be used to download or reuse the file.
+     * @param int $width Video width as defined by sender
+     * @param int $height Video height as defined by sender
+     * @param int $duration Duration of the video in seconds as defined by sender
+     * @return Video
+     */
+    public static function make(string $file_id, string $file_unique_id, int $width, int $height,
+        int $duration): self
+    {
+        return new self([
+            'file_id' => $file_id,
+            'file_unique_id' => $file_unique_id,
+            'width' => $width,
+            'height' => $height,
+            'duration' => $duration,
+        ]);
     }
 
     /**
@@ -69,6 +109,7 @@ class Video implements TypeInterface
     {
         return [
             'file_id' => $this->file_id,
+            'file_unique_id' => $this->file_unique_id,
             'width' => $this->width,
             'height' => $this->height,
             'duration' => $this->duration,
@@ -76,22 +117,5 @@ class Video implements TypeInterface
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,
         ];
-    }
-
-    /**
-     * @param string $file_id
-     * @param int $width
-     * @param int $height
-     * @param int $duration
-     * @return Video
-     */
-    public static function make(string $file_id, int $width, int $height, int $duration): self
-    {
-        return new self([
-            'file_id' => $file_id,
-            'width' => $width,
-            'height' => $height,
-            'duration' => $duration,
-        ]);
     }
 }

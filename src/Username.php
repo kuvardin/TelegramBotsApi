@@ -2,10 +2,13 @@
 
 namespace TelegramBotsApi;
 
+use TelegramBotsApi\Exceptions\Error;
+
 /**
  * Class Username
+ *
  * @package TelegramBotsApi
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Username
 {
@@ -19,15 +22,32 @@ class Username
     /**
      * @var string
      */
-    private $username;
+    protected string $username;
 
     /**
      * Username constructor.
-     * @param $username
+     *
+     * @param string $username
+     * @throws Error
      */
-    public function __construct($username)
+    public function __construct(string $username)
     {
-        $this->username = ltrim($username, '@');
+        $username = ltrim($username, '@');
+        if (!self::checkUsername($username)) {
+            throw new Error("Incorrect username: $username");
+        }
+        $this->username = $username;
+    }
+
+    /**
+     * @param string $username
+     * @return bool
+     */
+    public static function checkUsername(string $username): bool
+    {
+        return strpos($username, '__') === false &&
+            preg_match('/^([a-zA-Z])(\w{4,31})$/', $username) &&
+            preg_match('/_$/', $username) === false;
     }
 
     /**

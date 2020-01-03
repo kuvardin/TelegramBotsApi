@@ -1,14 +1,14 @@
 # TelegramBots
 
-Simply PHP classes for make Telegram-bots.
+PHP library for make Telegram-bots.
 
 ## Using Examples
 ### Init bot
 ```
 <?php
-$bot_token = '123456:AAAAAAAAAAAAAAA';
-$bot_username = 'ExampleBot';
-$bot = new TelegramBotsApi\Bot($bot_token, $bot_username);
+$token = '123456:AAAAAAAAAAAAAAA';
+$username = 'ExampleBot';
+$bot = new TelegramBotsApi\Bot($token, $username);
 ```
 
 ### Sending message
@@ -20,9 +20,9 @@ $request = $bot->sendMessage($chat_id, $message_text);
 try {
     $response = $request->sendRequest();
     echo 'Successful sended';
-} catch (TelegramBotsApi\Exceptions\ApiException $e) {
+} catch (TelegramBotsApi\Exceptions\ApiError $e) {
     echo "Telegram API returns error: $e";
-} catch (TelegramBotsApi\Exceptions\CurlException $e) {
+} catch (TelegramBotsApi\Exceptions\CurlError $e) {
     echo "Request sending error: $e";
 }
 ```

@@ -1,105 +1,139 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types\InlineQueryResult;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi\Types;
+use TelegramBotsApi\Types\InlineQueryResult;
 
 /**
- * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
- * @package TelegramBotsApi\Types\InlineQueryResult
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use
+ * input_message_content to send a message with the specified content instead of the location.
+ *
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Location extends TelegramBotsApi\Types\InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
+class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
 {
-    public const TYPE = TelegramBotsApi\Types\InlineQueryResult::TYPE_LOCATION;
-
-    /**
-     * @var string Type of the result, must be self::TYPE
-     */
-    public $type = self::TYPE;
+    public const TYPE = InlineQueryResult::TYPE_LOCATION;
 
     /**
      * @var string Unique identifier for this result, 1-64 Bytes
      */
-    public $id;
+    public string $id;
 
     /**
      * @var float Location latitude in degrees
      */
-    public $latitude;
+    public float $latitude;
 
     /**
      * @var float Location longitude in degrees
      */
-    public $longitude;
+    public float $longitude;
 
     /**
      * @var string Location title
      */
-    public $title;
+    public string $title;
 
     /**
      * @var int|null Period in seconds for which the location can be updated, should be between 60 and 86400.
      */
-    public $live_period;
+    public ?int $live_period;
 
     /**
-     * @var TelegramBotsApi\Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
+     * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup;
 
     /**
-     * @var TelegramBotsApi\Types\InputMessageContent|null Content of the message to be sent instead of the location
+     * @var Types\InputMessageContent|null Content of the message to be sent instead of the location
      */
-    public $input_message_content;
+    public ?Types\InputMessageContent $input_message_content;
 
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public $thumb_url;
+    public ?string $thumb_url;
 
     /**
      * @var int|null Thumbnail width
      */
-    public $thumb_width;
+    public ?int $thumb_width;
 
     /**
      * @var int|null Thumbnail height
      */
-    public $thumb_height;
+    public ?int $thumb_height;
 
     /**
      * Location constructor.
+     *
      * @param array $data
      * @throws Error
      */
     public function __construct(array $data)
     {
-        if (isset($data['type'])) {
-            if ($data['type'] !== self::TYPE) {
-                throw new Error("Unknown type: {$data['type']}. Type must be self::TYPE.");
-            }
-            $this->type = $data['type'];
+        parent::__construct($data);
+
+        if ($data['type'] !== self::TYPE) {
+            throw new Error("Unknown type: {$data['type']} (must be self::TYPE)");
         }
 
         $this->id = $data['id'];
         $this->latitude = $data['latitude'];
         $this->longitude = $data['longitude'];
         $this->title = $data['title'];
-        $this->live_period = $data['live_period'] ?? null;
+
+        if (isset($data['live_period'])) {
+            $this->live_period = $data['live_period'];
+        }
 
         if (isset($data['reply_markup'])) {
-            $this->reply_markup = $data['reply_markup'] instanceof TelegramBotsApi\Types\InlineKeyboardMarkup ? $data['reply_markup'] : new TelegramBotsApi\Types\InlineKeyboardMarkup($data['reply_markup']);
+            $this->reply_markup = $data['reply_markup'] instanceof Types\InlineKeyboardMarkup
+                ? $data['reply_markup']
+                : new Types\InlineKeyboardMarkup($data['reply_markup']);
         }
 
         if (isset($data['input_message_content'])) {
-            $this->input_message_content = $data['input_message_content'] instanceof TelegramBotsApi\Types\InputMessageContent ? $data['input_message_content'] : TelegramBotsApi\Types\InputMessageContent::new($data['input_message_content']);
+            $this->input_message_content = $data['input_message_content'] instanceof Types\InputMessageContent
+                ? $data['input_message_content']
+                : Types\InputMessageContent::constructChild($data['input_message_content']);
         }
 
-        $this->thumb_url = $data['thumb_url'] ?? null;
-        $this->thumb_width = $data['thumb_width'] ?? null;
-        $this->thumb_height = $data['thumb_height'] ?? null;
+        if (isset($data['thumb_url'])) {
+            $this->thumb_url = $data['thumb_url'];
+        }
+
+        if (isset($data['thumb_width'])) {
+            $this->thumb_width = $data['thumb_width'];
+        }
+
+        if (isset($data['thumb_height'])) {
+            $this->thumb_height = $data['thumb_height'];
+        }
+    }
+
+    /**
+     * @param string $type Type of the result, must be location
+     * @param string $id Unique identifier for this result, 1-64 Bytes
+     * @param float $latitude Location latitude in degrees
+     * @param float $longitude Location longitude in degrees
+     * @param string $title Location title
+     * @return self
+     * @throws Error
+     */
+    public static function make(string $type, string $id, float $latitude, float $longitude, string $title): self
+    {
+        return new self([
+            'type' => $type,
+            'id' => $id,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'title' => $title,
+        ]);
     }
 
     /**
@@ -108,7 +142,7 @@ class Location extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
     public function getRequestArray(): array
     {
         return [
-            'type' => $this->type,
+            'type' => self::TYPE,
             'id' => $this->id,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
@@ -120,23 +154,5 @@ class Location extends TelegramBotsApi\Types\InlineQueryResult implements Telegr
             'thumb_width' => $this->thumb_width,
             'thumb_height' => $this->thumb_height,
         ];
-    }
-
-    /**
-     * @param string $id
-     * @param float $latitude
-     * @param float $longitude
-     * @param string $title
-     * @return Location
-     * @throws Error
-     */
-    public static function make(string $id, float $latitude, float $longitude, string $title): self
-    {
-        return new self([
-            'id' => $id,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'title' => $title,
-        ]);
     }
 }

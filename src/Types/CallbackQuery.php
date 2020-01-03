@@ -1,58 +1,58 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi\Types;
 
-use \TelegramBotsApi;
-use \TelegramBotsApi\Exceptions\Error;
+use TelegramBotsApi;
+use TelegramBotsApi\Exceptions\Error;
 
 /**
- * Instance of this object represents an incoming callback query from a callback button in an inline keyboard. If the
- * button that originated the query was attached to a message sent by the bot, the field message will be present. If
- * the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present.
- * Exactly one of the fields data or game_short_name will be present.
+ * This object represents an incoming callback query from a callback button in an inline keyboard.
+ * If the button that originated the query was attached to a message sent by the bot, the field message
+ * will be present. If the button was attached to a message sent via the bot (in inline mode), the field
+ * inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
  *
- * @package TelegramBotsApi\Types
- * @author Maxim Kuvardin <kuvard.in@mail.ru>
+ * @package TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class CallbackQuery implements TypeInterface
 {
     /**
-     * @var int Unique identifier for this query
+     * @var string Unique identifier for this query
      */
-    public $id;
+    public string $id;
 
     /**
      * @var User Sender
      */
-    public $from;
+    public User $from;
 
     /**
-     * @var Message|null Message with the callback button that originated the query. Note that message content and
-     *     message date will not be available if the message is too old
+     * @var Message|null Message with the callback button that originated the query. Note that message
+     * content and message date will not be available if the message is too old
      */
-    public $message;
+    public ?Message $message;
 
     /**
      * @var string|null Identifier of the message sent via the bot in inline mode, that originated the query.
      */
-    public $inline_message_id;
+    public ?string $inline_message_id;
 
     /**
-     * @var string Global identifier, uniquely corresponding to the chat to which the message with the callback button
-     *     was sent. Useful for high scores in games.
+     * @var string Global identifier, uniquely corresponding to the chat to which the message with
+     * the callback button was sent. Useful for high scores in games.
      */
-    public $chat_instance;
+    public string $chat_instance;
 
     /**
-     * @var string|null Data associated with the callback button. Be aware that a bad client can send arbitrary data in
-     *     this field.
+     * @var string|null Data associated with the callback button. Be aware that a bad client can send
+     * arbitrary data in this field.
      */
-    public $data;
+    public ?string $data;
 
     /**
      * @var string|null Short name of a Game to be returned, serves as the unique identifier for the game
      */
-    public $game_short_name;
+    public ?string $game_short_name;
 
     /**
      * CallbackQuery constructor.
@@ -63,16 +63,45 @@ class CallbackQuery implements TypeInterface
     public function __construct(array $data)
     {
         $this->id = $data['id'];
-        $this->from = $data['from'] instanceof User ? $data['from'] : new User($data['from']);
-
+        $this->from = $data['from'] instanceof User
+            ? $data['from']
+            : new User($data['from']);
         if (isset($data['message'])) {
-            $this->message = $data['message'] instanceof Message ? $data['message'] : new Message($data['message']);
+            $this->message = $data['message'] instanceof Message
+                ? $data['message']
+                : new Message($data['message']);
         }
 
-        $this->inline_message_id = $data['inline_message_id'] ?? null;
-        $this->chat_instance = $data['chat_instance'] ?? null;
-        $this->data = $data['data'] ?? null;
-        $this->game_short_name = $data['game_short_name'] ?? null;
+        if (isset($data['inline_message_id'])) {
+            $this->inline_message_id = $data['inline_message_id'];
+        }
+
+        $this->chat_instance = $data['chat_instance'];
+        if (isset($data['data'])) {
+            $this->data = $data['data'];
+        }
+
+        if (isset($data['game_short_name'])) {
+            $this->game_short_name = $data['game_short_name'];
+        }
+
+    }
+
+    /**
+     * @param string $id Unique identifier for this query
+     * @param User $from Sender
+     * @param string $chat_instance Global identifier, uniquely corresponding to the chat to which
+     * the message with the callback button was sent. Useful for high scores in games.
+     * @return CallbackQuery
+     * @throws Error
+     */
+    public static function make(string $id, User $from, string $chat_instance): self
+    {
+        return new self([
+            'id' => $id,
+            'from' => $from,
+            'chat_instance' => $chat_instance,
+        ]);
     }
 
     /**
@@ -90,21 +119,4 @@ class CallbackQuery implements TypeInterface
             'game_short_name' => $this->game_short_name,
         ];
     }
-
-    /**
-     * @param int $id
-     * @param User $from
-     * @param string $chat_instance
-     * @return CallbackQuery
-     * @throws Error
-     */
-    public static function make(int $id, User $from, string $chat_instance): self
-    {
-        return new self([
-            'id' => $id,
-            'from' => $from,
-            'chat_instance' => $chat_instance,
-        ]);
-    }
-
 }
