@@ -22,8 +22,8 @@ try {
     $response = $request->sendRequest();
     echo 'Successful sended';
 } catch (TelegramBotsApi\Exceptions\ApiError $e) {
-    echo "Telegram API returns error: $e";
+    echo "API error #{$e->getCode()}: {$e->getMessage()}";
 } catch (TelegramBotsApi\Exceptions\CurlError $e) {
-    echo "Request sending error: $e";
+    echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
 }
 ```
