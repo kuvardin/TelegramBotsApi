@@ -130,17 +130,16 @@ class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     }
 
     /**
-     * @param string $type Type of the result, must be photo
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $photo_url A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
      * @param string $thumb_url URL of the thumbnail for the photo
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $photo_url, string $thumb_url): self
+    public static function make(string $id, string $photo_url, string $thumb_url): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'photo_url' => $photo_url,
             'thumb_url' => $thumb_url,

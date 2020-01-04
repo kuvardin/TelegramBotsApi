@@ -97,16 +97,15 @@ class CachedMpeg4Gif extends InlineQueryResult implements TelegramBotsApi\Types\
     }
 
     /**
-     * @param string $type Type of the result, must be mpeg4_gif
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $mpeg4_file_id A valid file identifier for the MP4 file
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $mpeg4_file_id): self
+    public static function make(string $id, string $mpeg4_file_id): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'mpeg4_file_id' => $mpeg4_file_id,
         ]);

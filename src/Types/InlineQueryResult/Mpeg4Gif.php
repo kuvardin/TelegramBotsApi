@@ -131,17 +131,16 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
     }
 
     /**
-     * @param string $type Type of the result, must be mpeg4_gif
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $mpeg4_url A valid URL for the MP4 file. File size must not exceed 1MB
      * @param string $thumb_url URL of the static thumbnail (jpeg or gif) for the result
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $mpeg4_url, string $thumb_url): self
+    public static function make(string $id, string $mpeg4_url, string $thumb_url): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'mpeg4_url' => $mpeg4_url,
             'thumb_url' => $thumb_url,

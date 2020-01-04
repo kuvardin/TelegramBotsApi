@@ -95,17 +95,16 @@ class CachedVoice extends InlineQueryResult implements TelegramBotsApi\Types\Typ
     }
 
     /**
-     * @param string $type Type of the result, must be voice
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $voice_file_id A valid file identifier for the voice message
      * @param string $title Voice message title
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $voice_file_id, string $title): self
+    public static function make(string $id, string $voice_file_id, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'voice_file_id' => $voice_file_id,
             'title' => $title,

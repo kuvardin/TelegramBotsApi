@@ -67,7 +67,6 @@ class TranslationFiles extends Types\PassportElementError implements Types\TypeI
     }
 
     /**
-     * @param string $source Error source, must be translation_files
      * @param string $type Type of element of the user's Telegram Passport which has the issue,
      * one of self::TYPE_*
      * @param string[] $file_hashes List of base64-encoded file hashes
@@ -75,10 +74,9 @@ class TranslationFiles extends Types\PassportElementError implements Types\TypeI
      * @return TranslationFiles
      * @throws Error
      */
-    public static function make(string $source, string $type, array $file_hashes, string $message): self
+    public static function make(string $type, array $file_hashes, string $message): self
     {
         return new self([
-            'source' => $source,
             'type' => $type,
             'file_hashes' => $file_hashes,
             'message' => $message,

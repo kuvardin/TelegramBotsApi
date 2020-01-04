@@ -67,7 +67,6 @@ class TranslationFile extends Types\PassportElementError implements Types\TypeIn
     }
 
     /**
-     * @param string $source Error source, must be translation_file
      * @param string $type Type of element of the user's Telegram Passport which has the issue,
      * one of self::TYPE_*
      * @param string $file_hash Base64-encoded file hash
@@ -75,10 +74,9 @@ class TranslationFile extends Types\PassportElementError implements Types\TypeIn
      * @return TranslationFile
      * @throws Error
      */
-    public static function make(string $source, string $type, string $file_hash, string $message): self
+    public static function make(string $type, string $file_hash, string $message): self
     {
         return new self([
-            'source' => $source,
             'type' => $type,
             'file_hash' => $file_hash,
             'message' => $message,

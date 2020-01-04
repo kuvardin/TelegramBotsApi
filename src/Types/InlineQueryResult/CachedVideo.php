@@ -103,17 +103,16 @@ class CachedVideo extends InlineQueryResult implements TelegramBotsApi\Types\Typ
     }
 
     /**
-     * @param string $type Type of the result, must be video
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $video_file_id A valid file identifier for the video file
      * @param string $title Title for the result
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $video_file_id, string $title): self
+    public static function make(string $id, string $video_file_id, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'video_file_id' => $video_file_id,
             'title' => $title,

@@ -112,17 +112,16 @@ class Audio extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     }
 
     /**
-     * @param string $type Type of the result, must be audio
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $audio_url A valid URL for the audio file
      * @param string $title Title
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $audio_url, string $title): self
+    public static function make(string $id, string $audio_url, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'audio_url' => $audio_url,
             'title' => $title,

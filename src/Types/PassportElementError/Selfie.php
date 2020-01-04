@@ -62,17 +62,15 @@ class Selfie extends Types\PassportElementError implements Types\TypeInterface
     }
 
     /**
-     * @param string $source Error source, must be selfie
      * @param string $type The section of the user's Telegram Passport which has the issue, one of self::TYPE_*
      * @param string $file_hash Base64-encoded hash of the file with the selfie
      * @param string $message Error message
      * @return Selfie
      * @throws Error
      */
-    public static function make(string $source, string $type, string $file_hash, string $message): self
+    public static function make(string $type, string $file_hash, string $message): self
     {
         return new self([
-            'source' => $source,
             'type' => $type,
             'file_hash' => $file_hash,
             'message' => $message,

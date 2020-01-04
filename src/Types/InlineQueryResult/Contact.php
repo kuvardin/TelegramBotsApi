@@ -120,17 +120,16 @@ class Contact extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     }
 
     /**
-     * @param string $type Type of the result, must be contact
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param string $phone_number Contact's phone number
      * @param string $first_name Contact's first name
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $phone_number, string $first_name): self
+    public static function make(string $id, string $phone_number, string $first_name): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'phone_number' => $phone_number,
             'first_name' => $first_name,

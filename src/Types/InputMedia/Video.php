@@ -110,7 +110,6 @@ class Video extends Types\InputMedia implements Types\TypeInterface
     }
 
     /**
-     * @param string $type Type of the result, must be video
      * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      * (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      * “attach://<file_attach_name>” to upload a new one using multipart/form-data
@@ -118,10 +117,10 @@ class Video extends Types\InputMedia implements Types\TypeInterface
      * @return Video
      * @throws Error
      */
-    public static function make(string $type, string $media): self
+    public static function make(string $media): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'media' => $media,
         ]);
     }

@@ -65,7 +65,6 @@ class DataField extends Types\PassportElementError implements Types\TypeInterfac
     }
 
     /**
-     * @param string $source Error source, must be data
      * @param string $type The section of the user's Telegram Passport which has the error, one of self::TYPE_*
      * @param string $field_name Name of the data field which has the error
      * @param string $data_hash Base64-encoded data hash
@@ -73,10 +72,9 @@ class DataField extends Types\PassportElementError implements Types\TypeInterfac
      * @return DataField
      * @throws Error
      */
-    public static function make(string $source, string $type, string $field_name, string $data_hash, string $message): self
+    public static function make(string $type, string $field_name, string $data_hash, string $message): self
     {
         return new self([
-            'source' => $source,
             'type' => $type,
             'field_name' => $field_name,
             'data_hash' => $data_hash,

@@ -119,18 +119,17 @@ class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     }
 
     /**
-     * @param string $type Type of the result, must be article
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param string $title Title of the result
      * @param Types\InputMessageContent $input_message_content Content of the message to be sent
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $title,
+    public static function make(string $id, string $title,
         Types\InputMessageContent $input_message_content): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'title' => $title,
             'input_message_content' => $input_message_content,

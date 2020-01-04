@@ -57,16 +57,15 @@ class Game extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterf
     }
 
     /**
-     * @param string $type Type of the result, must be game
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $game_short_name Short name of the game
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $game_short_name): self
+    public static function make(string $id, string $game_short_name): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'game_short_name' => $game_short_name,
         ]);

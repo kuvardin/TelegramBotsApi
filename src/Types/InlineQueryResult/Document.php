@@ -134,7 +134,6 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     }
 
     /**
-     * @param string $type Type of the result, must be document
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $title Title for the result
      * @param string $document_url A valid URL for the file
@@ -142,10 +141,10 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $title, string $document_url, string $mime_type): self
+    public static function make(string $id, string $title, string $document_url, string $mime_type): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'title' => $title,
             'document_url' => $document_url,

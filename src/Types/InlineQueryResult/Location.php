@@ -117,7 +117,6 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     }
 
     /**
-     * @param string $type Type of the result, must be location
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param float $latitude Location latitude in degrees
      * @param float $longitude Location longitude in degrees
@@ -125,10 +124,10 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, float $latitude, float $longitude, string $title): self
+    public static function make(string $id, float $latitude, float $longitude, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'latitude' => $latitude,
             'longitude' => $longitude,

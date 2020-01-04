@@ -130,17 +130,16 @@ class Gif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterfa
     }
 
     /**
-     * @param string $type Type of the result, must be gif
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $gif_url A valid URL for the GIF file. File size must not exceed 1MB
      * @param string $thumb_url URL of the static thumbnail for the result (jpeg or gif)
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $gif_url, string $thumb_url): self
+    public static function make(string $id, string $gif_url, string $thumb_url): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'gif_url' => $gif_url,
             'thumb_url' => $thumb_url,

@@ -56,17 +56,15 @@ class Unspecified extends Types\PassportElementError implements Types\TypeInterf
     }
 
     /**
-     * @param string $source Error source, must be unspecified
      * @param string $type Type of element of the user's Telegram Passport which has the issue
      * @param string $element_hash Base64-encoded element hash
      * @param string $message Error message
      * @return Unspecified
      * @throws Error
      */
-    public static function make(string $source, string $type, string $element_hash, string $message): self
+    public static function make(string $type, string $element_hash, string $message): self
     {
         return new self([
-            'source' => $source,
             'type' => $type,
             'element_hash' => $element_hash,
             'message' => $message,

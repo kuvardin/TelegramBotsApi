@@ -142,7 +142,6 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     }
 
     /**
-     * @param string $type Type of the result, must be video
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $video_url A valid URL for the embedded video player or video file
      * @param string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
@@ -151,10 +150,10 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $video_url, string $mime_type, string $thumb_url, string $title): self
+    public static function make(string $id, string $video_url, string $mime_type, string $thumb_url, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'video_url' => $video_url,
             'mime_type' => $mime_type,

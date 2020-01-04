@@ -86,16 +86,15 @@ class CachedAudio extends InlineQueryResult implements TelegramBotsApi\Types\Typ
     }
 
     /**
-     * @param string $type Type of the result, must be audio
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $audio_file_id A valid file identifier for the audio file
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $audio_file_id): self
+    public static function make(string $id, string $audio_file_id): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'audio_file_id' => $audio_file_id,
         ]);

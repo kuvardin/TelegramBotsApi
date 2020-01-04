@@ -70,16 +70,15 @@ class CachedSticker extends InlineQueryResult implements TelegramBotsApi\Types\T
     }
 
     /**
-     * @param string $type Type of the result, must be sticker
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $sticker_file_id A valid file identifier of the sticker
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $sticker_file_id): self
+    public static function make(string $id, string $sticker_file_id): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'sticker_file_id' => $sticker_file_id,
         ]);

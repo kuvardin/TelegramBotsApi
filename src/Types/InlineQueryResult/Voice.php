@@ -103,17 +103,16 @@ class Voice extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     }
 
     /**
-     * @param string $type Type of the result, must be voice
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $voice_url A valid URL for the voice recording
      * @param string $title Recording title
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, string $voice_url, string $title): self
+    public static function make(string $id, string $voice_url, string $title): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'voice_url' => $voice_url,
             'title' => $title,

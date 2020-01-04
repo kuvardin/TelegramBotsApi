@@ -132,7 +132,6 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     }
 
     /**
-     * @param string $type Type of the result, must be venue
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param float $latitude Latitude of the venue location in degrees
      * @param float $longitude Longitude of the venue location in degrees
@@ -141,10 +140,10 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @return self
      * @throws Error
      */
-    public static function make(string $type, string $id, float $latitude, float $longitude, string $title, string $address): self
+    public static function make(string $id, float $latitude, float $longitude, string $title, string $address): self
     {
         return new self([
-            'type' => $type,
+            'type' => self::TYPE,
             'id' => $id,
             'latitude' => $latitude,
             'longitude' => $longitude,
