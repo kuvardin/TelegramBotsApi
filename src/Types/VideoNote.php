@@ -36,12 +36,12 @@ class VideoNote implements TypeInterface
     /**
      * @var PhotoSize|null Video thumbnail
      */
-    public ?PhotoSize $thumb;
+    public ?PhotoSize $thumb = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * VideoNote constructor.

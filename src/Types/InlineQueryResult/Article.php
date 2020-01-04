@@ -40,32 +40,32 @@ class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     /**
      * @var string|null URL of the result
      */
-    public ?string $url;
+    public ?string $url = null;
 
     /**
      * @var bool|null Pass True, if you don't want the URL to be shown in the message
      */
-    public ?bool $hide_url;
+    public ?bool $hide_url = null;
 
     /**
      * @var string|null Short description of the result
      */
-    public ?string $description;
+    public ?string $description = null;
 
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public ?string $thumb_url;
+    public ?string $thumb_url = null;
 
     /**
      * @var int|null Thumbnail width
      */
-    public ?int $thumb_width;
+    public ?int $thumb_width = null;
 
     /**
      * @var int|null Thumbnail height
      */
-    public ?int $thumb_height;
+    public ?int $thumb_height = null;
 
     /**
      * Article constructor.

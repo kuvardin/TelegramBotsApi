@@ -31,23 +31,23 @@ class WebhookInfo implements TypeInterface
      * @var int|null Unix time for the most recent error that happened when trying to deliver an update
      * via webhook
      */
-    public ?int $last_error_date;
+    public ?int $last_error_date = null;
 
     /**
      * @var string|null Error message in human-readable format for the most recent error that happened when
      * trying to deliver an update via webhook
      */
-    public ?string $last_error_message;
+    public ?string $last_error_message = null;
 
     /**
      * @var int|null Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
      */
-    public ?int $max_connections;
+    public ?int $max_connections = null;
 
     /**
      * @var string[]|null A list of update types the bot is subscribed to. Defaults to all update types
      */
-    public ?array $allowed_updates;
+    public ?array $allowed_updates = null;
 
     /**
      * WebhookInfo constructor.

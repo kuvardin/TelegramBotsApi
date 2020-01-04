@@ -41,12 +41,12 @@ class MessageEntity implements TypeInterface
     /**
      * @var string|null For “text_link” only, url that will be opened after user taps on the text
      */
-    public ?string $url;
+    public ?string $url = null;
 
     /**
      * @var User|null For “text_mention” only, the mentioned user
      */
-    public ?User $user;
+    public ?User $user = null;
 
     /**
      * @var string Type of the entity. Can be self::TYPE_*

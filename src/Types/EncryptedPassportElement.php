@@ -32,17 +32,17 @@ class EncryptedPassportElement implements TypeInterface
      * available for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”
      * and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials.
      */
-    public ?string $data;
+    public ?string $data = null;
 
     /**
      * @var string|null User's verified phone number, available only for “phone_number” type
      */
-    public ?string $phone_number;
+    public ?string $phone_number = null;
 
     /**
      * @var string|null User's verified email address, available only for “email” type
      */
-    public ?string $email;
+    public ?string $email = null;
 
     /**
      * @var PassportFile[]|null Array of encrypted files with documents provided by the user, available for
@@ -50,28 +50,28 @@ class EncryptedPassportElement implements TypeInterface
      * “temporary_registration” types. Files can be decrypted and verified using the
      * accompanying EncryptedCredentials.
      */
-    public ?array $files;
+    public ?array $files = null;
 
     /**
      * @var PassportFile|null Encrypted file with the front side of the document, provided by the user.
      * Available for “passport”, “driver_license”, “identity_card” and “internal_passport”.
      * The file can be decrypted and verified using the accompanying EncryptedCredentials.
      */
-    public ?PassportFile $front_side;
+    public ?PassportFile $front_side = null;
 
     /**
      * @var PassportFile|null Encrypted file with the reverse side of the document, provided by the user.
      * Available for “driver_license” and “identity_card”. The file can be decrypted and verified using
      * the accompanying EncryptedCredentials.
      */
-    public ?PassportFile $reverse_side;
+    public ?PassportFile $reverse_side = null;
 
     /**
      * @var PassportFile|null Encrypted file with the selfie of the user holding a document, provided by
      * the user; available for “passport”, “driver_license”, “identity_card” and “internal_passport”.
      * The file can be decrypted and verified using the accompanying EncryptedCredentials.
      */
-    public ?PassportFile $selfie;
+    public ?PassportFile $selfie = null;
 
     /**
      * @var PassportFile[]|null Array of encrypted files with translated versions of documents provided by
@@ -80,7 +80,7 @@ class EncryptedPassportElement implements TypeInterface
      * “temporary_registration” types. Files can be decrypted and verified using the
      * accompanying EncryptedCredentials.
      */
-    public ?array $translation;
+    public ?array $translation = null;
 
     /**
      * @var string Base64-encoded element hash for using in PassportElementErrorUnspecified

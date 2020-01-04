@@ -41,17 +41,17 @@ class Video implements TypeInterface
     /**
      * @var PhotoSize|null Video thumbnail
      */
-    public ?PhotoSize $thumb;
+    public ?PhotoSize $thumb = null;
 
     /**
      * @var string|null Mime type of a file as defined by sender
      */
-    public ?string $mime_type;
+    public ?string $mime_type = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * Video constructor.

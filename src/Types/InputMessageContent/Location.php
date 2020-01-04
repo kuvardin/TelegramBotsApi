@@ -28,7 +28,7 @@ class Location extends Types\InputMessageContent implements Types\TypeInterface
     /**
      * @var int|null Period in seconds for which the location can be updated, should be between 60 and 86400.
      */
-    public ?int $live_period;
+    public ?int $live_period = null;
 
     /**
      * Location constructor.

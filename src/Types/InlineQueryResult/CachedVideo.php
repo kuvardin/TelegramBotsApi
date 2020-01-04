@@ -37,17 +37,17 @@ class CachedVideo extends InlineQueryResult implements TelegramBotsApi\Types\Typ
     /**
      * @var string|null Short description of the result
      */
-    public ?string $description;
+    public ?string $description = null;
 
     /**
      * @var string|null Caption of the video to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

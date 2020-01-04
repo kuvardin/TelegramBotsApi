@@ -32,17 +32,17 @@ class Gif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterfa
     /**
      * @var int|null Width of the GIF
      */
-    public ?int $gif_width;
+    public ?int $gif_width = null;
 
     /**
      * @var int|null Height of the GIF
      */
-    public ?int $gif_height;
+    public ?int $gif_height = null;
 
     /**
      * @var int|null Duration of the GIF
      */
-    public ?int $gif_duration;
+    public ?int $gif_duration = null;
 
     /**
      * @var string URL of the static thumbnail for the result (jpeg or gif)
@@ -52,17 +52,17 @@ class Gif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterfa
     /**
      * @var string|null Title for the result
      */
-    public ?string $title;
+    public ?string $title = null;
 
     /**
      * @var string|null Caption of the GIF file to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

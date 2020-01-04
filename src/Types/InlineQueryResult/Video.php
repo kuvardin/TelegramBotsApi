@@ -47,32 +47,32 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var string|null Caption of the video to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var int|null Video width
      */
-    public ?int $video_width;
+    public ?int $video_width = null;
 
     /**
      * @var int|null Video height
      */
-    public ?int $video_height;
+    public ?int $video_height = null;
 
     /**
      * @var int|null Video duration in seconds
      */
-    public ?int $video_duration;
+    public ?int $video_duration = null;
 
     /**
      * @var string|null Short description of the result
      */
-    public ?string $description;
+    public ?string $description = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

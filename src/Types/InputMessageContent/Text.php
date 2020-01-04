@@ -24,12 +24,12 @@ class Text extends Types\InputMessageContent implements Types\TypeInterface
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width
      * text or inline URLs in your bot's message.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var bool|null Disables link previews for links in the sent message
      */
-    public ?bool $disable_web_page_preview;
+    public ?bool $disable_web_page_preview = null;
 
     /**
      * Text constructor.

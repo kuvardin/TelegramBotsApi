@@ -25,17 +25,17 @@ class Contact implements TypeInterface
     /**
      * @var string|null Contact's last name
      */
-    public ?string $last_name;
+    public ?string $last_name = null;
 
     /**
      * @var int|null Contact's user identifier in Telegram
      */
-    public ?int $user_id;
+    public ?int $user_id = null;
 
     /**
      * @var string|null Additional data about the contact in the form of a vCard
      */
-    public ?string $vcard;
+    public ?string $vcard = null;
 
     /**
      * Contact constructor.

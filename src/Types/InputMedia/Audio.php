@@ -32,27 +32,27 @@ class Audio extends Types\InputMedia implements Types\TypeInterface
     /**
      * @var string|null Caption of the audio to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var int|null Duration of the audio in seconds
      */
-    public ?int $duration;
+    public ?int $duration = null;
 
     /**
      * @var string|null Performer of the audio
      */
-    public ?string $performer;
+    public ?string $performer = null;
 
     /**
      * @var string|null Title of the audio
      */
-    public ?string $title;
+    public ?string $title = null;
 
     /**
      * Audio constructor.

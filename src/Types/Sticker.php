@@ -42,27 +42,27 @@ class Sticker implements TypeInterface
     /**
      * @var PhotoSize|null Sticker thumbnail in the .webp or .jpg format
      */
-    public ?PhotoSize $thumb;
+    public ?PhotoSize $thumb = null;
 
     /**
      * @var string|null Emoji associated with the sticker
      */
-    public ?string $emoji;
+    public ?string $emoji = null;
 
     /**
      * @var string|null Name of the sticker set to which the sticker belongs
      */
-    public ?string $set_name;
+    public ?string $set_name = null;
 
     /**
      * @var MaskPosition|null For mask stickers, the position where the mask should be placed
      */
-    public ?MaskPosition $mask_position;
+    public ?MaskPosition $mask_position = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * Sticker constructor.

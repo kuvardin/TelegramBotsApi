@@ -36,55 +36,55 @@ class Update implements TypeInterface
     /**
      * @var Message|null New incoming message of any kind — text, photo, sticker, etc.
      */
-    public ?Message $message;
+    public ?Message $message = null;
 
     /**
      * @var Message|null New version of a message that is known to the bot and was edited
      */
-    public ?Message $edited_message;
+    public ?Message $edited_message = null;
 
     /**
      * @var Message|null New incoming channel post of any kind — text, photo, sticker, etc.
      */
-    public ?Message $channel_post;
+    public ?Message $channel_post = null;
 
     /**
      * @var Message|null New version of a channel post that is known to the bot and was edited
      */
-    public ?Message $edited_channel_post;
+    public ?Message $edited_channel_post = null;
 
     /**
      * @var InlineQuery|null New incoming inline query
      */
-    public ?InlineQuery $inline_query;
+    public ?InlineQuery $inline_query = null;
 
     /**
      * @var ChosenInlineResult|null The result of an inline query that was chosen by a user and sent to their
      * chat partner. Please see our documentation on the feedback collecting for details on how to enable these
      * updates for your bot.
      */
-    public ?ChosenInlineResult $chosen_inline_result;
+    public ?ChosenInlineResult $chosen_inline_result = null;
 
     /**
      * @var CallbackQuery|null New incoming callback query
      */
-    public ?CallbackQuery $callback_query;
+    public ?CallbackQuery $callback_query = null;
 
     /**
      * @var ShippingQuery|null New incoming shipping query. Only for invoices with flexible price
      */
-    public ?ShippingQuery $shipping_query;
+    public ?ShippingQuery $shipping_query = null;
 
     /**
      * @var PreCheckoutQuery|null New incoming pre-checkout query. Contains full information about checkout
      */
-    public ?PreCheckoutQuery $pre_checkout_query;
+    public ?PreCheckoutQuery $pre_checkout_query = null;
 
     /**
      * @var Poll|null New poll state. Bots receive only updates about stopped polls and polls, which are sent
      * by the bot
      */
-    public ?Poll $poll;
+    public ?Poll $poll = null;
 
     /**
      * Update constructor.
@@ -218,6 +218,8 @@ class Update implements TypeInterface
             case self::ACT_POLL:
                 return null;
         }
+
+        throw new Error("Unknown action: {$this->getAction()}");
     }
 
     /**
@@ -275,6 +277,8 @@ class Update implements TypeInterface
             case self::ACT_CHOSEN_INLINE_RESULT:
                 return null;
         }
+        
+        throw new Error("Unknown action: {$this->getAction()}");
     }
 
     /**

@@ -26,22 +26,22 @@ class Document implements TypeInterface
     /**
      * @var PhotoSize|null Document thumbnail as defined by sender
      */
-    public ?PhotoSize $thumb;
+    public ?PhotoSize $thumb = null;
 
     /**
      * @var string|null Original filename as defined by sender
      */
-    public ?string $file_name;
+    public ?string $file_name = null;
 
     /**
      * @var string|null MIME type of the file as defined by sender
      */
-    public ?string $mime_type;
+    public ?string $mime_type = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * Document constructor.

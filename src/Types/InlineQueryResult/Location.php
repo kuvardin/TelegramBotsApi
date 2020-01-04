@@ -41,7 +41,7 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var int|null Period in seconds for which the location can be updated, should be between 60 and 86400.
      */
-    public ?int $live_period;
+    public ?int $live_period = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
@@ -56,17 +56,17 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public ?string $thumb_url;
+    public ?string $thumb_url = null;
 
     /**
      * @var int|null Thumbnail width
      */
-    public ?int $thumb_width;
+    public ?int $thumb_width = null;
 
     /**
      * @var int|null Thumbnail height
      */
-    public ?int $thumb_height;
+    public ?int $thumb_height = null;
 
     /**
      * Location constructor.

@@ -46,12 +46,12 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var string|null Foursquare identifier of the venue if known
      */
-    public ?string $foursquare_id;
+    public ?string $foursquare_id = null;
 
     /**
      * @var string|null Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
      */
-    public ?string $foursquare_type;
+    public ?string $foursquare_type = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
@@ -66,17 +66,17 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public ?string $thumb_url;
+    public ?string $thumb_url = null;
 
     /**
      * @var int|null Thumbnail width
      */
-    public ?int $thumb_width;
+    public ?int $thumb_width = null;
 
     /**
      * @var int|null Thumbnail height
      */
-    public ?int $thumb_height;
+    public ?int $thumb_height = null;
 
     /**
      * Venue constructor.

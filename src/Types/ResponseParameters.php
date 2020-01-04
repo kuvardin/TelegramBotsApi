@@ -18,12 +18,12 @@ class ResponseParameters implements TypeInterface
      * But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for
      * storing this identifier.
      */
-    public ?int $migrate_to_chat_id;
+    public ?int $migrate_to_chat_id = null;
 
     /**
      * @var int|null In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
      */
-    public ?int $retry_after;
+    public ?int $retry_after = null;
 
     /**
      * ResponseParameters constructor.

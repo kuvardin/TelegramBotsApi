@@ -36,7 +36,7 @@ class PhotoSize implements TypeInterface
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * PhotoSize constructor.

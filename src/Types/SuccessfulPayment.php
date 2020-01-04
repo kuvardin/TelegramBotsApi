@@ -32,12 +32,12 @@ class SuccessfulPayment implements TypeInterface
     /**
      * @var string|null Identifier of the shipping option chosen by the user
      */
-    public ?string $shipping_option_id;
+    public ?string $shipping_option_id = null;
 
     /**
      * @var OrderInfo|null Order info provided by the user
      */
-    public ?OrderInfo $order_info;
+    public ?OrderInfo $order_info = null;
 
     /**
      * @var string Telegram payment identifier

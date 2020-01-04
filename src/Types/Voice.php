@@ -31,12 +31,12 @@ class Voice implements TypeInterface
     /**
      * @var string|null MIME type of the file as defined by sender
      */
-    public ?string $mime_type;
+    public ?string $mime_type = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * Voice constructor.

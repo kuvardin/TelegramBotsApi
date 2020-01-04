@@ -32,17 +32,17 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
     /**
      * @var int|null Video width
      */
-    public ?int $mpeg4_width;
+    public ?int $mpeg4_width = null;
 
     /**
      * @var int|null Video height
      */
-    public ?int $mpeg4_height;
+    public ?int $mpeg4_height = null;
 
     /**
      * @var int|null Video duration
      */
-    public ?int $mpeg4_duration;
+    public ?int $mpeg4_duration = null;
 
     /**
      * @var string URL of the static thumbnail (jpeg or gif) for the result
@@ -52,18 +52,18 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
     /**
      * @var string|null Title for the result
      */
-    public ?string $title;
+    public ?string $title = null;
 
     /**
      * @var string|null Caption of the MPEG-4 file to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text
      * or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

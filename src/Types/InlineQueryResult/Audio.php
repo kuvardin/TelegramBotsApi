@@ -36,23 +36,23 @@ class Audio extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var string|null Caption, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width
      * text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var string|null Performer
      */
-    public ?string $performer;
+    public ?string $performer = null;
 
     /**
      * @var int|null Audio duration in seconds
      */
-    public ?int $audio_duration;
+    public ?int $audio_duration = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

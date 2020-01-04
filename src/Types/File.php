@@ -30,12 +30,12 @@ class File implements TypeInterface
     /**
      * @var int|null File size, if known
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * @var string|null File path. Use $this->getUrl() to get the file.
      */
-    public ?string $file_path;
+    public ?string $file_path = null;
 
     /**
      * File constructor.

@@ -30,13 +30,13 @@ class Venue implements TypeInterface
     /**
      * @var string|null Foursquare identifier of the venue
      */
-    public ?string $foursquare_id;
+    public ?string $foursquare_id = null;
 
     /**
      * @var string|null Foursquare type of the venue. (For example, “arts_entertainment/default”,
      * “arts_entertainment/aquarium” or “food/icecream”.)
      */
-    public ?string $foursquare_type;
+    public ?string $foursquare_type = null;
 
     /**
      * Venue constructor.

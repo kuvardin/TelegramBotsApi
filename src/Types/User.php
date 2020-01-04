@@ -33,17 +33,17 @@ class User implements TypeInterface
     /**
      * @var string|null User‘s or bot’s last name
      */
-    public ?string $last_name;
+    public ?string $last_name = null;
 
     /**
      * @var Username|null User‘s or bot’s username
      */
-    public ?Username $username;
+    public ?Username $username = null;
 
     /**
      * @var string|null IETF language tag of the user's language
      */
-    public ?string $language_code;
+    public ?string $language_code = null;
 
     /**
      * User constructor.

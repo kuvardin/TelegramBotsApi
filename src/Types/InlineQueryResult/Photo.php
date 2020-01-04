@@ -37,32 +37,32 @@ class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var int|null Width of the photo
      */
-    public ?int $photo_width;
+    public ?int $photo_width = null;
 
     /**
      * @var int|null Height of the photo
      */
-    public ?int $photo_height;
+    public ?int $photo_height = null;
 
     /**
      * @var string|null Title for the result
      */
-    public ?string $title;
+    public ?string $title = null;
 
     /**
      * @var string|null Short description of the result
      */
-    public ?string $description;
+    public ?string $description = null;
 
     /**
      * @var string|null Caption of the photo to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message

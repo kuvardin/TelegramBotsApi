@@ -23,14 +23,14 @@ class ReplyKeyboardMarkup implements TypeInterface
      * the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case
      * the custom keyboard is always of the same height as the app's standard keyboard.
      */
-    public ?bool $resize_keyboard;
+    public ?bool $resize_keyboard = null;
 
     /**
      * @var bool|null Requests clients to hide the keyboard as soon as it's been used. The keyboard will still
      * be available, but clients will automatically display the usual letter-keyboard in the chat – the user can
      * press a special button in the input field to see the custom keyboard again. Defaults to false.
      */
-    public ?bool $one_time_keyboard;
+    public ?bool $one_time_keyboard = null;
 
     /**
      * @var bool|null Use this parameter if you want to show the keyboard to specific users only. Targets:
@@ -39,7 +39,7 @@ class ReplyKeyboardMarkup implements TypeInterface
      * Example: A user requests to change the bot‘s language, bot replies to the request with a keyboard
      * to select the new language. Other users in the group don’t see the keyboard.
      */
-    public ?bool $selective;
+    public ?bool $selective = null;
 
     /**
      * ReplyKeyboardMarkup constructor.

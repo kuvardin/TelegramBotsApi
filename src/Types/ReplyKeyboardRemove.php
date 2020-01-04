@@ -29,7 +29,7 @@ class ReplyKeyboardRemove implements TypeInterface
      * Example: A user votes in a poll, bot returns confirmation message in reply to the vote and removes the
      * keyboard for that user, while still showing the keyboard with poll options to users who haven't voted yet.
      */
-    public ?bool $selective;
+    public ?bool $selective = null;
 
     /**
      * ReplyKeyboardRemove constructor.

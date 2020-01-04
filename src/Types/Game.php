@@ -34,17 +34,17 @@ class Game implements TypeInterface
      * Can be automatically edited to include current high scores for the game when the bot calls setGameScore,
      * or manually edited using editMessageText. 0-4096 characters.
      */
-    public ?string $text;
+    public ?string $text = null;
 
     /**
      * @var MessageEntity[]|null Special entities that appear in text, such as usernames, URLs, bot commands, etc.
      */
-    public ?array $text_entities;
+    public ?array $text_entities = null;
 
     /**
      * @var Animation|null Animation that will be displayed in the game message in chats. Upload via BotFather
      */
-    public ?Animation $animation;
+    public ?Animation $animation = null;
 
     /**
      * Game constructor.

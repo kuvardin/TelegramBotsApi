@@ -28,12 +28,12 @@ class Contact extends Types\InputMessageContent implements Types\TypeInterface
     /**
      * @var string|null Contact's last name
      */
-    public ?string $last_name;
+    public ?string $last_name = null;
 
     /**
      * @var string|null Additional data about the contact in the form of a vCard, 0-2048 bytes
      */
-    public ?string $vcard;
+    public ?string $vcard = null;
 
     /**
      * Contact constructor.

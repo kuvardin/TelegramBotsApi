@@ -27,7 +27,7 @@ class InlineQuery implements TypeInterface
     /**
      * @var Location|null Sender location, only for bots that request user location
      */
-    public ?Location $location;
+    public ?Location $location = null;
 
     /**
      * @var string Text of the query (up to 512 characters)

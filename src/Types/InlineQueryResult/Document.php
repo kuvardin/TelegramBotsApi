@@ -30,12 +30,12 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var string|null Caption of the document to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var string A valid URL for the file
@@ -50,7 +50,7 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var string|null Short description of the result
      */
-    public ?string $description;
+    public ?string $description = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
@@ -65,17 +65,17 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var string|null URL of the thumbnail (jpeg only) for the file
      */
-    public ?string $thumb_url;
+    public ?string $thumb_url = null;
 
     /**
      * @var int|null Thumbnail width
      */
-    public ?int $thumb_width;
+    public ?int $thumb_width = null;
 
     /**
      * @var int|null Thumbnail height
      */
-    public ?int $thumb_height;
+    public ?int $thumb_height = null;
 
     /**
      * Document constructor.

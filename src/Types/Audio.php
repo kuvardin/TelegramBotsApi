@@ -31,27 +31,27 @@ class Audio implements TypeInterface
     /**
      * @var string|null Performer of the audio as defined by sender or by audio tags
      */
-    public ?string $performer;
+    public ?string $performer = null;
 
     /**
      * @var string|null Title of the audio as defined by sender or by audio tags
      */
-    public ?string $title;
+    public ?string $title = null;
 
     /**
      * @var string|null MIME type of the file as defined by sender
      */
-    public ?string $mime_type;
+    public ?string $mime_type = null;
 
     /**
      * @var int|null File size
      */
-    public ?int $file_size;
+    public ?int $file_size = null;
 
     /**
      * @var PhotoSize|null Thumbnail of the album cover to which the music file belongs
      */
-    public ?PhotoSize $thumb;
+    public ?PhotoSize $thumb = null;
 
     /**
      * Audio constructor.

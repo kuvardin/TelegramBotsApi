@@ -23,13 +23,13 @@ class KeyboardButton implements TypeInterface
      * @var bool|null If True, the user's phone number will be sent as a contact when the button is pressed.
      * Available in private chats only
      */
-    public ?bool $request_contact;
+    public ?bool $request_contact = null;
 
     /**
      * @var bool|null If True, the user's current location will be sent when the button is pressed. Available
      * in private chats only
      */
-    public ?bool $request_location;
+    public ?bool $request_location = null;
 
     /**
      * KeyboardButton constructor.

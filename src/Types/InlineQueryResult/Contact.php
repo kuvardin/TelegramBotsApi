@@ -36,12 +36,12 @@ class Contact extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     /**
      * @var string|null Contact's last name
      */
-    public ?string $last_name;
+    public ?string $last_name = null;
 
     /**
      * @var string|null Additional data about the contact in the form of a vCard, 0-2048 bytes
      */
-    public ?string $vcard;
+    public ?string $vcard = null;
 
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
@@ -56,17 +56,17 @@ class Contact extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     /**
      * @var string|null Url of the thumbnail for the result
      */
-    public ?string $thumb_url;
+    public ?string $thumb_url = null;
 
     /**
      * @var int|null Thumbnail width
      */
-    public ?int $thumb_width;
+    public ?int $thumb_width = null;
 
     /**
      * @var int|null Thumbnail height
      */
-    public ?int $thumb_height;
+    public ?int $thumb_height = null;
 
     /**
      * Contact constructor.

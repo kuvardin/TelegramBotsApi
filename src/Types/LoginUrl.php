@@ -26,19 +26,19 @@ class LoginUrl implements TypeInterface
     /**
      * @var string|null New text of the button in forwarded messages.
      */
-    public ?string $forward_text;
+    public ?string $forward_text = null;
 
     /**
      * @var string|null Username of a bot, which will be used for user authorization. See Setting up a bot for
      * more details. If not specified, the current bot's username will be assumed. The url's domain must be
      * the same as the domain linked with the bot. See Linking your domain to the bot for more details.
      */
-    public ?string $bot_username;
+    public ?string $bot_username = null;
 
     /**
      * @var bool|null Pass True to request the permission for your bot to send messages to the user.
      */
-    public ?bool $request_write_access;
+    public ?bool $request_write_access = null;
 
     /**
      * LoginUrl constructor.

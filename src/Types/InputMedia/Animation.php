@@ -36,27 +36,27 @@ class Animation extends Types\InputMedia implements Types\TypeInterface
     /**
      * @var string|null Caption of the animation to be sent, 0-1024 characters
      */
-    public ?string $caption;
+    public ?string $caption = null;
 
     /**
      * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
      */
-    public ?string $parse_mode;
+    public ?string $parse_mode = null;
 
     /**
      * @var int|null Animation width
      */
-    public ?int $width;
+    public ?int $width = null;
 
     /**
      * @var int|null Animation height
      */
-    public ?int $height;
+    public ?int $height = null;
 
     /**
      * @var int|null Animation duration
      */
-    public ?int $duration;
+    public ?int $duration = null;
 
     /**
      * Animation constructor.
