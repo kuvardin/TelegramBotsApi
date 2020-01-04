@@ -4,6 +4,11 @@
 PHP library for make Telegram-bots.
 
 ## Using Examples
+### Installing
+```
+composer require "kuvardin/telegram-bots-api: dev-master"
+```
+
 ### Init bot
 ```
 <?php
