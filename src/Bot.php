@@ -404,18 +404,18 @@ class Bot
      * @param string $document File to send. Pass a file_id as string to send a file that exists on the
      * Telegram servers (recommended), pass an HTTP URL as a string for Telegram to get a file from
      * the Internet, or upload a new one using multipart/form-data.
+     * @param string|null $caption Document caption (may also be used when resending documents by file_id),
+     * 0-1024 characters
      * @param string|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for
      * the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
      * A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using
      * multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass
      * “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data
      * under <file_attach_name>.
-     * @param string|null $caption Document caption (may also be used when resending documents by file_id),
-     * 0-1024 characters
      * @return Requests\SendDocument
      */
-    public function sendDocument($chat_id, string $document, string $thumb = null,
-        string $caption = null): Requests\SendDocument
+    public function sendDocument($chat_id, string $document, string $caption = null,
+        string $thumb = null): Requests\SendDocument
     {
         return new Requests\SendDocument($this->token, [
             'chat_id' => $chat_id,
@@ -432,7 +432,11 @@ class Bot
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
      * (in the format @channelusername)
-     * @param string $video Video to send. Pass a file_id as string to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a string for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+     * @param string $video Video to send. Pass a file_id as string to send a video that exists on the Telegram
+     * servers (recommended), pass an HTTP URL as a string for Telegram to get a video from the Internet, or upload
+     * a new video using multipart/form-data.
+     * @param string|null $caption Video caption (may also be used when resending videos by file_id),
+     * 0-1024 characters
      * @param int|null $duration Duration of sent video in seconds
      * @param int|null $width Video width
      * @param int|null $height Video height
@@ -442,14 +446,11 @@ class Bot
      * using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you
      * can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data
      * under <file_attach_name>.
-     * @param string|null $caption Video caption (may also be used when resending videos by file_id),
-     * 0-1024 characters
      * @param bool|null $supports_streaming Pass True, if the uploaded video is suitable for streaming
      * @return Requests\SendVideo
      */
-    public function sendVideo($chat_id, string $video, int $duration = null, int $width = null,
-        int $height = null, string $thumb = null, string $caption = null,
-        bool $supports_streaming = null): Requests\SendVideo
+    public function sendVideo($chat_id, string $video, string $caption = null, int $duration = null, int $width = null,
+        int $height = null, string $thumb = null, bool $supports_streaming = null): Requests\SendVideo
     {
         return new Requests\SendVideo($this->token, [
             'chat_id' => $chat_id,
@@ -473,6 +474,8 @@ class Bot
      * @param string $animation Animation to send. Pass a file_id as string to send an animation that exists
      * on the Telegram servers (recommended), pass an HTTP URL as a string for Telegram to get an animation
      * from the Internet, or upload a new animation using multipart/form-data.
+     * @param string|null $caption Animation caption (may also be used when resending animation by file_id),
+     * 0-1024 characters
      * @param int|null $duration Duration of sent animation in seconds
      * @param int|null $width Animation width
      * @param int|null $height Animation height
@@ -482,12 +485,10 @@ class Bot
      * using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you
      * can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data
      * under <file_attach_name>.
-     * @param string|null $caption Animation caption (may also be used when resending animation by file_id),
-     * 0-1024 characters
      * @return Requests\SendAnimation
      */
-    public function sendAnimation($chat_id, string $animation, int $duration = null, int $width = null,
-        int $height = null, string $thumb = null, string $caption = null): Requests\SendAnimation
+    public function sendAnimation($chat_id, string $animation, string $caption = null, int $duration = null,
+        int $width = null, int $height = null, string $thumb = null): Requests\SendAnimation
     {
         return new Requests\SendAnimation($this->token, [
             'chat_id' => $chat_id,
