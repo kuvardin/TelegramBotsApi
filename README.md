@@ -1,7 +1,5 @@
 # TelegramBots
-[![Total Downloads](https://poser.pugx.org/kuvardin/telegram-bots-api/downloads)](https://packagist.org/packages
-/kuvardin
-/telegram-bots-api)
+[![Total Downloads](https://poser.pugx.org/kuvardin/telegram-bots-api/downloads)](https://packagist.org/packages/kuvardin/telegram-bots-api)
 
 PHP library for make Telegram-bots.
 
