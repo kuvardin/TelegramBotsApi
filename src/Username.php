@@ -46,8 +46,8 @@ class Username
     public static function checkUsername(string $username): bool
     {
         return strpos($username, '__') === false &&
-            preg_match('/^([a-zA-Z])(\w{4,31})$/', $username) &&
-            preg_match('/_$/', $username) === false;
+            preg_match('/^([a-zA-Z])(\w{4,31})$/', $username);
+//            && preg_match('/_$/', $username) === false;
     }
 
     /**
