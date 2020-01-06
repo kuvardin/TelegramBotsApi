@@ -10,12 +10,12 @@ namespace TelegramBotsApi\Requests\Traits;
 trait NotificationDisablingEdit
 {
     /**
-     * @param bool $enable
+     * @param bool $disable
      * @return $this
      */
-    public function setNotificationDisabling(bool $enable): self
+    public function setNotificationDisabling(bool $disable): self
     {
-        $this->params['disable_notification'] = $enable;
+        $this->params['disable_notification'] = $disable;
         return $this;
     }
 }
