@@ -52,12 +52,12 @@ class Voice extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var Types\InputMessageContent|null Content of the message to be sent instead of the voice recording
      */
-    public ?Types\InputMessageContent $input_message_content;
+    public ?Types\InputMessageContent $input_message_content = null;
 
     /**
      * Voice constructor.

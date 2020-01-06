@@ -77,12 +77,12 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var Types\InputMessageContent|null Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
      */
-    public ?Types\InputMessageContent $input_message_content;
+    public ?Types\InputMessageContent $input_message_content = null;
 
     /**
      * Video constructor.

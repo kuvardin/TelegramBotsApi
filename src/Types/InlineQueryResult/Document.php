@@ -55,12 +55,12 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var Types\InputMessageContent|null Content of the message to be sent instead of the file
      */
-    public ?Types\InputMessageContent $input_message_content;
+    public ?Types\InputMessageContent $input_message_content = null;
 
     /**
      * @var string|null URL of the thumbnail (jpeg only) for the file

@@ -32,12 +32,12 @@ class CachedSticker extends InlineQueryResult implements TelegramBotsApi\Types\T
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var Types\InputMessageContent|null Content of the message to be sent instead of the sticker
      */
-    public ?Types\InputMessageContent $input_message_content;
+    public ?Types\InputMessageContent $input_message_content = null;
 
     /**
      * CachedSticker constructor.

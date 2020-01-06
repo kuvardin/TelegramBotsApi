@@ -35,7 +35,7 @@ class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var string|null URL of the result

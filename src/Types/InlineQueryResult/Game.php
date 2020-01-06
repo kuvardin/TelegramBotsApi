@@ -30,7 +30,7 @@ class Game extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterf
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * Game constructor.

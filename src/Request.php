@@ -30,7 +30,7 @@ abstract class Request
     /**
      * @var array|null
      */
-    public ?array $last_response_info;
+    public ?array $last_response_info = null;
 
     /**
      * @var string

@@ -68,12 +68,12 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
     /**
      * @var Types\InlineKeyboardMarkup|null Inline keyboard attached to the message
      */
-    public ?Types\InlineKeyboardMarkup $reply_markup;
+    public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @var Types\InputMessageContent|null Content of the message to be sent instead of the video animation
      */
-    public ?Types\InputMessageContent $input_message_content;
+    public ?Types\InputMessageContent $input_message_content = null;
 
     /**
      * Mpeg4Gif constructor.

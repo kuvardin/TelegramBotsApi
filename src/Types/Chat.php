@@ -33,7 +33,7 @@ class Chat implements TypeInterface
     /**
      * @var TelegramBotsApi\Username|null Username, for private chats, supergroups and channels if available
      */
-    public ?TelegramBotsApi\Username $username;
+    public ?TelegramBotsApi\Username $username = null;
 
     /**
      * @var string|null First name of the other party in a private chat

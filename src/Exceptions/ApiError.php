@@ -14,7 +14,7 @@ use Throwable;
  */
 class ApiError extends Exception
 {
-    public ?ResponseParameters $parameters;
+    public ?ResponseParameters $parameters = null;
 
     /**
      * ApiError constructor.
