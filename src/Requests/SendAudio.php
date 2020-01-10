@@ -15,6 +15,7 @@ class SendAudio extends TelegramBotsApi\Request
     use Traits\ForceReplyEdit;
     use Traits\InlineKeyboardMarkupEdit;
     use Traits\NotificationDisablingEdit;
+    use Traits\ParseModeEdit;
     use Traits\ReplyKeyboardMarkupEdit;
     use Traits\ReplyKeyboardRemovingEdit;
     use Traits\ReplyToMessageEdit;

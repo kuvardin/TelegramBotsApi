@@ -141,6 +141,14 @@ class Bot
     }
 
     /**
+     * @return string
+     */
+    public function getDefaultParseMode(): string
+    {
+        return $this->default_parse_mode;
+    }
+
+    /**
      * @param string $parse_mode
      * @return $this
      * @throws Error
@@ -314,10 +322,10 @@ class Bot
      */
     public function sendMessage($chat_id, string $text): Requests\SendMessage
     {
-        return new Requests\SendMessage($this->token, [
+        return (new Requests\SendMessage($this->token, [
             'chat_id' => $chat_id,
             'text' => $text,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -352,11 +360,11 @@ class Bot
      */
     public function sendPhoto($chat_id, string $photo, string $caption = null): Requests\SendPhoto
     {
-        return new Requests\SendPhoto($this->token, [
+        return (new Requests\SendPhoto($this->token, [
             'chat_id' => $chat_id,
             'photo' => $photo,
             'caption' => $caption,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -384,7 +392,7 @@ class Bot
     public function sendAudio($chat_id, string $audio, string $caption = null, int $duration = null,
         string $performer = null, string $title = null, string $thumb = null): Requests\SendAudio
     {
-        return new Requests\SendAudio($this->token, [
+        return (new Requests\SendAudio($this->token, [
             'chat_id' => $chat_id,
             'audio' => $audio,
             'caption' => $caption,
@@ -392,7 +400,7 @@ class Bot
             'performer' => $performer,
             'title' => $title,
             'thumb' => $thumb,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -417,12 +425,12 @@ class Bot
     public function sendDocument($chat_id, string $document, string $caption = null,
         string $thumb = null): Requests\SendDocument
     {
-        return new Requests\SendDocument($this->token, [
+        return (new Requests\SendDocument($this->token, [
             'chat_id' => $chat_id,
             'document' => $document,
             'thumb' => $thumb,
             'caption' => $caption,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -452,7 +460,7 @@ class Bot
     public function sendVideo($chat_id, string $video, string $caption = null, int $duration = null, int $width = null,
         int $height = null, string $thumb = null, bool $supports_streaming = null): Requests\SendVideo
     {
-        return new Requests\SendVideo($this->token, [
+        return (new Requests\SendVideo($this->token, [
             'chat_id' => $chat_id,
             'video' => $video,
             'duration' => $duration,
@@ -461,7 +469,7 @@ class Bot
             'thumb' => $thumb,
             'caption' => $caption,
             'supports_streaming' => $supports_streaming,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -490,7 +498,7 @@ class Bot
     public function sendAnimation($chat_id, string $animation, string $caption = null, int $duration = null,
         int $width = null, int $height = null, string $thumb = null): Requests\SendAnimation
     {
-        return new Requests\SendAnimation($this->token, [
+        return (new Requests\SendAnimation($this->token, [
             'chat_id' => $chat_id,
             'animation' => $animation,
             'duration' => $duration,
@@ -498,7 +506,7 @@ class Bot
             'height' => $height,
             'thumb' => $thumb,
             'caption' => $caption,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -519,12 +527,12 @@ class Bot
     public function sendVoice($chat_id, string $voice, string $caption = null,
         int $duration = null): Requests\SendVoice
     {
-        return new Requests\SendVoice($this->token, [
+        return (new Requests\SendVoice($this->token, [
             'chat_id' => $chat_id,
             'voice' => $voice,
             'caption' => $caption,
             'duration' => $duration,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -1187,11 +1195,11 @@ class Bot
      */
     public function editMessageText($chat_id, int $message_id, string $text): Requests\EditMessageText
     {
-        return new Requests\EditMessageText($this->token, [
+        return (new Requests\EditMessageText($this->token, [
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'text' => $text,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -1203,10 +1211,10 @@ class Bot
      */
     public function editMessageTextInline(string $inline_message_id, string $text): Requests\EditMessageText
     {
-        return new Requests\EditMessageText($this->token, [
+        return (new Requests\EditMessageText($this->token, [
             'inline_message_id' => $inline_message_id,
             'text' => $text,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -1220,11 +1228,11 @@ class Bot
      */
     public function editMessageCaption($chat_id, int $message_id, string $caption = null): Requests\EditMessageCaption
     {
-        return new Requests\EditMessageCaption($this->token, [
+        return (new Requests\EditMessageCaption($this->token, [
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'caption' => $caption,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
@@ -1237,10 +1245,10 @@ class Bot
     public function editMessageCaptionInline(string $inline_message_id,
         string $caption = null): Requests\EditMessageCaption
     {
-        return new Requests\EditMessageCaption($this->token, [
+        return (new Requests\EditMessageCaption($this->token, [
             'inline_message_id' => $inline_message_id,
             'caption' => $caption,
-        ]);
+        ]))->setParseMode($this->default_parse_mode);
     }
 
     /**
