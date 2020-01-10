@@ -1180,7 +1180,8 @@ class Bot
      * may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
      * @return Requests\AnswerCallbackQuery
      */
-    public function answerCallbackQuery(string $callback_query_id, string $text = null, bool $show_alert = null, string $url = null, int $cache_time = null): Requests\AnswerCallbackQuery
+    public function answerCallbackQuery(string $callback_query_id, string $text = null, bool $show_alert = null,
+        string $url = null, int $cache_time = null): Requests\AnswerCallbackQuery
     {
         return new Requests\AnswerCallbackQuery($this->token, [
             'callback_query_id' => $callback_query_id,
