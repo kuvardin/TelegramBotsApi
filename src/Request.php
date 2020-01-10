@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace TelegramBotsApi;
 
@@ -198,7 +198,7 @@ abstract class Request
 
         if ($this->last_response_info['http_code'] !== 200) {
             $error_message = "Incorrect HTTP code: {$this->last_response_info['http_code']} (must be 200)";
-            throw new CurlError($error_message, CURLE_HTTP_RETURNED_ERROR);
+            throw new CurlError(CURLE_HTTP_RETURNED_ERROR, $error_message);
         }
 
         return $response_decoded['result'];
