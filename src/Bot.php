@@ -198,7 +198,8 @@ class Bot
      * @param string $url_format
      * @return string
      */
-    public function getBotUrl(string $start_command = null, bool $start_group = null, string $url_format = Username::URL_FORMAT_DEFAULT): string
+    public function getBotUrl(string $start_command = null, bool $start_group = null,
+        string $url_format = Username::URL_FORMAT_DEFAULT): string
     {
         $get_params = [];
 
@@ -457,8 +458,9 @@ class Bot
      * @param bool|null $supports_streaming Pass True, if the uploaded video is suitable for streaming
      * @return Requests\SendVideo
      */
-    public function sendVideo($chat_id, string $video, string $caption = null, int $duration = null, int $width = null,
-        int $height = null, string $thumb = null, bool $supports_streaming = null): Requests\SendVideo
+    public function sendVideo($chat_id, string $video, string $caption = null, int $duration = null,
+        int $width = null, int $height = null, string $thumb = null,
+        bool $supports_streaming = null): Requests\SendVideo
     {
         return (new Requests\SendVideo($this->token, [
             'chat_id' => $chat_id,
@@ -715,7 +717,8 @@ class Bot
      * @param string|null $vcard Additional data about the contact in the form of a vCard, 0-2048 bytes
      * @return Requests\SendContact
      */
-    public function sendContact($chat_id, string $phone_number, string $first_name, string $last_name = null, string $vcard = null): Requests\SendContact
+    public function sendContact($chat_id, string $phone_number, string $first_name, string $last_name = null,
+        string $vcard = null): Requests\SendContact
     {
         return new Requests\SendContact($this->token, [
             'chat_id' => $chat_id,
@@ -983,7 +986,8 @@ class Bot
      * must be an administrator in the chat for this to work and must have the appropriate admin rights.
      * Returns True on success.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      * @param string $title New chat title, 1-255 characters
      * @return Requests\SetChatTitle
      */
@@ -1018,7 +1022,8 @@ class Bot
      * an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in
      * the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      * @param int $message_id Identifier of a message to pin
      * @return Requests\PinChatMessage
      */
@@ -1035,7 +1040,8 @@ class Bot
      * an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in
      * the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      * @return Requests\UnpinChatMessage
      */
     public function unpinChatMessage($chat_id): Requests\UnpinChatMessage
@@ -1063,7 +1069,8 @@ class Bot
      * Use this method to get up to date information about the chat (current name of the user for one-on-one
      * conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup or
+     * channel (in the format @channelusername)
      * @return Requests\GetChat
      */
     public function getChat($chat_id): Requests\GetChat
@@ -1169,7 +1176,8 @@ class Bot
      * accepted the conditions via @Botfather, specify the URL that opens your game – note that this will
      * only work if the query comes from a callback_game button.
      * Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
-     * @param int|null $cache_time The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
+     * @param int|null $cache_time The maximum amount of time in seconds that the result of the callback query
+     * may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
      * @return Requests\AnswerCallbackQuery
      */
     public function answerCallbackQuery(string $callback_query_id, string $text = null, bool $show_alert = null, string $url = null, int $cache_time = null): Requests\AnswerCallbackQuery
@@ -1218,7 +1226,8 @@ class Bot
     }
 
     /**
-     * Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited
+     * Message is returned, otherwise True is returned.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
      * (in the format @channelusername)
@@ -1252,7 +1261,11 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of
+     * a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed
+     * arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its
+     * file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message
+     * is returned, otherwise True is returned.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
      * (in the format @channelusername)
@@ -1286,7 +1299,8 @@ class Bot
     }
 
     /**
-     * Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot,
+     * the edited Message is returned, otherwise True is returned.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
      * (in the format @channelusername)
@@ -1341,7 +1355,8 @@ class Bot
      * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.<br><br>
      * Returns True on success.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
      * @param int $message_id Identifier of the message to delete
      * @return Requests\DeleteMessage
      */
@@ -1418,7 +1433,8 @@ class Bot
      * for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param string $emojis One or more emoji corresponding to the sticker
      * @param bool|null $contains_masks Pass True, if a set of mask stickers should be created
-     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask should be placed on faces
+     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask
+     * should be placed on faces
      * @return Requests\CreateNewStickerSet
      */
     public function createNewStickerSet(int $user_id, string $name, string $title, string $png_sticker,
@@ -1445,7 +1461,8 @@ class Bot
      * a string to send a file that already exists on the Telegram servers, pass an HTTP URL as a string for
      * Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param string $emojis One or more emoji corresponding to the sticker
-     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask should be placed on faces
+     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask
+     * should be placed on faces
      * @return Requests\AddStickerToSet
      */
     public function addStickerToSet(int $user_id, string $name, string $png_sticker, string $emojis,
@@ -1694,7 +1711,8 @@ class Bot
      * edited to include the current scoreboard
      * @return Requests\SetGameScore
      */
-    public function setGameScore(int $chat_id, int $message_id, int $user_id, int $score, bool $force = null, bool $disable_edit_message = null): Requests\SetGameScore
+    public function setGameScore(int $chat_id, int $message_id, int $user_id, int $score, bool $force = null,
+        bool $disable_edit_message = null): Requests\SetGameScore
     {
         return new Requests\SetGameScore($this->token, [
             'chat_id' => $chat_id,
@@ -1718,7 +1736,8 @@ class Bot
      * edited to include the current scoreboard
      * @return Requests\SetGameScore
      */
-    public function setGameScoreInline(string $inline_message_id, int $user_id, int $score, bool $force = null, bool $disable_edit_message = null): Requests\SetGameScore
+    public function setGameScoreInline(string $inline_message_id, int $user_id, int $score, bool $force = null,
+        bool $disable_edit_message = null): Requests\SetGameScore
     {
         return new Requests\SetGameScore($this->token, [
             'inline_message_id' => $inline_message_id,
