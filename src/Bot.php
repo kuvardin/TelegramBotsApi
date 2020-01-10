@@ -64,7 +64,8 @@ class Bot
      * @return string
      * @throws Error
      */
-    public static function genLink(string $url, string $text, string $parse_mode = self::PARSE_MODE_DEFAULT, bool $filter = false): string
+    public static function genLink(string $url, string $text, string $parse_mode = self::PARSE_MODE_DEFAULT,
+        bool $filter = false): string
     {
         if ($filter) {
             $text = self::filterstring($text, $parse_mode);
@@ -356,7 +357,8 @@ class Bot
      * @param string $photo Photo to send. Pass a file_id as string to send a photo that exists on
      * the Telegram servers (recommended), pass an HTTP URL as a string for Telegram to get a photo from
      * the Internet, or upload a new photo using multipart/form-data.
-     * @param string|null $caption Photo caption (may also be used when resending photos by file_id), 0-1024 characters
+     * @param string|null $caption Photo caption (may also be used when resending photos by file_id),
+     * 0-1024 characters
      * @return Requests\SendPhoto
      */
     public function sendPhoto($chat_id, string $photo, string $caption = null): Requests\SendPhoto
@@ -639,7 +641,8 @@ class Bot
      * @param float $longitude Longitude of new location
      * @return Requests\EditMessageLiveLocation
      */
-    public function editMessageLiveLocationInline(string $inline_message_id, float $latitude, float $longitude): Requests\EditMessageLiveLocation
+    public function editMessageLiveLocationInline(string $inline_message_id, float $latitude,
+        float $longitude): Requests\EditMessageLiveLocation
     {
         return new Requests\EditMessageLiveLocation($this->token, [
             'inline_message_id' => $inline_message_id,
