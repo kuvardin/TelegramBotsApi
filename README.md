@@ -27,6 +27,7 @@ $bot = new TelegramBotsApi\Bot($token, $username);
 $chat_id = 123456789;
 $message_text = 'Hi!';
 $request = $bot->sendMessage($chat_id, $message_text);
+
 try {
     $response = $request->sendRequest();
     echo 'Successful sent';
@@ -46,6 +47,7 @@ $bot = new TelegramBotsApi\Bot($token, $username);
 
 $webhooks_handler_url = 'https://example.com/script.php';
 $request = $bot->setWebhook($webhooks_handler_url);
+
 try {
     $request->sendRequest();
     echo 'Success';
