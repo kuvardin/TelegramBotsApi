@@ -23,6 +23,7 @@ class Update implements TypeInterface
     public const ACT_SHIPING_QUERY = 'shipping_query';
     public const ACT_PRE_CHECKOUT_QUERY = 'pre_checkout_query';
     public const ACT_POLL = 'poll';
+    public const ACT_POLL_ANSWER = 'poll_answer';
 
     /**
      * @var int The update‘s unique identifier. Update identifiers start from a certain positive number and
@@ -85,6 +86,12 @@ class Update implements TypeInterface
      * by the bot
      */
     public ?Poll $poll = null;
+
+    /**
+     * @var PollAnswer|null A user changed their answer in a non-anonymous poll. Bots receive new votes only
+     * in polls that were sent by the bot itself.
+     */
+    public ?PollAnswer $poll_answer = null;
 
     /**
      * Update constructor.
@@ -154,6 +161,12 @@ class Update implements TypeInterface
                 ? $data['poll']
                 : new Poll($data['poll']);
         }
+
+        if (isset($data['poll_answer'])) {
+            $this->poll_answer = $data['poll_answer'] instanceof PollAnswer
+                ? $data['poll_answer']
+                : new PollAnswer($data['poll_answer']);
+        }
     }
 
     /**
@@ -187,7 +200,8 @@ class Update implements TypeInterface
             $action === self::ACT_CALLBACK_QUERY ||
             $action === self::ACT_SHIPING_QUERY ||
             $action === self::ACT_PRE_CHECKOUT_QUERY ||
-            $action === self::ACT_POLL;
+            $action === self::ACT_POLL ||
+            $action === self::ACT_POLL_ANSWER;
     }
 
     /**
@@ -217,6 +231,8 @@ class Update implements TypeInterface
                 return $this->message->from;
             case self::ACT_POLL:
                 return null;
+            case self::ACT_POLL_ANSWER:
+                return $this->poll_answer->user;
         }
 
         throw new Error("Unknown action: {$this->getAction()}");
@@ -249,6 +265,8 @@ class Update implements TypeInterface
                 return self::ACT_PRE_CHECKOUT_QUERY;
             case $this->poll !== null:
                 return self::ACT_POLL;
+            case $this->poll_answer !== null:
+                return self::ACT_POLL_ANSWER;
         }
 
         throw new Error('Unknown action');
@@ -271,13 +289,14 @@ class Update implements TypeInterface
                 return $this->message->chat;
             case self::ACT_INLINE_QUERY:
             case self::ACT_POLL:
+            case self::ACT_POLL_ANSWER:
             case self::ACT_PRE_CHECKOUT_QUERY:
             case self::ACT_SHIPING_QUERY:
             case self::ACT_CALLBACK_QUERY:
             case self::ACT_CHOSEN_INLINE_RESULT:
                 return null;
         }
-        
+
         throw new Error("Unknown action: {$this->getAction()}");
     }
 
@@ -319,6 +338,7 @@ class Update implements TypeInterface
             'shipping_query' => $this->shipping_query,
             'pre_checkout_query' => $this->pre_checkout_query,
             'poll' => $this->poll,
+            'poll_answer' => $this->poll_answer,
         ];
     }
 }

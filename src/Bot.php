@@ -733,21 +733,38 @@ class Bot
     }
 
     /**
-     * Use this method to send a native poll. A native poll can't be sent to a private chat.
-     * On success, the sent Message is returned.
+     * Use this method to send a native poll. On success, the sent Message is returned.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
-     * (in the format @channelusername). A native poll can't be sent to a private chat.
+     * (in the format @channelusername)
      * @param string $question Poll question, 1-255 characters
      * @param string[] $options List of answer options, 2-10 strings 1-100 characters each
+     * @param bool|null $is_anonymous True, if the poll needs to be anonymous, defaults to True
+     * @param string|null $type Poll type, “quiz” or “regular”, defaults to “regular”
+     * @param bool|null $allows_multiple_answers True, if the poll allows multiple answers, ignored for polls
+     * in quiz mode, defaults to False
+     * @param int|null $correct_option_id 0-based identifier of the correct answer option, required for polls
+     * in quiz mode
+     * @param bool|null $is_closed Pass True, if the poll needs to be immediately closed
      * @return Requests\SendPoll
+     * @throws Error
      */
-    public function sendPoll($chat_id, string $question, array $options): Requests\SendPoll
+    public function sendPoll($chat_id, string $question, array $options, bool $is_anonymous = null,
+        string $type = null, bool $allows_multiple_answers = null, int $correct_option_id = null,
+        bool $is_closed = null): Requests\SendPoll
     {
+        if (!Types\Poll::checkType($type)) {
+            throw new Error("Unknown poll type: {$type} (must be self::POLL_TYPE_*");
+        }
+
         return new Requests\SendPoll($this->token, [
             'chat_id' => $chat_id,
             'question' => $question,
             'options' => $options,
+            'is_anonymous' => $is_anonymous,
+            'allows_multiple_answers' => $allows_multiple_answers,
+            'correct_option_id' => $correct_option_id,
+            'is_closed' => $is_closed,
         ]);
     }
 

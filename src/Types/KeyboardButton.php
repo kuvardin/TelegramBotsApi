@@ -5,8 +5,9 @@ namespace TelegramBotsApi\Types;
 use TelegramBotsApi;
 
 /**
- * This object represents one button of the reply keyboard. For simple text buttons String can be used instead
- * of this object to specify text of the button. Optional fields are mutually exclusive.
+ * This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this
+ * object to specify text of the button. Optional fields request_contact, request_location, and request_poll are
+ * mutually exclusive.
  *
  * @package TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -32,6 +33,12 @@ class KeyboardButton implements TypeInterface
     public ?bool $request_location = null;
 
     /**
+     * @var KeyboardButtonPollType|null If specified, the user will be asked to create a poll and send it to the bot
+     * when the button is pressed. Available in private chats only
+     */
+    public ?KeyboardButtonPollType $request_poll = null;
+
+    /**
      * KeyboardButton constructor.
      *
      * @param array $data
@@ -46,6 +53,10 @@ class KeyboardButton implements TypeInterface
 
         if (isset($data['request_location'])) {
             $this->request_location = $data['request_location'];
+        }
+
+        if (isset($data['request_poll'])) {
+            $this->request_poll = $data['request_poll'];
         }
     }
 
@@ -70,6 +81,7 @@ class KeyboardButton implements TypeInterface
             'text' => $this->text,
             'request_contact' => $this->request_contact,
             'request_location' => $this->request_location,
+            'request_poll' => $this->request_poll,
         ];
     }
 }

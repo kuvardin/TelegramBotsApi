@@ -46,6 +46,21 @@ class User implements TypeInterface
     public ?string $language_code = null;
 
     /**
+     * @var bool|null True, if the bot can be invited to groups. Returned only in getMe.
+     */
+    public ?bool $can_join_groups = null;
+
+    /**
+     * @var bool|null True, if privacy mode is disabled for the bot. Returned only in getMe.
+     */
+    public ?bool $can_read_all_group_messages = null;
+
+    /**
+     * @var bool|null True, if the bot supports inline queries. Returned only in getMe.
+     */
+    public ?bool $supports_inline_queries = null;
+
+    /**
      * User constructor.
      *
      * @param array $data
@@ -67,6 +82,18 @@ class User implements TypeInterface
 
         if (isset($data['language_code'])) {
             $this->language_code = $data['language_code'];
+        }
+
+        if (isset($data['can_join_groups'])) {
+            $this->can_join_groups = $data['can_join_groups'];
+        }
+
+        if (isset($data['can_read_all_group_messages'])) {
+            $this->can_read_all_group_messages = $data['can_read_all_group_messages'];
+        }
+
+        if (isset($data['supports_inline_queries'])) {
+            $this->supports_inline_queries = $data['supports_inline_queries'];
         }
     }
 
@@ -147,6 +174,9 @@ class User implements TypeInterface
             'last_name' => $this->last_name,
             'username' => $this->username->getShort(),
             'language_code' => $this->language_code,
+            'can_join_groups' => $this->can_join_groups,
+            'can_read_all_group_messages' => $this->can_read_all_group_messages,
+            'supports_inline_queries' => $this->supports_inline_queries,
         ];
     }
 }

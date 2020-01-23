@@ -54,6 +54,11 @@ class MessageEntity implements TypeInterface
     protected string $type;
 
     /**
+     * @var string|null For “pre” only, the programming language of the entity text
+     */
+    public ?string $language = null;
+
+    /**
      * MessageEntity constructor.
      *
      * @param array $data
@@ -73,6 +78,10 @@ class MessageEntity implements TypeInterface
             $this->user = $data['user'] instanceof User
                 ? $data['user']
                 : new User($data['user']);
+        }
+
+        if (isset($data['language'])) {
+            $this->language = $data['language'];
         }
     }
 
@@ -146,6 +155,7 @@ class MessageEntity implements TypeInterface
             'length' => $this->length,
             'url' => $this->url,
             'user' => $this->user,
+            'language' => $this->language,
         ];
     }
 }
