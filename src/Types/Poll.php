@@ -81,14 +81,14 @@ class Poll implements TypeInterface
             $this->options[] = $item instanceof PollOption ? $item : new PollOption($item);
         }
 
-        $this->total_voter_count = $data['$total_voter_count'];
+        $this->total_voter_count = $data['total_voter_count'];
         $this->is_closed = $data['is_closed'];
         $this->is_anonymous = $data['is_anonymous'];
         $this->type = $data['type'];
         $this->allows_multiple_answers = $data['allows_multiple_answers'];
 
         if (isset($data['correct_option_id'])) {
-            $this->correct_option_id = $data['$correct_option_id'];
+            $this->correct_option_id = $data['correct_option_id'];
         }
     }
 
