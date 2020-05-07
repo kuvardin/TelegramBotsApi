@@ -35,7 +35,7 @@ class StopMessageLiveLocation extends TelegramBotsApi\Request
     public function sendRequest(int $attempts = 1): ?TelegramBotsApi\Types\Message
     {
         $response = $this->request($attempts);
-        if (is_array($response)) {
+        if (!is_array($response)) {
             if ($response !== true) {
                 $type = gettype($response);
                 throw new Error("Incorrect response: $response typed $type (must be true)");

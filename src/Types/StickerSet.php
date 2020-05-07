@@ -41,6 +41,11 @@ class StickerSet implements TypeInterface
     public array $stickers = [];
 
     /**
+     * @var PhotoSize Sticker set thumbnail in the .WEBP or .TGS format
+     */
+    public PhotoSize $thumb;
+
+    /**
      * StickerSet constructor.
      *
      * @param array $data
@@ -56,6 +61,8 @@ class StickerSet implements TypeInterface
         foreach ($data['stickers'] as $item) {
             $this->stickers[] = $item instanceof Sticker ? $item : new Sticker($item);
         }
+
+        $this->thumb = new PhotoSize($data['thumb']);
     }
 
     /**

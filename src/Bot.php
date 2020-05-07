@@ -771,6 +771,29 @@ class Bot
     }
 
     /**
+     * Use this method to send a dice, which will have a random value from 1 to 6.
+     * On success, the sent Message is returned.
+     * (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change.
+     * One dice at a time!)
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     * (in the format @channelusername)
+     * @param string|null $emoji Emoji on which the dice throw animation is based. Must be one of Dice::EMOJI_*
+     * @return Requests\SendDice
+     * @throws Error
+     */
+    public function sendDice($chat_id, string $emoji = null): Requests\SendDice
+    {
+        if ($emoji !== null && !Types\Dice::checkEmoji($emoji)) {
+            throw new Error("Unknown dice emoji: $emoji");
+        }
+        return new Requests\SendDice($this->token, [
+            'chat_id' => $chat_id,
+            'emoji' => $emoji,
+        ]);
+    }
+
+    /**
      * Use this method when you need to tell the user that something is happening on the bot's side.
      * The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear
      * its typing status). Returns True on success.
@@ -1215,6 +1238,31 @@ class Bot
     }
 
     /**
+     * Use this method to change the list of the bot's commands. Returns True on success.
+     *
+     * @param Types\BotCommand[] $commands A JSON-serialized list of bot commands to be set as the list
+     * of the bot's commands. At most 100 commands can be specified.
+     * @return Requests\SetMyCommands
+     */
+    public function setMyCommands(array $commands): Requests\SetMyCommands
+    {
+        return new Requests\SetMyCommands($this->token, [
+            'commands' => $commands,
+        ]);
+    }
+
+    /**
+     * Use this method to get the current list of the bot's commands. Requires no parameters.
+     * Returns Array of BotCommand on success.
+     *
+     * @return Requests\GetMyCommands
+     */
+    public function getMyCommands(): Requests\GetMyCommands
+    {
+        return new Requests\GetMyCommands($this->token);
+    }
+
+    /**
      * Use this method to edit text and game messages. On success, if edited message is sent by the bot,
      * the edited Message is returned, otherwise True is returned.
      *
@@ -1450,24 +1498,28 @@ class Bot
      * consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive.
      * 1-64 characters.
      * @param string $title Sticker set title, 1-64 characters
-     * @param string $png_sticker Png image with the sticker, must be up to 512 kilobytes in size,
+     * @param string|null $png_sticker Png image with the sticker, must be up to 512 kilobytes in size,
      * dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id
      * as a string to send a file that already exists on the Telegram servers, pass an HTTP URL as a string
      * for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param string|null $tgs_sticker TGS animation with the sticker, uploaded using multipart/form-data.
+     * See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
      * @param string $emojis One or more emoji corresponding to the sticker
      * @param bool|null $contains_masks Pass True, if a set of mask stickers should be created
      * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask
      * should be placed on faces
      * @return Requests\CreateNewStickerSet
      */
-    public function createNewStickerSet(int $user_id, string $name, string $title, string $png_sticker,
-        string $emojis, bool $contains_masks = null, Types\MaskPosition $mask_position = null): Requests\CreateNewStickerSet
+    public function createNewStickerSet(int $user_id, string $name, string $title, ?string $png_sticker,
+        ?string $tgs_sticker, string $emojis, bool $contains_masks = null,
+        Types\MaskPosition $mask_position = null): Requests\CreateNewStickerSet
     {
         return new Requests\CreateNewStickerSet($this->token, [
             'user_id' => $user_id,
             'name' => $name,
             'title' => $title,
             'png_sticker' => $png_sticker,
+            'tgs_sticker' => $tgs_sticker,
             'emojis' => $emojis,
             'contains_masks' => $contains_masks,
             'mask_position' => $mask_position,
@@ -1479,22 +1531,25 @@ class Bot
      *
      * @param int $user_id User identifier of sticker set owner
      * @param string $name Sticker set name
-     * @param string $png_sticker Png image with the sticker, must be up to 512 kilobytes in size,
+     * @param string|null $png_sticker Png image with the sticker, must be up to 512 kilobytes in size,
      * dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as
      * a string to send a file that already exists on the Telegram servers, pass an HTTP URL as a string for
      * Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param string|null $tgs_sticker TGS animation with the sticker, uploaded using multipart/form-data.
+     * See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements
      * @param string $emojis One or more emoji corresponding to the sticker
      * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask
      * should be placed on faces
      * @return Requests\AddStickerToSet
      */
-    public function addStickerToSet(int $user_id, string $name, string $png_sticker, string $emojis,
-        Types\MaskPosition $mask_position = null): Requests\AddStickerToSet
+    public function addStickerToSet(int $user_id, string $name, ?string $png_sticker, ?string $tgs_sticker,
+        string $emojis, Types\MaskPosition $mask_position = null): Requests\AddStickerToSet
     {
         return new Requests\AddStickerToSet($this->token, [
             'user_id' => $user_id,
             'name' => $name,
             'png_sticker' => $png_sticker,
+            'tgs_sticker' => $tgs_sticker,
             'emojis' => $emojis,
             'mask_position' => $mask_position,
         ]);
@@ -1526,6 +1581,29 @@ class Bot
     {
         return new Requests\DeleteStickerFromSet($this->token, [
             'sticker' => $sticker,
+        ]);
+    }
+
+    /**
+     * Use this method to set the thumbnail of a sticker set.
+     * Animated thumbnails can be set for animated sticker sets only. Returns True on success.
+     *
+     * @param string $name Sticker set name
+     * @param int $user_id User identifier of the sticker set owner
+     * @param string|null $thumb A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width
+     * and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size;
+     * see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical
+     * requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers,
+     * pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using
+     * multipart/form-data. Animated sticker set thumbnail can't be uploaded via HTTP URL.
+     * @return Requests\SetStickerSetThumb
+     */
+    public function setStickerSetThumb(string $name, int $user_id, string $thumb = null): Requests\SetStickerSetThumb
+    {
+        return new Requests\SetStickerSetThumb($this->token, [
+            'name' => $name,
+            'user_id' => $user_id,
+            'thumb' => $thumb,
         ]);
     }
 
