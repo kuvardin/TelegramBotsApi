@@ -12,6 +12,8 @@ composer require "kuvardin/telegram-bots-api: dev-master"
 ### Init bot
 ```php
 <?php
+require 'vendor/autoload.php';
+
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
 $bot = new TelegramBotsApi\Bot($token, $username);
@@ -20,6 +22,8 @@ $bot = new TelegramBotsApi\Bot($token, $username);
 ### Sending message
 ```php
 <?php
+require 'vendor/autoload.php';
+
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
 $bot = new TelegramBotsApi\Bot($token, $username);
@@ -41,6 +45,8 @@ try {
 ### Set webhooks handler
 ```php
 <?php
+require 'vendor/autoload.php';
+
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
 $bot = new TelegramBotsApi\Bot($token, $username);
@@ -61,6 +67,8 @@ try {
 ### Receive incoming updates via an outgoing webhook
 ```php
 <?php
+require 'vendor/autoload.php';
+
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
 $bot = new TelegramBotsApi\Bot($token, $username);
