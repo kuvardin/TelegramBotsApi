@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace TelegramBotsApi\Requests;
 
@@ -25,12 +27,12 @@ class EditMessageMedia extends TelegramBotsApi\Request
 
     /**
      * @param int $attempts
-     * @return TelegramBotsApi\Types\Message
+     * @return TelegramBotsApi\Types\Message|null
      * @throws Error
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
      */
-    public function sendRequest(int $attempts = 1): TelegramBotsApi\Types\Message
+    public function sendRequest(int $attempts = 1): ?TelegramBotsApi\Types\Message
     {
         $response = $this->request($attempts);
         if (is_bool($response)) {
