@@ -747,13 +747,22 @@ class Bot
      * in quiz mode, defaults to False
      * @param int|null $correct_option_id 0-based identifier of the correct answer option, required for polls
      * in quiz mode
+     * @param string|null $explanation Text that is shown when a user chooses an incorrect answer or taps
+     * on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+     * @param string|null $explanation_parse_mode Mode for parsing entities in the explanation.
+     * See https://core.telegram.org/bots/api#formatting-options for more details.
+     * @param int|null $open_period Amount of time in seconds the poll will be active after creation, 5-600.
+     * Can't be used together with close_date.
+     * @param int|null $close_date Point in time (Unix timestamp) when the poll will be automatically closed.
+     * Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
      * @param bool|null $is_closed Pass True, if the poll needs to be immediately closed
      * @return Requests\SendPoll
      * @throws Error
      */
     public function sendPoll($chat_id, string $question, array $options, bool $is_anonymous = null,
         string $type = null, bool $allows_multiple_answers = null, int $correct_option_id = null,
-        bool $is_closed = null): Requests\SendPoll
+        string $explanation = null, string $explanation_parse_mode = null, int $open_period = null,
+        int $close_date = null, bool $is_closed = null): Requests\SendPoll
     {
         if (!Types\Poll::checkType($type)) {
             throw new Error("Unknown poll type: {$type} (must be self::POLL_TYPE_*");
@@ -766,6 +775,10 @@ class Bot
             'is_anonymous' => $is_anonymous,
             'allows_multiple_answers' => $allows_multiple_answers,
             'correct_option_id' => $correct_option_id,
+            'explanation' => $explanation,
+            'explanation_parse_mode' => $explanation_parse_mode,
+            'open_period' => $open_period,
+            'close_date' => $close_date,
             'is_closed' => $is_closed,
         ]);
     }

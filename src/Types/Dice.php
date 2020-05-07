@@ -17,8 +17,8 @@ use TelegramBotsApi\Exceptions\Error;
  */
 class Dice implements TypeInterface
 {
-    public const EMOJI_GAME_DIE = "\u{1F3B2}";
-    public const EMOJI_DIRECT_HIT = "\u{1F3AF}";
+    public const EMOJI_DICE = "\u{1F3B2}";
+    public const EMOJI_DARTS = "\u{1F3AF}";
 
     /**
      * @var string Emoji on which the dice throw animation is based. Must be self::EMOJI_*
@@ -65,8 +65,7 @@ class Dice implements TypeInterface
      */
     public static function checkEmoji(string $emoji): bool
     {
-        return $emoji === self::EMOJI_DIRECT_HIT ||
-            $emoji === self::EMOJI_GAME_DIE;
+        return $emoji === self::EMOJI_DICE || $emoji === self::EMOJI_DARTS;
     }
 
     /**
