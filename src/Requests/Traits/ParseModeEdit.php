@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Requests\Traits;
+namespace Kuvardin\TelegramBotsApi\Requests\Traits;
 
 /**
  * Trait ParseModeEdit
  *
- * @package TelegramBotsApi\Requests\Traits
- */
+ * @package Kuvardin\TelegramBotsApi
+*/
 trait ParseModeEdit
 {
     /**

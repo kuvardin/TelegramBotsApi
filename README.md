@@ -16,7 +16,7 @@ require 'vendor/autoload.php';
 
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
-$bot = new TelegramBotsApi\Bot($token, $username);
+$bot = new Kuvardin\TelegramBotsApi\Bot($token, $username);
 ```
 
 ### Sending message
@@ -26,7 +26,7 @@ require 'vendor/autoload.php';
 
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
-$bot = new TelegramBotsApi\Bot($token, $username);
+$bot = new Kuvardin\TelegramBotsApi\Bot($token, $username);
 
 $chat_id = 123456789;
 $message_text = 'Hi!';
@@ -35,9 +35,9 @@ $request = $bot->sendMessage($chat_id, $message_text);
 try {
     $response = $request->sendRequest();
     echo 'Successful sent';
-} catch (TelegramBotsApi\Exceptions\ApiError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\ApiError $e) {
     echo "API error #{$e->getCode()}: {$e->getMessage()}";
-} catch (TelegramBotsApi\Exceptions\CurlError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\CurlError $e) {
     echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
 }
 ```
@@ -49,7 +49,7 @@ require 'vendor/autoload.php';
 
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
-$bot = new TelegramBotsApi\Bot($token, $username);
+$bot = new Kuvardin\TelegramBotsApi\Bot($token, $username);
 
 $webhooks_handler_url = 'https://example.com/script.php';
 $request = $bot->setWebhook($webhooks_handler_url);
@@ -57,9 +57,9 @@ $request = $bot->setWebhook($webhooks_handler_url);
 try {
     $request->sendRequest();
     echo 'Success';
-} catch (TelegramBotsApi\Exceptions\ApiError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\ApiError $e) {
     echo "API error #{$e->getCode()}: {$e->getMessage()}";
-} catch (TelegramBotsApi\Exceptions\CurlError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\CurlError $e) {
     echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
 }
 ```
@@ -71,7 +71,7 @@ require 'vendor/autoload.php';
 
 $token = '123456:AAAAAAAAAAAAAAA';
 $username = 'ExampleBot';
-$bot = new TelegramBotsApi\Bot($token, $username);
+$bot = new Kuvardin\TelegramBotsApi\Bot($token, $username);
 
 $input = file_get_contents('php://input');
 if ($input === false || $input === '') {
@@ -84,50 +84,50 @@ if (!is_array($input_decoded)) {
 }
 
 $request = null;
-$update = new TelegramBotsApi\Types\Update($input_decoded);
+$update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 
 switch ($update->getAction()) {
-    case TelegramBotsApi\Types\Update::ACT_MESSAGE:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_MESSAGE:
         $request = $bot->sendMessage($update->message->chat->id, 'Hi!');
         break;
     
-    case TelegramBotsApi\Types\Update::ACT_EDITED_MESSAGE:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_EDITED_MESSAGE:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_CHANNEL_POST:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_CHANNEL_POST:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_EDITED_CHANNEL_POST:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_EDITED_CHANNEL_POST:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_INLINE_QUERY:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_INLINE_QUERY:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_CHOSEN_INLINE_RESULT:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_CHOSEN_INLINE_RESULT:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_CALLBACK_QUERY:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_CALLBACK_QUERY:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_SHIPING_QUERY:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_SHIPING_QUERY:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_PRE_CHECKOUT_QUERY:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_PRE_CHECKOUT_QUERY:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_POLL:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_POLL:
         // ...
         break;
 
-    case TelegramBotsApi\Types\Update::ACT_POLL_ANSWER:
+    case Kuvardin\TelegramBotsApi\Types\Update::ACT_POLL_ANSWER:
         // ...
         break;
 }

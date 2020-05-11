@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InputMedia;
+namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Animation extends Types\InputMedia implements Types\TypeInterface
@@ -20,8 +19,8 @@ class Animation extends Types\InputMedia implements Types\TypeInterface
 
     /**
      * @var string File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended),
-     * pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one
-     * using multipart/form-data under name
+     * pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a
+     *     new one using multipart/form-data under name
      */
     public string $media;
 
@@ -41,7 +40,8 @@ class Animation extends Types\InputMedia implements Types\TypeInterface
     public ?string $caption = null;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or
+     *     inline URLs in the media caption.
      */
     public ?string $parse_mode = null;
 

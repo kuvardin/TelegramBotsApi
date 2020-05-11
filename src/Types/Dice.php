@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents a dice with a random value from 1 to 6 for currently supported base emoji.
  * (Yes, we're aware of the “proper” singular of die. But it's awkward, and we decided to help it change.
  * One dice at a time!)
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Dice implements TypeInterface
@@ -46,6 +45,15 @@ class Dice implements TypeInterface
     }
 
     /**
+     * @param string $emoji
+     * @return bool
+     */
+    public static function checkEmoji(string $emoji): bool
+    {
+        return $emoji === self::EMOJI_DICE || $emoji === self::EMOJI_DARTS;
+    }
+
+    /**
      * @param string $emoji Emoji on which the dice throw animation is based
      * @param string $value Value of the dice, 1-6 for currently supported base emoji
      * @return static
@@ -57,15 +65,6 @@ class Dice implements TypeInterface
             'emoji' => $emoji,
             'value' => $value,
         ]);
-    }
-
-    /**
-     * @param string $emoji
-     * @return bool
-     */
-    public static function checkEmoji(string $emoji): bool
-    {
-        return $emoji === self::EMOJI_DICE || $emoji === self::EMOJI_DARTS;
     }
 
     /**

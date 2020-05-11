@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents one result of an inline query. Telegram clients currently support results of
  * the following 20 types
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class InlineQueryResult

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InlineQueryResult;
+namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
-use TelegramBotsApi\Types\InlineQueryResult;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 /**
  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use
  * input_message_content to send a message with the specified content instead of the venue.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
@@ -51,7 +51,8 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     public ?string $foursquare_id = null;
 
     /**
-     * @var string|null Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+     * @var string|null Foursquare type of the venue, if known. (For example, “arts_entertainment/default”,
+     *     “arts_entertainment/aquarium” or “food/icecream”.)
      */
     public ?string $foursquare_type = null;
 

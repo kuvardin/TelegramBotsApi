@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Username;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Username;
 
 /**
  * This object represents a Telegram user or bot.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class User implements TypeInterface

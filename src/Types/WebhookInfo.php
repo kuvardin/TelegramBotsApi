@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Contains information about the current status of a webhook.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class WebhookInfo implements TypeInterface

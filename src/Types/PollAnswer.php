@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents an answer of a user in a non-anonymous poll.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class PollAnswer implements TypeInterface

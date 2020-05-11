@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Requests\Traits;
+namespace Kuvardin\TelegramBotsApi\Requests\Traits;
 
-use TelegramBotsApi\Types\ReplyKeyboardRemove;
+use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardRemove;
 
 /**
  * Trait ReplyKeyboardRemovingEdit
  *
- * @package TelegramBotsApi\Requests\Traits
- */
+ * @package Kuvardin\TelegramBotsApi
+*/
 trait ReplyKeyboardRemovingEdit
 {
     /**

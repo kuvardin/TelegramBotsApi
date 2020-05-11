@@ -1,6 +1,6 @@
 <?php
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 interface TypeInterface
 {

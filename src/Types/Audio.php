@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents an audio file to be treated as music by the Telegram clients.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Audio implements TypeInterface

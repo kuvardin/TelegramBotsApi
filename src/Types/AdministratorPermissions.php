@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Custom type for Bot::promoteChatMember()
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class AdministratorPermissions implements TypeInterface
@@ -50,7 +48,9 @@ class AdministratorPermissions implements TypeInterface
     public ?bool $can_pin_messages = null;
 
     /**
-     * @var bool|null True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)
+     * @var bool|null True, if the administrator can add new administrators with a subset of his own privileges or
+     *     demote administrators that he has promoted, directly or indirectly (promoted by administrators that were
+     *     appointed by him)
      */
     public ?bool $can_promote_members = null;
 

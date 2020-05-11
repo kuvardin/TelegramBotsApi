@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InputMedia;
+namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents a general file to be sent.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Document extends Types\InputMedia implements Types\TypeInterface

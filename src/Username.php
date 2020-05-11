@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi;
 
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class Username
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Username

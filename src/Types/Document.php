@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents a general file (as opposed to photos, voice messages and audio files).
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Document implements TypeInterface

@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\PassportElementError;
+namespace Kuvardin\TelegramBotsApi\Types\PassportElementError;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved
  * when the field's value changes.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class DataField extends Types\PassportElementError implements Types\TypeInterface

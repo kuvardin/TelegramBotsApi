@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents an inline keyboard that appears right next to the message it belongs to.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class InlineKeyboardMarkup implements TypeInterface

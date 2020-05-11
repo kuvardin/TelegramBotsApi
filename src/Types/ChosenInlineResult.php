@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ChosenInlineResult implements TypeInterface

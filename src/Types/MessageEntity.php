@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class MessageEntity implements TypeInterface
@@ -49,16 +48,14 @@ class MessageEntity implements TypeInterface
      * @var User|null For “text_mention” only, the mentioned user
      */
     public ?User $user = null;
-
-    /**
-     * @var string Type of the entity. Can be self::TYPE_*
-     */
-    protected string $type;
-
     /**
      * @var string|null For “pre” only, the programming language of the entity text
      */
     public ?string $language = null;
+    /**
+     * @var string Type of the entity. Can be self::TYPE_*
+     */
+    protected string $type;
 
     /**
      * MessageEntity constructor.

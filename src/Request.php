@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi;
 
-use TelegramBotsApi\Exceptions\ApiError;
-use TelegramBotsApi\Exceptions\CurlError;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\ApiError;
+use Kuvardin\TelegramBotsApi\Exceptions\CurlError;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class Request
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 abstract class Request
@@ -85,6 +85,7 @@ abstract class Request
     /**
      * @return string
      * @throws Error
+     * @throws \JsonException
      */
     public function __toString(): string
     {
@@ -146,6 +147,7 @@ abstract class Request
      * @throws ApiError
      * @throws CurlError
      * @throws Error
+     * @throws \JsonException
      */
     final protected function request(int $attempts = 1)
     {

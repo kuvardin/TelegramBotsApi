@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi;
 
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class Bot
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Bot
@@ -133,17 +133,6 @@ class Bot
     }
 
     /**
-     * @param string $parse_mode
-     * @return bool
-     */
-    public static function checkParseMode(string $parse_mode): bool
-    {
-        return $parse_mode === self::PARSE_MODE_HTML ||
-            $parse_mode === self::PARSE_MODE_MARKDOWN ||
-            $parse_mode === self::PARSE_MODE_MARKDOWN_V2;
-    }
-
-    /**
      * @return string
      */
     public function getDefaultParseMode(): string
@@ -163,6 +152,17 @@ class Bot
         }
         $this->default_parse_mode = $parse_mode;
         return $this;
+    }
+
+    /**
+     * @param string $parse_mode
+     * @return bool
+     */
+    public static function checkParseMode(string $parse_mode): bool
+    {
+        return $parse_mode === self::PARSE_MODE_HTML ||
+            $parse_mode === self::PARSE_MODE_MARKDOWN ||
+            $parse_mode === self::PARSE_MODE_MARKDOWN_V2;
     }
 
     /**
@@ -1436,8 +1436,8 @@ class Bot
      * - Bots can delete incoming messages in private chats.<br>
      * - Bots granted can_post_messages permissions can delete outgoing messages in channels.<br>
      * - If the bot is an administrator of a group, it can delete any message there.<br>
-     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.<br><br>
-     * Returns True on success.
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message
+     * there.<br><br> Returns True on success.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
      * (in the format @channelusername)

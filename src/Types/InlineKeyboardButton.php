@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents one button of an inline keyboard. You must use exactly one of the optional fields.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class InlineKeyboardButton implements TypeInterface
@@ -46,7 +44,10 @@ class InlineKeyboardButton implements TypeInterface
     public ?string $switch_inline_query = null;
 
     /**
-     * @var string|null If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
+     * @var string|null If set, pressing the button will insert the bot‘s username and the specified inline query in
+     *     the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.This
+     *     offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting
+     *     something from multiple options.
      */
     public ?string $switch_inline_query_current_chat = null;
 

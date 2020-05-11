@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents an incoming callback query from a callback button in an inline keyboard.
@@ -13,7 +12,7 @@ use TelegramBotsApi\Exceptions\Error;
  * will be present. If the button was attached to a message sent via the bot (in inline mode), the field
  * inline_message_id will be present. Exactly one of the fields data or game_short_name will be present.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class CallbackQuery implements TypeInterface

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InlineQueryResult;
+namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
-use TelegramBotsApi\Types\InlineQueryResult;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file
  * will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send
  * a message with the specified content instead of the video.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
@@ -52,7 +52,8 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     public ?string $caption = null;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or
+     *     inline URLs in the media caption.
      */
     public ?string $parse_mode = null;
 
@@ -82,7 +83,8 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     public ?Types\InlineKeyboardMarkup $reply_markup = null;
 
     /**
-     * @var Types\InputMessageContent|null Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+     * @var Types\InputMessageContent|null Content of the message to be sent instead of the video. This field is
+     *     required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
      */
     public ?Types\InputMessageContent $input_message_content = null;
 

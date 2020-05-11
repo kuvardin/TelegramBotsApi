@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Requests\Traits;
+namespace Kuvardin\TelegramBotsApi\Requests\Traits;
 
-use TelegramBotsApi\Types\ReplyKeyboardMarkup;
+use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardMarkup;
 
 /**
  * Trait ReplyKeyboardMarkupEdit
  *
- * @package TelegramBotsApi\Requests\Traits
- */
+ * @package Kuvardin\TelegramBotsApi
+*/
 trait ReplyKeyboardMarkupEdit
 {
     /**

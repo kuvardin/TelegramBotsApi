@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
+namespace Kuvardin\TelegramBotsApi\Types;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object contains information about a poll.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Poll implements TypeInterface
@@ -125,6 +124,16 @@ class Poll implements TypeInterface
     }
 
     /**
+     * @param string $type
+     * @return bool
+     */
+    public static function checkType(string $type): bool
+    {
+        return $type === self::TYPE_QUIZ ||
+            $type === self::TYPE_REGULAR;
+    }
+
+    /**
      * @param string $id Unique poll identifier
      * @param string $question Poll question, 1-255 characters
      * @param PollOption[] $options List of poll options
@@ -143,16 +152,6 @@ class Poll implements TypeInterface
             'total_voter_count' => $total_voter_count,
             'type' => $type,
         ]);
-    }
-
-    /**
-     * @param string $type
-     * @return bool
-     */
-    public static function checkType(string $type): bool
-    {
-        return $type === self::TYPE_QUIZ ||
-            $type === self::TYPE_REGULAR;
     }
 
     /**

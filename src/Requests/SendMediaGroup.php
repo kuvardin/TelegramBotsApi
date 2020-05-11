@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Requests;
+namespace Kuvardin\TelegramBotsApi\Requests;
 
-use TelegramBotsApi;
+use Kuvardin\TelegramBotsApi;
 
 /**
  * Class SendMediaGroup
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class SendMediaGroup extends TelegramBotsApi\Request
@@ -31,6 +31,8 @@ class SendMediaGroup extends TelegramBotsApi\Request
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
      * @throws TelegramBotsApi\Exceptions\Error
+     * @throws \JsonException
+     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): array
     {

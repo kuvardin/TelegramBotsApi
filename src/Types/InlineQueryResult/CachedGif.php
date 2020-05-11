@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InlineQueryResult;
+namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
-use TelegramBotsApi\Types\InlineQueryResult;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 /**
- * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with specified content instead of the animation.
+ * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be
+ * sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with
+ * specified content instead of the animation.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class CachedGif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface

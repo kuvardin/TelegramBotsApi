@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\PassportElementError;
+namespace Kuvardin\TelegramBotsApi\Types\PassportElementError;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents an issue with the reverse side of a document. The error is considered resolved when the file with
  * reverse side of the document changes.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ReverseSide extends Types\PassportElementError implements Types\TypeInterface

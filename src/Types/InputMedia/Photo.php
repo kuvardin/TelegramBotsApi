@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InputMedia;
+namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents a photo to be sent.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Photo extends Types\InputMedia implements Types\TypeInterface
@@ -31,7 +30,8 @@ class Photo extends Types\InputMedia implements Types\TypeInterface
     public ?string $caption = null;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or
+     *     inline URLs in the media caption.
      */
     public ?string $parse_mode = null;
 

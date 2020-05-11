@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user.
  * Serves as a great replacement for the Telegram Login Widget when the user is coming from Telegram.
  * All the user needs to do is tap/click a button and confirm that they want to log in.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class LoginUrl implements TypeInterface

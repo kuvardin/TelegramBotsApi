@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InlineQueryResult;
+namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
-use TelegramBotsApi\Types\InlineQueryResult;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 /**
  * Represents a link to a photo. By default, this photo will be sent by the user with optional caption.
  * Alternatively, you can use input_message_content to send a message with the specified content instead
  * of the photo.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
@@ -62,7 +62,8 @@ class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
     public ?string $caption = null;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or
+     *     inline URLs in the media caption.
      */
     public ?string $parse_mode = null;
 

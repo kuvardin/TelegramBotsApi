@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Contains information about why a request was unsuccessful.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ResponseParameters implements TypeInterface
@@ -23,7 +21,8 @@ class ResponseParameters implements TypeInterface
     public ?int $migrate_to_chat_id = null;
 
     /**
-     * @var int|null In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
+     * @var int|null In case of exceeding flood control, the number of seconds left to wait before the request can be
+     *     repeated
      */
     public ?int $retry_after = null;
 

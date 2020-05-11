@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InputMessageContent;
+namespace Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents the content of a text message to be sent as the result of an inline query.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Text extends Types\InputMessageContent implements Types\TypeInterface

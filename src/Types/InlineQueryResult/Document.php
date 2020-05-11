@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\InlineQueryResult;
+namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
-use TelegramBotsApi\Types\InlineQueryResult;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 /**
- * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method.
+ * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively,
+ * you can use input_message_content to send a message with the specified content instead of the file. Currently, only
+ * .PDF and .ZIP files can be sent using this method.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterface
@@ -35,7 +37,8 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
     public ?string $caption = null;
 
     /**
-     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.
+     * @var string|null Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or
+     *     inline URLs in the media caption.
      */
     public ?string $parse_mode = null;
 

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Requests;
+namespace Kuvardin\TelegramBotsApi\Requests;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class LeaveChat
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class LeaveChat extends TelegramBotsApi\Request
@@ -28,6 +28,8 @@ class LeaveChat extends TelegramBotsApi\Request
      * @throws Error
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
+     * @throws \JsonException
+     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): void
     {

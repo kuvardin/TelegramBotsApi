@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG
  * format when decrypted and don't exceed 10MB.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class PassportFile implements TypeInterface

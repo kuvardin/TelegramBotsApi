@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Exceptions;
+namespace Kuvardin\TelegramBotsApi\Exceptions;
 
 use Exception;
 use Throwable;
@@ -10,7 +10,7 @@ use Throwable;
 /**
  * Class CurlError
  *
- * @package TelegramBotsApi\Exceptions
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class CurlError extends Exception

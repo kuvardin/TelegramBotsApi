@@ -13,12 +13,12 @@
   "authors": [
     {
       "name": "Maxim Kuvardin",
-      "email": "kuvard.in@mail.ru"
+      "email": "maxim@kuvard.in"
     }
   ],
   "autoload": {
-    "classmap": [
-      "src"
-    ]
+    "psr-4": {
+      "Kuvardin\\TelegramBotsApi\\": "src"
+    }
   }
 }

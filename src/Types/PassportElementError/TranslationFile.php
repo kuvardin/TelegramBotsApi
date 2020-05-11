@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types\PassportElementError;
+namespace Kuvardin\TelegramBotsApi\Types\PassportElementError;
 
-use TelegramBotsApi;
-use TelegramBotsApi\Exceptions\Error;
-use TelegramBotsApi\Types;
+use Kuvardin\TelegramBotsApi\Exceptions\Error;
+use Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Represents an issue with one of the files that constitute the translation of a document.
  * The error is considered resolved when the file changes.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class TranslationFile extends Types\PassportElementError implements Types\TypeInterface

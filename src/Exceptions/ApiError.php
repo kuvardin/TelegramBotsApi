@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Exceptions;
+namespace Kuvardin\TelegramBotsApi\Exceptions;
 
 use Exception;
-use TelegramBotsApi\Types\ResponseParameters;
+use Kuvardin\TelegramBotsApi\Types\ResponseParameters;
 use Throwable;
 
 /**
  * Class ApiError
  *
- * @package TelegramBotsApi\Exceptions
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ApiError extends Exception

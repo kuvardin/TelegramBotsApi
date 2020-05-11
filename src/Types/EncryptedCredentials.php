@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Contains data required for decrypting and authenticating EncryptedPassportElement. See the Telegram Passport
  * Documentation for a complete description of the data decryption and authentication processes.
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class EncryptedCredentials implements TypeInterface

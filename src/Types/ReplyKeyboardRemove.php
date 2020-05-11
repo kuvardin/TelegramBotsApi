@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TelegramBotsApi\Types;
-
-use TelegramBotsApi;
+namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
  * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and
@@ -12,7 +10,7 @@ use TelegramBotsApi;
  * by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses
  * a button (see ReplyKeyboardMarkup).
  *
- * @package TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class ReplyKeyboardRemove implements TypeInterface
