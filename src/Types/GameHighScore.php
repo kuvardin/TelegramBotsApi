@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents one row of the high scores table for a game.
  *
@@ -33,8 +31,6 @@ class GameHighScore implements TypeInterface
      * GameHighScore constructor.
      *
      * @param array $data
-     * @throws Error
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -50,8 +46,6 @@ class GameHighScore implements TypeInterface
      * @param User $user User
      * @param int $score Score
      * @return GameHighScore
-     * @throws Error
-     * @throws Error
      */
     public static function make(int $position, User $user, int $score): self
     {

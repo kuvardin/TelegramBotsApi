@@ -61,7 +61,6 @@ class CachedVoice extends InlineQueryResult implements TelegramBotsApi\Types\Typ
      * CachedVoice constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -101,7 +100,6 @@ class CachedVoice extends InlineQueryResult implements TelegramBotsApi\Types\Typ
      * @param string $voice_file_id A valid file identifier for the voice message
      * @param string $title Voice message title
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $voice_file_id, string $title): self
     {

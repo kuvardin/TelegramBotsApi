@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act
  * as unique identifiers.
@@ -51,7 +49,6 @@ class Game implements TypeInterface
      * Game constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -83,7 +80,6 @@ class Game implements TypeInterface
      * @param string $description Description of the game
      * @param PhotoSize[] $photo Photo that will be displayed in the game message in chats.
      * @return Game
-     * @throws Error
      */
     public static function make(string $title, string $description, array $photo): self
     {

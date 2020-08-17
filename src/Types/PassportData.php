@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * Contains information about Telegram Passport data shared with the bot by the user.
  *
@@ -29,7 +27,6 @@ class PassportData implements TypeInterface
      * PassportData constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -49,7 +46,6 @@ class PassportData implements TypeInterface
      * elements that was shared with the bot
      * @param EncryptedCredentials $credentials Encrypted credentials required to decrypt the data
      * @return PassportData
-     * @throws Error
      */
     public static function make(array $data, EncryptedCredentials $credentials): self
     {

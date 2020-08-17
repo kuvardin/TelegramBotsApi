@@ -50,7 +50,6 @@ class Bot
      *
      * @param string $token
      * @param string $username
-     * @throws Error
      */
     public function __construct(string $token, string $username)
     {
@@ -64,7 +63,6 @@ class Bot
      * @param string $parse_mode
      * @param bool $filter
      * @return string
-     * @throws Error
      */
     public static function genLink(string $url, string $text, string $parse_mode = self::PARSE_MODE_DEFAULT,
         bool $filter = false): string
@@ -90,7 +88,6 @@ class Bot
      * @param string $text
      * @param string $parse_mode
      * @return string
-     * @throws Error
      */
     public static function filterString(string $text, string $parse_mode = self::PARSE_MODE_DEFAULT): string
     {
@@ -143,7 +140,6 @@ class Bot
     /**
      * @param string $parse_mode
      * @return $this
-     * @throws Error
      */
     public function setDefaultParseMode(string $parse_mode): self
     {
@@ -757,7 +753,6 @@ class Bot
      * Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
      * @param bool|null $is_closed Pass True, if the poll needs to be immediately closed
      * @return Requests\SendPoll
-     * @throws Error
      */
     public function sendPoll($chat_id, string $question, array $options, bool $is_anonymous = null,
         string $type = null, bool $allows_multiple_answers = null, int $correct_option_id = null,
@@ -793,7 +788,6 @@ class Bot
      * (in the format @channelusername)
      * @param string|null $emoji Emoji on which the dice throw animation is based. Must be one of Dice::EMOJI_*
      * @return Requests\SendDice
-     * @throws Error
      */
     public function sendDice($chat_id, string $emoji = null): Requests\SendDice
     {

@@ -45,7 +45,6 @@ class CachedSticker extends InlineQueryResult implements TelegramBotsApi\Types\T
      * CachedSticker constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -75,7 +74,6 @@ class CachedSticker extends InlineQueryResult implements TelegramBotsApi\Types\T
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $sticker_file_id A valid file identifier of the sticker
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $sticker_file_id): self
     {

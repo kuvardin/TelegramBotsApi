@@ -100,7 +100,6 @@ class Chat implements TypeInterface
      * Chat constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -168,7 +167,6 @@ class Chat implements TypeInterface
      * 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier
      * @param string $type Type of chat, can be either self::TYPE_*
      * @return Chat
-     * @throws Error
      */
     public static function make(int $id, string $type): self
     {
@@ -200,7 +198,6 @@ class Chat implements TypeInterface
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

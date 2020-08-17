@@ -10,7 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
  * Trait InlineKeyboardMarkupEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait InlineKeyboardMarkupEdit
 {
     /**

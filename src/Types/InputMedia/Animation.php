@@ -64,7 +64,6 @@ class Animation extends Types\InputMedia implements Types\TypeInterface
      * Animation constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -107,7 +106,6 @@ class Animation extends Types\InputMedia implements Types\TypeInterface
      * “attach://<file_attach_name>” to upload a new one using multipart/form-data
      * under <file_attach_name> name
      * @return Animation
-     * @throws Error
      */
     public static function make(string $media): self
     {

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents a sticker.
  *
@@ -69,7 +67,6 @@ class Sticker implements TypeInterface
      * Sticker constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -112,7 +109,6 @@ class Sticker implements TypeInterface
      * @param int $height Sticker height
      * @param bool $is_animated True, if the sticker is animated
      * @return Sticker
-     * @throws Error
      */
     public static function make(string $file_id, string $file_unique_id, int $width, int $height, bool $is_animated): self
     {

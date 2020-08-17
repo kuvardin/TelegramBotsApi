@@ -74,7 +74,6 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * Location constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -124,7 +123,6 @@ class Location extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * @param float $longitude Location longitude in degrees
      * @param string $title Location title
      * @return self
-     * @throws Error
      */
     public static function make(string $id, float $latitude, float $longitude, string $title): self
     {

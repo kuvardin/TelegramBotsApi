@@ -52,7 +52,6 @@ class TranslationFile extends Types\PassportElementError implements Types\TypeIn
      * TranslationFile constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -73,7 +72,6 @@ class TranslationFile extends Types\PassportElementError implements Types\TypeIn
      * @param string $file_hash Base64-encoded file hash
      * @param string $message Error message
      * @return TranslationFile
-     * @throws Error
      */
     public static function make(string $type, string $file_hash, string $message): self
     {
@@ -111,7 +109,6 @@ class TranslationFile extends Types\PassportElementError implements Types\TypeIn
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

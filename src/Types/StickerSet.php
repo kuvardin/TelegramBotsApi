@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents a sticker set.
  *
@@ -48,7 +46,6 @@ class StickerSet implements TypeInterface
      * StickerSet constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -71,7 +68,6 @@ class StickerSet implements TypeInterface
      * @param bool $contains_masks True, if the sticker set contains masks
      * @param Sticker[] $stickers List of all set stickers
      * @return StickerSet
-     * @throws Error
      */
     public static function make(string $name, string $title, bool $is_animated, bool $contains_masks, array $stickers): self
     {

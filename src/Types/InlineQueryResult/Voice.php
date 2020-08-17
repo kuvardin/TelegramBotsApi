@@ -66,7 +66,6 @@ class Voice extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * Voice constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -110,7 +109,6 @@ class Voice extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @param string $voice_url A valid URL for the voice recording
      * @param string $title Recording title
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $voice_url, string $title): self
     {

@@ -26,11 +26,8 @@ class AnswerPreCheckoutQuery extends TelegramBotsApi\Request
     /**
      * @param int $attempts
      * @return mixed|void
-     * @throws Error
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
-     * @throws \JsonException
-     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): void
     {

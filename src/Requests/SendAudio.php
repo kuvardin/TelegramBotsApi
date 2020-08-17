@@ -36,8 +36,6 @@ class SendAudio extends TelegramBotsApi\Request
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
      * @throws TelegramBotsApi\Exceptions\Error
-     * @throws \JsonException
-     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): TelegramBotsApi\Types\Message
     {

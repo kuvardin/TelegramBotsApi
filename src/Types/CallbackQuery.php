@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents an incoming callback query from a callback button in an inline keyboard.
  * If the button that originated the query was attached to a message sent by the bot, the field message
@@ -59,7 +57,6 @@ class CallbackQuery implements TypeInterface
      * CallbackQuery constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -94,7 +91,6 @@ class CallbackQuery implements TypeInterface
      * @param string $chat_instance Global identifier, uniquely corresponding to the chat to which
      * the message with the callback button was sent. Useful for high scores in games.
      * @return CallbackQuery
-     * @throws Error
      */
     public static function make(string $id, User $from, string $chat_instance): self
     {

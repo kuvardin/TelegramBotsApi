@@ -66,7 +66,6 @@ class CachedVideo extends InlineQueryResult implements TelegramBotsApi\Types\Typ
      * InlineQueryResultCachedVideo constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -110,7 +109,6 @@ class CachedVideo extends InlineQueryResult implements TelegramBotsApi\Types\Typ
      * @param string $video_file_id A valid file identifier for the video file
      * @param string $title Title for the result
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $video_file_id, string $title): self
     {

@@ -81,7 +81,6 @@ class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * Photo constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -137,7 +136,6 @@ class Photo extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @param string $photo_url A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB
      * @param string $thumb_url URL of the thumbnail for the photo
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $photo_url, string $thumb_url): self
     {

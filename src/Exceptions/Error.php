@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Exceptions;
 
-use Exception;
 use Throwable;
 
 /**
  * Class Error
  *
- * @package Kuvardin\TelegramBotsApi
+ * @package Kuvardin\TelegramBotsApi\Exceptions
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Error extends Exception
+class Error extends \Error
 {
     /**
      * Error constructor.

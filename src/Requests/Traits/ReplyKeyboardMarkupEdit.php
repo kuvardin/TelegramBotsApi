@@ -10,7 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardMarkup;
  * Trait ReplyKeyboardMarkupEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait ReplyKeyboardMarkupEdit
 {
     /**

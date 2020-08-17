@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object contains information about an incoming shipping query.
  *
@@ -38,8 +36,6 @@ class ShippingQuery implements TypeInterface
      * ShippingQuery constructor.
      *
      * @param array $data
-     * @throws Error
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -57,8 +53,6 @@ class ShippingQuery implements TypeInterface
      * @param string $invoice_payload Bot specified invoice payload
      * @param ShippingAddress $shipping_address User specified shipping address
      * @return ShippingQuery
-     * @throws Error
-     * @throws Error
      */
     public static function make(string $id, User $from, string $invoice_payload, ShippingAddress $shipping_address): self
     {

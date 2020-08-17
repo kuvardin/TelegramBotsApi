@@ -10,7 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardRemove;
  * Trait ReplyKeyboardRemovingEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait ReplyKeyboardRemovingEdit
 {
     /**

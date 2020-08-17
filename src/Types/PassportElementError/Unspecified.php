@@ -41,7 +41,6 @@ class Unspecified extends Types\PassportElementError implements Types\TypeInterf
      * Unspecified constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -61,7 +60,6 @@ class Unspecified extends Types\PassportElementError implements Types\TypeInterf
      * @param string $element_hash Base64-encoded element hash
      * @param string $message Error message
      * @return Unspecified
-     * @throws Error
      */
     public static function make(string $type, string $element_hash, string $message): self
     {

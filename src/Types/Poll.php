@@ -89,7 +89,6 @@ class Poll implements TypeInterface
      * Poll constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -140,7 +139,6 @@ class Poll implements TypeInterface
      * @param int $total_voter_count Total number of users that voted in the poll
      * @param string $type Poll type, currently can be self::TYPE_*
      * @return Poll
-     * @throws Error
      */
     public static function make(string $id, string $question, array $options, int $total_voter_count,
         string $type): self

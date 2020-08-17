@@ -26,7 +26,6 @@ class KeyboardButtonPollType implements TypeInterface
      * KeyboardButtonPollType constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -41,7 +40,6 @@ class KeyboardButtonPollType implements TypeInterface
      * If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create
      * a poll of any type.
      * @return KeyboardButtonPollType
-     * @throws Error
      */
     public static function make(string $type): self
     {

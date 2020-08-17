@@ -66,7 +66,6 @@ class CachedDocument extends InlineQueryResult implements TelegramBotsApi\Types\
      * CachedDocument constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -110,7 +109,6 @@ class CachedDocument extends InlineQueryResult implements TelegramBotsApi\Types\
      * @param string $title Title for the result
      * @param string $document_file_id A valid file identifier for the file
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $title, string $document_file_id): self
     {

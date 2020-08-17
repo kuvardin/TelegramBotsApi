@@ -61,7 +61,6 @@ class MessageEntity implements TypeInterface
      * MessageEntity constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -89,7 +88,6 @@ class MessageEntity implements TypeInterface
      * @param int $offset Offset in UTF-16 code units to the start of the entity
      * @param int $length Length of the entity in UTF-16 code units
      * @return MessageEntity
-     * @throws Error
      */
     public static function make(string $type, int $offset, int $length): self
     {
@@ -133,7 +131,6 @@ class MessageEntity implements TypeInterface
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

@@ -70,7 +70,6 @@ class Audio extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * Audio constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -118,7 +117,6 @@ class Audio extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @param string $audio_url A valid URL for the audio file
      * @param string $title Title
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $audio_url, string $title): self
     {

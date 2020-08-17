@@ -81,7 +81,6 @@ class Gif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterfa
      * Gif constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -137,7 +136,6 @@ class Gif extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterfa
      * @param string $gif_url A valid URL for the GIF file. File size must not exceed 1MB
      * @param string $thumb_url URL of the static thumbnail for the result (jpeg or gif)
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $gif_url, string $thumb_url): self
     {

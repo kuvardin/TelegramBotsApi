@@ -98,7 +98,6 @@ class Update implements TypeInterface
      * Update constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -177,7 +176,6 @@ class Update implements TypeInterface
      * order. If there are no new updates for at least a week, then identifier of the next update will be chosen
      * randomly instead of sequentially.
      * @return Update
-     * @throws Error
      */
     public static function make(int $update_id): self
     {
@@ -207,7 +205,6 @@ class Update implements TypeInterface
 
     /**
      * @return User|null
-     * @throws Error
      */
     public function getUser(): ?User
     {
@@ -241,7 +238,6 @@ class Update implements TypeInterface
 
     /**
      * @return string
-     * @throws Error
      */
     public function getAction(): string
     {
@@ -275,7 +271,6 @@ class Update implements TypeInterface
 
     /**
      * @return Chat|null
-     * @throws Error
      */
     public function getChat(): ?Chat
     {

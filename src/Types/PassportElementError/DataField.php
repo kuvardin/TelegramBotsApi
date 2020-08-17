@@ -49,7 +49,6 @@ class DataField extends Types\PassportElementError implements Types\TypeInterfac
      * DataField constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -71,7 +70,6 @@ class DataField extends Types\PassportElementError implements Types\TypeInterfac
      * @param string $data_hash Base64-encoded data hash
      * @param string $message Error message
      * @return DataField
-     * @throws Error
      */
     public static function make(string $type, string $field_name, string $data_hash, string $message): self
     {
@@ -107,7 +105,6 @@ class DataField extends Types\PassportElementError implements Types\TypeInterfac
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

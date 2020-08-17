@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return
  * some default or trending results.
@@ -44,8 +42,6 @@ class InlineQuery implements TypeInterface
      * InlineQuery constructor.
      *
      * @param array $data
-     * @throws Error
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -70,8 +66,6 @@ class InlineQuery implements TypeInterface
      * @param string $query Text of the query (up to 512 characters)
      * @param string $offset Offset of the results to be returned, can be controlled by the bot
      * @return InlineQuery
-     * @throws Error
-     * @throws Error
      */
     public static function make(string $id, User $from, string $query, string $offset): self
     {

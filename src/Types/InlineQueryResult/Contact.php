@@ -74,7 +74,6 @@ class Contact extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
      * Contact constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -126,7 +125,6 @@ class Contact extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
      * @param string $phone_number Contact's phone number
      * @param string $first_name Contact's first name
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $phone_number, string $first_name): self
     {

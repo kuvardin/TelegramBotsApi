@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Requests;
 
 use Kuvardin\TelegramBotsApi;
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * Class SendDice
@@ -33,11 +32,8 @@ class SendDice extends TelegramBotsApi\Request
     /**
      * @param int $attempts
      * @return TelegramBotsApi\Types\Message
-     * @throws Error
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
-     * @throws \JsonException
-     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): TelegramBotsApi\Types\Message
     {

@@ -32,7 +32,6 @@ class InputMedia
     /**
      * @param array $data
      * @return InputMedia
-     * @throws Error
      */
     public static function constructChild(array $data): InputMedia
     {

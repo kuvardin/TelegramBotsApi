@@ -37,7 +37,6 @@ class PassportElementError
     /**
      * @param array $data
      * @return PassportElementError
-     * @throws Error
      */
     public static function constructChild(array $data): PassportElementError
     {

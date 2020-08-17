@@ -79,13 +79,13 @@ abstract class Request
     /**
      * @param int $attempts
      * @return mixed
+     * @throws ApiError
+     * @throws CurlError
      */
     abstract public function sendRequest(int $attempts = 1);
 
     /**
      * @return string
-     * @throws Error
-     * @throws \JsonException
      */
     public function __toString(): string
     {
@@ -94,7 +94,6 @@ abstract class Request
 
     /**
      * @return array
-     * @throws Error
      */
     public function getRequestData(): array
     {
@@ -106,7 +105,6 @@ abstract class Request
     /**
      * @param array $params
      * @return array
-     * @throws Error
      */
     private static function processingParams(array $params): array
     {
@@ -146,8 +144,6 @@ abstract class Request
      * @return mixed
      * @throws ApiError
      * @throws CurlError
-     * @throws Error
-     * @throws \JsonException
      */
     final protected function request(int $attempts = 1)
     {

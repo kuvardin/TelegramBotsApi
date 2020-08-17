@@ -38,7 +38,6 @@ class Game extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterf
      * Game constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -62,7 +61,6 @@ class Game extends InlineQueryResult implements TelegramBotsApi\Types\TypeInterf
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $game_short_name Short name of the game
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $game_short_name): self
     {

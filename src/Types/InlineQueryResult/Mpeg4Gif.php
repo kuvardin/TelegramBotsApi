@@ -80,7 +80,6 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
      * Mpeg4Gif constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -136,7 +135,6 @@ class Mpeg4Gif extends InlineQueryResult implements Types\TypeInterface
      * @param string $mpeg4_url A valid URL for the MP4 file. File size must not exceed 1MB
      * @param string $thumb_url URL of the static thumbnail (jpeg or gif) for the result
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $mpeg4_url, string $thumb_url): self
     {

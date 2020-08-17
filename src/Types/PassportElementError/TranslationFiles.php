@@ -52,7 +52,6 @@ class TranslationFiles extends Types\PassportElementError implements Types\TypeI
      * TranslationFiles constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -73,7 +72,6 @@ class TranslationFiles extends Types\PassportElementError implements Types\TypeI
      * @param string[] $file_hashes List of base64-encoded file hashes
      * @param string $message Error message
      * @return TranslationFiles
-     * @throws Error
      */
     public static function make(string $type, array $file_hashes, string $message): self
     {
@@ -111,7 +109,6 @@ class TranslationFiles extends Types\PassportElementError implements Types\TypeI
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

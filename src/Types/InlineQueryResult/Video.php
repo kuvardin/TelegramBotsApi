@@ -92,7 +92,6 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * Video constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -152,7 +151,6 @@ class Video extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @param string $thumb_url URL of the thumbnail (jpeg only) for the video
      * @param string $title Title for the result
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $video_url, string $mime_type, string $thumb_url, string $title): self
     {

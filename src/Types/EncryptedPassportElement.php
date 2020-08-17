@@ -97,7 +97,6 @@ class EncryptedPassportElement implements TypeInterface
      * EncryptedPassportElement constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -153,7 +152,6 @@ class EncryptedPassportElement implements TypeInterface
      * @param string $type Element type. One of self::TYPE_*
      * @param string $hash Base64-encoded element hash for using in PassportElementErrorUnspecified
      * @return EncryptedPassportElement
-     * @throws Error
      */
     public static function make(string $type, string $hash): self
     {
@@ -194,7 +192,6 @@ class EncryptedPassportElement implements TypeInterface
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

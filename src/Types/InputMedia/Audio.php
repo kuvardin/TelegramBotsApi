@@ -63,7 +63,6 @@ class Audio extends Types\InputMedia implements Types\TypeInterface
      * Audio constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -104,7 +103,6 @@ class Audio extends Types\InputMedia implements Types\TypeInterface
      * (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      * “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name
      * @return Audio
-     * @throws Error
      */
     public static function make(string $media): self
     {

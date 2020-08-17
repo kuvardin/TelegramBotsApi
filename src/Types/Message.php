@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object represents a message.
  *
@@ -274,7 +272,6 @@ class Message implements TypeInterface
      * Message constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -521,7 +518,6 @@ class Message implements TypeInterface
      * @param int $date Date the message was sent in Unix time
      * @param Chat $chat Conversation the message belongs to
      * @return Message
-     * @throws Error
      */
     public static function make(int $message_id, int $date, Chat $chat): self
     {

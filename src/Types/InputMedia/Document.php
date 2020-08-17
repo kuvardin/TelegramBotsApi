@@ -49,7 +49,6 @@ class Document extends Types\InputMedia implements Types\TypeInterface
      * Document constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -79,7 +78,6 @@ class Document extends Types\InputMedia implements Types\TypeInterface
      * “attach://<file_attach_name>” to upload a new one using multipart/form-data
      * under <file_attach_name> name
      * @return Document
-     * @throws Error
      */
     public static function make(string $media): self
     {

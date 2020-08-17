@@ -30,11 +30,8 @@ class EditMessageText extends TelegramBotsApi\Request
     /**
      * @param int $attempts
      * @return TelegramBotsApi\Types\Message|null
-     * @throws Error
      * @throws TelegramBotsApi\Exceptions\ApiError
      * @throws TelegramBotsApi\Exceptions\CurlError
-     * @throws \JsonException
-     * @throws \JsonException
      */
     public function sendRequest(int $attempts = 1): ?TelegramBotsApi\Types\Message
     {

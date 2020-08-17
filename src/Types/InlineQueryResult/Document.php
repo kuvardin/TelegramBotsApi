@@ -86,7 +86,6 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * Document constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -144,7 +143,6 @@ class Document extends InlineQueryResult implements TelegramBotsApi\Types\TypeIn
      * @param string $document_url A valid URL for the file
      * @param string $mime_type Mime type of the content of the file, either “application/pdf” or “application/zip”
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $title, string $document_url, string $mime_type): self
     {

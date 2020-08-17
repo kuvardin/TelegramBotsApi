@@ -73,7 +73,6 @@ class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
      * Article constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -125,7 +124,6 @@ class Article extends InlineQueryResult implements TelegramBotsApi\Types\TypeInt
      * @param string $title Title of the result
      * @param Types\InputMessageContent $input_message_content Content of the message to be sent
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $title,
         Types\InputMessageContent $input_message_content): self

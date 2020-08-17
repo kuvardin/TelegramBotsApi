@@ -33,7 +33,6 @@ class Dice implements TypeInterface
      * Dice constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -57,7 +56,6 @@ class Dice implements TypeInterface
      * @param string $emoji Emoji on which the dice throw animation is based
      * @param string $value Value of the dice, 1-6 for currently supported base emoji
      * @return static
-     * @throws Error
      */
     public static function make(string $emoji, string $value): self
     {

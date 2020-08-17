@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi;
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
 
 /**
  * This object represents an answer of a user in a non-anonymous poll.
@@ -50,7 +49,6 @@ class PollAnswer implements TypeInterface
      * @param int[] $option_ids 0-based identifiers of answer options, chosen by the user. May be empty if
      * the user retracted their vote.
      * @return PollAnswer
-     * @throws Error
      */
     public static function make(string $poll_id, User $user, array $option_ids): self
     {

@@ -8,7 +8,7 @@ namespace Kuvardin\TelegramBotsApi\Requests\Traits;
  * Trait WebPagePreviewSendingEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait WebPagePreviewSendingEdit
 {
     /**

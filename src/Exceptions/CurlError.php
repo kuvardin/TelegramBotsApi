@@ -33,7 +33,6 @@ class CurlError extends Exception
      * @param $ch
      * @param Throwable|null $previous
      * @return static
-     * @throws Error
      */
     public static function make($ch, Throwable $previous = null): self
     {

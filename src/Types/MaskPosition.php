@@ -45,7 +45,6 @@ class MaskPosition implements TypeInterface
      * MaskPosition constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -63,7 +62,6 @@ class MaskPosition implements TypeInterface
      * to bottom. For example, 1.0 will place the mask just below the default mask position.
      * @param float $scale Mask scaling coefficient. For example, 2.0 means double size.
      * @return MaskPosition
-     * @throws Error
      */
     public static function make(string $point, float $x_shift, float $y_shift, float $scale): self
     {
@@ -97,7 +95,6 @@ class MaskPosition implements TypeInterface
 
     /**
      * @param string $point
-     * @throws Error
      */
     public function setPoint(string $point): void
     {

@@ -132,7 +132,6 @@ class ChatMember implements TypeInterface
      * ChatMember constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -214,7 +213,6 @@ class ChatMember implements TypeInterface
      * @param User $user Information about the user
      * @param string $status The member's status in the chat. Can be self::STATUS_*
      * @return ChatMember
-     * @throws Error
      */
     public static function make(User $user, string $status): self
     {
@@ -248,7 +246,6 @@ class ChatMember implements TypeInterface
 
     /**
      * @param string $status
-     * @throws Error
      */
     public function setStatus(string $status): void
     {

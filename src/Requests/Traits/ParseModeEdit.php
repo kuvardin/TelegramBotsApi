@@ -8,7 +8,7 @@ namespace Kuvardin\TelegramBotsApi\Requests\Traits;
  * Trait ParseModeEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait ParseModeEdit
 {
     /**

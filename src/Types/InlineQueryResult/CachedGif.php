@@ -61,7 +61,6 @@ class CachedGif extends InlineQueryResult implements TelegramBotsApi\Types\TypeI
      * CachedGif constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -103,7 +102,6 @@ class CachedGif extends InlineQueryResult implements TelegramBotsApi\Types\TypeI
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $gif_file_id A valid file identifier for the GIF file
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $gif_file_id): self
     {

@@ -10,7 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\Message;
  * Trait ReplyToMessageEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait ReplyToMessageEdit
 {
     /**

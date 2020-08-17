@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * This object contains information about an incoming pre-checkout query.
  *
@@ -55,7 +53,6 @@ class PreCheckoutQuery implements TypeInterface
      * PreCheckoutQuery constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -87,7 +84,6 @@ class PreCheckoutQuery implements TypeInterface
      * it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      * @param string $invoice_payload Bot specified invoice payload
      * @return PreCheckoutQuery
-     * @throws Error
      */
     public static function make(string $id, User $from, string $currency, int $total_amount, string $invoice_payload): self
     {

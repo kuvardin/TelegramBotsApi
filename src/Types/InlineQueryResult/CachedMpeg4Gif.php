@@ -61,7 +61,6 @@ class CachedMpeg4Gif extends InlineQueryResult implements TelegramBotsApi\Types\
      * CachedMpeg4Gif constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -103,7 +102,6 @@ class CachedMpeg4Gif extends InlineQueryResult implements TelegramBotsApi\Types\
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $mpeg4_file_id A valid file identifier for the MP4 file
      * @return self
-     * @throws Error
      */
     public static function make(string $id, string $mpeg4_file_id): self
     {

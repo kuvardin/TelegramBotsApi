@@ -30,7 +30,6 @@ class Username
      * Username constructor.
      *
      * @param string $username
-     * @throws Error
      */
     public function __construct(string $username)
     {

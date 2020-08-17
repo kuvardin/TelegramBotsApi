@@ -47,7 +47,6 @@ class Selfie extends Types\PassportElementError implements Types\TypeInterface
      * Selfie constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -67,7 +66,6 @@ class Selfie extends Types\PassportElementError implements Types\TypeInterface
      * @param string $file_hash Base64-encoded hash of the file with the selfie
      * @param string $message Error message
      * @return Selfie
-     * @throws Error
      */
     public static function make(string $type, string $file_hash, string $message): self
     {
@@ -100,7 +98,6 @@ class Selfie extends Types\PassportElementError implements Types\TypeInterface
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

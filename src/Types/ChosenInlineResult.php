@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Exceptions\Error;
-
 /**
  * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
  *
@@ -44,8 +42,6 @@ class ChosenInlineResult implements TypeInterface
      * ChosenInlineResult constructor.
      *
      * @param array $data
-     * @throws Error
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -72,8 +68,6 @@ class ChosenInlineResult implements TypeInterface
      * @param User $from The user that chose the result
      * @param string $query The query that was used to obtain the result
      * @return ChosenInlineResult
-     * @throws Error
-     * @throws Error
      */
     public static function make(string $result_id, User $from, string $query): self
     {

@@ -45,7 +45,6 @@ class ReverseSide extends Types\PassportElementError implements Types\TypeInterf
      * ReverseSide constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -65,7 +64,6 @@ class ReverseSide extends Types\PassportElementError implements Types\TypeInterf
      * @param string $file_hash Base64-encoded hash of the file with the reverse side of the document
      * @param string $message Error message
      * @return ReverseSide
-     * @throws Error
      */
     public static function make(string $type, string $file_hash, string $message): self
     {
@@ -96,7 +94,6 @@ class ReverseSide extends Types\PassportElementError implements Types\TypeInterf
 
     /**
      * @param string $type
-     * @throws Error
      */
     public function setType(string $type): void
     {

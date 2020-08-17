@@ -8,7 +8,7 @@ namespace Kuvardin\TelegramBotsApi\Requests\Traits;
  * Trait NotificationDisablingEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait NotificationDisablingEdit
 {
     /**

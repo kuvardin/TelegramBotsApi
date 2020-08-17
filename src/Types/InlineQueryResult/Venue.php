@@ -85,7 +85,6 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * Venue constructor.
      *
      * @param array $data
-     * @throws Error
      */
     public function __construct(array $data)
     {
@@ -141,7 +140,6 @@ class Venue extends InlineQueryResult implements TelegramBotsApi\Types\TypeInter
      * @param string $title Title of the venue
      * @param string $address Address of the venue
      * @return self
-     * @throws Error
      */
     public static function make(string $id, float $latitude, float $longitude, string $title, string $address): self
     {

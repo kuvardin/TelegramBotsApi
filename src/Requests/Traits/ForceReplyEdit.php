@@ -10,7 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\ForceReply;
  * Trait ForceReplyEdit
  *
  * @package Kuvardin\TelegramBotsApi
-*/
+ */
 trait ForceReplyEdit
 {
     /**

@@ -41,7 +41,6 @@ class InlineQueryResult
     /**
      * @param array $data
      * @return InlineQueryResult
-     * @throws Error
      */
     public static function constructChild(array $data): InlineQueryResult
     {
