@@ -85,6 +85,22 @@ abstract class Request
     abstract public function sendRequest(int $attempts = 1);
 
     /**
+     * Returns true if request was success
+     * @param int $attempts
+     * @return bool
+     * @throws ApiError
+     */
+    public function tryToSend(int $attempts = 1): bool
+    {
+        try {
+            $this->request($attempts);
+            return true;
+        } catch (CurlError $curl_error) {
+            return false;
+        }
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -106,7 +122,7 @@ abstract class Request
      * @param array $params
      * @return array
      */
-    private static function processingParams(array $params): array
+    final private static function processingParams(array $params): array
     {
         $result = [];
         foreach ($params as $param_key => $param_value) {
