@@ -87,35 +87,35 @@ $request = null;
 $update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 
 switch ($update->type) {
-    case Kuvardin\TelegramBotsApi\Enums\Message:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
         $request = $bot->sendMessage($update->message->chat->id, 'Hi!');
         break;
     
-    case Kuvardin\TelegramBotsApi\Enums\EditedMessage:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::EditedMessage:
         // ...
         break;
 
-    case case Kuvardin\TelegramBotsApi\Enums\ChannelPost:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::ChannelPost:
         // ...
         break;
 
-    case Kuvardin\TelegramBotsApi\Enums\EditedChannelPost:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::EditedChannelPost:
         // ...
         break;
 
-    case Kuvardin\TelegramBotsApi\Enums\InlineQuery:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::InlineQuery:
         // ...
         break;
 
-    case Kuvardin\TelegramBotsApi\Enums\ChosenInlineResult:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::ChosenInlineResult:
         // ...
         break;
 
-    case Kuvardin\TelegramBotsApi\Enums\CallbackQuery:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::CallbackQuery:
         // ...
         break;
 
-    case Kuvardin\TelegramBotsApi\Enums\ShippingQuery:
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::ShippingQuery:
         // ...
         break;
     
