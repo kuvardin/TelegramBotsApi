@@ -1,0 +1,18 @@
+{
+    "name": "kuvardin/telegram-bots-api",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Kuvardin\\TelegramBotsApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maxim Kuvardin",
+            "email": "maxim@kuvard.in"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "7.4"
+    }
+}

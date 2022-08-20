@@ -1,0 +1,6 @@
+.idea/
+vendor/
+desktop.ini
+$RECYCLE.BIN/
+.idea_modules/
+composer.lock
