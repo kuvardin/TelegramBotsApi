@@ -68,6 +68,27 @@ class Bot
         $this->token = $token;
     }
 
+    public static function filterString(string $text, ParseMode $parse_mode = null): string
+    {
+        switch ($parse_mode ?? ParseMode::HTML) {
+            case ParseMode::HTML:
+                return str_replace(['<', '>', '&', '"'], ['&lt;', '&gt;', '&amp;', '&quot;'], $text);
+
+            case ParseMode::Markdown:
+                return str_replace(['_', '*', '`', '['], ['\_', '\*', '\`', '\['], $text);
+
+            case ParseMode::MarkdownV2:
+                return str_replace(
+                    ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+',
+                        '-', '=', '|', '{', '}', '.', '!',],
+                    ['\_', '\*', '\[', '\]', '\(', '\)', '\~', '\`', '\>', '\#', '\+',
+                        '\-', '\=', '\|', '\{', '\}', '\.', '\!',],
+                    $text);
+        }
+
+        throw new \RuntimeException("Unknown parse mode: {$parse_mode->value}");
+    }
+
     public function getToken(): string
     {
         return $this->token;
@@ -252,7 +273,7 @@ class Bot
         return new Requests\RequestMessage($this, 'sendMessage', [
             'chat_id' => $chat_id,
             'text' => $text,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
             'disable_web_page_preview' => $disable_web_page_preview,
             'disable_notification' => $disable_notification,
@@ -341,7 +362,7 @@ class Bot
             'from_chat_id' => $from_chat_id,
             'message_id' => $message_id,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
@@ -397,7 +418,7 @@ class Bot
             'chat_id' => $chat_id,
             'photo' => $photo,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
@@ -467,7 +488,7 @@ class Bot
             'chat_id' => $chat_id,
             'audio' => $audio,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'duration' => $duration,
             'performer' => $performer,
@@ -539,7 +560,7 @@ class Bot
             'document' => $document,
             'thumb' => $thumb,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'disable_content_type_detection' => $disable_content_type_detection,
             'disable_notification' => $disable_notification,
@@ -616,7 +637,7 @@ class Bot
             'height' => $height,
             'thumb' => $thumb,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'supports_streaming' => $supports_streaming,
             'disable_notification' => $disable_notification,
@@ -691,7 +712,7 @@ class Bot
             'height' => $height,
             'thumb' => $thumb,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
@@ -750,7 +771,7 @@ class Bot
             'chat_id' => $chat_id,
             'voice' => $voice,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'duration' => $duration,
             'disable_notification' => $disable_notification,
@@ -2137,7 +2158,7 @@ class Bot
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'text' => $text,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
             'disable_web_page_preview' => $disable_web_page_preview,
             'reply_markup' => $reply_markup,
@@ -2169,7 +2190,7 @@ class Bot
         return new Requests\RequestVoid($this, 'editMessageText', [
             'inline_message_id' => $inline_message_id,
             'text' => $text,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
             'disable_web_page_preview' => $disable_web_page_preview,
             'reply_markup' => $reply_markup,
@@ -2203,7 +2224,7 @@ class Bot
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'reply_markup' => $reply_markup,
         ]);
@@ -2233,7 +2254,7 @@ class Bot
         return new Requests\RequestVoid($this, 'editMessageCaption', [
             'inline_message_id' => $inline_message_id,
             'caption' => $caption,
-            'parse_mode' => $parse_mode?->value,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'reply_markup' => $reply_markup,
         ]);
