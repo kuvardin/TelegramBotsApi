@@ -35,9 +35,9 @@ $request = $bot->sendMessage($chat_id, $message_text);
 try {
     $message = $request->sendRequest();
     echo 'Successful sent';
-} catch (Kuvardin\TelegramBotsApi\Exceptions\ApiError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException $e) {
     echo "API error #{$e->getCode()}: {$e->getMessage()}";
-} catch (Kuvardin\TelegramBotsApi\Exceptions\CurlError $e) {
+} catch (GuzzleHttp\Exception\GuzzleException $e) {
     echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
 }
 ```
@@ -57,9 +57,9 @@ $request = $bot->setWebhook($webhooks_handler_url);
 try {
     $request->sendRequest();
     echo 'Success';
-} catch (Kuvardin\TelegramBotsApi\Exceptions\ApiError $e) {
+} catch (Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException $e) {
     echo "API error #{$e->getCode()}: {$e->getMessage()}";
-} catch (Kuvardin\TelegramBotsApi\Exceptions\CurlError $e) {
+} catch (GuzzleHttp\Exception\GuzzleException $e) {
     echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
 }
 ```
