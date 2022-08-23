@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use Kuvardin\TelegramBotsApi\Enums\ChatType;
 use Kuvardin\TelegramBotsApi\Type;
 use Kuvardin\TelegramBotsApi\Username;
 
@@ -24,9 +25,9 @@ class Chat extends Type
     public int $id;
 
     /**
-     * @var string $type Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+     * @var ChatType $type Type of chat, can be Enums\ChatType::*
      */
-    public string $type;
+    public ChatType $type;
 
     /**
      * @var string|null $title Title, for supergroups, channels and group chats
@@ -141,7 +142,7 @@ class Chat extends Type
     {
         $result = new self;
         $result->id = $data['id'];
-        $result->type = $data['type'];
+        $result->type = ChatType::from($data['type']);
         $result->title = $data['title'] ?? null;
         $result->username = isset($data['username'])
             ? new Username($data['username'])
@@ -177,7 +178,7 @@ class Chat extends Type
     {
         return [
             'id' => $this->id,
-            'type' => $this->type,
+            'type' => $this->type->value,
             'title' => $this->title,
             'username' => $this->username?->getShort(),
             'first_name' => $this->first_name,
