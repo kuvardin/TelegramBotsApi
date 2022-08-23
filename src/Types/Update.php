@@ -207,8 +207,8 @@ class Update extends Type
             ?? $this->shipping_query?->from
             ?? $this->pre_checkout_query?->from
             ?? $this->poll_answer?->user
-            ?? $this->my_chat_member->from
-            ?? $this->chat_member->from
-            ?? $this->chat_join_request->from;
+            ?? $this->my_chat_member?->from
+            ?? $this->chat_member?->from
+            ?? $this->chat_join_request?->from;
     }
 }
