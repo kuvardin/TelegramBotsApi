@@ -194,4 +194,21 @@ class Update extends Type
             ?? $this->chat_member?->chat
             ?? $this->chat_join_request?->chat;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->message?->from
+            ?? $this->edited_message?->from
+            ?? $this->channel_post?->from
+            ?? $this->edited_channel_post?->from
+            ?? $this->inline_query?->from
+            ?? $this->chosen_inline_result?->from
+            ?? $this->callback_query?->from
+            ?? $this->shipping_query?->from
+            ?? $this->pre_checkout_query?->from
+            ?? $this->poll_answer?->user
+            ?? $this->my_chat_member->from
+            ?? $this->chat_member->from
+            ?? $this->chat_join_request->from;
+    }
 }
