@@ -183,4 +183,15 @@ class Update extends Type
             'chat_join_request' => $this->chat_join_request,
         ];
     }
+
+    public function getChat(): ?Chat
+    {
+        return $this->message?->chat
+            ?? $this->edited_message?->chat
+            ?? $this->channel_post?->chat
+            ?? $this->edited_channel_post?->chat
+            ?? $this->my_chat_member?->chat
+            ?? $this->chat_member?->chat
+            ?? $this->chat_join_request?->chat;
+    }
 }
