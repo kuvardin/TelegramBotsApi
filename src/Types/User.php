@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Username;
 
 /**
  * This object represents a Telegram user or bot.
@@ -37,9 +38,9 @@ class User extends Type
     public ?string $last_name = null;
 
     /**
-     * @var string|null $username User's or bot's username
+     * @var Username|null $username User's or bot's username
      */
-    public ?string $username = null;
+    public ?Username $username = null;
 
     /**
      * @var string|null $language_code <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a>
@@ -73,7 +74,9 @@ class User extends Type
         $result->is_bot = $data['is_bot'];
         $result->first_name = $data['first_name'];
         $result->last_name = $data['last_name'] ?? null;
-        $result->username = $data['username'] ?? null;
+        $result->username = isset($data['username'])
+            ? new Username($data['username'])
+            : null;
         $result->language_code = $data['language_code'] ?? null;
         $result->can_join_groups = $data['can_join_groups'] ?? null;
         $result->can_read_all_group_messages = $data['can_read_all_group_messages'] ?? null;
@@ -88,7 +91,7 @@ class User extends Type
             'is_bot' => $this->is_bot,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'username' => $this->username,
+            'username' => $this->username?->getShort(),
             'language_code' => $this->language_code,
             'can_join_groups' => $this->can_join_groups,
             'can_read_all_group_messages' => $this->can_read_all_group_messages,

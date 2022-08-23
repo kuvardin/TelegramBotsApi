@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Username;
 
 /**
  * This object represents a chat.
@@ -33,9 +34,9 @@ class Chat extends Type
     public ?string $title = null;
 
     /**
-     * @var string|null $username Username, for private chats, supergroups and channels if available
+     * @var Username|null $username Username, for private chats, supergroups and channels if available
      */
-    public ?string $username = null;
+    public ?Username $username = null;
 
     /**
      * @var string|null $first_name First name of the other party in a private chat
@@ -142,7 +143,9 @@ class Chat extends Type
         $result->id = $data['id'];
         $result->type = $data['type'];
         $result->title = $data['title'] ?? null;
-        $result->username = $data['username'] ?? null;
+        $result->username = isset($data['username'])
+            ? new Username($data['username'])
+            : null;
         $result->first_name = $data['first_name'] ?? null;
         $result->last_name = $data['last_name'] ?? null;
         $result->photo = isset($data['photo'])
@@ -176,7 +179,7 @@ class Chat extends Type
             'id' => $this->id,
             'type' => $this->type,
             'title' => $this->title,
-            'username' => $this->username,
+            'username' => $this->username?->getShort(),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'photo' => $this->photo,
