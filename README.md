@@ -1,4 +1,4 @@
-# TelegramBotsApi v.6.2
+# TelegramBotsApi v.6.2.1
 [![Total Downloads](https://poser.pugx.org/kuvardin/telegram-bots-api/downloads)](https://packagist.org/packages/kuvardin/telegram-bots-api)
 
 SDK for latest version of Telegram bots API (from August 12, 2022)
@@ -88,7 +88,20 @@ $update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 
 switch ($update->type) {
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
-        $request = $bot->sendMessage($update->message->chat->id, 'Hi!');
+        $request = $bot->sendMessage(
+            $update->message->chat->id, 
+            'Hello <b>World</b>',
+            parse_mode: Kuvardin\TelegramBotsApi\Enums\ParseMode::HTML,  
+            reply_markup: new Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup([
+                [
+                    new Kuvardin\TelegramBotsApi\Types\InlineKeyboardButton(
+                        'Button 1',
+                        'url' => 'https://github.com/kuvardin',
+                    )
+                ]
+            ]),
+         
+        );
         break;
     
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::EditedMessage:
