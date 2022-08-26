@@ -89,18 +89,28 @@ $update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 switch ($update->type) {
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
         $request = $bot->sendMessage(
-            $update->message->chat->id, 
-            'Hello <b>World</b>',
+            chat_id: $update->message->chat->id, 
+            text: 'Hello <b>World</b>',
             parse_mode: Kuvardin\TelegramBotsApi\Enums\ParseMode::HTML,  
             reply_markup: new Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup([
-                [
+                [ // Buttons row 1
                     new Kuvardin\TelegramBotsApi\Types\InlineKeyboardButton(
-                        'Button 1',
-                        'url' => 'https://github.com/kuvardin',
-                    )
-                ]
+                        text: 'Open URL',
+                        url: 'https://github.com/kuvardin',
+                    ),
+                    new Kuvardin\TelegramBotsApi\Types\InlineKeyboardButton(
+                        text: 'Send callback command',
+                        callback_data: 'like_it',
+                    ),
+                ],
+                [ // Buttons row 2
+                    // ...
+                ],
+                [ // Buttons row 3
+                    // ...
+                ],
+                // ...
             ]),
-         
         );
         break;
     
