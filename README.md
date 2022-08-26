@@ -86,7 +86,7 @@ if (!is_array($input_decoded)) {
 $request = null;
 $update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 
-switch ($update->type) {
+switch ($update->getType()) {
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
         $request = $bot->sendMessage(
             chat_id: $update->message->chat->id, 
