@@ -15,24 +15,28 @@ use Kuvardin\TelegramBotsApi\Type;
 class PassportData extends Type
 {
     /**
-     * @var EncryptedPassportElement[] $data Array with information about documents and other Telegram Passport
+     * @param EncryptedPassportElement[] $data Array with information about documents and other Telegram Passport
      *     elements that was shared with the bot
+     * @param EncryptedCredentials $credentials Encrypted credentials required to decrypt the data
      */
-    public array $data;
+    public function __construct(
+        public array $data,
+        public EncryptedCredentials $credentials,
+    )
+    {
 
-    /**
-     * @var EncryptedCredentials $credentials Encrypted credentials required to decrypt the data
-     */
-    public EncryptedCredentials $credentials;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->data = [];
+        $result = new self(
+            data: [],
+            credentials: EncryptedCredentials::makeByArray($data['credentials']),
+        );
+
         foreach ($data['data'] as $item_data) {
             $result->data[] = EncryptedPassportElement::makeByArray($item_data);
         }
-        $result->credentials = EncryptedCredentials::makeByArray($data['credentials']);
         return $result;
     }
 

@@ -16,44 +16,37 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChosenInlineResult extends Type
 {
     /**
-     * @var string $result_id The unique identifier for the result that was chosen
-     */
-    public string $result_id;
-
-    /**
-     * @var User $from The user that chose the result
-     */
-    public User $from;
-
-    /**
-     * @var Location|null $location Sender location, only for bots that require user location
-     */
-    public ?Location $location = null;
-
-    /**
-     * @var string|null $inline_message_id Identifier of the sent inline message. Available only if there is an <a
+     * @param string $result_id The unique identifier for the result that was chosen
+     * @param User $from The user that chose the result
+     * @param string $query The query that was used to obtain the result
+     * @param Location|null $location Sender location, only for bots that require user location
+     * @param string|null $inline_message_id Identifier of the sent inline message. Available only if there is an <a
      *     href="https://core.telegram.org/bots/api#inlinekeyboardmarkup">inline keyboard</a> attached to the message.
      *     Will be also received in <a href="https://core.telegram.org/bots/api#callbackquery">callback queries</a> and
      *     can be used to <a href="https://core.telegram.org/bots/api#updating-messages">edit</a> the message.
      */
-    public ?string $inline_message_id = null;
+    public function __construct(
+        public string $result_id,
+        public User $from,
+        public string $query,
+        public ?Location $location = null,
+        public ?string $inline_message_id = null,
+    )
+    {
 
-    /**
-     * @var string $query The query that was used to obtain the result
-     */
-    public string $query;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->result_id = $data['result_id'];
-        $result->from = User::makeByArray($data['from']);
-        $result->location = isset($data['location'])
-            ? Location::makeByArray($data['location'])
-            : null;
-        $result->inline_message_id = $data['inline_message_id'] ?? null;
-        $result->query = $data['query'];
-        return $result;
+        return new self(
+            result_id: $data['result_id'],
+            from: User::makeByArray($data['from']),
+            query: $data['query'],
+            location: isset($data['location'])
+                ? Location::makeByArray($data['location'])
+                : null,
+            inline_message_id: $data['inline_message_id'] ?? null,
+        );
     }
 
     public function getRequestData(): array

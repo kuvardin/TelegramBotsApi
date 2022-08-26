@@ -15,58 +15,45 @@ use Kuvardin\TelegramBotsApi\Type;
 class PreCheckoutQuery extends Type
 {
     /**
-     * @var string $id Unique query identifier
-     */
-    public string $id;
-
-    /**
-     * @var User $from User who sent the query
-     */
-    public User $from;
-
-    /**
-     * @var string $currency Three-letter ISO 4217 <a
+     * @param string $id Unique query identifier
+     * @param User $from User who sent the query
+     * @param string $currency Three-letter ISO 4217 <a
      *     href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code
-     */
-    public string $currency;
-
-    /**
-     * @var int $total_amount Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong>
-     *     float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the
-     *     <em>exp</em> parameter in <a
+     * @param int $total_amount Total price in the <em>smallest units</em> of the currency (integer,
+     *     <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount =
+     *     145</code>. See the <em>exp</em> parameter in <a
      *     href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of
      *     digits past the decimal point for each currency (2 for the majority of currencies).
+     * @param string $invoice_payload Bot specified invoice payload
+     * @param string|null $shipping_option_id Identifier of the shipping option chosen by the user
+     * @param OrderInfo|null $order_info Order info provided by the user
      */
-    public int $total_amount;
+    public function __construct(
+        public string $id,
+        public User $from,
+        public string $currency,
+        public int $total_amount,
+        public string $invoice_payload,
+        public ?string $shipping_option_id = null,
+        public ?OrderInfo $order_info = null,
+    )
+    {
 
-    /**
-     * @var string $invoice_payload Bot specified invoice payload
-     */
-    public string $invoice_payload;
-
-    /**
-     * @var string|null $shipping_option_id Identifier of the shipping option chosen by the user
-     */
-    public ?string $shipping_option_id = null;
-
-    /**
-     * @var OrderInfo|null $order_info Order info provided by the user
-     */
-    public ?OrderInfo $order_info = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->id = $data['id'];
-        $result->from = User::makeByArray($data['from']);
-        $result->currency = $data['currency'];
-        $result->total_amount = $data['total_amount'];
-        $result->invoice_payload = $data['invoice_payload'];
-        $result->shipping_option_id = $data['shipping_option_id'] ?? null;
-        $result->order_info = isset($data['order_info'])
-            ? OrderInfo::makeByArray($data['order_info'])
-            : null;
-        return $result;
+        return new self(
+            id: $data['id'],
+            from: User::makeByArray($data['from']),
+            currency: $data['currency'],
+            total_amount: $data['total_amount'],
+            invoice_payload: $data['invoice_payload'],
+            shipping_option_id: $data['shipping_option_id'] ?? null,
+            order_info: isset($data['order_info'])
+                ? OrderInfo::makeByArray($data['order_info'])
+                : null,
+        );
     }
 
     public function getRequestData(): array

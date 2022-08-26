@@ -15,45 +15,35 @@ use Kuvardin\TelegramBotsApi\Type;
 class ShippingAddress extends Type
 {
     /**
-     * @var string $country_code ISO 3166-1 alpha-2 country code
+     * @param string $country_code ISO 3166-1 alpha-2 country code
+     * @param string $state State, if applicable
+     * @param string $city City
+     * @param string $street_line1 First line for the address
+     * @param string $street_line2 Second line for the address
+     * @param string $post_code Address post code
      */
-    public string $country_code;
+    public function __construct(
+        public string $country_code,
+        public string $state,
+        public string $city,
+        public string $street_line1,
+        public string $street_line2,
+        public string $post_code,
+    )
+    {
 
-    /**
-     * @var string $state State, if applicable
-     */
-    public string $state;
-
-    /**
-     * @var string $city City
-     */
-    public string $city;
-
-    /**
-     * @var string $street_line1 First line for the address
-     */
-    public string $street_line1;
-
-    /**
-     * @var string $street_line2 Second line for the address
-     */
-    public string $street_line2;
-
-    /**
-     * @var string $post_code Address post code
-     */
-    public string $post_code;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->country_code = $data['country_code'];
-        $result->state = $data['state'];
-        $result->city = $data['city'];
-        $result->street_line1 = $data['street_line1'];
-        $result->street_line2 = $data['street_line2'];
-        $result->post_code = $data['post_code'];
-        return $result;
+        return new self(
+            country_code: $data['country_code'],
+            state: $data['state'],
+            city: $data['city'],
+            street_line1: $data['street_line1'],
+            street_line2: $data['street_line2'],
+            post_code: $data['post_code'],
+        );
     }
 
     public function getRequestData(): array

@@ -16,13 +16,11 @@ class VideoChatStarted extends Type
 {
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        return $result;
+        return new self;
     }
 
     public function getRequestData(): array
     {
-        return [
-        ];
+        return [];
     }
 }

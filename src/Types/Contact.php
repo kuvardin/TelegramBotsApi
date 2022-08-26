@@ -15,42 +15,36 @@ use Kuvardin\TelegramBotsApi\Type;
 class Contact extends Type
 {
     /**
-     * @var string $phone_number Contact's phone number
-     */
-    public string $phone_number;
-
-    /**
-     * @var string $first_name Contact's first name
-     */
-    public string $first_name;
-
-    /**
-     * @var string|null $last_name Contact's last name
-     */
-    public ?string $last_name = null;
-
-    /**
-     * @var int|null $user_id Contact's user identifier in Telegram. This number may have more than 32 significant bits
-     *     and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52
-     *     significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-     */
-    public ?int $user_id = null;
-
-    /**
-     * @var string|null $vcard Additional data about the contact in the form of a <a
+     * @param string $phone_number Contact's phone number
+     * @param string $first_name Contact's first name
+     * @param string|null $last_name Contact's last name
+     * @param int|null $user_id Contact's user identifier in Telegram. This number may have more than 32 significant
+     *     bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at
+     *     most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this
+     *     identifier.
+     * @param string|null $vcard Additional data about the contact in the form of a <a
      *     href="https://en.wikipedia.org/wiki/VCard">vCard</a>
      */
-    public ?string $vcard = null;
+    public function __construct(
+        public string $phone_number,
+        public string $first_name,
+        public ?string $last_name = null,
+        public ?int $user_id = null,
+        public ?string $vcard = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->phone_number = $data['phone_number'];
-        $result->first_name = $data['first_name'];
-        $result->last_name = $data['last_name'] ?? null;
-        $result->user_id = $data['user_id'] ?? null;
-        $result->vcard = $data['vcard'] ?? null;
-        return $result;
+        return new self(
+            phone_number: $data['phone_number'],
+            first_name: $data['first_name'],
+            last_name: $data['last_name'] ?? null,
+            user_id: $data['user_id'] ?? null,
+            vcard: $data['vcard'] ?? null,
+        );
     }
 
     public function getRequestData(): array

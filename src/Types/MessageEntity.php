@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Enums\MessageEntityType;
 
 /**
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
@@ -15,64 +16,56 @@ use Kuvardin\TelegramBotsApi\Type;
 class MessageEntity extends Type
 {
     /**
-     * @var string $type Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag”
-     *     (<code>#hashtag</code>), “cashtag” (<code>$USD</code>), “bot_command” (<code>/start@jobs_bot</code>), “url”
-     *     (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number”
-     *     (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (<em>italic text</em>),
-     *     “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “code”
-     *     (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for
-     *     users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>)
+     * @param string $type_value Type of the entity. Can be one of Enums\MessageEntityType.
+     * @param int $offset Offset in UTF-16 code units to the start of the entity
+     * @param int $length Length of the entity in UTF-16 code units
+     * @param string|null $url For “text_link” only, url that will be opened after user taps on the text
+     * @param User|null $user For “text_mention” only, the mentioned user
+     * @param string|null $language For “pre” only, the programming language of the entity text
      */
-    public string $type;
+    public function __construct(
+        public string $type_value,
+        public int $offset,
+        public int $length,
+        public ?string $url = null,
+        public ?User $user = null,
+        public ?string $language = null,
+    )
+    {
 
-    /**
-     * @var int $offset Offset in UTF-16 code units to the start of the entity
-     */
-    public int $offset;
-
-    /**
-     * @var int $length Length of the entity in UTF-16 code units
-     */
-    public int $length;
-
-    /**
-     * @var string|null $url For “text_link” only, url that will be opened after user taps on the text
-     */
-    public ?string $url = null;
-
-    /**
-     * @var User|null $user For “text_mention” only, the mentioned user
-     */
-    public ?User $user = null;
-
-    /**
-     * @var string|null $language For “pre” only, the programming language of the entity text
-     */
-    public ?string $language = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->type = $data['type'];
-        $result->offset = $data['offset'];
-        $result->length = $data['length'];
-        $result->url = $data['url'] ?? null;
-        $result->user = isset($data['user'])
-            ? User::makeByArray($data['user'])
-            : null;
-        $result->language = $data['language'] ?? null;
-        return $result;
+        return new self(
+            type_value: $data['type'],
+            offset: $data['offset'],
+            length: $data['length'],
+            url: $data['url'] ?? null,
+            user: isset($data['user'])
+                ? User::makeByArray($data['user'])
+                : null,
+            language: $data['language'] ?? null,
+        );
     }
 
     public function getRequestData(): array
     {
         return [
-            'type' => $this->type,
+            'type' => $this->type_value,
             'offset' => $this->offset,
             'length' => $this->length,
             'url' => $this->url,
             'user' => $this->user,
             'language' => $this->language,
         ];
+    }
+
+    /**
+     * @return MessageEntityType|null Returns <em>Null</em> if the message entity type value is unknown.
+     */
+    public function getType(): ?MessageEntityType
+    {
+        return MessageEntityType::tryFrom($this->type_value);
     }
 }

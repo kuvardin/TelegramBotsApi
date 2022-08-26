@@ -6,6 +6,10 @@ namespace Kuvardin\TelegramBotsApi\Promises;
 
 use GuzzleHttp\Promise\Promise;
 
+/**
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
 class PromiseVoid extends Promise
 {
 

@@ -15,15 +15,20 @@ use Kuvardin\TelegramBotsApi\Type;
 class MessageAutoDeleteTimerChanged extends Type
 {
     /**
-     * @var int $message_auto_delete_time New auto-delete time for messages in the chat; in seconds
+     * @param int $message_auto_delete_time New auto-delete time for messages in the chat; in seconds
      */
-    public int $message_auto_delete_time;
+    public function __construct(
+        public int $message_auto_delete_time,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->message_auto_delete_time = $data['message_auto_delete_time'];
-        return $result;
+        return new self(
+            message_auto_delete_time: $data['message_auto_delete_time'],
+        );
     }
 
     public function getRequestData(): array

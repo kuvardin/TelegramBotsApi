@@ -21,75 +21,44 @@ use RuntimeException;
 class Mpeg4Gif extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $mpeg4_url A valid URL for the MP4 file. File size must not exceed 1MB
-     */
-    public string $mpeg4_url;
-
-    /**
-     * @var int|null $mpeg4_width Video width
-     */
-    public ?int $mpeg4_width = null;
-
-    /**
-     * @var int|null $mpeg4_height Video height
-     */
-    public ?int $mpeg4_height = null;
-
-    /**
-     * @var int|null $mpeg4_duration Video duration in seconds
-     */
-    public ?int $mpeg4_duration = null;
-
-    /**
-     * @var string $thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-     */
-    public string $thumb_url;
-
-    /**
-     * @var string|null $thumb_mime_type MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $mpeg4_url A valid URL for the MP4 file. File size must not exceed 1MB
+     * @param string $thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+     * @param int|null $mpeg4_width Video width
+     * @param int|null $mpeg4_height Video height
+     * @param int|null $mpeg4_duration Video duration in seconds
+     * @param string|null $thumb_mime_type MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or
      *     “video/mp4”. Defaults to “image/jpeg”
-     */
-    public ?string $thumb_mime_type = null;
-
-    /**
-     * @var string|null $title Title for the result
-     */
-    public ?string $title = null;
-
-    /**
-     * @var string|null $caption Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
-     */
-    public ?string $caption = null;
-
-    /**
-     * @var string|null $parse_mode Mode for parsing entities in the caption. See <a
+     * @param string|null $title Title for the result
+     * @param string|null $caption Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
-     */
-    public ?string $parse_mode = null;
-
-    /**
-     * @var MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
-     */
-    public ?array $caption_entities = null;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
-     */
-    public ?InlineKeyboardMarkup $reply_markup = null;
-
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the video
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the video
      *     animation
      */
-    public ?InputMessageContent $input_message_content = null;
+    public function __construct(
+        public string $id,
+        public string $mpeg4_url,
+        public string $thumb_url,
+        public ?int $mpeg4_width = null,
+        public ?int $mpeg4_height = null,
+        public ?int $mpeg4_duration = null,
+        public ?string $thumb_mime_type = null,
+        public ?string $title = null,
+        public ?string $caption = null,
+        public ?string $parse_mode = null,
+        public ?array $caption_entities = null,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+    )
+    {
+
+    }
 
     public static function getType(): string
     {
@@ -98,34 +67,36 @@ class Mpeg4Gif extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->mpeg4_url = $data['mpeg4_url'];
-        $result->mpeg4_width = $data['mpeg4_width'] ?? null;
-        $result->mpeg4_height = $data['mpeg4_height'] ?? null;
-        $result->mpeg4_duration = $data['mpeg4_duration'] ?? null;
-        $result->thumb_url = $data['thumb_url'];
-        $result->thumb_mime_type = $data['thumb_mime_type'] ?? null;
-        $result->title = $data['title'] ?? null;
-        $result->caption = $data['caption'] ?? null;
-        $result->parse_mode = $data['parse_mode'] ?? null;
+        $result = new self(
+            id: $data['id'],
+            mpeg4_url: $data['mpeg4_url'],
+            thumb_url: $data['thumb_url'],
+            mpeg4_width: $data['mpeg4_width'] ?? null,
+            mpeg4_height: $data['mpeg4_height'] ?? null,
+            mpeg4_duration: $data['mpeg4_duration'] ?? null,
+            thumb_mime_type: $data['thumb_mime_type'] ?? null,
+            title: $data['title'] ?? null,
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: null,
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+        );
+
         if (isset($data['caption_entities'])) {
             $result->caption_entities = [];
             foreach ($data['caption_entities'] as $item_data) {
                 $result->caption_entities[] = MessageEntity::makeByArray($item_data);
             }
         }
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
         return $result;
     }
 

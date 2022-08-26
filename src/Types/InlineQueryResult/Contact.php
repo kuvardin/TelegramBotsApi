@@ -19,57 +19,35 @@ use RuntimeException;
 class Contact extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 Bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $phone_number Contact's phone number
-     */
-    public string $phone_number;
-
-    /**
-     * @var string $first_name Contact's first name
-     */
-    public string $first_name;
-
-    /**
-     * @var string|null $last_name Contact's last name
-     */
-    public ?string $last_name = null;
-
-    /**
-     * @var string|null $vcard Additional data about the contact in the form of a <a
+     * @param string $id Unique identifier for this result, 1-64 Bytes
+     * @param string $phone_number Contact's phone number
+     * @param string $first_name Contact's first name
+     * @param string|null $last_name Contact's last name
+     * @param string|null $vcard Additional data about the contact in the form of a <a
      *     href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
-     */
-    public ?string $vcard = null;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the contact
+     * @param string|null $thumb_url Url of the thumbnail for the result
+     * @param int|null $thumb_width Thumbnail width
+     * @param int|null $thumb_height Thumbnail height
      */
-    public ?InlineKeyboardMarkup $reply_markup = null;
+    public function __construct(
+        public string $id,
+        public string $phone_number,
+        public string $first_name,
+        public ?string $last_name = null,
+        public ?string $vcard = null,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+        public ?string $thumb_url = null,
+        public ?int $thumb_width = null,
+        public ?int $thumb_height = null,
+    )
+    {
 
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the contact
-     */
-    public ?InputMessageContent $input_message_content = null;
-
-    /**
-     * @var string|null $thumb_url Url of the thumbnail for the result
-     */
-    public ?string $thumb_url = null;
-
-    /**
-     * @var int|null $thumb_width Thumbnail width
-     */
-    public ?int $thumb_width = null;
-
-    /**
-     * @var int|null $thumb_height Thumbnail height
-     */
-    public ?int $thumb_height = null;
+    }
 
     public static function getType(): string
     {
@@ -78,27 +56,26 @@ class Contact extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->phone_number = $data['phone_number'];
-        $result->first_name = $data['first_name'];
-        $result->last_name = $data['last_name'] ?? null;
-        $result->vcard = $data['vcard'] ?? null;
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
-        $result->thumb_url = $data['thumb_url'] ?? null;
-        $result->thumb_width = $data['thumb_width'] ?? null;
-        $result->thumb_height = $data['thumb_height'] ?? null;
-        return $result;
+        return new self(
+            id: $data['id'],
+            phone_number: $data['phone_number'],
+            first_name: $data['first_name'],
+            last_name: $data['last_name'] ?? null,
+            vcard: $data['vcard'] ?? null,
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+            thumb_url: $data['thumb_url'] ?? null,
+            thumb_width: $data['thumb_width'] ?? null,
+            thumb_height: $data['thumb_height'] ?? null,
+        );
     }
 
     public function getRequestData(): array

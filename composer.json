@@ -9,7 +9,8 @@
     "authors": [
         {
             "name": "Maxim Kuvardin",
-            "email": "maxim@kuvard.in"
+            "email": "maxim@kuvard.in",
+            "homepage": "https://github.com/kuvardin"
         }
     ],
     "require": {

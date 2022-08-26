@@ -15,14 +15,21 @@ use Kuvardin\TelegramBotsApi\Type;
 class VideoChatParticipantsInvited extends Type
 {
     /**
-     * @var User[] $users New members that were invited to the video chat
+     * @param User[] $users New members that were invited to the video chat
      */
-    public array $users;
+    public function __construct(
+        public array $users,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->users = [];
+        $result = new self(
+            users: [],
+        );
+
         foreach ($data['users'] as $item_data) {
             $result->users[] = User::makeByArray($item_data);
         }

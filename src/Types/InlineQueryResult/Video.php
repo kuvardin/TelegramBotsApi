@@ -24,80 +24,46 @@ use RuntimeException;
 class Video extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $video_url A valid URL for the embedded video player or video file
-     */
-    public string $video_url;
-
-    /**
-     * @var string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
-     */
-    public string $mime_type;
-
-    /**
-     * @var string $thumb_url URL of the thumbnail (JPEG only) for the video
-     */
-    public string $thumb_url;
-
-    /**
-     * @var string $title Title for the result
-     */
-    public string $title;
-
-    /**
-     * @var string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
-     */
-    public ?string $caption = null;
-
-    /**
-     * @var string|null $parse_mode Mode for parsing entities in the video caption. See <a
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $video_url A valid URL for the embedded video player or video file
+     * @param string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
+     * @param string $thumb_url URL of the thumbnail (JPEG only) for the video
+     * @param string $title Title for the result
+     * @param string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the video caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
-     */
-    public ?string $parse_mode = null;
-
-    /**
-     * @var MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
-     */
-    public ?array $caption_entities = null;
-
-    /**
-     * @var int|null $video_width Video width
-     */
-    public ?int $video_width = null;
-
-    /**
-     * @var int|null $video_height Video height
-     */
-    public ?int $video_height = null;
-
-    /**
-     * @var int|null $video_duration Video duration in seconds
-     */
-    public ?int $video_duration = null;
-
-    /**
-     * @var string|null $description Short description of the result
-     */
-    public ?string $description = null;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param int|null $video_width Video width
+     * @param int|null $video_height Video height
+     * @param int|null $video_duration Video duration in seconds
+     * @param string|null $description Short description of the result
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
-     */
-    public ?InlineKeyboardMarkup $reply_markup = null;
-
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the video.
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the video.
      *     This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result
      *     (e.g., a YouTube video).
      */
-    public ?InputMessageContent $input_message_content = null;
+    public function __construct(
+        public string $id,
+        public string $video_url,
+        public string $mime_type,
+        public string $thumb_url,
+        public string $title,
+        public ?string $caption = null,
+        public ?string $parse_mode = null,
+        public ?array $caption_entities = null,
+        public ?int $video_width = null,
+        public ?int $video_height = null,
+        public ?int $video_duration = null,
+        public ?string $description = null,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+    )
+    {
+
+    }
 
     public static function getType(): string
     {
@@ -106,35 +72,37 @@ class Video extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->video_url = $data['video_url'];
-        $result->mime_type = $data['mime_type'];
-        $result->thumb_url = $data['thumb_url'];
-        $result->title = $data['title'];
-        $result->caption = $data['caption'] ?? null;
-        $result->parse_mode = $data['parse_mode'] ?? null;
+        $result = new self(
+            id: $data['id'],
+            video_url: $data['video_url'],
+            mime_type: $data['mime_type'],
+            thumb_url: $data['thumb_url'],
+            title: $data['title'],
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: null,
+            video_width: $data['video_width'] ?? null,
+            video_height: $data['video_height'] ?? null,
+            video_duration: $data['video_duration'] ?? null,
+            description: $data['description'] ?? null,
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+        );
+
         if (isset($data['caption_entities'])) {
             $result->caption_entities = [];
             foreach ($data['caption_entities'] as $item_data) {
                 $result->caption_entities[] = MessageEntity::makeByArray($item_data);
             }
         }
-        $result->video_width = $data['video_width'] ?? null;
-        $result->video_height = $data['video_height'] ?? null;
-        $result->video_duration = $data['video_duration'] ?? null;
-        $result->description = $data['description'] ?? null;
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
         return $result;
     }
 

@@ -16,40 +16,33 @@ use Kuvardin\TelegramBotsApi\Type;
 class PhotoSize extends Type
 {
     /**
-     * @var string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_id Identifier for this file, which can be used to download or reuse the file
+     * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
+     *     for different bots. Can't be used to download or reuse the file.
+     * @param int $width Photo width
+     * @param int $height Photo height
+     * @param int|null $file_size File size in bytes
      */
-    public string $file_id;
+    public function __construct(
+        public string $file_id,
+        public string $file_unique_id,
+        public int $width,
+        public int $height,
+        public ?int $file_size = null,
+    )
+    {
 
-    /**
-     * @var string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and for
-     *     different bots. Can't be used to download or reuse the file.
-     */
-    public string $file_unique_id;
-
-    /**
-     * @var int $width Photo width
-     */
-    public int $width;
-
-    /**
-     * @var int $height Photo height
-     */
-    public int $height;
-
-    /**
-     * @var int|null $file_size File size in bytes
-     */
-    public ?int $file_size = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->file_id = $data['file_id'];
-        $result->file_unique_id = $data['file_unique_id'];
-        $result->width = $data['width'];
-        $result->height = $data['height'];
-        $result->file_size = $data['file_size'] ?? null;
-        return $result;
+        return new self(
+            file_id: $data['file_id'],
+            file_unique_id: $data['file_unique_id'],
+            width: $data['width'],
+            height: $data['height'],
+            file_size: $data['file_size'] ?? null,
+        );
     }
 
     public function getRequestData(): array

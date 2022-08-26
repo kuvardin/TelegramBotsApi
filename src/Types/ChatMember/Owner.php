@@ -18,19 +18,18 @@ use RuntimeException;
 class Owner extends ChatMember
 {
     /**
-     * @var User $user Information about the user
+     * @param User $user Information about the user
+     * @param bool $is_anonymous <em>True</em>, if the user's presence in the chat is hidden
+     * @param string|null $custom_title Custom title for this user
      */
-    public User $user;
+    public function __construct(
+        public User $user,
+        public bool $is_anonymous,
+        public ?string $custom_title = null,
+    )
+    {
 
-    /**
-     * @var bool $is_anonymous <em>True</em>, if the user's presence in the chat is hidden
-     */
-    public bool $is_anonymous;
-
-    /**
-     * @var string|null $custom_title Custom title for this user
-     */
-    public ?string $custom_title = null;
+    }
 
     public static function getStatus(): string
     {
@@ -39,16 +38,15 @@ class Owner extends ChatMember
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['status'] !== self::getStatus()) {
             throw new RuntimeException("Wrong chat member status: {$data['status']}");
         }
 
-        $result->user = User::makeByArray($data['user']);
-        $result->is_anonymous = $data['is_anonymous'];
-        $result->custom_title = $data['custom_title'] ?? null;
-        return $result;
+        return new self(
+            user: User::makeByArray($data['user']),
+            is_anonymous: $data['is_anonymous'],
+            custom_title: $data['custom_title'] ?? null,
+        );
     }
 
     public function getRequestData(): array

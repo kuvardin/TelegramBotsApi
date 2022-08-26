@@ -16,33 +16,34 @@ use RuntimeException;
  */
 class ChatMember extends BotCommandScope
 {
+    /**
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
+     *     format <code>@supergroupusername</code>)
+     * @param int $user_id Unique identifier of the target user
+     */
+    public function __construct(
+        public int|string $chat_id,
+        public int $user_id,
+    )
+    {
+
+    }
+
     public static function getType(): string
     {
         return 'chat_member';
     }
 
-    /**
-     * @var int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format <code>@supergroupusername</code>)
-     */
-    public int|string $chat_id;
-
-    /**
-     * @var int $user_id Unique identifier of the target user
-     */
-    public int $user_id;
-
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong type: {$data['type']}");
         }
 
-        $result->chat_id = $data['chat_id'];
-        $result->user_id = $data['user_id'];
-        return $result;
+        return new self(
+            chat_id: $data['chat_id'],
+            user_id: $data['user_id'],
+        );
     }
 
     public function getRequestData(): array

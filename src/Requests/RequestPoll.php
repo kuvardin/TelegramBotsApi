@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\Poll;
 /**
  * In response to this request, Poll object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestPoll extends Request

@@ -20,26 +20,22 @@ use RuntimeException;
 class CachedSticker extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $sticker_file_id A valid file identifier of the sticker
-     */
-    public string $sticker_file_id;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $sticker_file_id A valid file identifier of the sticker
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the sticker
      */
-    public ?InlineKeyboardMarkup $reply_markup = null;
+    public function __construct(
+        public string $id,
+        public string $sticker_file_id,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+    )
+    {
 
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the sticker
-     */
-    public ?InputMessageContent $input_message_content = null;
+    }
 
     public static function getType(): string
     {
@@ -48,21 +44,20 @@ class CachedSticker extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->sticker_file_id = $data['sticker_file_id'];
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
-        return $result;
+        return new self(
+            id: $data['id'],
+            sticker_file_id: $data['sticker_file_id'],
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+        );
     }
 
     public function getRequestData(): array

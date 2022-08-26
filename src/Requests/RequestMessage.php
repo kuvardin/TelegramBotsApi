@@ -10,6 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\Message;
 /**
  * In response to this request, Message object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestMessage extends Request

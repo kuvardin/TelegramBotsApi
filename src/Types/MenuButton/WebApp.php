@@ -17,16 +17,18 @@ use RuntimeException;
 class WebApp extends MenuButton
 {
     /**
-     * @var string $text Text on the button
+     * @param string $text Text on the button
+     * @param WebAppInfo $web_app Description of the Web App that will be launched when the user presses the button.
+     *     The Web App will be able to send an arbitrary message on behalf of the user using the method
+     *     answerWebAppQuery.
      */
-    public string $text;
+    public function __construct(
+        public string $text,
+        public WebAppInfo $web_app,
+    )
+    {
 
-    /**
-     * @var WebAppInfo $web_app Description of the Web App that will be launched when the user presses the button. The
-     *     Web App will be able to send an arbitrary message on behalf of the user using the method <a
-     *     href="https://core.telegram.org/bots/api#answerwebappquery">answerWebAppQuery</a>.
-     */
-    public WebAppInfo $web_app;
+    }
 
     public static function getType(): string
     {
@@ -35,15 +37,14 @@ class WebApp extends MenuButton
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong menu button type: {$data['type']}");
         }
 
-        $result->text = $data['text'];
-        $result->web_app = WebAppInfo::makeByArray($data['web_app']);
-        return $result;
+        return new self(
+            text: $data['text'],
+            web_app: WebAppInfo::makeByArray($data['web_app']),
+        );
     }
 
     public function getRequestData(): array

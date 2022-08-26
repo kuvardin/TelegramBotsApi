@@ -15,41 +15,34 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChatJoinRequest extends Type
 {
     /**
-     * @var Chat $chat Chat to which the request was sent
+     * @param Chat $chat Chat to which the request was sent
+     * @param User $from User that sent the join request
+     * @param int $date Date the request was sent in Unix time
+     * @param string|null $bio Bio of the user.
+     * @param ChatInviteLink|null $invite_link Chat invite link that was used by the user to send the join request
      */
-    public Chat $chat;
+    public function __construct(
+        public Chat $chat,
+        public User $from,
+        public int $date,
+        public ?string $bio = null,
+        public ?ChatInviteLink $invite_link = null,
+    )
+    {
 
-    /**
-     * @var User $from User that sent the join request
-     */
-    public User $from;
-
-    /**
-     * @var int $date Date the request was sent in Unix time
-     */
-    public int $date;
-
-    /**
-     * @var string|null $bio Bio of the user.
-     */
-    public ?string $bio = null;
-
-    /**
-     * @var ChatInviteLink|null $invite_link Chat invite link that was used by the user to send the join request
-     */
-    public ?ChatInviteLink $invite_link = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->chat = Chat::makeByArray($data['chat']);
-        $result->from = User::makeByArray($data['from']);
-        $result->date = $data['date'];
-        $result->bio = $data['bio'] ?? null;
-        $result->invite_link = isset($data['invite_link'])
-            ? ChatInviteLink::makeByArray($data['invite_link'])
-            : null;
-        return $result;
+        return new self(
+            chat: Chat::makeByArray($data['chat']),
+            from: User::makeByArray($data['from']),
+            date: $data['date'],
+            bio: $data['bio'] ?? null,
+            invite_link: isset($data['invite_link'])
+                ? ChatInviteLink::makeByArray($data['invite_link'])
+                : null,
+        );
     }
 
     public function getRequestData(): array

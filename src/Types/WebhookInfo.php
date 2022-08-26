@@ -15,69 +15,50 @@ use Kuvardin\TelegramBotsApi\Type;
 class WebhookInfo extends Type
 {
     /**
-     * @var string $url Webhook URL, may be empty if webhook is not set up
-     */
-    public string $url;
-
-    /**
-     * @var bool $has_custom_certificate <em>True</em>, if a custom certificate was provided for webhook certificate
+     * @param string $url Webhook URL, may be empty if webhook is not set up
+     * @param bool $has_custom_certificate <em>True</em>, if a custom certificate was provided for webhook certificate
      *     checks
-     */
-    public bool $has_custom_certificate;
-
-    /**
-     * @var int $pending_update_count Number of updates awaiting delivery
-     */
-    public int $pending_update_count;
-
-    /**
-     * @var string|null $ip_address Currently used webhook IP address
-     */
-    public ?string $ip_address = null;
-
-    /**
-     * @var int|null $last_error_date Unix time for the most recent error that happened when trying to deliver an
+     * @param int $pending_update_count Number of updates awaiting delivery
+     * @param string|null $ip_address Currently used webhook IP address
+     * @param int|null $last_error_date Unix time for the most recent error that happened when trying to deliver an
      *     update via webhook
-     */
-    public ?int $last_error_date = null;
-
-    /**
-     * @var string|null $last_error_message Error message in human-readable format for the most recent error that
+     * @param string|null $last_error_message Error message in human-readable format for the most recent error that
      *     happened when trying to deliver an update via webhook
-     */
-    public ?string $last_error_message = null;
-
-    /**
-     * @var int|null $last_synchronization_error_date Unix time of the most recent error that happened when trying to
+     * @param int|null $last_synchronization_error_date Unix time of the most recent error that happened when trying to
      *     synchronize available updates with Telegram datacenters
-     */
-    public ?int $last_synchronization_error_date = null;
-
-    /**
-     * @var int|null $max_connections Maximum allowed number of simultaneous HTTPS connections to the webhook for
+     * @param int|null $max_connections Maximum allowed number of simultaneous HTTPS connections to the webhook for
      *     update delivery
-     */
-    public ?int $max_connections = null;
-
-    /**
-     * @var string[]|null $allowed_updates A list of update types the bot is subscribed to. Defaults to all update
+     * @param string[]|null $allowed_updates A list of update types the bot is subscribed to. Defaults to all update
      *     types except <em>chat_member</em>
      */
-    public ?array $allowed_updates = null;
+    public function __construct(
+        public string $url,
+        public bool $has_custom_certificate,
+        public int $pending_update_count,
+        public ?string $ip_address = null,
+        public ?int $last_error_date = null,
+        public ?string $last_error_message = null,
+        public ?int $last_synchronization_error_date = null,
+        public ?int $max_connections = null,
+        public ?array $allowed_updates = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->url = $data['url'];
-        $result->has_custom_certificate = $data['has_custom_certificate'];
-        $result->pending_update_count = $data['pending_update_count'];
-        $result->ip_address = $data['ip_address'] ?? null;
-        $result->last_error_date = $data['last_error_date'] ?? null;
-        $result->last_error_message = $data['last_error_message'] ?? null;
-        $result->last_synchronization_error_date = $data['last_synchronization_error_date'] ?? null;
-        $result->max_connections = $data['max_connections'] ?? null;
-        $result->allowed_updates = $data['allowed_updates'] ?? null;
-        return $result;
+        return new self(
+            url: $data['url'],
+            has_custom_certificate: $data['has_custom_certificate'],
+            pending_update_count: $data['pending_update_count'],
+            ip_address: $data['ip_address'] ?? null,
+            last_error_date: $data['last_error_date'] ?? null,
+            last_error_message: $data['last_error_message'] ?? null,
+            last_synchronization_error_date: $data['last_synchronization_error_date'] ?? null,
+            max_connections: $data['max_connections'] ?? null,
+            allowed_updates: $data['allowed_updates'] ?? null,
+        );
     }
 
     public function getRequestData(): array

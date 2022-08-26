@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\StickerSet;
 /**
  * In response to this request, StickerSet object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestStickerSet extends Request

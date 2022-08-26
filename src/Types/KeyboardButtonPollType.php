@@ -17,25 +17,38 @@ use Kuvardin\TelegramBotsApi\Type;
 class KeyboardButtonPollType extends Type
 {
     /**
-     * @var PollType|null $type If <em>quiz</em> is passed, the user will be allowed to create only polls in the quiz
-     *     mode. If <em>regular</em> is passed, only regular polls will be allowed. Otherwise, the user will be allowed
-     *     to create a poll of any type.
+     * @param string|null $type_value One of Enums\PollType. If <em>quiz</em> is passed, the user will be allowed to
+     *     create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed.
+     *     Otherwise, the user will be allowed to create a poll of any type.
      */
-    public ?PollType $type = null;
+    public function __construct(
+        public ?string $type_value = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->type = isset($data['type']) ?
-            PollType::from($data['type'])
-            : null;
-        return $result;
+        return new self(
+            type_value: $data['type'] ?? null,
+        );
     }
 
     public function getRequestData(): array
     {
         return [
-            'type' => $this->type?->value,
+            'type' => $this->type_value,
         ];
+    }
+
+    /**
+     * @return PollType|null Returns <em>Null</em> if the poll type value is null or unknown.
+     */
+    public function getType(): ?PollType
+    {
+        return $this->type_value === null
+            ? null
+            : PollType::tryFrom($this->type_value);
     }
 }

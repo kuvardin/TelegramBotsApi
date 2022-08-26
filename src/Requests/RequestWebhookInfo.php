@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\WebhookInfo;
 /**
  * In response to this request, WebhookInfo object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestWebhookInfo extends Request

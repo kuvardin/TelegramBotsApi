@@ -15,57 +15,46 @@ use Kuvardin\TelegramBotsApi\Type;
 class StickerSet extends Type
 {
     /**
-     * @var string $name Sticker set name
-     */
-    public string $name;
-
-    /**
-     * @var string $title Sticker set title
-     */
-    public string $title;
-
-    /**
-     * @var bool $is_animated <em>True</em>, if the sticker set contains <a
+     * @param string $name Sticker set name
+     * @param string $title Sticker set title
+     * @param bool $is_animated <em>True</em>, if the sticker set contains <a
      *     href="https://telegram.org/blog/animated-stickers">animated stickers</a>
-     */
-    public bool $is_animated;
-
-    /**
-     * @var bool $is_video <em>True</em>, if the sticker set contains <a
+     * @param bool $is_video <em>True</em>, if the sticker set contains <a
      *     href="https://telegram.org/blog/video-stickers-better-reactions">video stickers</a>
+     * @param bool $contains_masks <em>True</em>, if the sticker set contains masks
+     * @param Sticker[] $stickers List of all set stickers
+     * @param PhotoSize|null $thumb Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
      */
-    public bool $is_video;
+    public function __construct(
+        public string $name,
+        public string $title,
+        public bool $is_animated,
+        public bool $is_video,
+        public bool $contains_masks,
+        public array $stickers,
+        public ?PhotoSize $thumb = null,
+    )
+    {
 
-    /**
-     * @var bool $contains_masks <em>True</em>, if the sticker set contains masks
-     */
-    public bool $contains_masks;
-
-    /**
-     * @var Sticker[] $stickers List of all set stickers
-     */
-    public array $stickers;
-
-    /**
-     * @var PhotoSize|null $thumb Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
-     */
-    public ?PhotoSize $thumb = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->name = $data['name'];
-        $result->title = $data['title'];
-        $result->is_animated = $data['is_animated'];
-        $result->is_video = $data['is_video'];
-        $result->contains_masks = $data['contains_masks'];
-        $result->stickers = [];
+        $result = new self(
+            name: $data['name'],
+            title: $data['title'],
+            is_animated: $data['is_animated'],
+            is_video: $data['is_video'],
+            contains_masks: $data['contains_masks'],
+            stickers: [],
+            thumb: isset($data['thumb'])
+                ? PhotoSize::makeByArray($data['thumb'])
+                : null,
+        );
+
         foreach ($data['stickers'] as $item_data) {
             $result->stickers[] = Sticker::makeByArray($item_data);
         }
-        $result->thumb = isset($data['thumb'])
-            ? PhotoSize::makeByArray($data['thumb'])
-            : null;
         return $result;
     }
 

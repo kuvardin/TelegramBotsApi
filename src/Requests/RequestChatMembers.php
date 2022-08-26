@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\ChatMember;
 /**
  * In response to this request, array of ChatMember object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestChatMembers extends Request

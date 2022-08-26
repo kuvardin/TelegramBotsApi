@@ -8,10 +8,10 @@ use GuzzleHttp\Exception\GuzzleException;
 use Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException;
 use Kuvardin\TelegramBotsApi\Request;
 
-
 /**
  * In response to this request, integer will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestInteger extends Request

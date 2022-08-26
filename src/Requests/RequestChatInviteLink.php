@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\ChatInviteLink;
 /**
  * In response to this request, ChatInviteLink object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestChatInviteLink extends Request

@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\Chat;
 /**
  * In response to this request, Chat object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestChat extends Request

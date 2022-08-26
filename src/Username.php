@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi;
 
+/**
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
 class Username
 {
     public const URL_FORMAT_DEFAULT = 'https://t.me/%s';

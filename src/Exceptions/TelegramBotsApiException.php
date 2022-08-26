@@ -8,6 +8,10 @@ use Exception;
 use Kuvardin\TelegramBotsApi\Types\ResponseParameters;
 use Throwable;
 
+/**
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
 class TelegramBotsApiException extends Exception
 {
     public ?ResponseParameters $parameters = null;

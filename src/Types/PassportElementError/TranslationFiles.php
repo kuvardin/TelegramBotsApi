@@ -17,21 +17,20 @@ use RuntimeException;
 class TranslationFiles extends PassportElementError
 {
     /**
-     * @var string $type Type of element of the user's Telegram Passport which has the issue, one of “passport”,
+     * @param string $type Type of element of the user's Telegram Passport which has the issue, one of “passport”,
      *     “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”,
      *     “rental_agreement”, “passport_registration”, “temporary_registration”
+     * @param string[] $file_hashes List of base64-encoded file hashes
+     * @param string $message Error message
      */
-    public string $type;
+    public function __construct(
+        public string $type,
+        public array $file_hashes,
+        public string $message,
+    )
+    {
 
-    /**
-     * @var string[] $file_hashes List of base64-encoded file hashes
-     */
-    public array $file_hashes;
-
-    /**
-     * @var string $message Error message
-     */
-    public string $message;
+    }
 
     public static function getSource(): string
     {
@@ -40,16 +39,15 @@ class TranslationFiles extends PassportElementError
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['source'] !== self::getSource()) {
             throw new RuntimeException("Wrong passport element error source: {$data['source']}");
         }
 
-        $result->type = $data['type'];
-        $result->file_hashes = $data['file_hashes'];
-        $result->message = $data['message'];
-        return $result;
+        return new self(
+            type: $data['type'],
+            file_hashes: $data['file_hashes'],
+            message: $data['message'],
+        );
     }
 
     public function getRequestData(): array

@@ -18,60 +18,41 @@ use RuntimeException;
 class Video extends InputMedia
 {
     /**
-     * @var string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
+     * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
      *     <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     */
-    public string $media;
-
-    /**
-     * @var InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the file
-     *     is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's
+     * @param InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the file is
+     *     supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's
      *     width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
      *     Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under
      *     <file_attach_name>. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files
      *     »</a>
-     */
-    public ?InputFile $thumb = null;
-
-    /**
-     * @var string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
-     */
-    public ?string $caption = null;
-
-    /**
-     * @var string|null $parse_mode Mode for parsing entities in the video caption. See <a
+     * @param string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the video caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
-     */
-    public ?string $parse_mode = null;
-
-    /**
-     * @var MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
+     * @param int|null $width Video width
+     * @param int|null $height Video height
+     * @param int|null $duration Video duration in seconds
+     * @param bool|null $supports_streaming Pass <em>True</em>, if the uploaded video is suitable for streaming
      */
-    public ?array $caption_entities = null;
+    public function __construct(
+        public string $media,
+        public ?InputFile $thumb = null,
+        public ?string $caption = null,
+        public ?string $parse_mode = null,
+        public ?array $caption_entities = null,
+        public ?int $width = null,
+        public ?int $height = null,
+        public ?int $duration = null,
+        public ?bool $supports_streaming = null,
+    )
+    {
 
-    /**
-     * @var int|null $width Video width
-     */
-    public ?int $width = null;
-
-    /**
-     * @var int|null $height Video height
-     */
-    public ?int $height = null;
-
-    /**
-     * @var int|null $duration Video duration in seconds
-     */
-    public ?int $duration = null;
-
-    /**
-     * @var bool|null $supports_streaming Pass <em>True</em>, if the uploaded video is suitable for streaming
-     */
-    public ?bool $supports_streaming = null;
+    }
 
     public static function getType(): string
     {
@@ -80,28 +61,30 @@ class Video extends InputMedia
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong input media type: {$data['type']}");
         }
 
-        $result->media = $data['media'];
-        $result->thumb = isset($data['thumb'])
-            ? InputFile::makeByString($data['thumb'])
-            : null;
-        $result->caption = $data['caption'] ?? null;
-        $result->parse_mode = $data['parse_mode'] ?? null;
+        $result = new self(
+            media: $data['media'],
+            thumb: isset($data['thumb'])
+                ? InputFile::makeByString($data['thumb'])
+                : null,
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: null,
+            width: $data['width'] ?? null,
+            height: $data['height'] ?? null,
+            duration: $data['duration'] ?? null,
+            supports_streaming: $data['supports_streaming'] ?? null,
+        );
+
         if (isset($data['caption_entities'])) {
             $result->caption_entities = [];
             foreach ($data['caption_entities'] as $item_data) {
                 $result->caption_entities[] = MessageEntity::makeByArray($item_data);
             }
         }
-        $result->width = $data['width'] ?? null;
-        $result->height = $data['height'] ?? null;
-        $result->duration = $data['duration'] ?? null;
-        $result->supports_streaming = $data['supports_streaming'] ?? null;
         return $result;
     }
 

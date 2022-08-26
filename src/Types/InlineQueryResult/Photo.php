@@ -20,69 +20,41 @@ use RuntimeException;
 class Photo extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $photo_url A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size must
-     *     not exceed 5MB
-     */
-    public string $photo_url;
-
-    /**
-     * @var string $thumb_url URL of the thumbnail for the photo
-     */
-    public string $thumb_url;
-
-    /**
-     * @var int|null $photo_width Width of the photo
-     */
-    public ?int $photo_width = null;
-
-    /**
-     * @var int|null $photo_height Height of the photo
-     */
-    public ?int $photo_height = null;
-
-    /**
-     * @var string|null $title Title for the result
-     */
-    public ?string $title = null;
-
-    /**
-     * @var string|null $description Short description of the result
-     */
-    public ?string $description = null;
-
-    /**
-     * @var string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
-     */
-    public ?string $caption = null;
-
-    /**
-     * @var string|null $parse_mode Mode for parsing entities in the photo caption. See <a
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $photo_url A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size
+     *     must not exceed 5MB
+     * @param string $thumb_url URL of the thumbnail for the photo
+     * @param int|null $photo_width Width of the photo
+     * @param int|null $photo_height Height of the photo
+     * @param string|null $title Title for the result
+     * @param string|null $description Short description of the result
+     * @param string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the photo caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
-     */
-    public ?string $parse_mode = null;
-
-    /**
-     * @var MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
-     */
-    public ?array $caption_entities = null;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the photo
      */
-    public ?InlineKeyboardMarkup $reply_markup = null;
+    public function __construct(
+        public string $id,
+        public string $photo_url,
+        public string $thumb_url,
+        public ?int $photo_width = null,
+        public ?int $photo_height = null,
+        public ?string $title = null,
+        public ?string $description = null,
+        public ?string $caption = null,
+        public ?string $parse_mode = null,
+        public ?array $caption_entities = null,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+    )
+    {
 
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the photo
-     */
-    public ?InputMessageContent $input_message_content = null;
+    }
 
     public static function getType(): string
     {
@@ -91,33 +63,35 @@ class Photo extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->photo_url = $data['photo_url'];
-        $result->thumb_url = $data['thumb_url'];
-        $result->photo_width = $data['photo_width'] ?? null;
-        $result->photo_height = $data['photo_height'] ?? null;
-        $result->title = $data['title'] ?? null;
-        $result->description = $data['description'] ?? null;
-        $result->caption = $data['caption'] ?? null;
-        $result->parse_mode = $data['parse_mode'] ?? null;
+        $result = new self(
+            id: $data['id'],
+            photo_url: $data['photo_url'],
+            thumb_url: $data['thumb_url'],
+            photo_width: $data['photo_width'] ?? null,
+            photo_height: $data['photo_height'] ?? null,
+            title: $data['title'] ?? null,
+            description: $data['description'] ?? null,
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: null,
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+        );
+
         if (isset($data['caption_entities'])) {
             $result->caption_entities = [];
             foreach ($data['caption_entities'] as $item_data) {
                 $result->caption_entities[] = MessageEntity::makeByArray($item_data);
             }
         }
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
         return $result;
     }
 

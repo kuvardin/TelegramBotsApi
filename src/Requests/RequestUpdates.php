@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\Update;
 /**
  * In response to this request, array of Update object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestUpdates extends Request

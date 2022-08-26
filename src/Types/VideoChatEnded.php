@@ -15,15 +15,20 @@ use Kuvardin\TelegramBotsApi\Type;
 class VideoChatEnded extends Type
 {
     /**
-     * @var int $duration Video chat duration in seconds
+     * @param int $duration Video chat duration in seconds
      */
-    public int $duration;
+    public function __construct(
+        public int $duration,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->duration = $data['duration'];
-        return $result;
+        return new self(
+            duration: $data['duration'],
+        );
     }
 
     public function getRequestData(): array

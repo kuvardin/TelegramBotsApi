@@ -16,34 +16,30 @@ use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 class Contact extends InputMessageContent
 {
     /**
-     * @var string $phone_number Contact's phone number
-     */
-    public string $phone_number;
-
-    /**
-     * @var string $first_name Contact's first name
-     */
-    public string $first_name;
-
-    /**
-     * @var string|null $last_name Contact's last name
-     */
-    public ?string $last_name = null;
-
-    /**
-     * @var string|null $vcard Additional data about the contact in the form of a <a
+     * @param string $phone_number Contact's phone number
+     * @param string $first_name Contact's first name
+     * @param string|null $last_name Contact's last name
+     * @param string|null $vcard Additional data about the contact in the form of a <a
      *     href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
      */
-    public ?string $vcard = null;
+    public function __construct(
+        public string $phone_number,
+        public string $first_name,
+        public ?string $last_name = null,
+        public ?string $vcard = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-        $result->phone_number = $data['phone_number'];
-        $result->first_name = $data['first_name'];
-        $result->last_name = $data['last_name'] ?? null;
-        $result->vcard = $data['vcard'] ?? null;
-        return $result;
+        return new self(
+            phone_number: $data['phone_number'],
+            first_name: $data['first_name'],
+            last_name: $data['last_name'] ?? null,
+            vcard: $data['vcard'] ?? null,
+        );
     }
 
     public function getRequestData(): array

@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\User;
 /**
  * In response to this request, User object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestUser extends Request

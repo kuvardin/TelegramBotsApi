@@ -11,6 +11,7 @@ use Kuvardin\TelegramBotsApi\Request;
 /**
  * In response to this request, string will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestString extends Request

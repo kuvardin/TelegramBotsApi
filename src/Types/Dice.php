@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use Kuvardin\TelegramBotsApi\Enums\DiceType;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
@@ -15,28 +16,24 @@ use Kuvardin\TelegramBotsApi\Type;
 class Dice extends Type
 {
     /**
-     * @var string $emoji Emoji on which the dice throw animation is based
+     * @param string $emoji Emoji on which the dice throw animation is based
+     * @param int $value Value of the dice, 1-6 for Dice, Darts and Bowling base emoji,
+     *      1-5 for Basketball and Soccer base emoji, 1-64 for SlotMachine base emoji
      */
-    public string $emoji;
+    public function __construct(
+        public string $emoji,
+        public int $value,
+    )
+    {
 
-    /**
-     * @var int $value Value of the dice, 1-6 for “<img class="emoji"
-     *     src="https://telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img
-     *     class="emoji" src="https://telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and
-     *     “<img class="emoji" src="https://telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”
-     *     base emoji, 1-5 for “<img class="emoji" src="https://telegram.org/img/emoji/40/F09F8F80.png" width="20"
-     *     height="20" alt="🏀" />” and “<img class="emoji" src="https://telegram.org/img/emoji/40/E29ABD.png"
-     *     width="20" height="20" alt="⚽" />” base emoji, 1-64 for “<img class="emoji"
-     *     src="https://telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />” base emoji
-     */
-    public int $value;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->emoji = $data['emoji'];
-        $result->value = $data['value'];
-        return $result;
+        return new self(
+            emoji: $data['emoji'],
+            value: $data['value'],
+        );
     }
 
     public function getRequestData(): array
@@ -45,5 +42,13 @@ class Dice extends Type
             'emoji' => $this->emoji,
             'value' => $this->value,
         ];
+    }
+
+    /**
+     * @return DiceType|null Returns <em>Null</em> if the dice emoji is unknown.
+     */
+    public function getType(): ?DiceType
+    {
+        return DiceType::tryFromEmoji($this->emoji);
     }
 }

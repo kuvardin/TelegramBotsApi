@@ -21,43 +21,30 @@ use RuntimeException;
 class CachedAudio extends InlineQueryResult
 {
     /**
-     * @var string $id Unique identifier for this result, 1-64 bytes
-     */
-    public string $id;
-
-    /**
-     * @var string $audio_file_id A valid file identifier for the audio file
-     */
-    public string $audio_file_id;
-
-    /**
-     * @var string|null $caption Caption, 0-1024 characters after entities parsing
-     */
-    public ?string $caption = null;
-
-    /**
-     * @var string|null $parse_mode Mode for parsing entities in the audio caption. See <a
+     * @param string $id Unique identifier for this result, 1-64 bytes
+     * @param string $audio_file_id A valid file identifier for the audio file
+     * @param string|null $caption Caption, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the audio caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
-     */
-    public ?string $parse_mode = null;
-
-    /**
-     * @var MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
-     */
-    public ?array $caption_entities = null;
-
-    /**
-     * @var InlineKeyboardMarkup|null $reply_markup <a
+     * @param InlineKeyboardMarkup|null $reply_markup <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
      *     to the message
+     * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the audio
      */
-    public ?InlineKeyboardMarkup $reply_markup = null;
+    public function __construct(
+        public string $id,
+        public string $audio_file_id,
+        public ?string $caption = null,
+        public ?string $parse_mode = null,
+        public ?array $caption_entities = null,
+        public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?InputMessageContent $input_message_content = null,
+    )
+    {
 
-    /**
-     * @var InputMessageContent|null $input_message_content Content of the message to be sent instead of the audio
-     */
-    public ?InputMessageContent $input_message_content = null;
+    }
 
     public static function getType(): string
     {
@@ -66,28 +53,30 @@ class CachedAudio extends InlineQueryResult
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result->id = $data['id'];
-        $result->audio_file_id = $data['audio_file_id'];
-        $result->caption = $data['caption'] ?? null;
-        $result->parse_mode = $data['parse_mode'] ?? null;
+        $result = new self(
+            id: $data['id'],
+            audio_file_id: $data['audio_file_id'],
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: null,
+            reply_markup: isset($data['reply_markup'])
+                ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            input_message_content: isset($data['input_message_content'])
+                ? InputMessageContent::makeByArray($data['input_message_content'])
+                : null,
+        );
+
         if (isset($data['caption_entities'])) {
             $result->caption_entities = [];
             foreach ($data['caption_entities'] as $item_data) {
                 $result->caption_entities[] = MessageEntity::makeByArray($item_data);
             }
         }
-        $result->reply_markup = isset($data['reply_markup'])
-            ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
-            : null;
-        $result->input_message_content = isset($data['input_message_content'])
-            ? InputMessageContent::makeByArray($data['input_message_content'])
-            : null;
         return $result;
     }
 

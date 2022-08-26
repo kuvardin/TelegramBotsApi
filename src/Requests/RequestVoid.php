@@ -12,6 +12,7 @@ use RuntimeException;
 /**
  * In response to this request, none will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestVoid extends Request

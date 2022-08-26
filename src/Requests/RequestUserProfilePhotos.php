@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\UserProfilePhotos;
 /**
  * In response to this request, UserProfilePhotos object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestUserProfilePhotos extends Request

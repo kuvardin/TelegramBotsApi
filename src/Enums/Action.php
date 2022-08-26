@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Enums;
 
+/**
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
 enum Action: string
 {
     case Typing = 'typing';

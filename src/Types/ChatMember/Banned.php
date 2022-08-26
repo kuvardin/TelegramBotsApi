@@ -10,7 +10,7 @@ use RuntimeException;
 
 /**
  * Represents a <a href="https://core.telegram.org/bots/api#chatmember">chat member</a> that was banned in the chat and
- * can&#39;t return to the chat or view chat messages.
+ * can't return to the chat or view chat messages.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -18,15 +18,17 @@ use RuntimeException;
 class Banned extends ChatMember
 {
     /**
-     * @var User $user Information about the user
-     */
-    public User $user;
-
-    /**
-     * @var int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is
+     * @param User $user Information about the user
+     * @param int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is
      *     banned forever
      */
-    public int $until_date;
+    public function __construct(
+        public User $user,
+        public int $until_date,
+    )
+    {
+
+    }
 
     public static function getStatus(): string
     {
@@ -35,15 +37,14 @@ class Banned extends ChatMember
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['status'] !== self::getStatus()) {
             throw new RuntimeException("Wrong chat member status: {$data['status']}");
         }
 
-        $result->user = User::makeByArray($data['user']);
-        $result->until_date = $data['until_date'];
-        return $result;
+        return new self(
+            user: User::makeByArray($data['user']),
+            until_date: $data['until_date'],
+        );
     }
 
     public function getRequestData(): array

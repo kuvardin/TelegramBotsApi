@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\BotCommand;
 /**
  * In response to this request, array of BotCommand object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestBotCommands extends Request

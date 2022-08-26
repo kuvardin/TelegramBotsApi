@@ -15,22 +15,24 @@ use Kuvardin\TelegramBotsApi\Type;
 class WebAppData extends Type
 {
     /**
-     * @var string $data The data. Be aware that a bad client can send arbitrary data in this field.
-     */
-    public string $data;
-
-    /**
-     * @var string $button_text Text of the <em>web_app</em> keyboard button, from which the Web App was opened. Be
+     * @param string $data The data. Be aware that a bad client can send arbitrary data in this field.
+     * @param string $button_text Text of the <em>web_app</em> keyboard button, from which the Web App was opened. Be
      *     aware that a bad client can send arbitrary data in this field.
      */
-    public string $button_text;
+    public function __construct(
+        public string $data,
+        public string $button_text,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->data = $data['data'];
-        $result->button_text = $data['button_text'];
-        return $result;
+        return new self(
+            data: $data['data'],
+            button_text: $data['button_text'],
+        );
     }
 
     public function getRequestData(): array

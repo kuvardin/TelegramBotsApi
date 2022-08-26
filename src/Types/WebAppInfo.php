@@ -15,16 +15,21 @@ use Kuvardin\TelegramBotsApi\Type;
 class WebAppInfo extends Type
 {
     /**
-     * @var string $url An HTTPS URL of a Web App to be opened with additional data as specified in <a
+     * @param string $url An HTTPS URL of a Web App to be opened with additional data as specified in <a
      *     href="https://core.telegram.org/bots/webapps#initializing-web-apps">Initializing Web Apps</a>
      */
-    public string $url;
+    public function __construct(
+        public string $url,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->url = $data['url'];
-        return $result;
+        return new self(
+            url: $data['url'],
+        );
     }
 
     public function getRequestData(): array

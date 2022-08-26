@@ -16,48 +16,38 @@ use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 class Location extends InputMessageContent
 {
     /**
-     * @var float $latitude Latitude of the location in degrees
-     */
-    public float $latitude;
-
-    /**
-     * @var float $longitude Longitude of the location in degrees
-     */
-    public float $longitude;
-
-    /**
-     * @var float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
-     */
-    public ?float $horizontal_accuracy = null;
-
-    /**
-     * @var int|null $live_period Period in seconds for which the location can be updated, should be between 60 and
+     * @param float $latitude Latitude of the location in degrees
+     * @param float $longitude Longitude of the location in degrees
+     * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
+     * @param int|null $live_period Period in seconds for which the location can be updated, should be between 60 and
      *     86400.
-     */
-    public ?int $live_period = null;
-
-    /**
-     * @var int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be between
-     *     1 and 360 if specified.
-     */
-    public ?int $heading = null;
-
-    /**
-     * @var int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about
+     * @param int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be
+     *     between 1 and 360 if specified.
+     * @param int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about
      *     approaching another chat member, in meters. Must be between 1 and 100000 if specified.
      */
-    public ?int $proximity_alert_radius = null;
+    public function __construct(
+        public float $latitude,
+        public float $longitude,
+        public ?float $horizontal_accuracy = null,
+        public ?int $live_period = null,
+        public ?int $heading = null,
+        public ?int $proximity_alert_radius = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-        $result->latitude = $data['latitude'];
-        $result->longitude = $data['longitude'];
-        $result->horizontal_accuracy = $data['horizontal_accuracy'] ?? null;
-        $result->live_period = $data['live_period'] ?? null;
-        $result->heading = $data['heading'] ?? null;
-        $result->proximity_alert_radius = $data['proximity_alert_radius'] ?? null;
-        return $result;
+        return new self(
+            latitude: $data['latitude'],
+            longitude: $data['longitude'],
+            horizontal_accuracy: $data['horizontal_accuracy'] ?? null,
+            live_period: $data['live_period'] ?? null,
+            heading: $data['heading'] ?? null,
+            proximity_alert_radius: $data['proximity_alert_radius'] ?? null,
+        );
     }
 
     public function getRequestData(): array

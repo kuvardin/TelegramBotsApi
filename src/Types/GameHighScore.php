@@ -15,27 +15,26 @@ use Kuvardin\TelegramBotsApi\Type;
 class GameHighScore extends Type
 {
     /**
-     * @var int $position Position in high score table for the game
+     * @param int $position Position in high score table for the game
+     * @param User $user User
+     * @param int $score Score
      */
-    public int $position;
+    public function __construct(
+        public int $position,
+        public User $user,
+        public int $score,
+    )
+    {
 
-    /**
-     * @var User $user User
-     */
-    public User $user;
-
-    /**
-     * @var int $score Score
-     */
-    public int $score;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->position = $data['position'];
-        $result->user = User::makeByArray($data['user']);
-        $result->score = $data['score'];
-        return $result;
+        return new self(
+            position: $data['position'],
+            user: User::makeByArray($data['user']),
+            score: $data['score'],
+        );
     }
 
     public function getRequestData(): array

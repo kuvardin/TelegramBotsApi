@@ -16,15 +16,22 @@ use Kuvardin\TelegramBotsApi\Type;
 class InlineKeyboardMarkup extends Type
 {
     /**
-     * @var InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an Array of <a
-     *     href="https://core.telegram.org/bots/api#inlinekeyboardbutton">InlineKeyboardButton</a> objects
+     * @param InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an Array of
+     *     InlineKeyboardButton objects
      */
-    public array $inline_keyboard;
+    public function __construct(
+        public array $inline_keyboard,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->inline_keyboard = [];
+        $result = new self(
+            inline_keyboard: [],
+        );
+
         foreach ($data['inline_keyboard'] as $buttons_row_data) {
             $buttons_row = [];
             foreach ($buttons_row_data as $button_data) {

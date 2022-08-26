@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\ChatAdministratorRights;
 /**
  * In response to this request, ChatAdministratorRights object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestChatAdministratorRights extends Request

@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\File;
 /**
  * In response to this request, File object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestFile extends Request

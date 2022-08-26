@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\MessageId;
 /**
  * In response to this request, MessageId object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestMessageId extends Request

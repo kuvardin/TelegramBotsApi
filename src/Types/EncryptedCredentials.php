@@ -18,30 +18,28 @@ use Kuvardin\TelegramBotsApi\Type;
 class EncryptedCredentials extends Type
 {
     /**
-     * @var string $data Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and
-     *     secrets required for <a
-     *     href="https://core.telegram.org/bots/api#encryptedpassportelement">EncryptedPassportElement</a> decryption
-     *     and authentication
+     * @param string $data Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and
+     *     secrets required for EncryptedPassportElement decryption and authentication
+     * @param string $hash Base64-encoded data hash for data authentication
+     * @param string $secret Base64-encoded secret, encrypted with the bot's public RSA key, required for data
+     *     decryption
      */
-    public string $data;
+    public function __construct(
+        public string $data,
+        public string $hash,
+        public string $secret,
+    )
+    {
 
-    /**
-     * @var string $hash Base64-encoded data hash for data authentication
-     */
-    public string $hash;
-
-    /**
-     * @var string $secret Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
-     */
-    public string $secret;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->data = $data['data'];
-        $result->hash = $data['hash'];
-        $result->secret = $data['secret'];
-        return $result;
+        return new self(
+            data: $data['data'],
+            hash: $data['hash'],
+            secret: $data['secret'],
+        );
     }
 
     public function getRequestData(): array

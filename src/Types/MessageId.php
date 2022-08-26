@@ -15,15 +15,20 @@ use Kuvardin\TelegramBotsApi\Type;
 class MessageId extends Type
 {
     /**
-     * @var int $message_id Unique message identifier
+     * @param int $message_id Unique message identifier
      */
-    public int $message_id;
+    public function __construct(
+        public int $message_id,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->message_id = $data['message_id'];
-        return $result;
+        return new self(
+            message_id: $data['message_id'],
+        );
     }
 
     public function getRequestData(): array

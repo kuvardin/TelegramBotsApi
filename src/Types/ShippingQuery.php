@@ -15,33 +15,29 @@ use Kuvardin\TelegramBotsApi\Type;
 class ShippingQuery extends Type
 {
     /**
-     * @var string $id Unique query identifier
+     * @param string $id Unique query identifier
+     * @param User $from User who sent the query
+     * @param string $invoice_payload Bot specified invoice payload
+     * @param ShippingAddress $shipping_address User specified shipping address
      */
-    public string $id;
+    public function __construct(
+        public string $id,
+        public User $from,
+        public string $invoice_payload,
+        public ShippingAddress $shipping_address,
+    )
+    {
 
-    /**
-     * @var User $from User who sent the query
-     */
-    public User $from;
-
-    /**
-     * @var string $invoice_payload Bot specified invoice payload
-     */
-    public string $invoice_payload;
-
-    /**
-     * @var ShippingAddress $shipping_address User specified shipping address
-     */
-    public ShippingAddress $shipping_address;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->id = $data['id'];
-        $result->from = User::makeByArray($data['from']);
-        $result->invoice_payload = $data['invoice_payload'];
-        $result->shipping_address = ShippingAddress::makeByArray($data['shipping_address']);
-        return $result;
+        return new self(
+            id: $data['id'],
+            from: User::makeByArray($data['from']),
+            invoice_payload: $data['invoice_payload'],
+            shipping_address: ShippingAddress::makeByArray($data['shipping_address']),
+        );
     }
 
     public function getRequestData(): array

@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represent a user&#39;s profile pictures.
+ * This object represent a user's profile pictures.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -15,20 +15,24 @@ use Kuvardin\TelegramBotsApi\Type;
 class UserProfilePhotos extends Type
 {
     /**
-     * @var int $total_count Total number of profile pictures the target user has
+     * @param int $total_count Total number of profile pictures the target user has
+     * @param PhotoSize[][] $photos Requested profile pictures (in up to 4 sizes each)
      */
-    public int $total_count;
+    public function __construct(
+        public int $total_count,
+        public array $photos,
+    )
+    {
 
-    /**
-     * @var PhotoSize[][] $photos Requested profile pictures (in up to 4 sizes each)
-     */
-    public array $photos;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->total_count = $data['total_count'];
-        $result->photos = [];
+        $result = new self(
+            total_count: $data['total_count'],
+            photos: [],
+        );
+
         foreach ($data['photos'] as $photo_sizes_data) {
             $photo_sizes = [];
             foreach ($photo_sizes_data as $photo_size_data) {

@@ -15,37 +15,33 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChatPhoto extends Type
 {
     /**
-     * @var string $small_file_id File identifier of small (160x160) chat photo. This file_id can be used only for
+     * @param string $small_file_id File identifier of small (160x160) chat photo. This file_id can be used only for
      *     photo download and only for as long as the photo is not changed.
-     */
-    public string $small_file_id;
-
-    /**
-     * @var string $small_file_unique_id Unique file identifier of small (160x160) chat photo, which is supposed to be
+     * @param string $small_file_unique_id Unique file identifier of small (160x160) chat photo, which is supposed to
+     *     be the same over time and for different bots. Can't be used to download or reuse the file.
+     * @param string $big_file_id File identifier of big (640x640) chat photo. This file_id can be used only for photo
+     *     download and only for as long as the photo is not changed.
+     * @param string $big_file_unique_id Unique file identifier of big (640x640) chat photo, which is supposed to be
      *     the same over time and for different bots. Can't be used to download or reuse the file.
      */
-    public string $small_file_unique_id;
+    public function __construct(
+        public string $small_file_id,
+        public string $small_file_unique_id,
+        public string $big_file_id,
+        public string $big_file_unique_id,
+    )
+    {
 
-    /**
-     * @var string $big_file_id File identifier of big (640x640) chat photo. This file_id can be used only for photo
-     *     download and only for as long as the photo is not changed.
-     */
-    public string $big_file_id;
-
-    /**
-     * @var string $big_file_unique_id Unique file identifier of big (640x640) chat photo, which is supposed to be the
-     *     same over time and for different bots. Can't be used to download or reuse the file.
-     */
-    public string $big_file_unique_id;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->small_file_id = $data['small_file_id'];
-        $result->small_file_unique_id = $data['small_file_unique_id'];
-        $result->big_file_id = $data['big_file_id'];
-        $result->big_file_unique_id = $data['big_file_unique_id'];
-        return $result;
+        return new self(
+            small_file_id: $data['small_file_id'],
+            small_file_unique_id: $data['small_file_unique_id'],
+            big_file_id: $data['big_file_id'],
+            big_file_unique_id: $data['big_file_unique_id'],
+        );
     }
 
     public function getRequestData(): array

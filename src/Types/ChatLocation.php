@@ -15,21 +15,23 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChatLocation extends Type
 {
     /**
-     * @var Location $location The location to which the supergroup is connected. Can't be a live location.
+     * @param Location $location The location to which the supergroup is connected. Can't be a live location.
+     * @param string $address Location address; 1-64 characters, as defined by the chat owner
      */
-    public Location $location;
+    public function __construct(
+        public Location $location,
+        public string $address,
+    )
+    {
 
-    /**
-     * @var string $address Location address; 1-64 characters, as defined by the chat owner
-     */
-    public string $address;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->location = Location::makeByArray($data['location']);
-        $result->address = $data['address'];
-        return $result;
+        return new self(
+            location: Location::makeByArray($data['location']),
+            address: $data['address'],
+        );
     }
 
     public function getRequestData(): array

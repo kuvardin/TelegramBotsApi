@@ -16,59 +16,51 @@ use Kuvardin\TelegramBotsApi\Type;
 class Game extends Type
 {
     /**
-     * @var string $title Title of the game
-     */
-    public string $title;
-
-    /**
-     * @var string $description Description of the game
-     */
-    public string $description;
-
-    /**
-     * @var PhotoSize[] $photo Photo that will be displayed in the game message in chats.
-     */
-    public array $photo;
-
-    /**
-     * @var string|null $text Brief description of the game or high scores included in the game message. Can be
-     *     automatically edited to include current high scores for the game when the bot calls <a
-     *     href="https://core.telegram.org/bots/api#setgamescore">setGameScore</a>, or manually edited using <a
-     *     href="https://core.telegram.org/bots/api#editmessagetext">editMessageText</a>. 0-4096 characters.
-     */
-    public ?string $text = null;
-
-    /**
-     * @var MessageEntity[]|null $text_entities Special entities that appear in <em>text</em>, such as usernames, URLs,
-     *     bot commands, etc.
-     */
-    public ?array $text_entities = null;
-
-    /**
-     * @var Animation|null $animation Animation that will be displayed in the game message in chats. Upload via <a
+     * @param string $title Title of the game
+     * @param string $description Description of the game
+     * @param PhotoSize[] $photo Photo that will be displayed in the game message in chats.
+     * @param string|null $text Brief description of the game or high scores included in the game message. Can be
+     *     automatically edited to include current high scores for the game when the bot calls setGameScore(), or
+     *     manually edited using editMessageText(). 0-4096 characters.
+     * @param MessageEntity[]|null $text_entities Special entities that appear in <em>text</em>, such as usernames,
+     *     URLs, bot commands, etc.
+     * @param Animation|null $animation Animation that will be displayed in the game message in chats. Upload via <a
      *     href="https://t.me/botfather">BotFather</a>
      */
-    public ?Animation $animation = null;
+    public function __construct(
+        public string $title,
+        public string $description,
+        public array $photo,
+        public ?string $text = null,
+        public ?array $text_entities = null,
+        public ?Animation $animation = null,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->title = $data['title'];
-        $result->description = $data['description'];
-        $result->photo = [];
-        foreach ($data['photo'] as $item_data) {
-            $result->photo[] = PhotoSize::makeByArray($item_data);
+        $result = new self(
+            title: $data['title'],
+            description: $data['description'],
+            photo: [],
+            text: $data['text'] ?? null,
+            text_entities: null,
+            animation: isset($data['animation'])
+                ? Animation::makeByArray($data['animation'])
+                : null,
+        );
+
+        foreach ($data['photo'] as $photo_size_data) {
+            $result->photo[] = PhotoSize::makeByArray($photo_size_data);
         }
-        $result->text = $data['text'] ?? null;
         if (isset($data['text_entities'])) {
             $result->text_entities = [];
-            foreach ($data['text_entities'] as $item_data) {
-                $result->text_entities[] = MessageEntity::makeByArray($item_data);
+            foreach ($data['text_entities'] as $message_entity_data) {
+                $result->text_entities[] = MessageEntity::makeByArray($message_entity_data);
             }
         }
-        $result->animation = isset($data['animation'])
-            ? Animation::makeByArray($data['animation'])
-            : null;
         return $result;
     }
 

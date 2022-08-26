@@ -15,21 +15,23 @@ use Kuvardin\TelegramBotsApi\Type;
 class PollOption extends Type
 {
     /**
-     * @var string $text Option text, 1-100 characters
+     * @param string $text Option text, 1-100 characters
+     * @param int $voter_count Number of users that voted for this option
      */
-    public string $text;
+    public function __construct(
+        public string $text,
+        public int $voter_count,
+    )
+    {
 
-    /**
-     * @var int $voter_count Number of users that voted for this option
-     */
-    public int $voter_count;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->text = $data['text'];
-        $result->voter_count = $data['voter_count'];
-        return $result;
+        return new self(
+            text: $data['text'],
+            voter_count: $data['voter_count'],
+        );
     }
 
     public function getRequestData(): array

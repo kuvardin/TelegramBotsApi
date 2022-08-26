@@ -10,6 +10,10 @@ use JsonException;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException;
 
+/**
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
 abstract class Request
 {
     public ?int $connect_timeout = null;

@@ -11,8 +11,10 @@ use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardRemove;
 use Psr\Http\Message\ResponseInterface;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
+use RuntimeException;
 
 /**
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Bot
@@ -86,7 +88,7 @@ class Bot
                     $text);
         }
 
-        throw new \RuntimeException("Unknown parse mode: {$parse_mode->value}");
+        throw new RuntimeException("Unknown parse mode: {$parse_mode->value}");
     }
 
     public function getToken(): string
@@ -1249,9 +1251,9 @@ class Bot
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
-     * @param Enums\DiceEmoji|null $emoji Emoji on which the dice throw animation is based. Currently, must be one of
-     *     Enums\DiceEmoji::*. Dice can have values 1-6 for Dice, Darts and Bowling, values 1-5 for Basketball and
-     *     Soccer, and values 1-64 for SlotMachine. Defaults to Dice
+     * @param Enums\DiceType|null $type Type on which the dice throw animation is based. Currently, must be one of
+     *     Enums\DiceType::*. Dice can have values 1-6 for Dice, Darts and Bowling, values 1-5 for Basketball and
+     *     Soccer, and values 1-64 for SlotMachine. Defaults to Enums\DiceType::Dice
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
@@ -1267,7 +1269,7 @@ class Bot
      */
     public function sendDice(
         int|string $chat_id,
-        Enums\DiceEmoji $emoji = null,
+        Enums\DiceType $type = null,
         bool $disable_notification = null,
         bool $protect_content = null,
         int $reply_to_message_id = null,
@@ -1277,7 +1279,7 @@ class Bot
     {
         return new Requests\RequestMessage($this, 'sendDice', [
             'chat_id' => $chat_id,
-            'emoji' => $emoji,
+            'emoji' => $type?->getEmoji(),
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
             'reply_to_message_id' => $reply_to_message_id,
@@ -2088,7 +2090,7 @@ class Bot
      * @param int|null $chat_id Unique identifier for the target private chat. If not specified, default bot's menu
      *     button will be returned
      */
-    public function getChatMenuButton(int $chat_id = null,): Requests\RequestMenuButton
+    public function getChatMenuButton(int $chat_id = null): Requests\RequestMenuButton
     {
         return new Requests\RequestMenuButton($this, 'getChatMenuButton', [
             'chat_id' => $chat_id,

@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\MenuButton;
 /**
  * In response to this request, MenuButton object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestMenuButton extends Request

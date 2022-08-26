@@ -18,9 +18,14 @@ use RuntimeException;
 class Member extends ChatMember
 {
     /**
-     * @var User $user Information about the user
+     * @param User $user Information about the user
      */
-    public User $user;
+    public function __construct(
+        public User $user,
+    )
+    {
+
+    }
 
     public static function getStatus(): string
     {
@@ -29,14 +34,13 @@ class Member extends ChatMember
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['status'] !== self::getStatus()) {
             throw new RuntimeException("Wrong chat member status: {$data['status']}");
         }
 
-        $result->user = User::makeByArray($data['user']);
-        return $result;
+        return new self(
+            user: User::makeByArray($data['user']),
+        );
     }
 
     public function getRequestData(): array

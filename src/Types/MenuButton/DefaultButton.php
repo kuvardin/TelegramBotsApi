@@ -22,13 +22,11 @@ class DefaultButton extends MenuButton
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['type'] !== self::getType()) {
             throw new RuntimeException("Wrong menu button type: {$data['type']}");
         }
 
-        return $result;
+        return new self;
     }
 
     public function getRequestData(): array

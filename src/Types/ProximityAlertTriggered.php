@@ -16,27 +16,26 @@ use Kuvardin\TelegramBotsApi\Type;
 class ProximityAlertTriggered extends Type
 {
     /**
-     * @var User $traveler User that triggered the alert
+     * @param User $traveler User that triggered the alert
+     * @param User $watcher User that set the alert
+     * @param int $distance The distance between the users
      */
-    public User $traveler;
+    public function __construct(
+        public User $traveler,
+        public User $watcher,
+        public int $distance,
+    )
+    {
 
-    /**
-     * @var User $watcher User that set the alert
-     */
-    public User $watcher;
-
-    /**
-     * @var int $distance The distance between the users
-     */
-    public int $distance;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->traveler = User::makeByArray($data['traveler']);
-        $result->watcher = User::makeByArray($data['watcher']);
-        $result->distance = $data['distance'];
-        return $result;
+        return new self(
+            traveler: User::makeByArray($data['traveler']),
+            watcher: User::makeByArray($data['watcher']),
+            distance: $data['distance'],
+        );
     }
 
     public function getRequestData(): array

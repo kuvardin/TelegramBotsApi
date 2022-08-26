@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\GameHighScore;
 /**
  * In response to this request, array of GameHighScore object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestGameHighScores extends Request

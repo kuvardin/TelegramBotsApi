@@ -12,6 +12,7 @@ use Kuvardin\TelegramBotsApi\Types\SentWebAppMessage;
 /**
  * In response to this request, SentWebAppMessage object will be received.
  *
+ * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class RequestSentWebAppMessage extends Request

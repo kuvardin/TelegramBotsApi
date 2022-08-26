@@ -15,35 +15,31 @@ use Kuvardin\TelegramBotsApi\Type;
 class OrderInfo extends Type
 {
     /**
-     * @var string|null $name User name
+     * @param string|null $name User name
+     * @param string|null $phone_number User's phone number
+     * @param string|null $email User email
+     * @param ShippingAddress|null $shipping_address User shipping address
      */
-    public ?string $name = null;
+    public function __construct(
+        public ?string $name = null,
+        public ?string $phone_number = null,
+        public ?string $email = null,
+        public ?ShippingAddress $shipping_address = null,
+    )
+    {
 
-    /**
-     * @var string|null $phone_number User's phone number
-     */
-    public ?string $phone_number = null;
-
-    /**
-     * @var string|null $email User email
-     */
-    public ?string $email = null;
-
-    /**
-     * @var ShippingAddress|null $shipping_address User shipping address
-     */
-    public ?ShippingAddress $shipping_address = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->name = $data['name'] ?? null;
-        $result->phone_number = $data['phone_number'] ?? null;
-        $result->email = $data['email'] ?? null;
-        $result->shipping_address = isset($data['shipping_address'])
-            ? ShippingAddress::makeByArray($data['shipping_address'])
-            : null;
-        return $result;
+        return new self(
+            name: $data['name'] ?? null,
+            phone_number: $data['phone_number'] ?? null,
+            email: $data['email'] ?? null,
+            shipping_address: isset($data['shipping_address'])
+                ? ShippingAddress::makeByArray($data['shipping_address'])
+                : null,
+        );
     }
 
     public function getRequestData(): array

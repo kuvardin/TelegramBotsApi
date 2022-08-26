@@ -20,45 +20,41 @@ use Kuvardin\TelegramBotsApi\Type;
 class LoginUrl extends Type
 {
     /**
-     * @var string $url An HTTP URL to be opened with user authorization data added to the query string when the button
-     *     is pressed. If the user refuses to provide authorization data, the original URL without information about
-     *     the user will be opened. The data added is the same as described in <a
+     * @param string $url An HTTP URL to be opened with user authorization data added to the query string when the
+     *     button is pressed. If the user refuses to provide authorization data, the original URL without information
+     *     about the user will be opened. The data added is the same as described in <a
      *     href="https://core.telegram.org/widgets/login#receiving-authorization-data">Receiving authorization
      *     data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data
      *     to verify the authentication and the integrity of the data as described in <a
      *     href="https://core.telegram.org/widgets/login#checking-authorization">Checking authorization</a>.
-     */
-    public string $url;
-
-    /**
-     * @var string|null $forward_text New text of the button in forwarded messages.
-     */
-    public ?string $forward_text = null;
-
-    /**
-     * @var string|null $bot_username Username of a bot, which will be used for user authorization. See <a
+     * @param string|null $forward_text New text of the button in forwarded messages.
+     * @param string|null $bot_username Username of a bot, which will be used for user authorization. See <a
      *     href="https://core.telegram.org/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If
      *     not specified, the current bot's username will be assumed. The <em>url</em>'s domain must be the same as the
      *     domain linked with the bot. See <a
      *     href="https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the
      *     bot</a> for more details.
+     * @param bool|null $request_write_access Pass <em>True</em> to request the permission for your bot to send
+     *     messages to the user.
      */
-    public ?string $bot_username = null;
+    public function __construct(
+        public string $url,
+        public ?string $forward_text = null,
+        public ?string $bot_username = null,
+        public ?bool $request_write_access = null,
+    )
+    {
 
-    /**
-     * @var bool|null $request_write_access Pass <em>True</em> to request the permission for your bot to send messages
-     *     to the user.
-     */
-    public ?bool $request_write_access = null;
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->url = $data['url'];
-        $result->forward_text = $data['forward_text'] ?? null;
-        $result->bot_username = $data['bot_username'] ?? null;
-        $result->request_write_access = $data['request_write_access'] ?? null;
-        return $result;
+        return new self(
+            url: $data['url'],
+            forward_text: $data['forward_text'] ?? null,
+            bot_username: $data['bot_username'] ?? null,
+            request_write_access: $data['request_write_access'] ?? null,
+        );
     }
 
     public function getRequestData(): array

@@ -15,16 +15,21 @@ use Kuvardin\TelegramBotsApi\Type;
 class VideoChatScheduled extends Type
 {
     /**
-     * @var int $start_date Point in time (Unix timestamp) when the video chat is supposed to be started by a chat
+     * @param int $start_date Point in time (Unix timestamp) when the video chat is supposed to be started by a chat
      *     administrator
      */
-    public int $start_date;
+    public function __construct(
+        public int $start_date,
+    )
+    {
+
+    }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self;
-        $result->start_date = $data['start_date'];
-        return $result;
+        return new self(
+            start_date: $data['start_date'],
+        );
     }
 
     public function getRequestData(): array

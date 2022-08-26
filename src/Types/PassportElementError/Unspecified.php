@@ -16,37 +16,35 @@ use RuntimeException;
 class Unspecified extends PassportElementError
 {
     /**
-     * @var string $type Type of element of the user's Telegram Passport which has the issue
+     * @param string $type Type of element of the user's Telegram Passport which has the issue
+     * @param string $element_hash Base64-encoded element hash
+     * @param string $message Error message
      */
-    public string $type;
-
-    /**
-     * @var string $element_hash Base64-encoded element hash
-     */
-    public string $element_hash;
-
-    /**
-     * @var string $message Error message
-     */
-    public string $message;
-
-    public static function getSource(): string
+    public function __construct(
+        public string $type,
+        public string $element_hash,
+        public string $message,
+    )
     {
-        return 'unspecified';
+
     }
 
     public static function makeByArray(array $data): static
     {
-        $result = new self;
-
         if ($data['source'] !== self::getSource()) {
             throw new RuntimeException("Wrong passport element error source: {$data['source']}");
         }
 
-        $result->type = $data['type'];
-        $result->element_hash = $data['element_hash'];
-        $result->message = $data['message'];
-        return $result;
+        return new self(
+            type: $data['type'],
+            element_hash: $data['element_hash'],
+            message: $data['message'],
+        );
+    }
+
+    public static function getSource(): string
+    {
+        return 'unspecified';
     }
 
     public function getRequestData(): array
