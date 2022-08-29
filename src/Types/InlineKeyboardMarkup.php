@@ -35,7 +35,7 @@ class InlineKeyboardMarkup extends Type
         foreach ($data['inline_keyboard'] as $buttons_row_data) {
             $buttons_row = [];
             foreach ($buttons_row_data as $button_data) {
-                $buttons_row[] = InlineKeyboardMarkup::makeByArray($button_data);
+                $buttons_row[] = InlineKeyboardButton::makeByArray($button_data);
             }
             $result->inline_keyboard[] = $buttons_row;
         }
