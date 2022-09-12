@@ -22,6 +22,8 @@ class MessageEntity extends Type
      * @param string|null $url For “text_link” only, url that will be opened after user taps on the text
      * @param User|null $user For “text_mention” only, the mentioned user
      * @param string|null $language For “pre” only, the programming language of the entity text
+     * @param string|null $custom_emoji_id For “custom_emoji” only, unique identifier of the custom emoji.
+     *     Use getCustomEmojiStickers() to get full information about the sticker
      */
     public function __construct(
         public string $type_value,
@@ -30,6 +32,7 @@ class MessageEntity extends Type
         public ?string $url = null,
         public ?User $user = null,
         public ?string $language = null,
+        public ?string $custom_emoji_id = null,
     )
     {
 
@@ -46,6 +49,7 @@ class MessageEntity extends Type
                 ? User::makeByArray($data['user'])
                 : null,
             language: $data['language'] ?? null,
+            custom_emoji_id: $data['custom_emoji_id'] ?? null,
         );
     }
 
@@ -58,6 +62,7 @@ class MessageEntity extends Type
             'url' => $this->url,
             'user' => $this->user,
             'language' => $this->language,
+            'custom_emoji_id' => $this->custom_emoji_id,
         ];
     }
 

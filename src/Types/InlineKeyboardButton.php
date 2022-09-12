@@ -27,7 +27,7 @@ class InlineKeyboardButton extends Type
      *     that will be launched when the user presses the button. The Web App will be able to send an arbitrary
      *     message on behalf of the user using the method answerWebAppQuery(). Available only in private chats between
      *     a user and the bot.
-     * @param LoginUrl|null $login_url An HTTP URL used to automatically authorize the user. Can be used as a
+     * @param LoginUrl|null $login_url An HTTPS URL used to automatically authorize the user. Can be used as a
      *     replacement for the <a href="https://core.telegram.org/widgets/login">Telegram Login Widget</a>.
      * @param string|null $switch_inline_query If set, pressing the button will prompt the user to select one of their
      *     chats, open that chat and insert the bot's username and the specified inline query in the input field. Can

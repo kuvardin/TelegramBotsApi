@@ -53,8 +53,11 @@ enum MessageEntityType: string
     case Pre = 'pre';
 
     /** for clickable text URLs */
-    case Text_link = 'text_link';
+    case TextLink = 'text_link';
 
     /** for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a> */
-    case Text_mention = 'text_mention';
+    case TextMention = 'text_mention';
+
+    /** for inline custom emoji stickers */
+    case CustomEmoji = 'custom_emoji';
 }

@@ -23,7 +23,9 @@ class Audio extends Type
      * @param string|null $title Title of the audio as defined by sender or by audio tags
      * @param string|null $file_name Original filename as defined by sender
      * @param string|null $mime_type MIME type of the file as defined by sender
-     * @param int|null $file_size File size in bytes
+     * @param int|null $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming
+     *     languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so
+     *     a signed 64-bit integer or double-precision float type are safe for storing this value.
      * @param PhotoSize|null $thumb Thumbnail of the album cover to which the music file belongs
      */
     public function __construct(
