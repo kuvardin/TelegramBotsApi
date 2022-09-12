@@ -101,7 +101,7 @@ abstract class Request
         $result = [];
         foreach ($parameters as $parameter_key => $parameter_value) {
             if ($parameter_value instanceof Type) {
-                $parameter_value = self::processingParameters($parameter_value->getRequestData());
+                $parameter_value = $parameter_value->getRequestData();
             }
 
             if ($parameter_value === null) {
