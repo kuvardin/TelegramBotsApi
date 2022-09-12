@@ -146,6 +146,7 @@ class Update extends Type
             ?? $this->edited_message?->chat
             ?? $this->channel_post?->chat
             ?? $this->edited_channel_post?->chat
+            ?? $this->callback_query?->message?->chat
             ?? $this->my_chat_member?->chat
             ?? $this->chat_member?->chat
             ?? $this->chat_join_request?->chat;
