@@ -30,6 +30,12 @@ class Chat extends Type
      * @param string|null $bio Bio of the other party in a private chat. Returned only in getChat().
      * @param bool|null $has_private_forwards True, if privacy settings of the other party in the private chat allows
      *     to use <code>tg://user?id=<user_id></code> links only in chats with the user. Returned only in getChat().
+     * @param bool|null $has_restricted_voice_and_video_messages True, if the privacy settings of the other party
+     *     restrict sending voice and video note messages in the private chat. Returned only in getChat().
+     * @param bool|null $join_to_send_messages True, if users need to join the supergroup before they can send messages.
+     *     Returned only in getChat().
+     * @param bool|null $join_by_request True, if all users directly joining the supergroup need to be approved by
+     *     supergroup administrators. Returned only in getChat().
      * @param string|null $description Description, for groups, supergroups and channel chats. Returned only in
      *     getChat().
      * @param string|null $invite_link Primary invite link, for groups, supergroups and channel chats. Returned only in
@@ -64,6 +70,9 @@ class Chat extends Type
         public ?ChatPhoto $photo = null,
         public ?string $bio = null,
         public ?bool $has_private_forwards = null,
+        public ?bool $has_restricted_voice_and_video_messages = null,
+        public ?bool $join_to_send_messages = null,
+        public ?bool $join_by_request = null,
         public ?string $description = null,
         public ?string $invite_link = null,
         public ?Message $pinned_message = null,
@@ -96,6 +105,9 @@ class Chat extends Type
                 : null,
             bio: $data['bio'] ?? null,
             has_private_forwards: $data['has_private_forwards'] ?? null,
+            has_restricted_voice_and_video_messages: $data['has_restricted_voice_and_video_messages'] ?? null,
+            join_to_send_messages: $data['join_to_send_messages'] ?? null,
+            join_by_request: $data['join_by_request'] ?? null,
             description: $data['description'] ?? null,
             invite_link: $data['invite_link'] ?? null,
             pinned_message: isset($data['pinned_message'])
@@ -128,6 +140,9 @@ class Chat extends Type
             'photo' => $this->photo,
             'bio' => $this->bio,
             'has_private_forwards' => $this->has_private_forwards,
+            'has_restricted_voice_and_video_messages' => $this->has_restricted_voice_and_video_messages,
+            'join_to_send_messages' => $this->join_to_send_messages,
+            'join_by_request' => $this->join_by_request,
             'description' => $this->description,
             'invite_link' => $this->invite_link,
             'pinned_message' => $this->pinned_message,
