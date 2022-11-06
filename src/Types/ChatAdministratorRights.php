@@ -33,6 +33,8 @@ class ChatAdministratorRights extends Type
      *     pin messages; channels only
      * @param bool|null $can_pin_messages <em>True</em>, if the user is allowed to pin messages; groups and supergroups
      *     only
+     * @param bool|null $can_manage_topics <em>True</em>, if the user is allowed to create, rename, close, and reopen
+     *     forum topics; supergroups only
      */
     public function __construct(
         public bool $is_anonymous,
@@ -46,6 +48,7 @@ class ChatAdministratorRights extends Type
         public ?bool $can_post_messages = null,
         public ?bool $can_edit_messages = null,
         public ?bool $can_pin_messages = null,
+        public ?bool $can_manage_topics = null,
     )
     {
 
@@ -65,6 +68,7 @@ class ChatAdministratorRights extends Type
             can_post_messages: $data['can_post_messages'] ?? null,
             can_edit_messages: $data['can_edit_messages'] ?? null,
             can_pin_messages: $data['can_pin_messages'] ?? null,
+            can_manage_topics: $data['can_manage_topics'] ?? null,
         );
     }
 
@@ -82,6 +86,7 @@ class ChatAdministratorRights extends Type
             'can_post_messages' => $this->can_post_messages,
             'can_edit_messages' => $this->can_edit_messages,
             'can_pin_messages' => $this->can_pin_messages,
+            'can_manage_topics' => $this->can_manage_topics,
         ];
     }
 }

@@ -1,7 +1,7 @@
-# TelegramBotsApi v.6.2.2
+# TelegramBotsApi v.6.3
 [![Total Downloads](https://poser.pugx.org/kuvardin/telegram-bots-api/downloads)](https://packagist.org/packages/kuvardin/telegram-bots-api)
 
-SDK for latest version of Telegram bots API (from August 12, 2022)
+SDK for latest version of Telegram bots API (from November 5, 2022)
 
 ## Using Examples
 ### Installing

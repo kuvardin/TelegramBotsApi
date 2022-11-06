@@ -16,6 +16,8 @@ class Message extends Type
 {
     /**
      * @param int $message_id Unique message identifier inside this chat
+     * @param int|null $message_thread_id Unique identifier of a message thread to which the message belongs;
+     *     for supergroups only
      * @param int $date Date the message was sent in Unix time
      * @param Chat $chat Conversation the message belongs to
      * @param User|null $from Sender of the message; empty for messages sent to channels. For backward compatibility,
@@ -34,6 +36,7 @@ class Message extends Type
      * @param string|null $forward_sender_name Sender's name for messages forwarded from users who disallow adding a
      *     link to their account in forwarded messages
      * @param int|null $forward_date For forwarded messages, date the original message was sent in Unix time
+     * @param bool|null $is_topic_message True, if the message is sent to a forum topic
      * @param bool|null $is_automatic_forward True, if the message is a channel post that was automatically forwarded
      *     to the connected discussion group
      * @param Message|null $reply_to_message For replies, the original message. Note that the Message object in this
@@ -107,6 +110,9 @@ class Message extends Type
      * @param PassportData|null $passport_data Telegram Passport data
      * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message. A user in the chat triggered
      *     another user's proximity alert while sharing Live Location.
+     * @param ForumTopicCreated|null $forum_topic_created Service message: forum topic created
+     * @param ForumTopicClosed|null $forum_topic_closed Service message: forum topic closed
+     * @param ForumTopicReopened|null $forum_topic_reopened Service message: forum topic reopened
      * @param VideoChatScheduled|null $video_chat_scheduled Service message: video chat scheduled
      * @param VideoChatStarted|null $video_chat_started Service message: video chat started
      * @param VideoChatEnded|null $video_chat_ended Service message: video chat ended
@@ -118,6 +124,7 @@ class Message extends Type
      */
     public function __construct(
         public int $message_id,
+        public ?int $message_thread_id,
         public int $date,
         public Chat $chat,
         public ?User $from = null,
@@ -128,6 +135,7 @@ class Message extends Type
         public ?string $forward_signature = null,
         public ?string $forward_sender_name = null,
         public ?int $forward_date = null,
+        public ?bool $is_topic_message = null,
         public ?bool $is_automatic_forward = null,
         public ?Message $reply_to_message = null,
         public ?User $via_bot = null,
@@ -170,6 +178,9 @@ class Message extends Type
         public ?string $connected_website = null,
         public ?PassportData $passport_data = null,
         public ?ProximityAlertTriggered $proximity_alert_triggered = null,
+        public ?ForumTopicCreated $forum_topic_created = null,
+        public ?ForumTopicClosed $forum_topic_closed = null,
+        public ?ForumTopicReopened $forum_topic_reopened = null,
         public ?VideoChatScheduled $video_chat_scheduled = null,
         public ?VideoChatStarted $video_chat_started = null,
         public ?VideoChatEnded $video_chat_ended = null,
@@ -185,6 +196,7 @@ class Message extends Type
     {
         $result = new self(
             message_id: $data['message_id'],
+            message_thread_id: $data['message_thread_id'] ?? null,
             date: $data['date'],
             chat: Chat::makeByArray($data['chat']),
             from: isset($data['from'])
@@ -203,6 +215,7 @@ class Message extends Type
             forward_signature: $data['forward_signature'] ?? null,
             forward_sender_name: $data['forward_sender_name'] ?? null,
             forward_date: $data['forward_date'] ?? null,
+            is_topic_message: $data['is_topic_message'] ?? null,
             is_automatic_forward: $data['is_automatic_forward'] ?? null,
             reply_to_message: isset($data['reply_to_message'])
                 ? Message::makeByArray($data['reply_to_message'])
@@ -289,6 +302,15 @@ class Message extends Type
             proximity_alert_triggered: isset($data['proximity_alert_triggered'])
                 ? ProximityAlertTriggered::makeByArray($data['proximity_alert_triggered'])
                 : null,
+            forum_topic_created: isset($data['forum_topic_created'])
+                ? ForumTopicCreated::makeByArray($data['forum_topic_created'])
+                : null,
+            forum_topic_closed: isset($data['forum_topic_closed'])
+                ? ForumTopicClosed::makeByArray($data['forum_topic_closed'])
+                : null,
+            forum_topic_reopened: isset($data['forum_topic_reopened'])
+                ? ForumTopicReopened::makeByArray($data['forum_topic_reopened'])
+                : null,
             video_chat_scheduled: isset($data['video_chat_scheduled'])
                 ? VideoChatScheduled::makeByArray($data['video_chat_scheduled'])
                 : null,
@@ -356,6 +378,7 @@ class Message extends Type
             'forward_signature' => $this->forward_signature,
             'forward_sender_name' => $this->forward_sender_name,
             'forward_date' => $this->forward_date,
+            'is_topic_message' => $this->is_topic_message,
             'is_automatic_forward' => $this->is_automatic_forward,
             'reply_to_message' => $this->reply_to_message,
             'via_bot' => $this->via_bot,
@@ -397,6 +420,9 @@ class Message extends Type
             'successful_payment' => $this->successful_payment,
             'connected_website' => $this->connected_website,
             'passport_data' => $this->passport_data,
+            'forum_topic_created' => $this->forum_topic_created,
+            'forum_topic_closed' => $this->forum_topic_closed,
+            'forum_topic_reopened' => $this->forum_topic_reopened,
             'proximity_alert_triggered' => $this->proximity_alert_triggered,
             'video_chat_scheduled' => $this->video_chat_scheduled,
             'video_chat_started' => $this->video_chat_started,

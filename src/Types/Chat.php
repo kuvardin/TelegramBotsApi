@@ -26,7 +26,12 @@ class Chat extends Type
      * @param Username|null $username Username, for private chats, supergroups and channels if available
      * @param string|null $first_name First name of the other party in a private chat
      * @param string|null $last_name Last name of the other party in a private chat
+     * @param bool|null $is_forum True, if the supergroup chat is a forum (has topics enabled)
      * @param ChatPhoto|null $photo Chat photo. Returned only in getChat().
+     * @param string[]|null $active_usernames Optional. If non-empty, the list of all active chat usernames;
+     *     for private chats, supergroups and channels. Returned only in getChat().
+     * @param string|null $emoji_status_custom_emoji_id Custom emoji identifier of emoji status of the other party in
+     *     a private chat. Returned only in getChat().
      * @param string|null $bio Bio of the other party in a private chat. Returned only in getChat().
      * @param bool|null $has_private_forwards True, if privacy settings of the other party in the private chat allows
      *     to use <code>tg://user?id=<user_id></code> links only in chats with the user. Returned only in getChat().
@@ -67,7 +72,10 @@ class Chat extends Type
         public ?Username $username = null,
         public ?string $first_name = null,
         public ?string $last_name = null,
+        public ?bool $is_forum = null,
         public ?ChatPhoto $photo = null,
+        public ?array $active_usernames = null,
+        public ?string $emoji_status_custom_emoji_id = null,
         public ?string $bio = null,
         public ?bool $has_private_forwards = null,
         public ?bool $has_restricted_voice_and_video_messages = null,
@@ -100,9 +108,12 @@ class Chat extends Type
                 : null,
             first_name: $data['first_name'] ?? null,
             last_name: $data['last_name'] ?? null,
+            is_forum: $data['is_forum'] ?? null,
             photo: isset($data['photo'])
                 ? ChatPhoto::makeByArray($data['photo'])
                 : null,
+            active_usernames: $data['active_usernames'] ?? null,
+            emoji_status_custom_emoji_id: $data['emoji_status_custom_emoji_id'] ?? null,
             bio: $data['bio'] ?? null,
             has_private_forwards: $data['has_private_forwards'] ?? null,
             has_restricted_voice_and_video_messages: $data['has_restricted_voice_and_video_messages'] ?? null,
@@ -137,6 +148,7 @@ class Chat extends Type
             'username' => $this->username?->getShort(),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'is_forum' => $this->is_forum,
             'photo' => $this->photo,
             'bio' => $this->bio,
             'has_private_forwards' => $this->has_private_forwards,

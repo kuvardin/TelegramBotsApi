@@ -29,6 +29,8 @@ class ChatPermissions extends Type
      * @param bool|null $can_invite_users <em>True</em>, if the user is allowed to invite new users to the chat
      * @param bool|null $can_pin_messages <em>True</em>, if the user is allowed to pin messages. Ignored in public
      *     supergroups
+     * @param bool|null $can_manage_topics True, if the user is allowed to create forum topics. If omitted defaults
+     *     to the value of can_pin_messages
      */
     public function __construct(
         public ?bool $can_send_messages = null,
@@ -39,6 +41,7 @@ class ChatPermissions extends Type
         public ?bool $can_change_info = null,
         public ?bool $can_invite_users = null,
         public ?bool $can_pin_messages = null,
+        public ?bool $can_manage_topics = null,
     )
     {
 
@@ -55,6 +58,7 @@ class ChatPermissions extends Type
             can_change_info: $data['can_change_info'] ?? null,
             can_invite_users: $data['can_invite_users'] ?? null,
             can_pin_messages: $data['can_pin_messages'] ?? null,
+            can_manage_topics: $data['can_manage_topics'] ?? null,
         );
     }
 
@@ -69,6 +73,7 @@ class ChatPermissions extends Type
             'can_change_info' => $this->can_change_info,
             'can_invite_users' => $this->can_invite_users,
             'can_pin_messages' => $this->can_pin_messages,
+            'can_manage_topics' => $this->can_manage_topics,
         ];
     }
 }

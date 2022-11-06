@@ -263,6 +263,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendMessage(
         int|string $chat_id,
@@ -275,6 +277,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
@@ -288,6 +291,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -303,6 +307,8 @@ class Bot
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the forwarded message from forwarding and saving
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function forwardMessage(
         int|string $chat_id,
@@ -310,6 +316,7 @@ class Bot
         int $message_id,
         bool $disable_notification = null,
         bool $protect_content = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'forwardMessage', [
@@ -318,6 +325,7 @@ class Bot
             'message_id' => $message_id,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -349,6 +357,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function copyMessage(
         int|string $chat_id,
@@ -362,6 +372,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessageId
     {
         return new Requests\RequestMessageId($this, 'copyMessage', [
@@ -376,6 +387,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -407,6 +419,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendPhoto(
         int|string $chat_id,
@@ -419,6 +433,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -432,6 +447,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -473,6 +489,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendAudio(
         int|string $chat_id,
@@ -489,6 +507,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -506,6 +525,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -546,6 +566,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendDocument(
         int|string $chat_id,
@@ -560,6 +582,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
@@ -575,6 +598,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -617,6 +641,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendVideo(
         int|string $chat_id,
@@ -634,6 +660,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -652,6 +679,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -693,6 +721,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -709,6 +739,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -726,6 +757,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -759,6 +791,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendVoice(
         int|string $chat_id,
@@ -772,6 +806,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
@@ -786,6 +821,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -820,6 +856,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendVideoNote(
         int|string $chat_id,
@@ -832,6 +870,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -845,6 +884,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -862,6 +902,8 @@ class Bot
      * @param int|null $reply_to_message_id If the messages are a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
      *     specified replied-to message is not found
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendMediaGroup(
         int|string $chat_id,
@@ -870,6 +912,7 @@ class Bot
         bool $protect_content = null,
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessages
     {
         return new Requests\RequestMessages($this, 'sendMediaGroup', [
@@ -879,6 +922,7 @@ class Bot
             'protect_content' => $protect_content,
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -908,6 +952,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendLocation(
         int|string $chat_id,
@@ -922,6 +968,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
@@ -937,6 +984,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1084,6 +1132,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendVenue(
         int|string $chat_id,
@@ -1100,6 +1150,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1117,6 +1168,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1142,6 +1194,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove keyboard
      *     or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendContact(
         int|string $chat_id,
@@ -1154,6 +1208,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendContact', [
@@ -1167,6 +1222,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1207,6 +1263,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendPoll(
         int|string $chat_id,
@@ -1227,6 +1285,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
@@ -1248,6 +1307,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1271,6 +1331,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendDice(
         int|string $chat_id,
@@ -1280,6 +1342,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDice', [
@@ -1290,6 +1353,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1471,6 +1535,8 @@ class Bot
      *     other settings
      * @param bool|null $can_invite_users Pass <em>True</em>, if the administrator can invite new users to the chat
      * @param bool|null $can_pin_messages Pass <em>True</em>, if the administrator can pin messages, supergroups only
+     * @param bool|null $can_manage_topics Pass <em>True</em> if the user is allowed to create, rename, close, and
+     *     reopen forum topics, supergroups only
      */
     public function promoteChatMember(
         int|string $chat_id,
@@ -1486,6 +1552,7 @@ class Bot
         bool $can_change_info = null,
         bool $can_invite_users = null,
         bool $can_pin_messages = null,
+        bool $can_manage_topics = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'promoteChatMember', [
@@ -1502,7 +1569,39 @@ class Bot
             'can_change_info' => $can_change_info,
             'can_invite_users' => $can_invite_users,
             'can_pin_messages' => $can_pin_messages,
+            'can_manage_topics' => $can_manage_topics,
         ]);
+    }
+
+    /**
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in
+     * the chat for this to work and must have the appropriate administrator rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
+     *     format &#64;channelusername)
+     * @param int $user_id Unique identifier of the target user
+     */
+    public function demoteChatMember(
+        int|string $chat_id,
+        int $user_id,
+    ): Requests\RequestVoid
+    {
+        return $this->promoteChatMember(
+            chat_id: $chat_id,
+            user_id: $user_id,
+            is_anonymous: false,
+            can_manage_chat: false,
+            can_post_messages: false,
+            can_edit_messages: false,
+            can_delete_messages: false,
+            can_manage_video_chats: false,
+            can_restrict_members: false,
+            can_promote_members: false,
+            can_change_info: false,
+            can_invite_users: false,
+            can_pin_messages: false,
+            can_manage_topics: false,
+        );
     }
 
     /**
@@ -2003,6 +2102,147 @@ class Bot
         ]);
     }
 
+
+    /**
+     * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user
+     */
+    public function getForumTopicIconStickers(): Requests\RequestStickers
+    {
+        return new Requests\RequestStickers($this, 'getForumTopicIconStickers');
+    }
+
+    /**
+     * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for
+     * this to work and must have the <em>can_manage_topics</em> administrator rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format @supergroupusername)
+     * @param string $name Topic name, 1-128 characters
+     * @param int|null $icon_color Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E,
+     *     0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F
+     * @param string|null $icon_custom_emoji_id Unique identifier of the custom emoji shown as the topic icon.
+     *     Use getForumTopicIconStickers() to get all allowed custom emoji identifiers.
+     */
+    public function createForumTopic(
+        int|string $chat_id,
+        string $name,
+        int $icon_color = null,
+        string $icon_custom_emoji_id = null,
+    ): Requests\RequestForumTopic
+    {
+        return new Requests\RequestForumTopic($this, 'createForumTopic', [
+            'chat_id' => $chat_id,
+            'name' => $name,
+            'icon_color' => $icon_color,
+            'icon_custom_emoji_id' => $icon_custom_emoji_id,
+        ]);
+    }
+
+    /**
+     * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat
+     * for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of
+     * the topic.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format @supergroupusername)
+     * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+     */
+    public function closeForumTopic(
+        int|string $chat_id,
+        int $message_thread_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'closeForumTopic', [
+            'chat_id' => $chat_id,
+            'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
+    /**
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in
+     * the chat for this to work and must have <em>can_manage_topics</em> administrator rights, unless it is the creator
+     * of the topic.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
+     *     format @supergroupusername)
+     * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param string $name New topic name, 1-128 characters
+     * @param string $icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use <a href="https://core.telegram.org/bots/api#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers
+     */
+    public function editForumTopic(
+        int|string $chat_id,
+        int $message_thread_id,
+        string $name,
+        string $icon_custom_emoji_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editForumTopic', [
+            'chat_id' => $chat_id,
+            'message_thread_id' => $message_thread_id,
+            'name' => $name,
+            'icon_custom_emoji_id' => $icon_custom_emoji_id,
+        ]);
+    }
+
+    /**
+     * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat
+     * for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of
+     * the topic.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format @supergroupusername)
+     * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+     */
+    public function reopenForumTopic(
+        int|string $chat_id,
+        int $message_thread_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'reopenForumTopic', [
+            'chat_id' => $chat_id,
+            'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
+    /**
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be
+     * an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator
+     * rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format @supergroupusername)
+     * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+     */
+    public function deleteForumTopic(
+        int|string $chat_id,
+        int $message_thread_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteForumTopic', [
+            'chat_id' => $chat_id,
+            'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
+    /**
+     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the
+     * chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format @supergroupusername)
+     * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
+     */
+    public function unpinAllForumTopicMessages(
+        int|string $chat_id,
+        int $message_thread_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'unpinAllForumTopicMessages', [
+            'chat_id' => $chat_id,
+            'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
     /**
      * Use this method to change the list of the bot's commands. See <a
      * href="https://core.telegram.org/bots#commands">documentation</a> for more details about bot commands.
@@ -2382,13 +2622,16 @@ class Bot
     }
 
     /**
-     * Use this method to delete a message, including service messages, with the following limitations:<br>- A message
-     * can only be deleted if it was sent less than 48 hours ago.<br>- A dice message in a private chat can only be
-     * deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups,
-     * and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted
-     * <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an
-     * administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em>
-     * permission in a supergroup or a channel, it can delete any message there.
+     * Use this method to delete a message, including service messages, with the following limitations:<br>
+     * - A message can only be deleted if it was sent less than 48 hours ago.<br>
+     * - Service messages about a supergroup, channel, or forum topic creation can't be deleted.<br>
+     * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.<br>
+     * - Bots can delete incoming messages in private chats.<br>
+     * - Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>
+     * - If the bot is an administrator of a group, it can delete any message there.<br>
+     * - If the bot has <em>can_delete_messages</em> permission in a supergroup or a channel, it can delete any message
+     * there.<br>
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -2427,6 +2670,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
      *     keyboard or to force a reply from the user.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendSticker(
         int|string $chat_id,
@@ -2436,6 +2681,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -2446,6 +2692,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -2781,6 +3028,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>. If
      *     empty, one 'Pay total price' button will be shown. If not empty, the first button must
      *     be a Pay button.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendInvoice(
         int|string $chat_id,
@@ -2810,6 +3059,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendInvoice', [
@@ -2840,6 +3090,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -3028,6 +3279,8 @@ class Bot
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>. If
      *     empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the
      *     game.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
      */
     public function sendGame(
         int $chat_id,
@@ -3037,6 +3290,7 @@ class Bot
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendGame', [
@@ -3047,6 +3301,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 

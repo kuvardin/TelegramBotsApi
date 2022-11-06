@@ -38,6 +38,8 @@ class Administrator extends ChatMember
      *     pin messages; channels only
      * @param bool|null $can_pin_messages <em>True</em>, if the user is allowed to pin messages; groups and supergroups
      *     only
+     * @param bool|null $can_manage_topics <em>True</em>, if the user is allowed to create, rename, close, and reopen
+     *     forum topics; supergroups only
      * @param string|null $custom_title Custom title for this user
      */
     public function __construct(
@@ -54,6 +56,7 @@ class Administrator extends ChatMember
         public ?bool $can_post_messages = null,
         public ?bool $can_edit_messages = null,
         public ?bool $can_pin_messages = null,
+        public ?bool $can_manage_topics = null,
         public ?string $custom_title = null,
     )
     {
@@ -85,6 +88,7 @@ class Administrator extends ChatMember
             can_post_messages: $data['can_post_messages'] ?? null,
             can_edit_messages: $data['can_edit_messages'] ?? null,
             can_pin_messages: $data['can_pin_messages'] ?? null,
+            can_manage_topics: $data['can_manage_topics'] ?? null,
             custom_title: $data['custom_title'] ?? null,
         );
     }
@@ -106,6 +110,7 @@ class Administrator extends ChatMember
             'can_post_messages' => $this->can_post_messages,
             'can_edit_messages' => $this->can_edit_messages,
             'can_pin_messages' => $this->can_pin_messages,
+            'can_manage_topics' => $this->can_manage_topics,
             'custom_title' => $this->custom_title,
         ];
     }
