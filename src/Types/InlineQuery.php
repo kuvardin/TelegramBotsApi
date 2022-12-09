@@ -46,7 +46,7 @@ class InlineQuery extends Type
             from: User::makeByArray($data['from']),
             query: $data['query'],
             offset: $data['offset'],
-            inline_query_chat_type_value: $data['chat_type'],
+            inline_query_chat_type_value: $data['chat_type'] ?? null,
             location: isset($data['location'])
                 ? Location::makeByArray($data['location'])
                 : null,
