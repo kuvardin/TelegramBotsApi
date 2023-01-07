@@ -111,6 +111,7 @@ class Message extends Type
      * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message. A user in the chat triggered
      *     another user's proximity alert while sharing Live Location.
      * @param ForumTopicCreated|null $forum_topic_created Service message: forum topic created
+     * @param ForumTopicEdited|null $forum_topic_edited Service message: forum topic edited
      * @param ForumTopicClosed|null $forum_topic_closed Service message: forum topic closed
      * @param ForumTopicReopened|null $forum_topic_reopened Service message: forum topic reopened
      * @param VideoChatScheduled|null $video_chat_scheduled Service message: video chat scheduled
@@ -121,6 +122,12 @@ class Message extends Type
      * @param WebAppData|null $web_app_data Service message: data sent by a Web App
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message. <code>login_url</code>
      *     buttons are represented as ordinary <code>url</code> buttons.
+     * @param bool|null $has_media_spoiler True, if the message media is covered by a spoiler animation
+     * @param GeneralForumTopicHidden|null $general_forum_topic_hidden Service message: the 'General' forum topic hidden
+     * @param GeneralForumTopicUnhidden|null $general_forum_topic_unhidden Service message: the 'General' forum topic
+     *     unhidden
+     * @param WriteAccessAllowed|null $write_access_allowed Service message: the user allowed the bot added
+     *     to the attachment menu to write messages
      */
     public function __construct(
         public int $message_id,
@@ -179,6 +186,7 @@ class Message extends Type
         public ?PassportData $passport_data = null,
         public ?ProximityAlertTriggered $proximity_alert_triggered = null,
         public ?ForumTopicCreated $forum_topic_created = null,
+        public ?ForumTopicEdited $forum_topic_edited = null,
         public ?ForumTopicClosed $forum_topic_closed = null,
         public ?ForumTopicReopened $forum_topic_reopened = null,
         public ?VideoChatScheduled $video_chat_scheduled = null,
@@ -187,6 +195,10 @@ class Message extends Type
         public ?VideoChatParticipantsInvited $video_chat_participants_invited = null,
         public ?WebAppData $web_app_data = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
+        public ?bool $has_media_spoiler = null,
+        public ?GeneralForumTopicHidden $general_forum_topic_hidden = null,
+        public ?GeneralForumTopicUnhidden $general_forum_topic_unhidden = null,
+        public ?WriteAccessAllowed $write_access_allowed = null,
     )
     {
 
@@ -305,6 +317,9 @@ class Message extends Type
             forum_topic_created: isset($data['forum_topic_created'])
                 ? ForumTopicCreated::makeByArray($data['forum_topic_created'])
                 : null,
+            forum_topic_edited: isset($data['forum_topic_edited'])
+                ? ForumTopicEdited::makeByArray($data['forum_topic_edited'])
+                : null,
             forum_topic_closed: isset($data['forum_topic_closed'])
                 ? ForumTopicClosed::makeByArray($data['forum_topic_closed'])
                 : null,
@@ -328,6 +343,16 @@ class Message extends Type
                 : null,
             reply_markup: isset($data['reply_markup'])
                 ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
+                : null,
+            has_media_spoiler: $data['has_media_spoiler'] ?? null,
+            general_forum_topic_hidden:  isset($data['general_forum_topic_hidden'])
+                ? GeneralForumTopicHidden::makeByArray($data['general_forum_topic_hidden'])
+                : null,
+            general_forum_topic_unhidden:  isset($data['general_forum_topic_unhidden'])
+                ? GeneralForumTopicUnhidden::makeByArray($data['general_forum_topic_unhidden'])
+                : null,
+            write_access_allowed: isset($data['write_access_allowed'])
+                ? WriteAccessAllowed::makeByArray($data['write_access_allowed'])
                 : null,
         );
 
@@ -421,6 +446,7 @@ class Message extends Type
             'connected_website' => $this->connected_website,
             'passport_data' => $this->passport_data,
             'forum_topic_created' => $this->forum_topic_created,
+            'forum_topic_edited' => $this->forum_topic_edited,
             'forum_topic_closed' => $this->forum_topic_closed,
             'forum_topic_reopened' => $this->forum_topic_reopened,
             'proximity_alert_triggered' => $this->proximity_alert_triggered,
@@ -430,6 +456,10 @@ class Message extends Type
             'video_chat_participants_invited' => $this->video_chat_participants_invited,
             'web_app_data' => $this->web_app_data,
             'reply_markup' => $this->reply_markup,
+            'has_media_spoiler' => $this->has_media_spoiler,
+            'general_forum_topic_hidden' => $this->general_forum_topic_hidden,
+            'general_forum_topic_unhidden' => $this->general_forum_topic_unhidden,
+            'write_access_allowed' => $this->write_access_allowed,
         ];
     }
 }

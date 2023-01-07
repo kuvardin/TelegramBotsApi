@@ -32,6 +32,8 @@ class ReplyKeyboardMarkup extends Type
      *     (has <em>reply_to_message_id</em>), sender of the original message.<br><br><em>Example:</em> A user requests
      *     to change the bot's language, bot replies to the request with a keyboard to select the new language. Other
      *     users in the group don't see the keyboard.
+     * @param bool|null $is_persistent Requests clients to always show the keyboard when the regular keyboard is hidden.
+     *     Defaults to false, in which case the custom keyboard can be hidden and opened with a keyboard icon.
      */
     public function __construct(
         public array $keyboard,
@@ -39,6 +41,7 @@ class ReplyKeyboardMarkup extends Type
         public ?bool $one_time_keyboard = null,
         public ?string $input_field_placeholder = null,
         public ?bool $selective = null,
+        public ?bool $is_persistent = null,
     )
     {
 
@@ -52,6 +55,7 @@ class ReplyKeyboardMarkup extends Type
             one_time_keyboard: $data['one_time_keyboard'] ?? null,
             input_field_placeholder: $data['input_field_placeholder'] ?? null,
             selective: $data['selective'] ?? null,
+            is_persistent: $data['is_persistent'] ?? null,
         );
 
         foreach ($data['keyboard'] as $keyboard_buttons_row_data) {
@@ -72,6 +76,7 @@ class ReplyKeyboardMarkup extends Type
             'one_time_keyboard' => $this->one_time_keyboard,
             'input_field_placeholder' => $this->input_field_placeholder,
             'selective' => $this->selective,
+            'is_persistent' => $this->is_persistent,
         ];
     }
 }

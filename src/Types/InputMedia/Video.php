@@ -38,6 +38,7 @@ class Video extends InputMedia
      * @param int|null $height Video height
      * @param int|null $duration Video duration in seconds
      * @param bool|null $supports_streaming Pass <em>True</em>, if the uploaded video is suitable for streaming
+     * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
      */
     public function __construct(
         public string $media,
@@ -49,6 +50,7 @@ class Video extends InputMedia
         public ?int $height = null,
         public ?int $duration = null,
         public ?bool $supports_streaming = null,
+        public ?bool $has_spoiler = null,
     )
     {
 
@@ -77,6 +79,7 @@ class Video extends InputMedia
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
             supports_streaming: $data['supports_streaming'] ?? null,
+            has_spoiler: $data['has_spoiler'] ?? null,
         );
 
         if (isset($data['caption_entities'])) {
@@ -101,6 +104,7 @@ class Video extends InputMedia
             'height' => $this->height,
             'duration' => $this->duration,
             'supports_streaming' => $this->supports_streaming,
+            'has_spoiler' => $this->has_spoiler,
         ];
     }
 }

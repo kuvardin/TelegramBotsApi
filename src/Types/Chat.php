@@ -64,6 +64,10 @@ class Chat extends Type
      *     Returned only in getChat().
      * @param ChatLocation|null $location For supergroups, the location to which the supergroup is connected. Returned
      *     only in getChat().
+     * @param bool|null $has_hidden_members True, if non-administrators can only get the list of bots and administrators
+     *     in the chat. Returned only in getChat().
+     * @param bool|null $has_aggressive_anti_spam_enabled True, if aggressive anti-spam checks are enabled in the
+     *     supergroup. The field is only available to chat administrators. Returned only in getChat().
      */
     public function __construct(
         public int $id,
@@ -92,6 +96,8 @@ class Chat extends Type
         public ?bool $can_set_sticker_set = null,
         public ?int $linked_chat_id = null,
         public ?ChatLocation $location = null,
+        public ?bool $has_hidden_members = null,
+        public ?bool $has_aggressive_anti_spam_enabled = null,
     )
     {
 
@@ -136,6 +142,8 @@ class Chat extends Type
             location: isset($data['location'])
                 ? ChatLocation::makeByArray($data['location'])
                 : null,
+            has_hidden_members: $data['has_hidden_members'] ?? null,
+            has_aggressive_anti_spam_enabled: $data['has_aggressive_anti_spam_enabled'] ?? null,
         );
     }
 
@@ -166,6 +174,8 @@ class Chat extends Type
             'can_set_sticker_set' => $this->can_set_sticker_set,
             'linked_chat_id' => $this->linked_chat_id,
             'location' => $this->location,
+            'has_hidden_members' => $this->has_hidden_members,
+            'has_aggressive_anti_spam_enabled' => $this->has_aggressive_anti_spam_enabled,
         ];
     }
 

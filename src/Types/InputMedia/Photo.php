@@ -26,12 +26,14 @@ class Photo extends InputMedia
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of <em>parse_mode</em>
+     * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
      */
     public function __construct(
         public string $media,
         public ?string $caption = null,
         public ?string $parse_mode = null,
         public ?array $caption_entities = null,
+        public ?bool $has_spoiler = null,
     )
     {
 
@@ -53,6 +55,7 @@ class Photo extends InputMedia
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
             caption_entities: null,
+            has_spoiler: $data['has_spoiler'] ?? null,
         );
 
         if (isset($data['caption_entities'])) {
@@ -72,6 +75,7 @@ class Photo extends InputMedia
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
+            'has_spoiler' => $this->has_spoiler,
         ];
     }
 }

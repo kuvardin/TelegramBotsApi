@@ -37,6 +37,7 @@ class Animation extends InputMedia
      * @param int|null $width Animation width
      * @param int|null $height Animation height
      * @param int|null $duration Animation duration in seconds
+     * @param bool|null $has_spoiler Pass True if the animation needs to be covered with a spoiler animation
      */
     public function __construct(
         public string $media,
@@ -47,6 +48,7 @@ class Animation extends InputMedia
         public ?int $width = null,
         public ?int $height = null,
         public ?int $duration = null,
+        public ?bool $has_spoiler = null,
     )
     {
 
@@ -74,6 +76,7 @@ class Animation extends InputMedia
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
+            has_spoiler: $data['has_spoiler'] ?? null,
         );
 
         if (isset($data['caption_entities'])) {
@@ -97,6 +100,7 @@ class Animation extends InputMedia
             'width' => $this->width,
             'height' => $this->height,
             'duration' => $this->duration,
+            'has_spoiler' => $this->has_spoiler,
         ];
     }
 }

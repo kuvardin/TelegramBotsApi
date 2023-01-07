@@ -421,6 +421,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
      */
     public function sendPhoto(
         int|string $chat_id,
@@ -434,6 +435,7 @@ class Bot
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        bool $has_spoiler = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -448,6 +450,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'has_spoiler' => $has_spoiler,
         ]);
     }
 
@@ -643,6 +646,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
      */
     public function sendVideo(
         int|string $chat_id,
@@ -661,6 +665,7 @@ class Bot
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        bool $has_spoiler = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -680,6 +685,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'has_spoiler' => $has_spoiler,
         ]);
     }
 
@@ -723,6 +729,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param bool|null $has_spoiler Pass True if the animation needs to be covered with a spoiler animation
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -740,6 +747,7 @@ class Bot
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        bool $has_spoiler = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -758,6 +766,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'has_spoiler' => $has_spoiler,
         ]);
     }
 
@@ -1360,21 +1369,24 @@ class Bot
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is
      * set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
-     * Returns <em>True</em> on success.<br><br> We only recommend using this method when a response from the bot will
-     * take a <strong>noticeable</strong> amount of time to arrive.
+     * We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount 
+     * of time to arrive.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param Enums\Action $action Type of action to broadcast
+     * @param int|null $message_thread_id Unique identifier for the target message thread; supergroups only
      */
     public function sendChatAction(
         int|string $chat_id,
         Enums\Action $action,
+        int $message_thread_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'sendChatAction', [
             'chat_id' => $chat_id,
             'action' => $action->value,
+            'message_thread_id' => $message_thread_id,
         ]);
     }
 
@@ -1485,7 +1497,7 @@ class Bot
      * restrictions from a user. Returns <em>True</em> on success.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      * @param int $user_id Unique identifier of the target user
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new user permissions
      * @param int|null $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted
@@ -1608,7 +1620,7 @@ class Bot
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      * @param int $user_id Unique identifier of the target user
      * @param string $custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
      */
@@ -1670,7 +1682,7 @@ class Bot
      * or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new default chat permissions
      */
     public function setChatPermissions(
@@ -2012,7 +2024,8 @@ class Bot
     }
 
     /**
-     * Use this method to get information about a member of a chat.
+     * Use this method to get information about a member of a chat. The method is guaranteed to work for other users,
+     * only if the bot is an administrator in the chat.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel
      *     (in the format &#64;channelusername)
@@ -2035,7 +2048,7 @@ class Bot
      * optionally returned in getChat() requests to check if the bot can use this method.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      * @param string $sticker_set_name Name of the sticker set to be set as the group sticker set
      */
     public function setChatStickerSet(
@@ -2093,7 +2106,7 @@ class Bot
      * optionally returned in getChat() requests to check if the bot can use this method.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      */
     public function deleteChatStickerSet(int|string $chat_id): Requests\RequestVoid
     {
@@ -2116,7 +2129,7 @@ class Bot
      * this to work and must have the <em>can_manage_topics</em> administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
-     *     (in the format @supergroupusername)
+     *     (in the format &#64;supergroupusername)
      * @param string $name Topic name, 1-128 characters
      * @param int|null $icon_color Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E,
      *     0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F
@@ -2144,7 +2157,7 @@ class Bot
      * the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
-     *     (in the format @supergroupusername)
+     *     (in the format &#64;supergroupusername)
      * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
      */
     public function closeForumTopic(
@@ -2164,16 +2177,19 @@ class Bot
      * of the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format @supergroupusername)
+     *     format &#64;supergroupusername)
      * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
      * @param string $name New topic name, 1-128 characters
-     * @param string $icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use <a href="https://core.telegram.org/bots/api#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers
+     * @param string|null $icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use
+     *     <a href="https://core.telegram.org/bots/api#getforumtopiciconstickers">getForumTopicIconStickers</a> to get
+     *     all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current
+     *     icon will be kept
      */
     public function editForumTopic(
         int|string $chat_id,
         int $message_thread_id,
         string $name,
-        string $icon_custom_emoji_id,
+        string $icon_custom_emoji_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editForumTopic', [
@@ -2190,7 +2206,7 @@ class Bot
      * the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
-     *     (in the format @supergroupusername)
+     *     (in the format &#64;supergroupusername)
      * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
      */
     public function reopenForumTopic(
@@ -2210,7 +2226,7 @@ class Bot
      * rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
-     *     (in the format @supergroupusername)
+     *     (in the format &#64;supergroupusername)
      * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
      */
     public function deleteForumTopic(
@@ -2229,7 +2245,7 @@ class Bot
      * chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
-     *     (in the format @supergroupusername)
+     *     (in the format &#64;supergroupusername)
      * @param int $message_thread_id Unique identifier for the target message thread of the forum topic
      */
     public function unpinAllForumTopicMessages(
@@ -2240,6 +2256,92 @@ class Bot
         return new Requests\RequestVoid($this, 'unpinAllForumTopicMessages', [
             'chat_id' => $chat_id,
             'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
+
+    /**
+     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
+     * administrator in the chat for this to work and must have <em>can_manage_topics</em> administrator rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     * @param string $name New topic name, 1-128 characters
+     */
+    public function editGeneralForumTopic(
+        int|string $chat_id,
+        string $name,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editGeneralForumTopic', [
+            'chat_id' => $chat_id,
+            'name' => $name,
+        ]);
+    }
+
+    /**
+     * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
+     * the chat for this to work and must have the <em>can_manage_topics</em> administrator rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     */
+    public function closeGeneralForumTopic(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'closeGeneralForumTopic', [
+            'chat_id' => $chat_id,
+        ]);
+    }
+
+    /**
+     * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator
+     * in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be
+     * automatically unhidden if it was hidden.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     */
+    public function reopenGeneralForumTopic(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'reopenGeneralForumTopic', [
+            'chat_id' => $chat_id,
+        ]);
+    }
+
+    /**
+     * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
+     * chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be
+     * automatically closed if it was open.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     */
+    public function hideGeneralForumTopic(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'hideGeneralForumTopic', [
+            'chat_id' => $chat_id,
+        ]);
+    }
+
+    /**
+     * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
+     * chat for this to work and must have the <em>can_manage_topics</em> administrator rights.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     */
+    public function unhideGeneralForumTopic(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'unhideGeneralForumTopic', [
+            'chat_id' => $chat_id,
         ]);
     }
 
