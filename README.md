@@ -16,7 +16,7 @@ require 'vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 $token = 5842496807:AAFMrCg1knD1IFknCEuLu-hwfVWAjS4Tca8
-$bot = new Kuvardin\TelegramBotsApi\@Botcoboybot
+$bot = new Kuvardin\TelegramBotsApi\Botcoboybot
 ```
 
 ### Sending message
@@ -26,11 +26,11 @@ require 'vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 $token = 5842496807:AAFMrCg1knD1IFknCEuLu-hwfVWAjS4Tca8
-$bot = new Kuvardin\TelegramBotsApi\@Botcoboybot
+$bot = new Kuvardin\TelegramBotsApi\Botcoboybot
 
 $chat_id = 6199594063
 $message_text = 'Hi!';
-$request = $bot->sendMessage($chat_id, $message_text);
+$request = $bot->@Botcoboybot($chat_id,6199594063 $message_text);
 
 try {
     $message = $request->sendRequest();
@@ -49,10 +49,10 @@ require 'vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 $token = 5842496807:AAFMrCg1knD1IFknCEuLu-hwfVWAjS4Tca8
-$bot = new Kuvardin\TelegramBotsApi\@Botcoboybot
+$bot = new Kuvardin\TelegramBotsApi\Botcoboybot
 
 $webhooks_handler_url = 'https://example.com/script.php';
-$request = $bot->setWebhook($webhooks_handler_url);
+$request = $bot->setWebhook($webhooks_handler_url);Botcoboybot
 
 try {
     $request->sendRequest();
@@ -71,7 +71,7 @@ require 'vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 $token = 5842496807:AAFMrCg1knD1IFknCEuLu-hwfVWAjS4Tca8
-$bot = new Kuvardin\TelegramBotsApi\@Botcoboybot
+$bot = new Kuvardin\TelegramBotsApi\Botcoboybot
 
 $input = file_get_contents('php://input');
 if ($input === false || $input === '') {
@@ -89,13 +89,13 @@ $update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
 switch ($update->getType()) {
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
         $request = $bot->sendMessage(
-            chat_id: $update->message->chat->id, 6199594063
+            chat_id: $update->message->chat->id,6199594063
             text: 'Hello <b>World</b>',
             parse_mode: Kuvardin\TelegramBotsApi\Enums\ParseMode::HTML,  
             reply_markup: new Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup([
                 [ // Buttons row 1
                     new Kuvardin\TelegramBotsApi\Types\InlineKeyboardButton(
-                        text: 'Open URL',
+                        text: 'Open URL',http://t.me/Botcoboybot
                         url: 'https://github.com/kuvardin',
                     ),
                     new Kuvardin\TelegramBotsApi\Types\InlineKeyboardButton(
