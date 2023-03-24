@@ -1437,8 +1437,7 @@ class Bot
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels,
      * the user will not be able to return to the chat on their own using invite links, etc., unless <a
      * href="https://core.telegram.org/bots/api#unbanchatmember">unbanned</a> first. The bot must be an administrator
-     * in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on
-     * success.
+     * in the chat for this to work and must have the appropriate administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target group or username of the target supergroup or
      *     channel (in the format &#64;channelusername)
@@ -1471,7 +1470,6 @@ class Bot
      * administrator for this to work. By default, this method guarantees that after the call the user is not a member
      * of the chat, but will be able to join it. So if the user is a member of the chat they will also be
      * <strong>removed</strong> from the chat. If you don't want this, use the parameter <em>only_if_banned</em>.
-     * Returns <em>True</em> on success.
      *
      * @param int|string $chat_id Unique identifier for the target group or username of the target supergroup or
      *     channel (in the format &#64;channelusername)
@@ -1494,12 +1492,18 @@ class Bot
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
      * to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift
-     * restrictions from a user. Returns <em>True</em> on success.
+     * restrictions from a user.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
      *     format &#64;supergroupusername)
      * @param int $user_id Unique identifier of the target user
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new user permissions
+     * @param bool|null $use_independent_chat_permissions Pass <em>True</em> if chat permissions are set independently.
+     *     Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply
+     *     the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>,
+     *     <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>,
+     *     and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply
+     *     the <em>can_send_messages</em> permission.
      * @param int|null $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted
      *     for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted
      *     forever
@@ -1508,6 +1512,7 @@ class Bot
         int|string $chat_id,
         int $user_id,
         Types\ChatPermissions $permissions,
+        bool $use_independent_chat_permissions = null,
         int $until_date = null,
     ): Requests\RequestVoid
     {
@@ -1515,6 +1520,7 @@ class Bot
             'chat_id' => $chat_id,
             'user_id' => $user_id,
             'permissions' => $permissions,
+            'use_independent_chat_permissions' => $use_independent_chat_permissions,
             'until_date' => $until_date,
         ]);
     }
@@ -1684,15 +1690,23 @@ class Bot
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
      *     format &#64;supergroupusername)
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new default chat permissions
+     * @param bool|null $use_independent_chat_permissions Pass <em>True</em> if chat permissions are set independently.
+     *     Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will
+     *     imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>,
+     *     <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>,
+     *     and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the
+     *     <em>can_send_messages</em> permission.
      */
     public function setChatPermissions(
         int|string $chat_id,
         Types\ChatPermissions $permissions,
+        bool $use_independent_chat_permissions = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setChatPermissions', [
             'chat_id' => $chat_id,
             'permissions' => $permissions,
+            'use_independent_chat_permissions' => $use_independent_chat_permissions,
         ]);
     }
 

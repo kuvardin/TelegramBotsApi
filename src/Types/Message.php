@@ -99,12 +99,14 @@ class Message extends Type
      *     integer or double-precision float type are safe for storing this identifier.
      * @param Message|null $pinned_message Specified message was pinned. Note that the Message object in this field
      *     will not contain further <em>reply_to_message</em> fields even if it is itself a reply.
-     * @param Invoice|null $invoice Message is an invoice for a <a
-     *     href="https://core.telegram.org/bots/api#payments">payment</a>, information about the invoice. <a
-     *     href="https://core.telegram.org/bots/api#payments">More about payments »</a>
+     * @param Invoice|null $invoice Message is an invoice for a
+     *     <a href="https://core.telegram.org/bots/api#payments">payment</a>, information about the invoice.<br><br>
+     *     <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
      * @param SuccessfulPayment|null $successful_payment Message is a service message about a successful payment,
-     *     information about the payment. <a href="https://core.telegram.org/bots/api#payments">More about payments
-     *     »</a>
+     *     information about the payment.<br><br>
+     *     <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
+     * @param UserShared|null $user_shared Service message: a user was shared with the bot
+     * @param ChatShared|null $chat_shared Service message: a chat was shared with the bot
      * @param string|null $connected_website The domain name of the website on which the user has logged in. <a
      *     href="https://core.telegram.org/widgets/login">More about Telegram Login »</a>
      * @param PassportData|null $passport_data Telegram Passport data
@@ -182,6 +184,8 @@ class Message extends Type
         public ?Message $pinned_message = null,
         public ?Invoice $invoice = null,
         public ?SuccessfulPayment $successful_payment = null,
+        public ?UserShared $user_shared = null,
+        public ?ChatShared $chat_shared = null,
         public ?string $connected_website = null,
         public ?PassportData $passport_data = null,
         public ?ProximityAlertTriggered $proximity_alert_triggered = null,
@@ -306,6 +310,12 @@ class Message extends Type
                 : null,
             successful_payment: isset($data['successful_payment'])
                 ? SuccessfulPayment::makeByArray($data['successful_payment'])
+                : null,
+            user_shared: isset($data['user_shared'])
+                ? UserShared::makeByArray($data['user_shared'])
+                : null,
+            chat_shared: isset($data['chat_shared'])
+                ? ChatShared::makeByArray($data['chat_shared'])
                 : null,
             connected_website: $data['connected_website'] ?? null,
             passport_data: isset($data['passport_data'])
@@ -443,6 +453,8 @@ class Message extends Type
             'pinned_message' => $this->pinned_message,
             'invoice' => $this->invoice,
             'successful_payment' => $this->successful_payment,
+            'user_shared' => $this->user_shared,
+            'chat_payment' => $this->chat_shared,
             'connected_website' => $this->connected_website,
             'passport_data' => $this->passport_data,
             'forum_topic_created' => $this->forum_topic_created,
