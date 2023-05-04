@@ -1,5 +1,15 @@
 {
     "name": "kuvardin/telegram-bots-api",
+    "description": "SDK for Telegram bots API",
+    "keywords": [
+        "telegram",
+        "bot",
+        "php",
+        "php8",
+        "bot api",
+        "api"
+    ],
+    "homepage": "https://github.com/kuvardin/TelegramBotsApi",
     "type": "library",
     "autoload": {
         "psr-4": {
@@ -16,5 +26,6 @@
     "require": {
         "php": ">=8.1",
         "guzzlehttp/guzzle": ">=7.4"
-    }
+    },
+    "license": "MIT"
 }
