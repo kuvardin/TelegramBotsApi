@@ -16,6 +16,12 @@ use Kuvardin\TelegramBotsApi\Type;
 class Sticker extends Type
 {
     /**
+     * @var PhotoSize|null
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?PhotoSize $thumb = null;
+
+    /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
      *     for different bots. Can't be used to download or reuse the file.
@@ -27,12 +33,15 @@ class Sticker extends Type
      *     href="https://telegram.org/blog/animated-stickers">animated</a>
      * @param bool $is_video <em>True</em>, if the sticker is a <a
      *     href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
-     * @param PhotoSize|null $thumb Sticker thumbnail in the .WEBP or .JPG format
+     * @param PhotoSize|null $thumbnail Sticker thumbnail in the .WEBP or .JPG format
      * @param string|null $emoji Emoji associated with the sticker
      * @param string|null $set_name Name of the sticker set to which the sticker belongs
      * @param File|null $premium_animation For premium regular stickers, premium animation for the sticker
      * @param MaskPosition|null $mask_position For mask stickers, the position where the mask should be placed
      * @param string|null $custom_emoji_id For custom emoji stickers, unique identifier of the custom emoji
+     * @param bool|null $needs_repainting <em>True</em>, if the sticker must be repainted to a text color in messages,
+     *     the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate
+     *     color in other places
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
@@ -43,16 +52,17 @@ class Sticker extends Type
         public int $height,
         public bool $is_animated,
         public bool $is_video,
-        public ?PhotoSize $thumb = null,
+        public ?PhotoSize $thumbnail = null,
         public ?string $emoji = null,
         public ?string $set_name = null,
         public ?File $premium_animation = null,
         public ?MaskPosition $mask_position = null,
         public ?string $custom_emoji_id = null,
+        public ?bool $needs_repainting = null,
         public ?int $file_size = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function makeByArray(array $data): self
@@ -65,8 +75,8 @@ class Sticker extends Type
             height: $data['height'],
             is_animated: $data['is_animated'],
             is_video: $data['is_video'],
-            thumb: isset($data['thumb'])
-                ? PhotoSize::makeByArray($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
             emoji: $data['emoji'] ?? null,
             set_name: $data['set_name'] ?? null,
@@ -77,6 +87,7 @@ class Sticker extends Type
                 ? MaskPosition::makeByArray($data['mask_position'])
                 : null,
             custom_emoji_id: $data['custom_emoji_id'] ?? null,
+            needs_repainting: $data['needs_repainting'] ?? null,
             file_size: $data['file_size'] ?? null,
         );
     }
@@ -91,12 +102,13 @@ class Sticker extends Type
             'height' => $this->height,
             'is_animated' => $this->is_animated,
             'is_video' => $this->is_video,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
             'emoji' => $this->emoji,
             'set_name' => $this->set_name,
             'premium_animation' => $this->premium_animation,
             'mask_position' => $this->mask_position,
             'custom_emoji_id' => $this->custom_emoji_id,
+            'needs_repainting' => $this->needs_repainting,
             'file_size' => $this->file_size,
         ];
     }

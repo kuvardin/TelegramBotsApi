@@ -15,6 +15,11 @@ use Kuvardin\TelegramBotsApi\Type;
 class Audio extends Type
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?PhotoSize $thumb = null;
+
+    /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
      *     for different bots. Can't be used to download or reuse the file.
@@ -26,7 +31,7 @@ class Audio extends Type
      * @param int|null $file_size Optional. File size in bytes. It can be bigger than 2^31 and some programming
      *     languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so
      *     a signed 64-bit integer or double-precision float type are safe for storing this value.
-     * @param PhotoSize|null $thumb Thumbnail of the album cover to which the music file belongs
+     * @param PhotoSize|null $thumbnail Thumbnail of the album cover to which the music file belongs
      */
     public function __construct(
         public string $file_id,
@@ -37,10 +42,10 @@ class Audio extends Type
         public ?string $file_name = null,
         public ?string $mime_type = null,
         public ?int $file_size = null,
-        public ?PhotoSize $thumb = null,
+        public ?PhotoSize $thumbnail = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function makeByArray(array $data): self
@@ -54,8 +59,8 @@ class Audio extends Type
             file_name: $data['file_name'] ?? null,
             mime_type: $data['mime_type'] ?? null,
             file_size: $data['file_size'] ?? null,
-            thumb: isset($data['thumb'])
-                ? PhotoSize::makeByArray($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
         );
     }
@@ -71,7 +76,7 @@ class Audio extends Type
             'file_name' => $this->file_name,
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
         ];
     }
 }

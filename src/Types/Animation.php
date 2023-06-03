@@ -15,13 +15,18 @@ use Kuvardin\TelegramBotsApi\Type;
 class Animation extends Type
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?PhotoSize $thumb = null;
+
+    /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
      *     for different bots. Can't be used to download or reuse the file.
      * @param int $width Video width as defined by sender
      * @param int $height Video height as defined by sender
      * @param int $duration Duration of the video in seconds as defined by sender
-     * @param PhotoSize|null $thumb Animation thumbnail as defined by sender
+     * @param PhotoSize|null $thumbnail Animation thumbnail as defined by sender
      * @param string|null $file_name Original animation filename as defined by sender
      * @param string|null $mime_type MIME type of the file as defined by sender
      * @param int|null $file_size File size in bytes. It can be bigger than 2^31 and some programming languages may
@@ -34,13 +39,13 @@ class Animation extends Type
         public int $width,
         public int $height,
         public int $duration,
-        public ?PhotoSize $thumb = null,
+        public ?PhotoSize $thumbnail = null,
         public ?string $file_name = null,
         public ?string $mime_type = null,
         public ?int $file_size = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function makeByArray(array $data): self
@@ -51,8 +56,8 @@ class Animation extends Type
             width: $data['width'],
             height: $data['height'],
             duration: $data['duration'],
-            thumb: isset($data['thumb'])
-                ? PhotoSize::makeByArray($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
             file_name: $data['file_name'] ?? null,
             mime_type: $data['mime_type'] ?? null,
@@ -68,7 +73,7 @@ class Animation extends Type
             'width' => $this->width,
             'height' => $this->height,
             'duration' => $this->duration,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
             'file_name' => $this->file_name,
             'mime_type' => $this->mime_type,
             'file_size' => $this->file_size,

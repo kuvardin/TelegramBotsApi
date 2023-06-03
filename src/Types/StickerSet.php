@@ -16,6 +16,11 @@ use Kuvardin\TelegramBotsApi\Type;
 class StickerSet extends Type
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?PhotoSize $thumb = null;
+
+    /**
      * @param string $name Sticker set name
      * @param string $title Sticker set title
      * @param string $sticker_type_value Type of stickers in the set, currently one of Enums\StickerType
@@ -24,7 +29,7 @@ class StickerSet extends Type
      * @param bool $is_video <em>True</em>, if the sticker set contains <a
      *     href="https://telegram.org/blog/video-stickers-better-reactions">video stickers</a>
      * @param Sticker[] $stickers List of all set stickers
-     * @param PhotoSize|null $thumb Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
+     * @param PhotoSize|null $thumbnail Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
      */
     public function __construct(
         public string $name,
@@ -33,10 +38,10 @@ class StickerSet extends Type
         public bool $is_animated,
         public bool $is_video,
         public array $stickers,
-        public ?PhotoSize $thumb = null,
+        public ?PhotoSize $thumbnail = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function makeByArray(array $data): self
@@ -48,8 +53,8 @@ class StickerSet extends Type
             is_animated: $data['is_animated'],
             is_video: $data['is_video'],
             stickers: [],
-            thumb: isset($data['thumb'])
-                ? PhotoSize::makeByArray($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
         );
 
@@ -68,7 +73,7 @@ class StickerSet extends Type
             'is_animated' => $this->is_animated,
             'is_video' => $this->is_video,
             'stickers' => $this->stickers,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
         ];
     }
 

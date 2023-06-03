@@ -40,6 +40,9 @@ class InlineKeyboardButton extends Type
      *     and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's
      *     username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in
      *     the same chat – good for selecting something from multiple options.
+     * @param SwitchInlineQueryChosenChat|null $switch_inline_query_chosen_chat If set, pressing the button will prompt
+     *     the user to select one of their chats of the specified type, open that chat and insert the bot's username and
+     *     the specified inline query in the input field
      * @param CallbackGame|null $callback_game Description of the game that will be launched when the user presses the
      *     button.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button
      *     in the first row.
@@ -55,6 +58,7 @@ class InlineKeyboardButton extends Type
         public ?LoginUrl $login_url = null,
         public ?string $switch_inline_query = null,
         public ?string $switch_inline_query_current_chat = null,
+        public ?SwitchInlineQueryChosenChat $switch_inline_query_chosen_chat = null,
         public ?CallbackGame $callback_game = null,
         public ?bool $pay = null,
     )
@@ -76,6 +80,9 @@ class InlineKeyboardButton extends Type
                 : null,
             switch_inline_query: $data['switch_inline_query'] ?? null,
             switch_inline_query_current_chat: $data['switch_inline_query_current_chat'] ?? null,
+            switch_inline_query_chosen_chat: isset($data['switch_inline_query_chosen_chat'])
+                ? SwitchInlineQueryChosenChat::makeByArray($data['switch_inline_query_chosen_chat'])
+                : null,
             callback_game: isset($data['callback_game'])
                 ? CallbackGame::makeByArray($data['callback_game'])
                 : null,
@@ -93,6 +100,7 @@ class InlineKeyboardButton extends Type
             'login_url' => $this->login_url,
             'switch_inline_query' => $this->switch_inline_query,
             'switch_inline_query_current_chat' => $this->switch_inline_query_current_chat,
+            'switch_inline_query_chosen_chat' => $this->switch_inline_query_chosen_chat,
             'callback_game' => $this->callback_game,
             'pay' => $this->pay,
         ];

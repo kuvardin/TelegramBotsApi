@@ -18,12 +18,17 @@ use RuntimeException;
 class Animation extends InputMedia
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?InputFile $thumb = null;
+
+    /**
      * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
      *     <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the file is
-     *     supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's
+     * @param InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+     *     is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's
      *     width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
      *     Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under
@@ -41,7 +46,7 @@ class Animation extends InputMedia
      */
     public function __construct(
         public string $media,
-        public ?InputFile $thumb = null,
+        public ?InputFile $thumbnail = null,
         public ?string $caption = null,
         public ?string $parse_mode = null,
         public ?array $caption_entities = null,
@@ -51,7 +56,7 @@ class Animation extends InputMedia
         public ?bool $has_spoiler = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function getType(): string
@@ -67,8 +72,8 @@ class Animation extends InputMedia
 
         $result = new self(
             media: $data['media'],
-            thumb: isset($data['thumb'])
-                ? InputFile::makeByString($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? InputFile::makeByString($data['thumbnail'])
                 : null,
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
@@ -93,7 +98,7 @@ class Animation extends InputMedia
         return [
             'type' => self::getType(),
             'media' => $this->media,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,

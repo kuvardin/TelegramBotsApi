@@ -21,13 +21,23 @@ use RuntimeException;
 class Gif extends InlineQueryResult
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
+     */
+    public string $thumb_url;
+
+    /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_mime_type instead
+     */
+    public ?string $thumb_mime_type;
+
+    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $gif_url A valid URL for the GIF file. File size must not exceed 1MB
-     * @param string $thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+     * @param string $thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
      * @param int|null $gif_width Width of the GIF
      * @param int|null $gif_height Height of the GIF
      * @param int|null $gif_duration Duration of the GIF in seconds
-     * @param string|null $thumb_mime_type MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or
+     * @param string|null $thumbnail_mime_type MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or
      *     “video/mp4”. Defaults to “image/jpeg”
      * @param string|null $title Title for the result
      * @param string|null $caption Caption of the GIF file to be sent, 0-1024 characters after entities parsing
@@ -44,11 +54,11 @@ class Gif extends InlineQueryResult
     public function __construct(
         public string $id,
         public string $gif_url,
-        public string $thumb_url,
+        public string $thumbnail_url,
         public ?int $gif_width = null,
         public ?int $gif_height = null,
         public ?int $gif_duration = null,
-        public ?string $thumb_mime_type = null,
+        public ?string $thumbnail_mime_type = null,
         public ?string $title = null,
         public ?string $caption = null,
         public ?string $parse_mode = null,
@@ -57,7 +67,8 @@ class Gif extends InlineQueryResult
         public ?InputMessageContent $input_message_content = null,
     )
     {
-
+        $this->thumb_url = &$this->thumbnail_url;
+        $this->thumb_mime_type = &$this->thumbnail_mime_type;
     }
 
     public static function getType(): string
@@ -74,11 +85,11 @@ class Gif extends InlineQueryResult
         $result = new self(
             id: $data['id'],
             gif_url: $data['gif_url'],
-            thumb_url: $data['thumb_url'],
+            thumbnail_url: $data['thumbnail_url'],
             gif_width: $data['gif_width'] ?? null,
             gif_height: $data['gif_height'] ?? null,
             gif_duration: $data['gif_duration'] ?? null,
-            thumb_mime_type: $data['thumb_mime_type'] ?? null,
+            thumbnail_mime_type: $data['thumbnail_mime_type'] ?? null,
             title: $data['title'] ?? null,
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,

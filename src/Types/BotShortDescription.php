@@ -7,19 +7,18 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a service message about a user allowing a bot to write messages after adding the bot to
- * the attachment menu or launching a Web App from a link.
+ * This object represents the bot's short description.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class WriteAccessAllowed extends Type
+class BotShortDescription extends Type
 {
     /**
-     * @param string|null $web_app_name Name of the Web App which was launched from a link
+     * @param string $short_description The bot's short description
      */
     public function __construct(
-        public ?string $web_app_name = null,
+        public string $short_description,
     )
     {
 
@@ -28,14 +27,14 @@ class WriteAccessAllowed extends Type
     public static function makeByArray(array $data): self
     {
         return new self(
-            web_app_name: $data['web_app_name'] ?? null,
+            short_description: $data['short_description'],
         );
     }
 
     public function getRequestData(): array
     {
         return [
-            'web_app_name' => $this->web_app_name,
+            'short_description' => $this->short_description,
         ];
     }
 }

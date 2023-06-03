@@ -16,12 +16,17 @@ use Kuvardin\TelegramBotsApi\Type;
 class VideoNote extends Type
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
+     */
+    public ?PhotoSize $thumb = null;
+
+    /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
      *     for different bots. Can't be used to download or reuse the file.
      * @param int $length Video width and height (diameter of the video message) as defined by sender
      * @param int $duration Duration of the video in seconds as defined by sender
-     * @param PhotoSize|null $thumb Video thumbnail
+     * @param PhotoSize|null $thumbnail Video thumbnail
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
@@ -29,11 +34,11 @@ class VideoNote extends Type
         public string $file_unique_id,
         public int $length,
         public int $duration,
-        public ?PhotoSize $thumb = null,
+        public ?PhotoSize $thumbnail = null,
         public ?int $file_size = null,
     )
     {
-
+        $this->thumb = $this->thumbnail;
     }
 
     public static function makeByArray(array $data): self
@@ -43,8 +48,8 @@ class VideoNote extends Type
             file_unique_id: $data['file_unique_id'],
             length: $data['length'],
             duration: $data['duration'],
-            thumb: isset($data['thumb'])
-                ? PhotoSize::makeByArray($data['thumb'])
+            thumbnail: isset($data['thumbnail'])
+                ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
             file_size: $data['file_size'] ?? null,
         );
@@ -57,7 +62,7 @@ class VideoNote extends Type
             'file_unique_id' => $this->file_unique_id,
             'length' => $this->length,
             'duration' => $this->duration,
-            'thumb' => $this->thumb,
+            'thumbnail' => $this->thumbnail,
             'file_size' => $this->file_size,
         ];
     }

@@ -24,10 +24,15 @@ use RuntimeException;
 class Video extends InlineQueryResult
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
+     */
+    public string $thumb_url;
+
+    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $video_url A valid URL for the embedded video player or video file
      * @param string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
-     * @param string $thumb_url URL of the thumbnail (JPEG only) for the video
+     * @param string $thumbnail_url URL of the thumbnail (JPEG only) for the video
      * @param string $title Title for the result
      * @param string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
      * @param string|null $parse_mode Mode for parsing entities in the video caption. See <a
@@ -49,7 +54,7 @@ class Video extends InlineQueryResult
         public string $id,
         public string $video_url,
         public string $mime_type,
-        public string $thumb_url,
+        public string $thumbnail_url,
         public string $title,
         public ?string $caption = null,
         public ?string $parse_mode = null,
@@ -62,7 +67,7 @@ class Video extends InlineQueryResult
         public ?InputMessageContent $input_message_content = null,
     )
     {
-
+        $this->thumb_url = &$this->thumbnail_url;
     }
 
     public static function getType(): string
@@ -80,7 +85,7 @@ class Video extends InlineQueryResult
             id: $data['id'],
             video_url: $data['video_url'],
             mime_type: $data['mime_type'],
-            thumb_url: $data['thumb_url'],
+            thumbnail_url: $data['thumbnail_url'],
             title: $data['title'],
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
@@ -113,7 +118,7 @@ class Video extends InlineQueryResult
             'id' => $this->id,
             'video_url' => $this->video_url,
             'mime_type' => $this->mime_type,
-            'thumb_url' => $this->thumb_url,
+            'thumbnail_url' => $this->thumbnail_url,
             'title' => $this->title,
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,

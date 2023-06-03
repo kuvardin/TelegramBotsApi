@@ -473,9 +473,9 @@ class Bot
      * @param int|null $duration Duration of the audio in seconds
      * @param string|null $performer Performer
      * @param string|null $title Track name
-     * @param Types\InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
-     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
+     *     A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
@@ -494,6 +494,8 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     *
+     * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      */
     public function sendAudio(
         int|string $chat_id,
@@ -504,13 +506,15 @@ class Bot
         int $duration = null,
         string $performer = null,
         string $title = null,
-        Types\InputFile $thumb = null,
+        Types\InputFile $thumbnail = null,
         bool $disable_notification = null,
         bool $protect_content = null,
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+
+        Types\InputFile $thumb = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -522,7 +526,7 @@ class Bot
             'duration' => $duration,
             'performer' => $performer,
             'title' => $title,
-            'thumb' => $thumb,
+            'thumb' => $thumbnail ?? $thumb,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
             'reply_to_message_id' => $reply_to_message_id,
@@ -542,9 +546,9 @@ class Bot
      *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
      *     or upload a new one using multipart/form-data. <a
      *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param Types\InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
-     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
+     *     A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
@@ -571,11 +575,13 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     *
+     * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      */
     public function sendDocument(
         int|string $chat_id,
         Types\InputFile $document,
-        Types\InputFile $thumb = null,
+        Types\InputFile $thumbnail = null,
         string $caption = null,
         Enums\ParseMode $parse_mode = null,
         array $caption_entities = null,
@@ -586,12 +592,14 @@ class Bot
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+
+        Types\InputFile $thumb = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
             'chat_id' => $chat_id,
             'document' => $document,
-            'thumb' => $thumb,
+            'thumbnail' => $thumbnail ?? $thumb,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
@@ -618,9 +626,9 @@ class Bot
      * @param int|null $duration Duration of sent video in seconds
      * @param int|null $width Video width
      * @param int|null $height Video height
-     * @param Types\InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
-     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
+     *     A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
@@ -647,6 +655,8 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
+     *
+     * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      */
     public function sendVideo(
         int|string $chat_id,
@@ -654,7 +664,7 @@ class Bot
         int $duration = null,
         int $width = null,
         int $height = null,
-        Types\InputFile $thumb = null,
+        Types\InputFile $thumbnail = null,
         string $caption = null,
         Enums\ParseMode $parse_mode = null,
         array $caption_entities = null,
@@ -666,6 +676,8 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         bool $has_spoiler = null,
+
+        Types\InputFile $thumb = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -674,7 +686,7 @@ class Bot
             'duration' => $duration,
             'width' => $width,
             'height' => $height,
-            'thumb' => $thumb,
+            'thumbnail' => $thumbnail ?? $thumb,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
@@ -702,9 +714,9 @@ class Bot
      * @param int|null $duration Duration of sent animation in seconds
      * @param int|null $width Animation width
      * @param int|null $height Animation height
-     * @param Types\InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
-     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
+     *     A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
@@ -730,6 +742,8 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the animation needs to be covered with a spoiler animation
+     *
+     * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -737,7 +751,7 @@ class Bot
         int $duration = null,
         int $width = null,
         int $height = null,
-        Types\InputFile $thumb = null,
+        Types\InputFile $thumbnail = null,
         string $caption = null,
         Enums\ParseMode $parse_mode = null,
         array $caption_entities = null,
@@ -748,6 +762,8 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         bool $has_spoiler = null,
+
+        Types\InputFile $thumb = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -756,7 +772,7 @@ class Bot
             'duration' => $duration,
             'width' => $width,
             'height' => $height,
-            'thumb' => $thumb,
+            'thumbnail' => $thumbnail ?? $thumb,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
@@ -846,9 +862,9 @@ class Bot
      *     notes by a URL is currently unsupported
      * @param int|null $duration Duration of sent video in seconds
      * @param int|null $length Video width and height, i.e. diameter of the video message
-     * @param Types\InputFile|null $thumb Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
-     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
+     *     A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
@@ -867,19 +883,23 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     *
+     * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      */
     public function sendVideoNote(
         int|string $chat_id,
         Types\InputFile $video_note,
         int $duration = null,
         int $length = null,
-        Types\InputFile $thumb = null,
+        Types\InputFile $thumbnail = null,
         bool $disable_notification = null,
         bool $protect_content = null,
         int $reply_to_message_id = null,
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+
+        Types\InputFile $thumb = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -887,7 +907,7 @@ class Bot
             'video_note' => $video_note,
             'duration' => $duration,
             'length' => $length,
-            'thumb' => $thumb,
+            'thumbnail' => $thumbnail ?? $thumb,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
             'reply_to_message_id' => $reply_to_message_id,
@@ -2426,6 +2446,108 @@ class Bot
     }
 
     /**
+     * Use this method to change the bot's name
+     *
+     * @param string|null $name New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for
+     *     the given language.
+     * @param string|null $language_code A two-letter ISO 639-1 language code. If empty, the name will be shown to all
+     *     users for whose language there is no dedicated name.
+     */
+    public function setMyName(
+        string $name = null,
+        string $language_code = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setMyName', [
+            'name' => $name,
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
+     * Use this method to get the current bot name for the given user language.
+     *
+     * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
+     */
+    public function getMyName(
+        string $language_code = null,
+    ): Requests\RequestBotName
+    {
+        return new Requests\RequestBotName($this, 'getMyName', [
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
+     * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty.
+     *
+     * @param string|null $description New bot description; 0-512 characters. Pass an empty string to remove the
+     *     dedicated description for the given language.
+     * @param string|null $language_code A two-letter ISO 639-1 language code. If empty, the description will be
+     *     applied to all users for whose language there is no dedicated description.
+     */
+    public function setMyDescription(
+        string $description = null,
+        string $language_code = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setMyDescription', [
+            'description' => $description,
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
+     * Use this method to get the current bot description for the given user language. 
+     * Returns BotDescription on success.
+     *
+     * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
+     */
+    public function getMyDescription(
+        string $language_code = null,
+    ): Requests\RequestBotDescription
+    {
+        return new Requests\RequestBotDescription($this, 'getMyDescription', [
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
+     * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent
+     *     together with the link when users share the bot.
+     *
+     * @param string|null $short_description New short description for the bot; 0-120 characters. Pass an empty string
+     *     to remove the dedicated short description for the given language.
+     * @param string|null $language_code A two-letter ISO 639-1 language code. If empty, the short description will be
+     *     applied to all users for whose language there is no dedicated short description.
+     */
+    public function setMyShortDescription(
+        string $short_description = null,
+        string $language_code = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setMyShortDescription', [
+            'short_description' => $short_description,
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
+     * Use this method to get the current bot short description for the given user language.
+     * Returns BotShortDescription on success.
+     *
+     * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
+     */
+    public function getMyShortDescription(
+        string $language_code = null,
+    ): Requests\RequestBotShortDescription
+    {
+        return new Requests\RequestBotShortDescription($this, 'getMyShortDescription', [
+            'language_code' => $language_code,
+        ]);
+    }
+
+    /**
      * Use this method to change the bot's menu button in a private chat, or the default menu button.
      *
      * @param int|null $chat_id Unique identifier for the target private chat. If not specified, default bot's menu
@@ -2446,7 +2568,7 @@ class Bot
 
     /**
      * Use this method to get the current value of the bot's menu button in a private chat, or the default menu
-     * button. Returns <a href="https://core.telegram.org/bots/api#menubutton">MenuButton</a> on success.
+     * button. Returns MenuButton on success.
      *
      * @param int|null $chat_id Unique identifier for the target private chat. If not specified, default bot's menu
      *     button will be returned
@@ -2788,6 +2910,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param string|null $emoji Emoji associated with the sticker; only for just uploaded stickers
      */
     public function sendSticker(
         int|string $chat_id,
@@ -2798,6 +2921,7 @@ class Bot
         bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        string $emoji = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -2809,6 +2933,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'emoji' => $emoji,
         ]);
     }
 
@@ -2839,122 +2964,85 @@ class Bot
     }
 
     /**
-     * Use this method to upload a .PNG file with a sticker for later use in <em>createNewStickerSet</em> and
-     * <em>addStickerToSet</em> methods (can be used multiple times).
+     * Use this method to upload a file with a sticker for later use in the createNewStickerSet() and addStickerToSet()
+     * methods (the file can be used multiple times).
      *
      * @param int $user_id User identifier of sticker file owner
-     * @param Types\InputFile $png_sticker <strong>PNG</strong> image with the sticker, must be up to 512 kilobytes in
-     *     size, dimensions must not exceed 512px, and either width or height must be exactly 512px. <a
-     *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
+     * @param Types\InputFile $sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See
+     *     <a href="https://core.telegram.org/stickers">more info</a> for technical requirements.
+     * @param string $sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      */
     public function uploadStickerFile(
         int $user_id,
-        Types\InputFile $png_sticker,
+        Types\InputFile $sticker,
+        string $sticker_format,
     ): Requests\RequestFile
     {
         return new Requests\RequestFile($this, 'uploadStickerFile', [
             'user_id' => $user_id,
-            'png_sticker' => $png_sticker,
+            'sticker' => $sticker,
+            'sticker_format' => $sticker_format,
         ]);
     }
 
     /**
      * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus
-     * created. You <strong>must</strong> use exactly one of the fields <em>png_sticker</em>, <em>tgs_sticker</em>, or
-     * <em>webm_sticker</em>.
+     * created. Returns <em>True</em> on success.
      *
      * @param int $user_id User identifier of created sticker set owner
-     * @param string $name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g.,
-     *     <em>animals</em>). Can contain only english letters, digits and underscores. Must begin with a letter,
-     *     can't contain consecutive underscores and must end in &quot;_by_&lt;bot_username&gt;&quot;.
-     *     &lt;bot_username&gt; is case insensitive. 1-64 characters.
+     * @param string $name Short name of sticker set, to be used in <code>t.me/addstickers/</code>
+     *     URLs (e.g., <em>animals</em>). Can contain only English letters, digits and underscores. Must begin with
+     *     a letter, can't contain consecutive underscores and must end in <code>"_by_<bot_username>"</code>.
+     *     <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.
      * @param string $title Sticker set title, 1-64 characters
-     * @param string $emojis One or more emoji corresponding to the sticker
-     * @param Types\InputFile|null $png_sticker <strong>PNG</strong> image with the sticker, must be up to 512
-     *     kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass
-     *     a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL
-     *     as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a
-     *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param Types\InputFile|null $tgs_sticker <strong>TGS</strong> animation with the sticker, uploaded using
-     *     multipart/form-data. See <a href="https://core.telegram.org/stickers#animated-sticker-requirements">
-     *     https://core.telegram.org/stickers#animated-sticker-requirements</a> for technical requirements
-     * @param Types\InputFile|null $webm_sticker <strong>WEBM</strong> video with the sticker, uploaded using
-     *     multipart/form-data. See <a href="https://core.telegram.org/stickers#video-sticker-requirements">
-     *     https://core.telegram.org/stickers#video-sticker-requirements</a> for technical requirements
-     * @param Enums\StickerType|null $sticker_type Type of stickers in the set, pass “regular” or “mask”.
-     *     Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker
-     *     set is created.
-     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask should be
-     *     placed on faces
+     * @param Types\InputSticker[] $stickers A JSON-serialized list of 1-50 initial stickers to be added
+     *     to the sticker set
+     * @param Enums\StickerFormat $sticker_format Format of stickers in the set
+     * @param Enums\StickerType|null $sticker_type Type of stickers in the set. By default, a regular sticker set
+     *     is created.
+     * @param bool|null $needs_repainting Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
      */
     public function createNewStickerSet(
         int $user_id,
         string $name,
         string $title,
-        string $emojis,
-        Types\InputFile $png_sticker = null,
-        Types\InputFile $tgs_sticker = null,
-        Types\InputFile $webm_sticker = null,
+        array $stickers,
+        Enums\StickerFormat $sticker_format,
         Enums\StickerType $sticker_type = null,
-        Types\MaskPosition $mask_position = null,
+        bool $needs_repainting = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'createNewStickerSet', [
             'user_id' => $user_id,
             'name' => $name,
             'title' => $title,
-            'emojis' => $emojis,
-            'png_sticker' => $png_sticker,
-            'tgs_sticker' => $tgs_sticker,
-            'webm_sticker' => $webm_sticker,
+            'stickers' => $stickers,
+            'sticker_format' => $sticker_format->value,
             'sticker_type' => $sticker_type?->value,
-            'mask_position' => $mask_position,
+            'needs_repainting' => $needs_repainting,
         ]);
     }
 
     /**
-     * Use this method to add a new sticker to a set created by the bot. You <strong>must</strong> use exactly one of
-     * the fields <em>png_sticker</em>, <em>tgs_sticker</em>, or <em>webm_sticker</em>. Animated stickers can be added
-     * to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets
-     * can have up to 120 stickers.
+     * Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match
+     * the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video
+     * sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
      *
      * @param int $user_id User identifier of sticker set owner
      * @param string $name Sticker set name
-     * @param string $emojis One or more emoji corresponding to the sticker
-     * @param Types\InputFile|null $png_sticker <strong>PNG</strong> image with the sticker, must be up to 512
-     *     kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass
-     *     a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL
-     *     as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a
-     *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param Types\InputFile|null $tgs_sticker <strong>TGS</strong> animation with the sticker, uploaded using
-     *     multipart/form-data. See <a href="https://core.telegram.org/stickers#animated-sticker-requirements"><a
-     *     href="https://core.telegram.org/stickers#animated-sticker-requirements">https://core.telegram.org/stickers#animated-sticker-requirements</a></a>
-     *     for technical requirements
-     * @param Types\InputFile|null $webm_sticker <strong>WEBM</strong> video with the sticker, uploaded using
-     *     multipart/form-data. See <a href="https://core.telegram.org/stickers#video-sticker-requirements"><a
-     *     href="https://core.telegram.org/stickers#video-sticker-requirements">https://core.telegram.org/stickers#video-sticker-requirements</a></a>
-     *     for technical requirements
-     * @param Types\MaskPosition|null $mask_position A JSON-serialized object for position where the mask should be
-     *     placed on faces
+     * @param Types\InputSticker $sticker A JSON-serialized object with information about the added sticker.
+     *     If exactly the same sticker had already been added to the set, then the set isn't changed.
      */
     public function addStickerToSet(
         int $user_id,
         string $name,
-        string $emojis,
-        Types\InputFile $png_sticker = null,
-        Types\InputFile $tgs_sticker = null,
-        Types\InputFile $webm_sticker = null,
-        Types\MaskPosition $mask_position = null,
+        Types\InputSticker $sticker,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'addStickerToSet', [
             'user_id' => $user_id,
             'name' => $name,
-            'emojis' => $emojis,
-            'png_sticker' => $png_sticker,
-            'tgs_sticker' => $tgs_sticker,
-            'webm_sticker' => $webm_sticker,
-            'mask_position' => $mask_position,
+            'sticker' => $sticker,
         ]);
     }
 
@@ -2988,23 +3076,81 @@ class Bot
     }
 
     /**
-     * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets
-     * only. Video thumbnails can be set only for video sticker sets only.
+     * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must
+     * belong to a sticker set created by the bot.
+     *
+     * @param string $sticker File identifier of the sticker
+     * @param string[] $emoji_list A JSON-serialized list of 1-20 emoji associated with the sticker
+     */
+    public function setStickerEmojiList(
+        string $sticker,
+        array $emoji_list,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setStickerEmojiList', [
+            'sticker' => $sticker,
+            'emoji_list' => $emoji_list,
+        ]);
+    }
+
+    /**
+     * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must
+     * belong to a sticker set created by the bot.
+     *
+     * @param string $sticker File identifier of the sticker
+     * @param string[]|null $keywords A JSON-serialized list of 0-20 search keywords for the sticker with total length
+     *     of up to 64 characters
+     */
+    public function setStickerKeywords(
+        string $sticker,
+        array $keywords = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setStickerKeywords', [
+            'sticker' => $sticker,
+            'keywords' => $keywords,
+        ]);
+    }
+
+    /**
+     * Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was
+     * created by the bot.
+     *
+     * @param string $sticker File identifier of the sticker
+     * @param Types\MaskPosition|null $mask_position A JSON-serialized object with the position where the mask should
+     *     be placed on faces. Omit the parameter to remove the mask position.
+     */
+    public function setStickerMaskPosition(
+        string $sticker,
+        Types\MaskPosition $mask_position = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setStickerMaskPosition', [
+            'sticker' => $sticker,
+            'mask_position' => $mask_position,
+        ]);
+    }
+
+    /**
+     * Use this method to set the title of a created sticker set.
      *
      * @param string $name Sticker set name
-     * @param int $user_id User identifier of the sticker set owner
-     * @param Types\InputFile|null $thumb A <strong>PNG</strong> image with the thumbnail, must be up to 128 kilobytes
-     *     in size and have width and height exactly 100px, or a <strong>TGS</strong> animation with the thumbnail up
-     *     to 32 kilobytes in size; see <a href="https://core.telegram.org/stickers#animated-sticker-requirements"><a
-     *     href="https://core.telegram.org/stickers#animated-sticker-requirements">https://core.telegram.org/stickers#animated-sticker-requirements</a></a>
-     *     for animated sticker technical requirements, or a <strong>WEBM</strong> video with the thumbnail up to 32
-     *     kilobytes in size; see <a href="https://core.telegram.org/stickers#video-sticker-requirements"><a
-     *     href="https://core.telegram.org/stickers#video-sticker-requirements">https://core.telegram.org/stickers#video-sticker-requirements</a></a>
-     *     for video sticker technical requirements. Pass a <em>file_id</em> as a String to send a file that already
-     *     exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet,
-     *     or upload a new one using multipart/form-data. <a
-     *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>. Animated sticker
-     *     set thumbnails can't be uploaded via HTTP URL.
+     * @param string $title Sticker set title, 1-64 characters
+     */
+    public function setStickerSetTitle(
+        string $name,
+        string $title,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setStickerSetTitle', [
+            'name' => $name,
+            'title' => $title,
+        ]);
+    }
+
+
+    /**
+     * @deprecated Deprecated in v6.6. Use ->setStickerSetThumbnail() instead
      */
     public function setStickerSetThumb(
         string $name,
@@ -3012,10 +3158,72 @@ class Bot
         Types\InputFile $thumb = null,
     ): Requests\RequestVoid
     {
-        return new Requests\RequestVoid($this, 'setStickerSetThumb', [
+        return $this->setStickerSetThumbnail(
+            name: $name,
+            user_id: $user_id,
+            thumbnail: $thumb,
+        );
+    }
+
+    /**
+     * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must
+     * match the format of the stickers in the set.
+     *
+     * @param string $name Sticker set name
+     * @param int $user_id User identifier of the sticker set owner
+     * @param Types\InputFile|null $thumbnail A <strong>.WEBP</strong> or <strong>.PNG</strong> image with the
+     *     thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px,
+     *     or a <strong>.TGS</strong> animation with a thumbnail up to 32 kilobytes in size
+     *     (see <a href="https://core.telegram.org/stickers#animated-sticker-requirements">info</a> for animated sticker
+     *     technical requirements), or a <strong>WEBM</strong> video with the thumbnail up to 32 kilobytes in size;
+     *     see <a href="https://core.telegram.org/stickers#video-sticker-requirements">info</a> for video sticker
+     *     technical requirements. Pass a <em>file_id</em> as a String to send a file that already exists on the
+     *     Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new
+     *     one using multipart/form-data. Animated and video sticker set thumbnails can't be uploaded via HTTP URL.
+     *     If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     */
+    public function setStickerSetThumbnail(
+        string $name,
+        int $user_id,
+        Types\InputFile $thumbnail = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setStickerSetThumbnail', [
             'name' => $name,
             'user_id' => $user_id,
-            'thumb' => $thumb,
+            'thumbnail' => $thumbnail,
+        ]);
+    }
+
+    /**
+     * Use this method to set the thumbnail of a custom emoji sticker set.
+     *
+     * @param string $name Sticker set name
+     * @param string|null $custom_emoji_id Custom emoji identifier of a sticker from the sticker set; pass an empty
+     *     string to drop the thumbnail and use the first sticker as the thumbnail.
+     */
+    public function setCustomEmojiStickerSetThumbnail(
+        string $name,
+        string $custom_emoji_id = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setCustomEmojiStickerSetThumbnail', [
+            'name' => $name,
+            'custom_emoji_id' => $custom_emoji_id,
+        ]);
+    }
+
+    /**
+     * Use this method to delete a sticker set that was created by the bot.
+     *
+     * @param string $name Sticker set name
+     */
+    public function deleteStickerSet(
+        string $name,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteStickerSet', [
+            'name' => $name,
         ]);
     }
 
@@ -3032,19 +3240,8 @@ class Bot
      * @param string|null $next_offset Pass the offset that a client should send in the next query with the same text
      *     to receive more results. Pass an empty string if there are no more results or if you don't support
      *     pagination. Offset length can't exceed 64 bytes.
-     * @param string|null $switch_pm_text If passed, clients will display a button with specified text that switches
-     *     the user to a private chat with the bot and sends the bot a start message with the parameter
-     *     <em>switch_pm_parameter</em>
-     * @param string|null $switch_pm_parameter <a href="https://core.telegram.org/bots#deep-linking">Deep-linking</a>
-     *     parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only
-     *     A-Z, a-z, 0-9, _ and - are
-     *     allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the
-     *     bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect
-     *     your YouTube account' button above the results, or even before showing any. The user presses the button,
-     *     switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to
-     *     return an OAuth link. Once done, the bot can offer a <a
-     *     href="https://core.telegram.org/bots/api#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the
-     *     user can easily return to the chat where they wanted to use the bot's inline capabilities.
+     * @param Types\InlineQueryResultsButton|null $button A JSON-serialized object describing a button to be shown above
+     *     inline query results
      */
     public function answerInlineQuery(
         string $inline_query_id,
@@ -3052,8 +3249,7 @@ class Bot
         int $cache_time = null,
         bool $is_personal = null,
         string $next_offset = null,
-        string $switch_pm_text = null,
-        string $switch_pm_parameter = null,
+        Types\InlineQueryResultsButton $button = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'answerInlineQuery', [
@@ -3062,8 +3258,7 @@ class Bot
             'cache_time' => $cache_time,
             'is_personal' => $is_personal,
             'next_offset' => $next_offset,
-            'switch_pm_text' => $switch_pm_text,
-            'switch_pm_parameter' => $switch_pm_parameter,
+            'button' => $button,
         ]);
     }
 

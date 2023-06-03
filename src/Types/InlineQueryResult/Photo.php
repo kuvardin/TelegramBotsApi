@@ -20,10 +20,15 @@ use RuntimeException;
 class Photo extends InlineQueryResult
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
+     */
+    public string $thumb_url;
+
+    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $photo_url A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size
      *     must not exceed 5MB
-     * @param string $thumb_url URL of the thumbnail for the photo
+     * @param string $thumbnail_url URL of the thumbnail for the photo
      * @param int|null $photo_width Width of the photo
      * @param int|null $photo_height Height of the photo
      * @param string|null $title Title for the result
@@ -41,7 +46,7 @@ class Photo extends InlineQueryResult
     public function __construct(
         public string $id,
         public string $photo_url,
-        public string $thumb_url,
+        public string $thumbnail_url,
         public ?int $photo_width = null,
         public ?int $photo_height = null,
         public ?string $title = null,
@@ -53,7 +58,7 @@ class Photo extends InlineQueryResult
         public ?InputMessageContent $input_message_content = null,
     )
     {
-
+        $this->thumb_url = &$this->thumbnail_url;
     }
 
     public static function getType(): string
@@ -70,7 +75,7 @@ class Photo extends InlineQueryResult
         $result = new self(
             id: $data['id'],
             photo_url: $data['photo_url'],
-            thumb_url: $data['thumb_url'],
+            thumbnail_url: $data['thumbnail_url'],
             photo_width: $data['photo_width'] ?? null,
             photo_height: $data['photo_height'] ?? null,
             title: $data['title'] ?? null,
@@ -101,7 +106,7 @@ class Photo extends InlineQueryResult
             'type' => self::getType(),
             'id' => $this->id,
             'photo_url' => $this->photo_url,
-            'thumb_url' => $this->thumb_url,
+            'thumbnail_url' => $this->thumbnail_url,
             'photo_width' => $this->photo_width,
             'photo_height' => $this->photo_height,
             'title' => $this->title,

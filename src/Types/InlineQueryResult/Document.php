@@ -21,6 +21,21 @@ use RuntimeException;
 class Document extends InlineQueryResult
 {
     /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
+     */
+    public ?string $thumb_url;
+
+    /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_width instead
+     */
+    public ?int $thumb_width;
+
+    /**
+     * @deprecated Deprecated in v6.6. Use ->thumbnail_height instead
+     */
+    public ?int $thumb_height;
+
+    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $title Title for the result
      * @param string $document_url A valid URL for the file
@@ -33,9 +48,9 @@ class Document extends InlineQueryResult
      * @param string|null $description Short description of the result
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the file
-     * @param string|null $thumb_url URL of the thumbnail (JPEG only) for the file
-     * @param int|null $thumb_width Thumbnail width
-     * @param int|null $thumb_height Thumbnail height
+     * @param string|null $thumbnail_url URL of the thumbnail (JPEG only) for the file
+     * @param int|null $thumbnail_width Thumbnail width
+     * @param int|null $thumbnail_height Thumbnail height
      */
     public function __construct(
         public string $id,
@@ -48,12 +63,14 @@ class Document extends InlineQueryResult
         public ?string $description = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
         public ?InputMessageContent $input_message_content = null,
-        public ?string $thumb_url = null,
-        public ?int $thumb_width = null,
-        public ?int $thumb_height = null,
+        public ?string $thumbnail_url = null,
+        public ?int $thumbnail_width = null,
+        public ?int $thumbnail_height = null,
     )
     {
-
+        $this->thumb_url = &$this->thumbnail_url;
+        $this->thumb_width = &$this->thumbnail_width;
+        $this->thumb_height = &$this->thumbnail_height;
     }
 
     public static function getType(): string
@@ -82,9 +99,9 @@ class Document extends InlineQueryResult
             input_message_content: isset($data['input_message_content'])
                 ? InputMessageContent::makeByArray($data['input_message_content'])
                 : null,
-            thumb_url: $data['thumb_url'] ?? null,
-            thumb_width: $data['thumb_width'] ?? null,
-            thumb_height: $data['thumb_height'] ?? null,
+            thumbnail_url: $data['thumbnail_url'] ?? null,
+            thumbnail_width: $data['thumbnail_width'] ?? null,
+            thumbnail_height: $data['thumbnail_height'] ?? null,
         );
 
         if (isset($data['caption_entities'])) {
@@ -110,9 +127,9 @@ class Document extends InlineQueryResult
             'description' => $this->description,
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,
-            'thumb_url' => $this->thumb_url,
-            'thumb_width' => $this->thumb_width,
-            'thumb_height' => $this->thumb_height,
+            'thumbnail_url' => $this->thumbnail_url,
+            'thumbnail_width' => $this->thumbnail_width,
+            'thumbnail_height' => $this->thumbnail_height,
         ];
     }
 }
