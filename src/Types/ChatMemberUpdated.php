@@ -48,7 +48,7 @@ class ChatMemberUpdated extends Type
             invite_link: isset($data['invite_link'])
                 ? ChatInviteLink::makeByArray($data['invite_link'])
                 : null,
-            via_chat_folder_invite_link: $data['via_chat_folder_invite_link'],
+            via_chat_folder_invite_link: $data['via_chat_folder_invite_link'] ?? null,
         );
     }
 
