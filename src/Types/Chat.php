@@ -32,6 +32,8 @@ class Chat extends Type
      *     for private chats, supergroups and channels. Returned only in getChat().
      * @param string|null $emoji_status_custom_emoji_id Custom emoji identifier of emoji status of the other party in
      *     a private chat. Returned only in getChat().
+     * @param int|null $emoji_status_expiration_date Expiration date of the emoji status of the other party in a private
+     *     chat in Unix time, if any. Returned only in getChat().
      * @param string|null $bio Bio of the other party in a private chat. Returned only in getChat().
      * @param bool|null $has_private_forwards True, if privacy settings of the other party in the private chat allows
      *     to use <code>tg://user?id=<user_id></code> links only in chats with the user. Returned only in getChat().
@@ -80,6 +82,7 @@ class Chat extends Type
         public ?ChatPhoto $photo = null,
         public ?array $active_usernames = null,
         public ?string $emoji_status_custom_emoji_id = null,
+        public ?int $emoji_status_expiration_date = null,
         public ?string $bio = null,
         public ?bool $has_private_forwards = null,
         public ?bool $has_restricted_voice_and_video_messages = null,
@@ -120,6 +123,7 @@ class Chat extends Type
                 : null,
             active_usernames: $data['active_usernames'] ?? null,
             emoji_status_custom_emoji_id: $data['emoji_status_custom_emoji_id'] ?? null,
+            emoji_status_expiration_date: $data['emoji_status_expiration_date'] ?? null,
             bio: $data['bio'] ?? null,
             has_private_forwards: $data['has_private_forwards'] ?? null,
             has_restricted_voice_and_video_messages: $data['has_restricted_voice_and_video_messages'] ?? null,
@@ -153,11 +157,14 @@ class Chat extends Type
             'id' => $this->id,
             'type' => $this->type_value,
             'title' => $this->title,
-            'username' => $this->username?->getShort(),
+            'username' => $this->username,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'is_forum' => $this->is_forum,
             'photo' => $this->photo,
+            'active_usernames' => $this->active_usernames,
+            'emoji_status_custom_emoji_id' => $this->emoji_status_custom_emoji_id,
+            'emoji_status_expiration_date' => $this->emoji_status_expiration_date,
             'bio' => $this->bio,
             'has_private_forwards' => $this->has_private_forwards,
             'has_restricted_voice_and_video_messages' => $this->has_restricted_voice_and_video_messages,
@@ -169,13 +176,13 @@ class Chat extends Type
             'permissions' => $this->permissions,
             'slow_mode_delay' => $this->slow_mode_delay,
             'message_auto_delete_time' => $this->message_auto_delete_time,
+            'has_aggressive_anti_spam_enabled' => $this->has_aggressive_anti_spam_enabled,
+            'has_hidden_members' => $this->has_hidden_members,
             'has_protected_content' => $this->has_protected_content,
             'sticker_set_name' => $this->sticker_set_name,
             'can_set_sticker_set' => $this->can_set_sticker_set,
             'linked_chat_id' => $this->linked_chat_id,
             'location' => $this->location,
-            'has_hidden_members' => $this->has_hidden_members,
-            'has_aggressive_anti_spam_enabled' => $this->has_aggressive_anti_spam_enabled,
         ];
     }
 

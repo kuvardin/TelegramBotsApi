@@ -2097,6 +2097,22 @@ class Bot
     }
 
     /**
+     * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator
+     * in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
+     *     (in the format &#64;supergroupusername)
+     */
+    public function unpinAllGeneralForumTopicMessages(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'unpinAllGeneralForumTopicMessages', [
+            'chat_id' => $chat_id,
+        ]);
+    }
+
+    /**
      * Use this method to send answers to callback queries sent from <a
      * href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboards</a>. The answer
      * will be displayed to the user as a notification at the top of the chat screen or as an alert. On success,

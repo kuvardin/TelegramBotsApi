@@ -56,6 +56,7 @@ class Message extends Type
      * @param Document|null $document Message is a general file, information about the file
      * @param PhotoSize[]|null $photo Message is a photo, available sizes of the photo
      * @param Sticker|null $sticker Message is a sticker, information about the sticker
+     * @param Story|null $story Message is a forwarded story
      * @param Video|null $video Message is a video, information about the video
      * @param VideoNote|null $video_note Message is a <a
      *     href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video
@@ -159,6 +160,7 @@ class Message extends Type
         public ?Document $document = null,
         public ?array $photo = null,
         public ?Sticker $sticker = null,
+        public ?Story $story = null,
         public ?Video $video = null,
         public ?VideoNote $video_note = null,
         public ?Voice $voice = null,
@@ -257,6 +259,9 @@ class Message extends Type
             photo: null,
             sticker: isset($data['sticker'])
                 ? Sticker::makeByArray($data['sticker'])
+                : null,
+            story: isset($data['story'])
+                ? Story::makeByArray($data['story'])
                 : null,
             video: isset($data['video'])
                 ? Video::makeByArray($data['video'])
@@ -428,6 +433,7 @@ class Message extends Type
             'document' => $this->document,
             'photo' => $this->photo,
             'sticker' => $this->sticker,
+            'story' => $this->story,
             'video' => $this->video,
             'video_note' => $this->video_note,
             'voice' => $this->voice,

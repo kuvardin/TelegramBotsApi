@@ -16,14 +16,15 @@ class PollAnswer extends Type
 {
     /**
      * @param string $poll_id Unique poll identifier
-     * @param User $user The user, who changed the answer to the poll
-     * @param int[] $option_ids 0-based identifiers of answer options, chosen by the user. May be empty if the user
-     *     retracted their vote.
+     * @param int[] $option_ids 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
+     * @param Chat|null $voter_chat The chat that changed the answer to the poll, if the voter is anonymous
+     * @param User|null $user The user that changed the answer to the poll, if the voter isn't anonymous
      */
     public function __construct(
         public string $poll_id,
-        public User $user,
         public array $option_ids,
+        public ?Chat $voter_chat = null,
+        public ?User $user = null,
     )
     {
 
@@ -31,17 +32,25 @@ class PollAnswer extends Type
 
     public static function makeByArray(array $data): self
     {
-        return new self(
+        $result = new self(
             poll_id: $data['poll_id'],
-            user: User::makeByArray($data['user']),
             option_ids: $data['option_ids'],
+            voter_chat: isset($data['voter_chat'])
+                ? Chat::makeByArray($data['voter_chat'])
+                : null,
+            user: isset($data['user'])
+                ? User::makeByArray($data['user'])
+                : null,
         );
+
+        return $result;
     }
 
     public function getRequestData(): array
     {
         return [
             'poll_id' => $this->poll_id,
+            'voter_chat' => $this->voter_chat,
             'user' => $this->user,
             'option_ids' => $this->option_ids,
         ];
