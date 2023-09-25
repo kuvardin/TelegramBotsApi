@@ -35,6 +35,12 @@ class ChatAdministratorRights extends Type
      *     only
      * @param bool|null $can_manage_topics <em>True</em>, if the user is allowed to create, rename, close, and reopen
      *     forum topics; supergroups only
+     * @param bool|null $can_post_stories <em>True</em>, if the administrator can post stories in the channel; channels
+     *     only
+     * @param bool|null $can_edit_stories <em>True</em>, if the administrator can edit stories posted by other users;
+     *     channels only
+     * @param bool|null $can_delete_stories <em>True</em>, if the administrator can delete stories posted by other
+     *     users; channels only
      */
     public function __construct(
         public bool $is_anonymous,
@@ -49,6 +55,9 @@ class ChatAdministratorRights extends Type
         public ?bool $can_edit_messages = null,
         public ?bool $can_pin_messages = null,
         public ?bool $can_manage_topics = null,
+        public ?bool $can_post_stories = null,
+        public ?bool $can_edit_stories = null,
+        public ?bool $can_delete_stories = null,
     )
     {
 
@@ -69,6 +78,9 @@ class ChatAdministratorRights extends Type
             can_edit_messages: $data['can_edit_messages'] ?? null,
             can_pin_messages: $data['can_pin_messages'] ?? null,
             can_manage_topics: $data['can_manage_topics'] ?? null,
+            can_post_stories: $data['can_post_stories'] ?? null,
+            can_edit_stories: $data['can_edit_stories'] ?? null,
+            can_delete_stories: $data['can_delete_stories'] ?? null,
         );
     }
 
@@ -87,6 +99,9 @@ class ChatAdministratorRights extends Type
             'can_edit_messages' => $this->can_edit_messages,
             'can_pin_messages' => $this->can_pin_messages,
             'can_manage_topics' => $this->can_manage_topics,
+            'can_post_stories' => $this->can_post_stories,
+            'can_edit_stories' => $this->can_edit_stories,
+            'can_delete_stories' => $this->can_delete_stories,
         ];
     }
 }

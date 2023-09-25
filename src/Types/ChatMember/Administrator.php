@@ -41,6 +41,12 @@ class Administrator extends ChatMember
      * @param bool|null $can_manage_topics <em>True</em>, if the user is allowed to create, rename, close, and reopen
      *     forum topics; supergroups only
      * @param string|null $custom_title Custom title for this user
+     * @param bool|null $can_post_stories <em>True</em>, if the administrator can post stories in the channel;
+     *     channels only
+     * @param bool|null $can_edit_stories <em>True</em>, if the administrator can edit stories posted by other users;
+     *     channels only
+     * @param bool|null $can_delete_stories <em>True</em>, if the administrator can delete stories posted by other
+     *     users; channels only
      */
     public function __construct(
         public User $user,
@@ -58,6 +64,9 @@ class Administrator extends ChatMember
         public ?bool $can_pin_messages = null,
         public ?bool $can_manage_topics = null,
         public ?string $custom_title = null,
+        public ?bool $can_post_stories = null,
+        public ?bool $can_edit_stories = null,
+        public ?bool $can_delete_stories = null,
     )
     {
 
@@ -90,6 +99,9 @@ class Administrator extends ChatMember
             can_pin_messages: $data['can_pin_messages'] ?? null,
             can_manage_topics: $data['can_manage_topics'] ?? null,
             custom_title: $data['custom_title'] ?? null,
+            can_post_stories: $data['can_post_stories'] ?? null,
+            can_edit_stories: $data['can_edit_stories'] ?? null,
+            can_delete_stories: $data['can_delete_stories'] ?? null,
         );
     }
 
@@ -110,6 +122,9 @@ class Administrator extends ChatMember
             'can_post_messages' => $this->can_post_messages,
             'can_edit_messages' => $this->can_edit_messages,
             'can_pin_messages' => $this->can_pin_messages,
+            'can_post_stories' => $this->can_post_stories,
+            'can_edit_stories' => $this->can_edit_stories,
+            'can_delete_stories' => $this->can_delete_stories,
             'can_manage_topics' => $this->can_manage_topics,
             'custom_title' => $this->custom_title,
         ];

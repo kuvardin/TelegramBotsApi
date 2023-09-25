@@ -1575,6 +1575,12 @@ class Bot
      * @param bool|null $can_pin_messages Pass <em>True</em>, if the administrator can pin messages, supergroups only
      * @param bool|null $can_manage_topics Pass <em>True</em> if the user is allowed to create, rename, close, and
      *     reopen forum topics, supergroups only
+     * @param bool|null $can_post_stories Pass <em>True</em> if the administrator can post stories in the channel;
+     *     channels only
+     * @param bool|null $can_edit_stories Pass <em>True</em> if the administrator can edit stories posted by other
+     *     users; channels only
+     * @param bool|null $can_delete_stories Pass <em>True</em> if the administrator can delete stories posted by other
+     *     users; channels only
      */
     public function promoteChatMember(
         int|string $chat_id,
@@ -1591,6 +1597,9 @@ class Bot
         bool $can_invite_users = null,
         bool $can_pin_messages = null,
         bool $can_manage_topics = null,
+        bool $can_post_stories = null,
+        bool $can_edit_stories = null,
+        bool $can_delete_stories = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'promoteChatMember', [
@@ -1608,6 +1617,9 @@ class Bot
             'can_invite_users' => $can_invite_users,
             'can_pin_messages' => $can_pin_messages,
             'can_manage_topics' => $can_manage_topics,
+            'can_post_stories' => $can_post_stories,
+            'can_edit_stories' => $can_edit_stories,
+            'can_delete_stories' => $can_delete_stories,
         ]);
     }
 
