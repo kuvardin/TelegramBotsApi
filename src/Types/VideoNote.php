@@ -13,7 +13,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class VideoNote extends Type
+class VideoNote extends FileAbstract
 {
     /**
      * @deprecated Deprecated in v6.6. Use ->thumbnail instead
@@ -30,14 +30,17 @@ class VideoNote extends Type
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
-        public string $file_id,
-        public string $file_unique_id,
+        string $file_id,
+        string $file_unique_id,
         public int $length,
         public int $duration,
         public ?PhotoSize $thumbnail = null,
-        public ?int $file_size = null,
+        ?int $file_size = null,
     )
     {
+        $this->file_id = $file_id;
+        $this->file_unique_id = $file_unique_id;
+        $this->file_size = $file_size;
         $this->thumb = $this->thumbnail;
     }
 

@@ -12,7 +12,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Audio extends Type
+class Audio extends FileAbstract
 {
     /**
      * @deprecated Deprecated in v6.6. Use ->thumbnail instead
@@ -34,17 +34,20 @@ class Audio extends Type
      * @param PhotoSize|null $thumbnail Thumbnail of the album cover to which the music file belongs
      */
     public function __construct(
-        public string $file_id,
-        public string $file_unique_id,
+        string $file_id,
+        string $file_unique_id,
         public int $duration,
         public ?string $performer = null,
         public ?string $title = null,
         public ?string $file_name = null,
         public ?string $mime_type = null,
-        public ?int $file_size = null,
+        ?int $file_size = null,
         public ?PhotoSize $thumbnail = null,
     )
     {
+        $this->file_id = $file_id;
+        $this->file_unique_id = $file_unique_id;
+        $this->file_size = $file_size;
         $this->thumb = $this->thumbnail;
     }
 

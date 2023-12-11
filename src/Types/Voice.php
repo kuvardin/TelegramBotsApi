@@ -12,7 +12,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Voice extends Type
+class Voice extends FileAbstract
 {
     /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
@@ -25,14 +25,16 @@ class Voice extends Type
      *     64-bit integer or double-precision float type are safe for storing this value.
      */
     public function __construct(
-        public string $file_id,
-        public string $file_unique_id,
+        string $file_id,
+        string $file_unique_id,
         public int $duration,
         public ?string $mime_type = null,
-        public ?int $file_size = null,
+        ?int $file_size = null,
     )
     {
-
+        $this->file_id = $file_id;
+        $this->file_unique_id = $file_unique_id;
+        $this->file_size = $file_size;
     }
 
     public static function makeByArray(array $data): self

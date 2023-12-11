@@ -15,7 +15,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class File extends Type
+class File extends FileAbstract
 {
     /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
@@ -28,13 +28,15 @@ class File extends Type
      *     to get the file.
      */
     public function __construct(
-        public string $file_id,
-        public string $file_unique_id,
-        public ?int $file_size = null,
+        string $file_id,
+        string $file_unique_id,
+        ?int $file_size = null,
         public ?string $file_path = null,
     )
     {
-
+        $this->file_id = $file_id;
+        $this->file_unique_id = $file_unique_id;
+        $this->file_size = $file_size;
     }
 
     public static function makeByArray(array $data): self

@@ -13,7 +13,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Sticker extends Type
+class Sticker extends FileAbstract
 {
     /**
      * @var PhotoSize|null
@@ -45,8 +45,8 @@ class Sticker extends Type
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
-        public string $file_id,
-        public string $file_unique_id,
+        string $file_id,
+        string $file_unique_id,
         public string $type_value,
         public int $width,
         public int $height,
@@ -59,9 +59,12 @@ class Sticker extends Type
         public ?MaskPosition $mask_position = null,
         public ?string $custom_emoji_id = null,
         public ?bool $needs_repainting = null,
-        public ?int $file_size = null,
+        ?int $file_size = null,
     )
     {
+        $this->file_id = $file_id;
+        $this->file_unique_id = $file_unique_id;
+        $this->file_size = $file_size;
         $this->thumb = $this->thumbnail;
     }
 
