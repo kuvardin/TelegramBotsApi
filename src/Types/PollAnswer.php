@@ -32,7 +32,7 @@ class PollAnswer extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             poll_id: $data['poll_id'],
             option_ids: $data['option_ids'],
             voter_chat: isset($data['voter_chat'])
@@ -42,8 +42,6 @@ class PollAnswer extends Type
                 ? User::makeByArray($data['user'])
                 : null,
         );
-
-        return $result;
     }
 
     public function getRequestData(): array

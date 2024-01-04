@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Type;
+use JetBrains\PhpStorm\Deprecated;
 
 /**
  * This object represents a message.
@@ -12,7 +12,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Message extends Type
+class Message extends MaybeInaccessibleMessage
 {
     /**
      * @param int $message_id Unique message identifier inside this chat
@@ -26,6 +26,7 @@ class Message extends Type
      *     for channel posts, the supergroup itself for messages from anonymous group administrators, the linked
      *     channel for messages automatically forwarded to the discussion group. For backward compatibility, the field
      *     <em>from</em> contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+     * @param MessageOrigin|null $forward_origin Information about the original message for forwarded messages
      * @param User|null $forward_from For forwarded messages, sender of the original message
      * @param Chat|null $forward_from_chat For messages forwarded from channels or from anonymous administrators,
      *     information about the original sender chat
@@ -41,6 +42,9 @@ class Message extends Type
      *     to the connected discussion group
      * @param Message|null $reply_to_message For replies, the original message. Note that the Message object in this
      *     field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.
+     * @param ExternalReplyInfo|null $external_reply Information about the message that is being replied to, which may
+     *     come from another chat or forum topic
+     * @param TextQuote|null $quote For replies that quote part of the original message, the quoted part of the message
      * @param User|null $via_bot Bot through which the message was sent
      * @param int|null $edit_date Date the message was last edited in Unix time
      * @param bool|null $has_protected_content True, if the message can't be forwarded
@@ -50,6 +54,8 @@ class Message extends Type
      * @param string|null $text For text messages, the actual UTF-8 text of the message, 0-4096 characters
      * @param MessageEntity[]|null $entities For text messages, special entities like usernames, URLs, bot commands,
      *     etc. that appear in the text
+     * @param LinkPreviewOptions|null $link_preview_options Options used for link preview generation for the message,
+     *     if it is a text message and link preview options were changed
      * @param Animation|null $animation Message is an animation, information about the animation. For backward
      *     compatibility, when this field is set, the <em>document</em> field will also be set
      * @param Audio|null $audio Message is an audio file, information about the file
@@ -98,15 +104,15 @@ class Message extends Type
      *     identifier. This number may have more than 32 significant bits and some programming languages may have
      *     difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit
      *     integer or double-precision float type are safe for storing this identifier.
-     * @param Message|null $pinned_message Specified message was pinned. Note that the Message object in this field
-     *     will not contain further <em>reply_to_message</em> fields even if it is itself a reply.
+     * @param MaybeInaccessibleMessage|null $pinned_message Specified message was pinned. Note that the Message object
+     *     in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.
      * @param Invoice|null $invoice Message is an invoice for a
      *     <a href="https://core.telegram.org/bots/api#payments">payment</a>, information about the invoice.<br><br>
      *     <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
      * @param SuccessfulPayment|null $successful_payment Message is a service message about a successful payment,
      *     information about the payment.<br><br>
      *     <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
-     * @param UserShared|null $user_shared Service message: a user was shared with the bot
+     * @param UsersShared|null $users_shared Service message: users were shared with the bot
      * @param ChatShared|null $chat_shared Service message: a chat was shared with the bot
      * @param string|null $connected_website The domain name of the website on which the user has logged in. <a
      *     href="https://core.telegram.org/widgets/login">More about Telegram Login »</a>
@@ -129,6 +135,11 @@ class Message extends Type
      * @param GeneralForumTopicHidden|null $general_forum_topic_hidden Service message: the 'General' forum topic hidden
      * @param GeneralForumTopicUnhidden|null $general_forum_topic_unhidden Service message: the 'General' forum topic
      *     unhidden
+     * @param GiveawayCreated|null $giveaway_created Service message: a scheduled giveaway was created
+     * @param Giveaway|null $giveaway The message is a scheduled giveaway message
+     * @param GiveawayWinners|null $giveaway_winners A giveaway with public winners was completed
+     * @param GiveawayCompleted|null $giveaway_completed Service message: a giveaway without public winners was
+     *     completed
      * @param WriteAccessAllowed|null $write_access_allowed Service message: the user allowed the bot added
      *     to the attachment menu to write messages
      */
@@ -139,15 +150,18 @@ class Message extends Type
         public Chat $chat,
         public ?User $from = null,
         public ?Chat $sender_chat = null,
-        public ?User $forward_from = null,
-        public ?Chat $forward_from_chat = null,
-        public ?int $forward_from_message_id = null,
-        public ?string $forward_signature = null,
-        public ?string $forward_sender_name = null,
-        public ?int $forward_date = null,
+        public ?MessageOrigin $forward_origin = null,
+        #[Deprecated] public ?User $forward_from = null,
+        #[Deprecated] public ?Chat $forward_from_chat = null,
+        #[Deprecated] public ?int $forward_from_message_id = null,
+        #[Deprecated] public ?string $forward_signature = null,
+        #[Deprecated] public ?string $forward_sender_name = null,
+        #[Deprecated] public ?int $forward_date = null,
         public ?bool $is_topic_message = null,
         public ?bool $is_automatic_forward = null,
         public ?Message $reply_to_message = null,
+        public ?ExternalReplyInfo $external_reply = null,
+        public ?TextQuote $quote = null,
         public ?User $via_bot = null,
         public ?int $edit_date = null,
         public ?bool $has_protected_content = null,
@@ -155,6 +169,7 @@ class Message extends Type
         public ?string $author_signature = null,
         public ?string $text = null,
         public ?array $entities = null,
+        public ?LinkPreviewOptions $link_preview_options = null,
         public ?Animation $animation = null,
         public ?Audio $audio = null,
         public ?Document $document = null,
@@ -183,10 +198,10 @@ class Message extends Type
         public ?MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed = null,
         public ?int $migrate_to_chat_id = null,
         public ?int $migrate_from_chat_id = null,
-        public ?Message $pinned_message = null,
+        public ?MaybeInaccessibleMessage $pinned_message = null,
         public ?Invoice $invoice = null,
         public ?SuccessfulPayment $successful_payment = null,
-        public ?UserShared $user_shared = null,
+        public ?UsersShared $users_shared = null,
         public ?ChatShared $chat_shared = null,
         public ?string $connected_website = null,
         public ?PassportData $passport_data = null,
@@ -204,6 +219,10 @@ class Message extends Type
         public ?bool $has_media_spoiler = null,
         public ?GeneralForumTopicHidden $general_forum_topic_hidden = null,
         public ?GeneralForumTopicUnhidden $general_forum_topic_unhidden = null,
+        public ?GiveawayCreated $giveaway_created = null,
+        public ?Giveaway $giveaway = null,
+        public ?GiveawayWinners $giveaway_winners = null,
+        public ?GiveawayCompleted $giveaway_completed = null,
         public ?WriteAccessAllowed $write_access_allowed = null,
     )
     {
@@ -223,6 +242,9 @@ class Message extends Type
             sender_chat: isset($data['sender_chat'])
                 ? Chat::makeByArray($data['sender_chat'])
                 : null,
+            forward_origin: isset($data['forward_origin'])
+                ? MessageOrigin::makeByArray($data['forward_origin'])
+                : null,
             forward_from: isset($data['forward_from'])
                 ? User::makeByArray($data['forward_from'])
                 : null,
@@ -238,6 +260,12 @@ class Message extends Type
             reply_to_message: isset($data['reply_to_message'])
                 ? Message::makeByArray($data['reply_to_message'])
                 : null,
+            external_reply: isset($data['external_reply'])
+                ? ExternalReplyInfo::makeByArray($data['external_reply'])
+                : null,
+            quote: isset($data['quote'])
+                ? TextQuote::makeByArray($data['quote'])
+                : null,
             via_bot: isset($data['via_bot'])
                 ? User::makeByArray($data['via_bot'])
                 : null,
@@ -247,6 +275,9 @@ class Message extends Type
             author_signature: $data['author_signature'] ?? null,
             text: $data['text'] ?? null,
             entities: null,
+            link_preview_options: isset($data['link_preview_options'])
+                ? LinkPreviewOptions::makeByArray($data['link_preview_options'])
+                : null,
             animation: isset($data['animation'])
                 ? Animation::makeByArray($data['animation'])
                 : null,
@@ -308,7 +339,7 @@ class Message extends Type
             migrate_to_chat_id: $data['migrate_to_chat_id'] ?? null,
             migrate_from_chat_id: $data['migrate_from_chat_id'] ?? null,
             pinned_message: isset($data['pinned_message'])
-                ? Message::makeByArray($data['pinned_message'])
+                ? MaybeInaccessibleMessage::makeByArray($data['pinned_message'])
                 : null,
             invoice: isset($data['invoice'])
                 ? Invoice::makeByArray($data['invoice'])
@@ -316,8 +347,8 @@ class Message extends Type
             successful_payment: isset($data['successful_payment'])
                 ? SuccessfulPayment::makeByArray($data['successful_payment'])
                 : null,
-            user_shared: isset($data['user_shared'])
-                ? UserShared::makeByArray($data['user_shared'])
+            users_shared: isset($data['users_shared'])
+                ? UsersShared::makeByArray($data['users_shared'])
                 : null,
             chat_shared: isset($data['chat_shared'])
                 ? ChatShared::makeByArray($data['chat_shared'])
@@ -366,6 +397,18 @@ class Message extends Type
             general_forum_topic_unhidden:  isset($data['general_forum_topic_unhidden'])
                 ? GeneralForumTopicUnhidden::makeByArray($data['general_forum_topic_unhidden'])
                 : null,
+            giveaway_created: isset($data['giveaway_created'])
+                ? GiveawayCreated::makeByArray($data['giveaway_created'])
+                : null,
+            giveaway: isset($data['giveaway'])
+                ? Giveaway::makeByArray($data['giveaway'])
+                : null,
+            giveaway_winners: isset($data['giveaway_winners'])
+                ? GiveawayWinners::makeByArray($data['giveaway_winners'])
+                : null,
+            giveaway_completed: isset($data['giveaway_completed'])
+                ? GiveawayCompleted::makeByArray($data['giveaway_completed'])
+                : null,
             write_access_allowed: isset($data['write_access_allowed'])
                 ? WriteAccessAllowed::makeByArray($data['write_access_allowed'])
                 : null,
@@ -408,10 +451,12 @@ class Message extends Type
     {
         return [
             'message_id' => $this->message_id,
+            'message_thread_id' => $this->message_thread_id,
             'from' => $this->from,
             'sender_chat' => $this->sender_chat,
             'date' => $this->date,
             'chat' => $this->chat,
+            'forward_origin' => $this->forward_origin,
             'forward_from' => $this->forward_from,
             'forward_from_chat' => $this->forward_from_chat,
             'forward_from_message_id' => $this->forward_from_message_id,
@@ -421,6 +466,8 @@ class Message extends Type
             'is_topic_message' => $this->is_topic_message,
             'is_automatic_forward' => $this->is_automatic_forward,
             'reply_to_message' => $this->reply_to_message,
+            'external_reply' => $this->external_reply,
+            'quote' => $this->quote,
             'via_bot' => $this->via_bot,
             'edit_date' => $this->edit_date,
             'has_protected_content' => $this->has_protected_content,
@@ -428,6 +475,7 @@ class Message extends Type
             'author_signature' => $this->author_signature,
             'text' => $this->text,
             'entities' => $this->entities,
+            'link_preview_options' => $this->link_preview_options,
             'animation' => $this->animation,
             'audio' => $this->audio,
             'document' => $this->document,
@@ -459,8 +507,8 @@ class Message extends Type
             'pinned_message' => $this->pinned_message,
             'invoice' => $this->invoice,
             'successful_payment' => $this->successful_payment,
-            'user_shared' => $this->user_shared,
-            'chat_payment' => $this->chat_shared,
+            'users_shared' => $this->users_shared,
+            'chat_shared' => $this->chat_shared,
             'connected_website' => $this->connected_website,
             'passport_data' => $this->passport_data,
             'forum_topic_created' => $this->forum_topic_created,
@@ -477,6 +525,10 @@ class Message extends Type
             'has_media_spoiler' => $this->has_media_spoiler,
             'general_forum_topic_hidden' => $this->general_forum_topic_hidden,
             'general_forum_topic_unhidden' => $this->general_forum_topic_unhidden,
+            'giveaway_created' => $this->giveaway_created,
+            'giveaway' => $this->giveaway,
+            'giveaway_winners' => $this->giveaway_winners,
+            'giveaway_completed' => $this->giveaway_completed,
             'write_access_allowed' => $this->write_access_allowed,
         ];
     }

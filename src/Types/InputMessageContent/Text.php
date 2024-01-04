@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
+use Kuvardin\TelegramBotsApi\Types\LinkPreviewOptions;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 
 /**
@@ -23,12 +25,14 @@ class Text extends InputMessageContent
      * @param MessageEntity[]|null $entities List of special entities that appear in message text, which can be
      *     specified instead of <em>parse_mode</em>
      * @param bool|null $disable_web_page_preview Disables link previews for links in the sent message
+     * @param LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      */
     public function __construct(
         public string $message_text,
         public ?string $parse_mode = null,
         public ?array $entities = null,
-        public ?bool $disable_web_page_preview = null,
+        #[Deprecated] public ?bool $disable_web_page_preview = null,
+        public ?LinkPreviewOptions $link_preview_options = null,
     )
     {
 
@@ -36,20 +40,20 @@ class Text extends InputMessageContent
 
     public static function makeByArray(array $data): static
     {
-        $result = new self(
+        return new self(
             message_text: $data['message_text'],
             parse_mode: $data['parse_mode'] ?? null,
-            entities: null,
+            entities: isset($data['entities'])
+                ? array_map(
+                    static fn(array $item_data) => MessageEntity::makeByArray($item_data),
+                    $data['entities'],
+                )
+                : null,
             disable_web_page_preview: $data['disable_web_page_preview'] ?? null,
+            link_preview_options: isset($data['link_preview_options'])
+                ? LinkPreviewOptions::makeByArray($data['link_preview_options'])
+                : null,
         );
-
-        if (isset($data['entities'])) {
-            $result->entities = [];
-            foreach ($data['entities'] as $item_data) {
-                $result->entities[] = MessageEntity::makeByArray($item_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array
@@ -59,6 +63,7 @@ class Text extends InputMessageContent
             'parse_mode' => $this->parse_mode,
             'entities' => $this->entities,
             'disable_web_page_preview' => $this->disable_web_page_preview,
+            'link_preview_options' => $this->link_preview_options,
         ];
     }
 }

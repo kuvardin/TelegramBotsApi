@@ -7,12 +7,12 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a message about a forwarded story in the chat. Currently holds no information.
+ * This object represents a service message about the creation of a scheduled giveaway. Currently holds no information.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Story extends Type
+class GiveawayCreated extends Type
 {
     public function __construct()
     {

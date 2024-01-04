@@ -14,6 +14,8 @@ enum UpdateType: string
     case EditedMessage = 'edited_message';
     case ChannelPost = 'channel_post';
     case EditedChannelPost = 'edited_channel_post';
+    case MessageReaction = 'message_reaction';
+    case MessageReactionCount = 'message_reaction_count';
     case InlineQuery = 'inline_query';
     case ChosenInlineResult = 'chosen_inline_result';
     case CallbackQuery = 'callback_query';
@@ -24,4 +26,6 @@ enum UpdateType: string
     case MyChatMember = 'my_chat_member';
     case ChatMember = 'chat_member';
     case ChatJoinRequest = 'chat_join_request';
+    case ChatBoost = 'chat_boost';
+    case RemovedChatBoost = 'removed_chat_boost';
 }

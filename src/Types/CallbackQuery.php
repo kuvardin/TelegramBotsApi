@@ -31,8 +31,8 @@ class CallbackQuery extends Type
      * @param string $chat_instance Global identifier, uniquely corresponding to the chat to which the message with the
      *     callback button was sent. Useful for high scores in <a
      *     href="https://core.telegram.org/bots/api#games">games</a>.
-     * @param Message|null $message Message with the callback button that originated the query. Note that message
-     *     content and message date will not be available if the message is too old
+     * @param MaybeInaccessibleMessage|null $message Message sent by the bot with the callback button that originated
+     *     the query
      * @param string|null $inline_message_id Identifier of the message sent via the bot in inline mode, that originated
      *     the query.
      * @param string|null $data Data associated with the callback button. Be aware that a bad client can send arbitrary
@@ -44,7 +44,7 @@ class CallbackQuery extends Type
         public string $id,
         public User $from,
         public string $chat_instance,
-        public ?Message $message = null,
+        public ?MaybeInaccessibleMessage $message = null,
         public ?string $inline_message_id = null,
         public ?string $data = null,
         public ?string $game_short_name = null,
@@ -60,7 +60,7 @@ class CallbackQuery extends Type
             from: User::makeByArray($data['from']),
             chat_instance: $data['chat_instance'],
             message: isset($data['message'])
-                ? Message::makeByArray($data['message'])
+                ? MaybeInaccessibleMessage::makeByArray($data['message'])
                 : null,
             inline_message_id: $data['inline_message_id'] ?? null,
             data: $data['data'] ?? null,

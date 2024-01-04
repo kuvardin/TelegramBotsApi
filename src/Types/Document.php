@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
-use Kuvardin\TelegramBotsApi\Type;
-
 /**
  * This object represents a general file (as opposed to <a
  * href="https://core.telegram.org/bots/api#photosize">photos</a>, <a

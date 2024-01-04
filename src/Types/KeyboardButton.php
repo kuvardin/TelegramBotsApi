@@ -29,8 +29,8 @@ class KeyboardButton extends Type
      * @param WebAppInfo|null $web_app If specified, the described
      *     <a href="https://core.telegram.org/bots/webapps">Web App</a> will be launched when the button is pressed.
      *     The Web App will be able to send a “web_app_data” service message. Available in private chats only.
-     * @param KeyboardButtonRequestUser|null $request_user If specified, pressing the button will open a list of
-     *     suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message.
+     * @param KeyboardButtonRequestUsers|null $request_users If specified, pressing the button will open a list of
+     *     suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message.
      *     Available in private chats only.
      * @param KeyboardButtonRequestChat|null $request_chat If specified, pressing the button will open a list of
      *     suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message.
@@ -42,7 +42,7 @@ class KeyboardButton extends Type
         public ?bool $request_location = null,
         public ?KeyboardButtonPollType $request_poll = null,
         public ?WebAppInfo $web_app = null,
-        public ?KeyboardButtonRequestUser $request_user = null,
+        public ?KeyboardButtonRequestUsers $request_users = null,
         public ?KeyboardButtonRequestChat $request_chat = null,
     )
     {
@@ -61,8 +61,8 @@ class KeyboardButton extends Type
             web_app: isset($data['web_app'])
                 ? WebAppInfo::makeByArray($data['web_app'])
                 : null,
-            request_user: isset($data['request_user'])
-                ? KeyboardButtonRequestUser::makeByArray($data['request_user'])
+            request_users: isset($data['request_users'])
+                ? KeyboardButtonRequestUsers::makeByArray($data['request_users'])
                 : null,
             request_chat: isset($data['request_chat'])
                 ? KeyboardButtonRequestChat::makeByArray($data['request_chat'])
@@ -78,7 +78,7 @@ class KeyboardButton extends Type
             'request_location' => $this->request_location,
             'request_poll' => $this->request_poll,
             'web_app' => $this->web_app,
-            'request_user' => $this->request_user,
+            'request_users' => $this->request_users,
             'request_chat' => $this->request_chat,
         ];
     }

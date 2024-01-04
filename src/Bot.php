@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi;
 
 use GuzzleHttp\Client;
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\ForceReply;
 use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardMarkup;
@@ -265,19 +266,23 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      */
     public function sendMessage(
         int|string $chat_id,
         string $text,
         Enums\ParseMode $parse_mode = null,
         array $entities = null,
-        bool $disable_web_page_preview = null,
+        #[Deprecated] bool $disable_web_page_preview = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
+        Types\LinkPreviewOptions $link_preview_options = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
@@ -292,6 +297,8 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
+            'link_preview_options' => $link_preview_options,
         ]);
     }
 
@@ -330,6 +337,42 @@ class Bot
     }
 
     /**
+     * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found
+     * or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album
+     * grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format &#64;channelusername)
+     * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent
+     *     (or channel username in the format &#64;channelusername)
+     * @param int[] $message_ids Identifiers of 1-100 messages in the chat <em>from_chat_id</em> to forward.
+     *     The identifiers must be specified in a strictly increasing order.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
+     *     for forum supergroups only
+     * @param bool|null $disable_notification Sends the messages silently. Users will receive a notification with
+     *     no sound.
+     * @param bool|null $protect_content Protects the contents of the forwarded messages from forwarding and saving
+     */
+    public function forwardMessages(
+        int|string $chat_id,
+        int|string $from_chat_id,
+        array $message_ids,
+        int $message_thread_id = null,
+        bool $disable_notification = null,
+        bool $protect_content = null,
+    ): Requests\RequestMessageIds
+    {
+        return new Requests\RequestMessageIds($this, 'forwardMessages', [
+            'chat_id' => $chat_id,
+            'from_chat_id' => $from_chat_id,
+            'message_ids' => $message_ids,
+            'message_thread_id' => $message_thread_id,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+        ]);
+    }
+
+    /**
      * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The
      * method is analogous to the method forwardMessage(), but the copied message doesn't have a link to the original
      * message.
@@ -359,6 +402,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function copyMessage(
         int|string $chat_id,
@@ -369,10 +413,11 @@ class Bot
         array $caption_entities = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessageId
     {
         return new Requests\RequestMessageId($this, 'copyMessage', [
@@ -388,6 +433,49 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
+        ]);
+    }
+
+    /**
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they
+     * are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be
+     * copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot.
+     * The method is analogous to the method forwardMessages(), but the copied messages don't have a link to the
+     * original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent
+     * messages is returned.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format &#64;channelusername)
+     * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent
+     *     (or channel username in the format &#64;channelusername)
+     * @param int[] $message_ids Identifiers of 1-100 messages in the chat <em>from_chat_id</em> to copy. The
+     *     identifiers must be specified in a strictly increasing order.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
+     *     forum supergroups only
+     * @param bool|null $disable_notification Sends the messages silently. Users will receive a notification with
+     *     no sound.
+     * @param bool|null $protect_content Protects the contents of the sent messages from forwarding and saving
+     * @param bool|null $remove_caption Pass <em>True</em> to copy the messages without their captions
+     */
+    public function copyMessages(
+        int|string $chat_id,
+        int|string $from_chat_id,
+        array $message_ids,
+        int $message_thread_id = null,
+        bool $disable_notification = null,
+        bool $protect_content = null,
+        bool $remove_caption = null,
+    ): Requests\RequestMessageIds
+    {
+        return new Requests\RequestMessageIds($this, 'copyMessages', [
+            'chat_id' => $chat_id,
+            'from_chat_id' => $from_chat_id,
+            'message_ids' => $message_ids,
+            'message_thread_id' => $message_thread_id,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'remove_caption' => $remove_caption,
         ]);
     }
 
@@ -422,6 +510,7 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendPhoto(
         int|string $chat_id,
@@ -431,11 +520,12 @@ class Bot
         array $caption_entities = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         bool $has_spoiler = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -451,6 +541,7 @@ class Bot
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
             'has_spoiler' => $has_spoiler,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -494,8 +585,8 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
-     *
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendAudio(
         int|string $chat_id,
@@ -509,12 +600,12 @@ class Bot
         Types\InputFile $thumbnail = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
-
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -533,6 +624,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -575,8 +667,8 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
-     *
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendDocument(
         int|string $chat_id,
@@ -588,12 +680,12 @@ class Bot
         bool $disable_content_type_detection = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
-
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
@@ -610,6 +702,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -655,8 +748,8 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
-     *
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendVideo(
         int|string $chat_id,
@@ -671,13 +764,13 @@ class Bot
         bool $supports_streaming = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         bool $has_spoiler = null,
-
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -698,6 +791,7 @@ class Bot
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
             'has_spoiler' => $has_spoiler,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -742,8 +836,8 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the animation needs to be covered with a spoiler animation
-     *
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -757,13 +851,13 @@ class Bot
         array $caption_entities = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         bool $has_spoiler = null,
-
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -783,6 +877,7 @@ class Bot
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
             'has_spoiler' => $has_spoiler,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -818,6 +913,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendVoice(
         int|string $chat_id,
@@ -828,10 +924,11 @@ class Bot
         int $duration = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
@@ -847,6 +944,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -883,8 +981,8 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
-     *
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendVideoNote(
         int|string $chat_id,
@@ -894,12 +992,12 @@ class Bot
         Types\InputFile $thumbnail = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
-
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -914,6 +1012,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -933,15 +1032,17 @@ class Bot
      *     specified replied-to message is not found
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendMediaGroup(
         int|string $chat_id,
         array $media,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessages
     {
         return new Requests\RequestMessages($this, 'sendMediaGroup', [
@@ -952,6 +1053,7 @@ class Bot
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -983,6 +1085,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendLocation(
         int|string $chat_id,
@@ -994,10 +1097,11 @@ class Bot
         int $proximity_alert_radius = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
@@ -1014,6 +1118,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1163,6 +1268,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendVenue(
         int|string $chat_id,
@@ -1176,10 +1282,11 @@ class Bot
         string $google_place_type = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1198,6 +1305,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1225,6 +1333,7 @@ class Bot
      *     or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendContact(
         int|string $chat_id,
@@ -1234,10 +1343,11 @@ class Bot
         string $vcard = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendContact', [
@@ -1252,6 +1362,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1294,6 +1405,7 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendPoll(
         int|string $chat_id,
@@ -1311,10 +1423,11 @@ class Bot
         bool $is_closed = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
@@ -1337,6 +1450,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1362,16 +1476,18 @@ class Bot
      *     keyboard or to force a reply from the user.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendDice(
         int|string $chat_id,
         Enums\DiceType $type = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDice', [
@@ -1383,6 +1499,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1407,6 +1524,35 @@ class Bot
             'chat_id' => $chat_id,
             'action' => $action->value,
             'message_thread_id' => $message_thread_id,
+        ]);
+    }
+
+    /**
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically
+     * forwarded messages from a channel to its discussion group have the same available reactions as messages in the
+     * channel.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format &#64;channelusername)
+     * @param int $message_id Identifier of the target message. If the message belongs to a media group, the reaction
+     *     is set to the first non-deleted message in the group instead.
+     * @param Types\ReactionType[]|null $reaction New list of reaction types to set on the message. Currently,
+     *     as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used
+     *     if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param bool|null $is_big Pass True to set the reaction with a big animation
+     */
+    public function setMessageReaction(
+        int|string $chat_id,
+        int $message_id,
+        array $reaction = null,
+        bool $is_big = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setMessageReaction', [
+            'chat_id' => $chat_id,
+            'message_id' => $message_id,
+            'reaction' => $reaction,
+            'is_big' => $is_big,
         ]);
     }
 
@@ -2163,6 +2309,25 @@ class Bot
     }
 
     /**
+     * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat.
+     * Returns a UserChatBoosts object.
+     *
+     * @param int|string $chat_id Unique identifier for the chat or username of the channel
+     *     (in the format &#64;channelusername)
+     * @param int $user_id Unique identifier of the target user
+     */
+    public function getUserChatBoosts(
+        int|string $chat_id,
+        int $user_id,
+    ): Requests\RequestUserChatBoosts
+    {
+        return new Requests\RequestUserChatBoosts($this, 'getUserChatBoosts', [
+            'chat_id' => $chat_id,
+            'user_id' => $user_id,
+        ]);
+    }
+
+    /**
      * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat
      * for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em>
      * optionally returned in getChat() requests to check if the bot can use this method.
@@ -2656,6 +2821,7 @@ class Bot
      * @param bool|null $disable_web_page_preview Disables link previews for links in this message
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      */
     public function editMessageText(
         int|string $chat_id,
@@ -2663,8 +2829,9 @@ class Bot
         string $text,
         Enums\ParseMode $parse_mode = null,
         array $entities = null,
-        bool $disable_web_page_preview = null,
+        #[Deprecated] bool $disable_web_page_preview = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        Types\LinkPreviewOptions $link_preview_options = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageText', [
@@ -2675,6 +2842,7 @@ class Bot
             'entities' => $entities,
             'disable_web_page_preview' => $disable_web_page_preview,
             'reply_markup' => $reply_markup,
+            'link_preview_options' => $link_preview_options,
         ]);
     }
 
@@ -2915,6 +3083,26 @@ class Bot
     }
 
     /**
+     * Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found,
+     * they are skipped.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format &#64;channelusername)
+     * @param int[] $message_ids Identifiers of 1-100 messages to delete. See deleteMessage() for limitations on which
+     *     messages can be deleted
+     */
+    public function deleteMessages(
+        int|string $chat_id,
+        array $message_ids,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteMessages', [
+            'chat_id' => $chat_id,
+            'message_ids' => $message_ids,
+        ]);
+    }
+
+    /**
      * Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS,
      * or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers.
      *
@@ -2939,17 +3127,19 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param string|null $emoji Emoji associated with the sticker; only for just uploaded stickers
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendSticker(
         int|string $chat_id,
         Types\InputFile $sticker,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         string $emoji = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -2962,6 +3152,7 @@ class Bot
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
             'emoji' => $emoji,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -3183,7 +3374,7 @@ class Bot
     public function setStickerSetThumb(
         string $name,
         int $user_id,
-        Types\InputFile $thumb = null,
+        #[Deprecated] Types\InputFile $thumb = null,
     ): Requests\RequestVoid
     {
         return $this->setStickerSetThumbnail(
@@ -3369,6 +3560,7 @@ class Bot
      *     be a Pay button.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendInvoice(
         int|string $chat_id,
@@ -3395,10 +3587,11 @@ class Bot
         bool $is_flexible = null,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendInvoice', [
@@ -3430,6 +3623,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -3620,16 +3814,18 @@ class Bot
      *     game.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      */
     public function sendGame(
         int $chat_id,
         string $game_short_name,
         bool $disable_notification = null,
         bool $protect_content = null,
-        int $reply_to_message_id = null,
-        bool $allow_sending_without_reply = null,
+        #[Deprecated] int $reply_to_message_id = null,
+        #[Deprecated] bool $allow_sending_without_reply = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
         int $message_thread_id = null,
+        Types\ReplyParameters $reply_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendGame', [
@@ -3641,6 +3837,7 @@ class Bot
             'allow_sending_without_reply' => $allow_sending_without_reply,
             'reply_markup' => $reply_markup,
             'message_thread_id' => $message_thread_id,
+            'reply_parameters' => $reply_parameters,
         ]);
     }
 

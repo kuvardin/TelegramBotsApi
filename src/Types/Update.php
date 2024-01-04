@@ -26,6 +26,12 @@ class Update extends Type
      * @param Message|null $edited_message New version of a message that is known to the bot and was edited
      * @param Message|null $channel_post New incoming channel post of any kind — text, photo, sticker, etc.
      * @param Message|null $edited_channel_post New version of a channel post that is known to the bot and was edited
+     * @param MessageReactionUpdated|null $message_reaction A reaction to a message was changed by a user. The bot must
+     *     be an administrator in the chat and must explicitly specify <code>"message_reaction"</code> in the list of
+     *     <em>allowed_updates</em> to receive these updates. The update isn't received for reactions set by bots.
+     * @param MessageReactionCountUpdated|null $message_reaction_count Reactions to a message with anonymous reactions
+     *     were changed. The bot must be an administrator in the chat and must explicitly specify
+     *     <code>"message_reaction_count"</code> in the list of <em>allowed_updates</em> to receive these updates.
      * @param InlineQuery|null $inline_query New incoming <a
      *     href="https://core.telegram.org/bots/api#inline-mode">inline</a> query
      * @param ChosenInlineResult|null $chosen_inline_result The result of an <a
@@ -48,6 +54,10 @@ class Update extends Type
      *     to receive these updates.
      * @param ChatJoinRequest|null $chat_join_request A request to join the chat has been sent. The bot must have the
      *     <em>can_invite_users</em> administrator right in the chat to receive these updates.
+     * @param ChatBoostUpdated|null $chat_boost A chat boost was added or changed. The bot must be an administrator in
+     *     the chat to receive these updates.
+     * @param ChatBoostRemoved|null $removed_chat_boost A boost was removed from a chat. The bot must be an
+     *     administrator in the chat to receive these updates.
      */
     public function __construct(
         public int $update_id,
@@ -55,6 +65,8 @@ class Update extends Type
         public ?Message $edited_message = null,
         public ?Message $channel_post = null,
         public ?Message $edited_channel_post = null,
+        public ?MessageReactionUpdated $message_reaction = null,
+        public ?MessageReactionCountUpdated $message_reaction_count = null,
         public ?InlineQuery $inline_query = null,
         public ?ChosenInlineResult $chosen_inline_result = null,
         public ?CallbackQuery $callback_query = null,
@@ -65,6 +77,8 @@ class Update extends Type
         public ?ChatMemberUpdated $my_chat_member = null,
         public ?ChatMemberUpdated $chat_member = null,
         public ?ChatJoinRequest $chat_join_request = null,
+        public ?ChatBoostUpdated $chat_boost = null,
+        public ?ChatBoostRemoved $removed_chat_boost = null,
     )
     {
 
@@ -85,6 +99,12 @@ class Update extends Type
                 : null,
             edited_channel_post: isset($data['edited_channel_post'])
                 ? Message::makeByArray($data['edited_channel_post'])
+                : null,
+            message_reaction: isset($data['message_reaction'])
+                ? MessageReactionUpdated::makeByArray($data['message_reaction'])
+                : null,
+            message_reaction_count: isset($data['message_reaction_count'])
+                ? MessageReactionCountUpdated::makeByArray($data['message_reaction_count'])
                 : null,
             inline_query: isset($data['inline_query'])
                 ? InlineQuery::makeByArray($data['inline_query'])
@@ -116,6 +136,12 @@ class Update extends Type
             chat_join_request: isset($data['chat_join_request'])
                 ? ChatJoinRequest::makeByArray($data['chat_join_request'])
                 : null,
+            chat_boost: isset($data['chat_boost'])
+                ? ChatBoostUpdated::makeByArray($data['chat_boost'])
+                : null,
+            removed_chat_boost: isset($data['removed_chat_boost'])
+                ? ChatBoostRemoved::makeByArray($data['removed_chat_boost'])
+                : null,
         );
     }
 
@@ -127,6 +153,8 @@ class Update extends Type
             'edited_message' => $this->edited_message,
             'channel_post' => $this->channel_post,
             'edited_channel_post' => $this->edited_channel_post,
+            'message_reaction' => $this->message_reaction,
+            'message_reaction_count' => $this->message_reaction_count,
             'inline_query' => $this->inline_query,
             'chosen_inline_result' => $this->chosen_inline_result,
             'callback_query' => $this->callback_query,
@@ -137,6 +165,8 @@ class Update extends Type
             'my_chat_member' => $this->my_chat_member,
             'chat_member' => $this->chat_member,
             'chat_join_request' => $this->chat_join_request,
+            'chat_boost' => $this->chat_boost,
+            'removed_chat_boost' => $this->removed_chat_boost,
         ];
     }
 
@@ -146,10 +176,14 @@ class Update extends Type
             ?? $this->edited_message?->chat
             ?? $this->channel_post?->chat
             ?? $this->edited_channel_post?->chat
+            ?? $this->message_reaction?->chat
+            ?? $this->message_reaction_count?->chat
             ?? $this->callback_query?->message?->chat
             ?? $this->my_chat_member?->chat
             ?? $this->chat_member?->chat
-            ?? $this->chat_join_request?->chat;
+            ?? $this->chat_join_request?->chat
+            ?? $this->chat_boost?->chat
+            ?? $this->removed_chat_boost?->chat;
     }
 
     public function getUser(): ?User
@@ -158,6 +192,7 @@ class Update extends Type
             ?? $this->edited_message?->from
             ?? $this->channel_post?->from
             ?? $this->edited_channel_post?->from
+            ?? $this->message_reaction?->user
             ?? $this->inline_query?->from
             ?? $this->chosen_inline_result?->from
             ?? $this->callback_query?->from
@@ -181,6 +216,8 @@ class Update extends Type
             $this->edited_message !== null => UpdateType::EditedMessage,
             $this->channel_post !== null => UpdateType::ChannelPost,
             $this->edited_channel_post !== null => UpdateType::EditedChannelPost,
+            $this->message_reaction !== null => UpdateType::MessageReaction,
+            $this->message_reaction_count !== null => UpdateType::MessageReactionCount,
             $this->inline_query !== null => UpdateType::InlineQuery,
             $this->chosen_inline_result !== null => UpdateType::ChosenInlineResult,
             $this->callback_query !== null => UpdateType::CallbackQuery,
@@ -191,6 +228,8 @@ class Update extends Type
             $this->my_chat_member !== null => UpdateType::MyChatMember,
             $this->chat_member !== null => UpdateType::ChatMember,
             $this->chat_join_request !== null => UpdateType::ChatJoinRequest,
+            $this->chat_boost !== null => UpdateType::ChatBoost,
+            $this->removed_chat_boost !== null => UpdateType::RemovedChatBoost,
             default => null,
         };
     }

@@ -30,6 +30,19 @@ class Chat extends Type
      * @param ChatPhoto|null $photo Chat photo. Returned only in getChat().
      * @param string[]|null $active_usernames Optional. If non-empty, the list of all active chat usernames;
      *     for private chats, supergroups and channels. Returned only in getChat().
+     * @param ReactionType[]|null $available_reactions List of available reactions allowed in the chat. If omitted, then
+     *     all <a href="https://core.telegram.org/bots/api#reactiontypeemoji">emoji reactions</a> are allowed.
+     *     Returned only in getChat().
+     * @param int|null $accent_color_id Identifier of the accent color for the chat name and backgrounds of the chat
+     *     photo, reply header, and link preview. See <a href="https://core.telegram.org/bots/api#accent-colors">accent
+     *     colors</a> for more details. Returned only in getChat(). Always returned in getChat().
+     * @param string|null $background_custom_emoji_id Custom emoji identifier of emoji chosen by the chat for the reply
+     *     header and link preview background. Returned only in getChat().
+     * @param int|null $profile_accent_color_id Identifier of the accent color for the chat's profile background.
+     *     See <a href="https://core.telegram.org/bots/api#profile-accent-colors">profile accent colors</a> for more
+     *     details. Returned only in getChat().
+     * @param string|null $profile_background_custom_emoji_id Custom emoji identifier of the emoji chosen by the chat
+     *     for its profile background. Returned only in getChat().
      * @param string|null $emoji_status_custom_emoji_id Custom emoji identifier of emoji status of the other party in
      *     a private chat. Returned only in getChat().
      * @param int|null $emoji_status_expiration_date Expiration date of the emoji status of the other party in a private
@@ -56,6 +69,8 @@ class Chat extends Type
      *     automatically deleted; in seconds. Returned only in Returned only in getChat().
      * @param bool|null $has_protected_content True, if messages from the chat can't be forwarded to other chats.
      *     Returned only in getChat().
+     * @param bool|null $has_visible_history True, if new chat members will have access to old messages; available only
+     *     to chat administrators. Returned only in getChat().
      * @param string|null $sticker_set_name For supergroups, name of group sticker set. Returned only in getChat().
      * @param bool|null $can_set_sticker_set <em>True</em>, if the bot can change the group sticker set. Returned only
      *     in getChat().
@@ -81,6 +96,11 @@ class Chat extends Type
         public ?bool $is_forum = null,
         public ?ChatPhoto $photo = null,
         public ?array $active_usernames = null,
+        public ?array $available_reactions = null,
+        public ?int $accent_color_id = null,
+        public ?string $background_custom_emoji_id = null,
+        public ?int $profile_accent_color_id = null,
+        public ?string $profile_background_custom_emoji_id = null,
         public ?string $emoji_status_custom_emoji_id = null,
         public ?int $emoji_status_expiration_date = null,
         public ?string $bio = null,
@@ -95,6 +115,7 @@ class Chat extends Type
         public ?int $slow_mode_delay = null,
         public ?int $message_auto_delete_time = null,
         public ?bool $has_protected_content = null,
+        public ?bool $has_visible_history = null,
         public ?string $sticker_set_name = null,
         public ?bool $can_set_sticker_set = null,
         public ?int $linked_chat_id = null,
@@ -122,6 +143,16 @@ class Chat extends Type
                 ? ChatPhoto::makeByArray($data['photo'])
                 : null,
             active_usernames: $data['active_usernames'] ?? null,
+            available_reactions: isset($data['available_reactions'])
+                ? array_map(
+                    static fn($item_data) => ReactionType::makeByArray($item_data),
+                    $data['available_reactions'],
+                )
+                : null,
+            accent_color_id: $data['accent_color_id'] ?? null,
+            background_custom_emoji_id: $data['background_custom_emoji_id'] ?? null,
+            profile_accent_color_id: $data['profile_accent_color_id'] ?? null,
+            profile_background_custom_emoji_id: $data['profile_background_custom_emoji_id'] ?? null,
             emoji_status_custom_emoji_id: $data['emoji_status_custom_emoji_id'] ?? null,
             emoji_status_expiration_date: $data['emoji_status_expiration_date'] ?? null,
             bio: $data['bio'] ?? null,
@@ -140,6 +171,7 @@ class Chat extends Type
             slow_mode_delay: $data['slow_mode_delay'] ?? null,
             message_auto_delete_time: $data['message_auto_delete_time'] ?? null,
             has_protected_content: $data['has_protected_content'] ?? null,
+            has_visible_history: $data['has_visible_history'] ?? null,
             sticker_set_name: $data['sticker_set_name'] ?? null,
             can_set_sticker_set: $data['can_set_sticker_set'] ?? null,
             linked_chat_id: $data['linked_chat_id'] ?? null,
@@ -163,6 +195,11 @@ class Chat extends Type
             'is_forum' => $this->is_forum,
             'photo' => $this->photo,
             'active_usernames' => $this->active_usernames,
+            'available_reactions' => $this->available_reactions,
+            'accent_color_id' => $this->accent_color_id,
+            'background_custom_emoji_id' => $this->background_custom_emoji_id,
+            'profile_accent_color_id' => $this->profile_accent_color_id,
+            'profile_background_custom_emoji_id' => $this->profile_background_custom_emoji_id,
             'emoji_status_custom_emoji_id' => $this->emoji_status_custom_emoji_id,
             'emoji_status_expiration_date' => $this->emoji_status_expiration_date,
             'bio' => $this->bio,
@@ -179,6 +216,7 @@ class Chat extends Type
             'has_aggressive_anti_spam_enabled' => $this->has_aggressive_anti_spam_enabled,
             'has_hidden_members' => $this->has_hidden_members,
             'has_protected_content' => $this->has_protected_content,
+            'has_visible_history' => $this->has_visible_history,
             'sticker_set_name' => $this->sticker_set_name,
             'can_set_sticker_set' => $this->can_set_sticker_set,
             'linked_chat_id' => $this->linked_chat_id,
