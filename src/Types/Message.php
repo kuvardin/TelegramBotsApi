@@ -26,6 +26,8 @@ class Message extends MaybeInaccessibleMessage
      *     for channel posts, the supergroup itself for messages from anonymous group administrators, the linked
      *     channel for messages automatically forwarded to the discussion group. For backward compatibility, the field
      *     <em>from</em> contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+     * @param int|null $sender_boost_count If the sender of the message boosted the chat, the number of boosts added
+     *     by the user
      * @param MessageOrigin|null $forward_origin Information about the original message for forwarded messages
      * @param User|null $forward_from For forwarded messages, sender of the original message
      * @param Chat|null $forward_from_chat For messages forwarded from channels or from anonymous administrators,
@@ -45,6 +47,7 @@ class Message extends MaybeInaccessibleMessage
      * @param ExternalReplyInfo|null $external_reply Information about the message that is being replied to, which may
      *     come from another chat or forum topic
      * @param TextQuote|null $quote For replies that quote part of the original message, the quoted part of the message
+     * @param Story|null $reply_to_story For replies to a story, the original story
      * @param User|null $via_bot Bot through which the message was sent
      * @param int|null $edit_date Date the message was last edited in Unix time
      * @param bool|null $has_protected_content True, if the message can't be forwarded
@@ -119,6 +122,7 @@ class Message extends MaybeInaccessibleMessage
      * @param PassportData|null $passport_data Telegram Passport data
      * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message. A user in the chat triggered
      *     another user's proximity alert while sharing Live Location.
+     * @param ChatBoostAdded|null $boost_added Service message: user boosted the chat
      * @param ForumTopicCreated|null $forum_topic_created Service message: forum topic created
      * @param ForumTopicEdited|null $forum_topic_edited Service message: forum topic edited
      * @param ForumTopicClosed|null $forum_topic_closed Service message: forum topic closed
@@ -150,6 +154,7 @@ class Message extends MaybeInaccessibleMessage
         public Chat $chat,
         public ?User $from = null,
         public ?Chat $sender_chat = null,
+        public ?int $sender_boost_count = null,
         public ?MessageOrigin $forward_origin = null,
         #[Deprecated] public ?User $forward_from = null,
         #[Deprecated] public ?Chat $forward_from_chat = null,
@@ -162,6 +167,7 @@ class Message extends MaybeInaccessibleMessage
         public ?Message $reply_to_message = null,
         public ?ExternalReplyInfo $external_reply = null,
         public ?TextQuote $quote = null,
+        public ?Story $reply_to_story = null,
         public ?User $via_bot = null,
         public ?int $edit_date = null,
         public ?bool $has_protected_content = null,
@@ -206,6 +212,7 @@ class Message extends MaybeInaccessibleMessage
         public ?string $connected_website = null,
         public ?PassportData $passport_data = null,
         public ?ProximityAlertTriggered $proximity_alert_triggered = null,
+        public ?ChatBoostAdded $boost_added = null,
         public ?ForumTopicCreated $forum_topic_created = null,
         public ?ForumTopicEdited $forum_topic_edited = null,
         public ?ForumTopicClosed $forum_topic_closed = null,
@@ -242,6 +249,7 @@ class Message extends MaybeInaccessibleMessage
             sender_chat: isset($data['sender_chat'])
                 ? Chat::makeByArray($data['sender_chat'])
                 : null,
+            sender_boost_count: $data['sender_boost_count'] ?? null,
             forward_origin: isset($data['forward_origin'])
                 ? MessageOrigin::makeByArray($data['forward_origin'])
                 : null,
@@ -265,6 +273,9 @@ class Message extends MaybeInaccessibleMessage
                 : null,
             quote: isset($data['quote'])
                 ? TextQuote::makeByArray($data['quote'])
+                : null,
+            reply_to_story: isset($data['reply_to_story'])
+                ? Story::makeByArray($data['reply_to_story'])
                 : null,
             via_bot: isset($data['via_bot'])
                 ? User::makeByArray($data['via_bot'])
@@ -360,6 +371,9 @@ class Message extends MaybeInaccessibleMessage
             proximity_alert_triggered: isset($data['proximity_alert_triggered'])
                 ? ProximityAlertTriggered::makeByArray($data['proximity_alert_triggered'])
                 : null,
+            boost_added: isset($data['boost_added'])
+                ? ChatBoostAdded::makeByArray($data['boost_added'])
+                : null,
             forum_topic_created: isset($data['forum_topic_created'])
                 ? ForumTopicCreated::makeByArray($data['forum_topic_created'])
                 : null,
@@ -454,6 +468,7 @@ class Message extends MaybeInaccessibleMessage
             'message_thread_id' => $this->message_thread_id,
             'from' => $this->from,
             'sender_chat' => $this->sender_chat,
+            'sender_boost_count' => $this->sender_boost_count,
             'date' => $this->date,
             'chat' => $this->chat,
             'forward_origin' => $this->forward_origin,
@@ -468,6 +483,7 @@ class Message extends MaybeInaccessibleMessage
             'reply_to_message' => $this->reply_to_message,
             'external_reply' => $this->external_reply,
             'quote' => $this->quote,
+            'reply_to_story' => $this->reply_to_story,
             'via_bot' => $this->via_bot,
             'edit_date' => $this->edit_date,
             'has_protected_content' => $this->has_protected_content,
@@ -516,6 +532,7 @@ class Message extends MaybeInaccessibleMessage
             'forum_topic_closed' => $this->forum_topic_closed,
             'forum_topic_reopened' => $this->forum_topic_reopened,
             'proximity_alert_triggered' => $this->proximity_alert_triggered,
+            'boost_added' => $this->boost_added,
             'video_chat_scheduled' => $this->video_chat_scheduled,
             'video_chat_started' => $this->video_chat_started,
             'video_chat_ended' => $this->video_chat_ended,

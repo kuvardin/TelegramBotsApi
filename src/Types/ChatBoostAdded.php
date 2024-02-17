@@ -7,20 +7,18 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a story.
+ * This object represents a service message about a user boosting a chat.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Story extends Type
+class ChatBoostAdded extends Type
 {
     /**
-     * @param Chat $chat Chat that posted the story
-     * @param int $id Unique identifier for the story in the chat
+     * @param int $boost_count Number of boosts added by the user
      */
     public function __construct(
-        public Chat $chat,
-        public int $id,
+        public int $boost_count,
     )
     {
 
@@ -29,16 +27,14 @@ class Story extends Type
     public static function makeByArray(array $data): self
     {
         return new self(
-            chat: Chat::makeByArray($data['chat']),
-            id: $data['id'],
+            boost_count: $data['boost_count'],
         );
     }
 
     public function getRequestData(): array
     {
         return [
-            'chat' => $this->chat,
-            'id' => $this->id,
+            'boost_count' => $this->boost_count,
         ];
     }
 }
