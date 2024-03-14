@@ -6,7 +6,7 @@ namespace Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 
 use Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 use RuntimeException;
-
+use Kuvardin\TelegramBotsApi\Types\User as TelegramUser;
 /**
  * The message was originally sent by a known user.
  *
@@ -17,11 +17,11 @@ class User extends MessageOrigin
 {
     /**
      * @param int $date Date the message was sent originally in Unix time
-     * @param User $sender_user User that sent the message originally
+     * @param TelegramUser $sender_user User that sent the message originally
      */
     public function __construct(
         public int $date,
-        public User $sender_user,
+        public TelegramUser $sender_user,
     )
     {
 
@@ -40,7 +40,7 @@ class User extends MessageOrigin
 
         return new self(
             date: $data['date'],
-            sender_user: User::makeByArray($data['sender_user']),
+            sender_user: TelegramUser::makeByArray($data['sender_user']),
         );
     }
 

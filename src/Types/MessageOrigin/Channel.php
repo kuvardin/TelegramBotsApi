@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 
-use Kuvardin\TelegramBotsApi\Types\Chat;
+use Kuvardin\TelegramBotsApi\Types\Chat as TelegramChat;
 use Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 use RuntimeException;
 
@@ -18,13 +18,13 @@ class Channel extends MessageOrigin
 {
     /**
      * @param int $date Date the message was sent originally in Unix time
-     * @param Chat $chat Channel chat to which the message was originally sent
+     * @param TelegramChat $chat Channel chat to which the message was originally sent
      * @param int $message_id Unique message identifier inside the chat
      * @param string|null $author_signature Signature of the original post author
      */
     public function __construct(
         public int $date,
-        public Chat $chat,
+        public TelegramChat $chat,
         public int $message_id,
         public ?string $author_signature = null,
     )
@@ -45,7 +45,7 @@ class Channel extends MessageOrigin
 
         return new self(
             date: $data['date'],
-            chat: Chat::makeByArray($data['chat']),
+            chat: TelegramChat::makeByArray($data['chat']),
             message_id: $data['message_id'],
             author_signature: $data['author_signature'] ?? null,
         );

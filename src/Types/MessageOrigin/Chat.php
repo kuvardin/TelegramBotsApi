@@ -6,6 +6,7 @@ namespace Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 
 use Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 use RuntimeException;
+use Kuvardin\TelegramBotsApi\Types\Chat as TelegramChat;
 
 /**
  * The message was originally sent on behalf of a chat to a group chat.
@@ -17,13 +18,13 @@ class Chat extends MessageOrigin
 {
     /**
      * @param int $date Date the message was sent originally in Unix time
-     * @param Chat $sender_chat Chat that sent the message originally
+     * @param TelegramChat $sender_chat Chat that sent the message originally
      * @param string|null $author_signature For messages originally sent by an anonymous chat administrator, original
      *     message author signature
      */
     public function __construct(
         public int $date,
-        public Chat $sender_chat,
+        public TelegramChat $sender_chat,
         public ?string $author_signature = null,
     )
     {
@@ -43,7 +44,7 @@ class Chat extends MessageOrigin
 
         return new self(
             date: $data['date'],
-            sender_chat: Chat::makeByArray($data['sender_chat']),
+            sender_chat: TelegramChat::makeByArray($data['sender_chat']),
             author_signature: $data['author_signature'] ?? null,
         );
     }
