@@ -45,7 +45,7 @@ class Dice extends Type
     }
 
     /**
-     * @return DiceType|null Returns <em>Null</em> if the dice emoji is unknown.
+     * @return DiceType|null Returns Null if the dice emoji is unknown.
      */
     public function getType(): ?DiceType
     {

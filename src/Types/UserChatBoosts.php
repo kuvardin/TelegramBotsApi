@@ -26,15 +26,12 @@ class UserChatBoosts extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
-            boosts: [],
+        return new self(
+            boosts: array_map(
+                static fn(array $boosts_data) => ChatBoost::makeByArray($boosts_data),
+                $data['boosts'],
+            ),
         );
-
-        foreach ($data['boosts'] as $item_data) {
-            $result->boosts[] = ChatBoost::makeByArray($item_data);
-        }
-
-        return $result;
     }
 
     public function getRequestData(): array

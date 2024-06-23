@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Enums;
 
 /**
+ * Format of the sticker
+ *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */

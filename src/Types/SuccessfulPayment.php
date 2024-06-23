@@ -15,18 +15,15 @@ use Kuvardin\TelegramBotsApi\Type;
 class SuccessfulPayment extends Type
 {
     /**
-     * @param string $currency Three-letter ISO 4217 <a
-     *     href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code
-     * @param int $total_amount Total price in the <em>smallest units</em> of the currency (integer,
-     *     <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount =
-     *     145</code>. See the <em>exp</em> parameter in <a
-     *     href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of
-     *     digits past the decimal point for each currency (2 for the majority of currencies).
+     * @param string $currency Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars
+     * @param int $total_amount Total price in the smallest units of the currency (integer, not float/double). For
+     *     example, for a price of "US$ 1.45" pass "amount = 145". See the exp parameter in currencies.json, it shows
+     *     the number of digits past the decimal point for each currency (2 for the majority of currencies).
      * @param string $invoice_payload Bot specified invoice payload
      * @param string $telegram_payment_charge_id Telegram payment identifier
      * @param string $provider_payment_charge_id Provider payment identifier
      * @param string|null $shipping_option_id Identifier of the shipping option chosen by the user
-     * @param OrderInfo|null $order_info Order info provided by the user
+     * @param OrderInfo|null $order_info Order information provided by the user
      */
     public function __construct(
         public string $currency,

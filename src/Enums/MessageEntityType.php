@@ -10,6 +10,7 @@ namespace Kuvardin\TelegramBotsApi\Enums;
  */
 enum MessageEntityType: string
 {
+
     /** @username */
     case Mention = 'mention';
 
@@ -31,10 +32,10 @@ enum MessageEntityType: string
     /** +1-212-555-0123 */
     case PhoneNumber = 'phone_number';
 
-    /** <strong>bold text</strong> */
+    /** bold text */
     case Bold = 'bold';
 
-    /** <em>italic text</em> */
+    /** italic text */
     case Italic = 'italic';
 
     /** underlined text */
@@ -46,6 +47,12 @@ enum MessageEntityType: string
     /** spoiler message */
     case Spoiler = 'spoiler';
 
+    /** block quotation */
+    case Blockquote = 'blockquote';
+
+    /** collapsed-by-default block quotation */
+    case ExpandableBlockquote = 'expandable_blockquote';
+
     /** monowidth string */
     case Code = 'code';
 
@@ -55,7 +62,7 @@ enum MessageEntityType: string
     /** for clickable text URLs */
     case TextLink = 'text_link';
 
-    /** for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a> */
+    /** for users without usernames */
     case TextMention = 'text_mention';
 
     /** for inline custom emoji stickers */

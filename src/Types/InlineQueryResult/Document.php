@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -12,8 +13,8 @@ use RuntimeException;
 
 /**
  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively,
- * you can use <em>input_message_content</em> to send a message with the specified content instead of the file.
- * Currently, only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.
+ * you can use "input_message_content" to send a message with the specified content instead of the file. Currently,
+ * only ".PDF" and ".ZIP" files can be sent using this method.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -21,30 +22,14 @@ use RuntimeException;
 class Document extends InlineQueryResult
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
-     */
-    public ?string $thumb_url;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_width instead
-     */
-    public ?int $thumb_width;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_height instead
-     */
-    public ?int $thumb_height;
-
-    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $title Title for the result
      * @param string $document_url A valid URL for the file
-     * @param string $mime_type Mime type of the content of the file, either “application/pdf” or “application/zip”
+     * @param string $mime_type MIME type of the content of the file, either “application/pdf” or “application/zip”
      * @param string|null $caption Caption of the document to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the document caption. See <a
-     *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * @param string|null $parse_mode Mode for parsing entities in the document caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of <em>parse_mode</em>
+     *     specified instead of "parse_mode"
      * @param string|null $description Short description of the result
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the file
@@ -66,11 +51,20 @@ class Document extends InlineQueryResult
         public ?string $thumbnail_url = null,
         public ?int $thumbnail_width = null,
         public ?int $thumbnail_height = null,
+
+        #[Deprecated] public ?string $thumb_url = null,
+        #[Deprecated] public ?int $thumb_width = null,
+        #[Deprecated] public ?int $thumb_height = null,
     )
     {
-        $this->thumb_url = &$this->thumbnail_url;
-        $this->thumb_width = &$this->thumbnail_width;
-        $this->thumb_height = &$this->thumbnail_height;
+        $this->thumbnail_url ??= $this->thumb_url;
+        $this->thumb_url ??= $this->thumbnail_url;
+
+        $this->thumbnail_width ??= $this->thumb_width;
+        $this->thumb_width ??= $this->thumbnail_width;
+
+        $this->thumbnail_height ??= $this->thumb_height;
+        $this->thumb_height ??= $this->thumbnail_height;
     }
 
     public static function getType(): string
@@ -84,14 +78,19 @@ class Document extends InlineQueryResult
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result = new self(
+        return new self(
             id: $data['id'],
             title: $data['title'],
             document_url: $data['document_url'],
             mime_type: $data['mime_type'],
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
-            caption_entities: null,
+            caption_entities: isset($data['caption_entities'])
+                ? array_map(
+                    static fn(array $caption_entities_data) => MessageEntity::makeByArray($caption_entities_data),
+                    $data['caption_entities'],
+                )
+                : null,
             description: $data['description'] ?? null,
             reply_markup: isset($data['reply_markup'])
                 ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
@@ -103,14 +102,6 @@ class Document extends InlineQueryResult
             thumbnail_width: $data['thumbnail_width'] ?? null,
             thumbnail_height: $data['thumbnail_height'] ?? null,
         );
-
-        if (isset($data['caption_entities'])) {
-            $result->caption_entities = [];
-            foreach ($data['caption_entities'] as $item_data) {
-                $result->caption_entities[] = MessageEntity::makeByArray($item_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array

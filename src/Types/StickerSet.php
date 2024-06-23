@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\StickerType;
 use Kuvardin\TelegramBotsApi\Type;
 
@@ -16,18 +17,9 @@ use Kuvardin\TelegramBotsApi\Type;
 class StickerSet extends Type
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
-     */
-    public ?PhotoSize $thumb = null;
-
-    /**
      * @param string $name Sticker set name
      * @param string $title Sticker set title
-     * @param string $sticker_type_value Type of stickers in the set, currently one of Enums\StickerType
-     * @param bool $is_animated <em>True</em>, if the sticker set contains <a
-     *     href="https://telegram.org/blog/animated-stickers">animated stickers</a>
-     * @param bool $is_video <em>True</em>, if the sticker set contains <a
-     *     href="https://telegram.org/blog/video-stickers-better-reactions">video stickers</a>
+     * @param string $sticker_type_value Type of stickers in the set, currently one of Enums\StickerType::*->value
      * @param Sticker[] $stickers List of all set stickers
      * @param PhotoSize|null $thumbnail Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
      */
@@ -35,33 +27,37 @@ class StickerSet extends Type
         public string $name,
         public string $title,
         public string $sticker_type_value,
-        public bool $is_animated,
-        public bool $is_video,
         public array $stickers,
+
+        #[Deprecated] public ?bool $is_animated = null,
+        #[Deprecated] public ?bool $is_video = null,
+        #[Deprecated] public ?PhotoSize $thumb = null,
+
         public ?PhotoSize $thumbnail = null,
     )
     {
-        $this->thumb = $this->thumbnail;
+        $this->thumb ??= $this->thumbnail;
+        $this->thumbnail ??= $this->thumb;
     }
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             name: $data['name'],
             title: $data['title'],
-            sticker_type_value: $data['sticker_type_value'],
-            is_animated: $data['is_animated'],
-            is_video: $data['is_video'],
-            stickers: [],
+            sticker_type_value: $data['sticker_type'],
+
+            stickers: array_map(
+                static fn(array $sticker_data) => Sticker::makeByArray($sticker_data),
+                $data['stickers'],
+            ),
+            is_animated: $data['is_animated'] ?? null,
+
+            is_video: $data['is_video'] ?? null,
             thumbnail: isset($data['thumbnail'])
                 ? PhotoSize::makeByArray($data['thumbnail'])
                 : null,
         );
-
-        foreach ($data['stickers'] as $item_data) {
-            $result->stickers[] = Sticker::makeByArray($item_data);
-        }
-        return $result;
     }
 
     public function getRequestData(): array
@@ -69,7 +65,7 @@ class StickerSet extends Type
         return [
             'name' => $this->name,
             'title' => $this->title,
-            'sticker_type_value' => $this->sticker_type_value,
+            'sticker_type' => $this->sticker_type_value,
             'is_animated' => $this->is_animated,
             'is_video' => $this->is_video,
             'stickers' => $this->stickers,
@@ -78,7 +74,7 @@ class StickerSet extends Type
     }
 
     /**
-     * @return StickerType|null Returns <em>Null</em> if the sticker type is unknown.
+     * @return StickerType|null Returns Null if the sticker type is unknown.
      */
     public function getStickerType(): ?StickerType
     {

@@ -7,6 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 use Kuvardin\TelegramBotsApi\Types\MessageOrigin;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Types\User as TelegramUser;
+
 /**
  * The message was originally sent by a known user.
  *

@@ -66,7 +66,7 @@ class InlineQuery extends Type
     }
 
     /**
-     * @return InlineQueryChatType|null Returns <em>Null</em> if inline query chat type value is null or unknown.
+     * @return InlineQueryChatType|null Returns Null if inline query chat type value is null or unknown.
      */
     public function getInlineQueryChatType(): ?InlineQueryChatType
     {

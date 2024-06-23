@@ -19,20 +19,20 @@ class User extends Type
      * @param int $id Unique identifier for this user or bot. This number may have more than 32 significant bits and
      *     some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52
      *     significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-     * @param bool $is_bot <em>True</em>, if this user is a bot
+     * @param bool $is_bot True, if this user is a bot
      * @param string $first_name User's or bot's first name
      * @param string|null $last_name User's or bot's last name
      * @param Username|null $username User's or bot's username
-     * @param string|null $language_code <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language
-     *     tag</a> of the user's language
+     * @param string|null $language_code IETF language tag of the user's language
      * @param bool|null $is_premium True, if this user is a Telegram Premium user
      * @param bool|null $added_to_attachment_menu True, if this user added the bot to the attachment menu
-     * @param bool|null $can_join_groups <em>True</em>, if the bot can be invited to groups. Returned only in getMe().
-     * @param bool|null $can_read_all_group_messages <em>True</em>, if <a
-     *     href="https://core.telegram.org/bots#privacy-mode">privacy mode</a> is disabled for the bot. Returned only
-     *     in getMe().
-     * @param bool|null $supports_inline_queries <em>True</em>, if the bot supports inline queries. Returned only
-     *     in getMe().
+     * @param bool|null $can_join_groups True, if the bot can be invited to groups. Returned only in getMe().
+     * @param bool|null $can_read_all_group_messages True, if privacy mode is disabled for the bot.
+     *     Returned only in getMe().
+     * @param bool|null $supports_inline_queries True, if the bot supports inline queries.
+     *     Returned only in getMe().
+     * @param bool|null $can_connect_to_business True, if the bot can be connected to a Telegram Business account
+     *     to receive its messages. Returned only in getMe().
      */
     public function __construct(
         public int $id,
@@ -46,6 +46,7 @@ class User extends Type
         public ?bool $can_join_groups = null,
         public ?bool $can_read_all_group_messages = null,
         public ?bool $supports_inline_queries = null,
+        public ?bool $can_connect_to_business = null,
     )
     {
 
@@ -67,6 +68,7 @@ class User extends Type
             can_join_groups: $data['can_join_groups'] ?? null,
             can_read_all_group_messages: $data['can_read_all_group_messages'] ?? null,
             supports_inline_queries: $data['supports_inline_queries'] ?? null,
+            can_connect_to_business: $data['can_connect_to_business'] ?? null,
         );
     }
 
@@ -84,6 +86,7 @@ class User extends Type
             'can_join_groups' => $this->can_join_groups,
             'can_read_all_group_messages' => $this->can_read_all_group_messages,
             'supports_inline_queries' => $this->supports_inline_queries,
+            'can_connect_to_business' => $this->can_connect_to_business,
         ];
     }
 }

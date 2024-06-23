@@ -9,7 +9,7 @@ use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use RuntimeException;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#games">Game</a>.
+ * Represents a Game.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,9 +19,7 @@ class Game extends InlineQueryResult
     /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $game_short_name Short name of the game
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      */
     public function __construct(
         public string $id,

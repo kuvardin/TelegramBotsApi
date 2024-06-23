@@ -12,8 +12,8 @@ use RuntimeException;
 
 /**
  * Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an
- * optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified
- * content instead of the file.
+ * optional caption. Alternatively, you can use input_message_content to send a message with the specified content
+ * instead of the file.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -26,13 +26,10 @@ class CachedDocument extends InlineQueryResult
      * @param string $document_file_id A valid file identifier for the file
      * @param string|null $description Short description of the result
      * @param string|null $caption Caption of the document to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the document caption. See <a
-     *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * @param string|null $parse_mode Mode for parsing entities in the document caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of <em>parse_mode</em>
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     *     specified instead of parse_mode
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the file
      */
     public function __construct(
@@ -61,14 +58,19 @@ class CachedDocument extends InlineQueryResult
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result = new self(
+        return new self(
             id: $data['id'],
             title: $data['title'],
             document_file_id: $data['document_file_id'],
             description: $data['description'] ?? null,
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
-            caption_entities: null,
+            caption_entities: isset($data['caption_entities'])
+                ? array_map(
+                    static fn(array $caption_entities_data) => MessageEntity::makeByArray($caption_entities_data),
+                    $data['caption_entities'],
+                )
+                : null,
             reply_markup: isset($data['reply_markup'])
                 ? InlineKeyboardMarkup::makeByArray($data['reply_markup'])
                 : null,
@@ -76,14 +78,6 @@ class CachedDocument extends InlineQueryResult
                 ? InputMessageContent::makeByArray($data['input_message_content'])
                 : null,
         );
-
-        if (isset($data['caption_entities'])) {
-            $result->caption_entities = [];
-            foreach ($data['caption_entities'] as $item_data) {
-                $result->caption_entities[] = MessageEntity::makeByArray($item_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array

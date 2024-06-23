@@ -26,14 +26,12 @@ class VideoChatParticipantsInvited extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
-            users: [],
+        return new self(
+            users: array_map(
+                static fn(array $users_data) => User::makeByArray($users_data),
+                $data['users'],
+            ),
         );
-
-        foreach ($data['users'] as $item_data) {
-            $result->users[] = User::makeByArray($item_data);
-        }
-        return $result;
     }
 
     public function getRequestData(): array

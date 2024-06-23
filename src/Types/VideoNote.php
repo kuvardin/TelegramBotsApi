@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use JetBrains\PhpStorm\Deprecated;
+
 /**
- * This object represents a <a href="https://telegram.org/blog/video-messages-and-telescope">video message</a>
- * (available in Telegram apps as of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>).
+ * This object represents a video message (available in Telegram apps as of v.4.0).
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class VideoNote extends FileAbstract
 {
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
-     */
-    public ?PhotoSize $thumb = null;
-
     /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
@@ -28,18 +24,18 @@ class VideoNote extends FileAbstract
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
-        string $file_id,
-        string $file_unique_id,
+        public string $file_id,
+        public string $file_unique_id,
         public int $length,
         public int $duration,
         public ?PhotoSize $thumbnail = null,
-        ?int $file_size = null,
+        public ?int $file_size = null,
+
+        #[Deprecated] public ?PhotoSize $thumb = null,
     )
     {
-        $this->file_id = $file_id;
-        $this->file_unique_id = $file_unique_id;
-        $this->file_size = $file_size;
-        $this->thumb = $this->thumbnail;
+        $this->thumb ??= $this->thumbnail;
+        $this->thumbnail ??= $this->thumb;
     }
 
     public static function makeByArray(array $data): self

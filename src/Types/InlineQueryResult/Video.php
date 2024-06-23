@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -12,11 +13,11 @@ use RuntimeException;
 
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be
- * sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a
- * message with the specified content instead of the video.<br><br>
+ * sent by the user with an optional caption. Alternatively, you can use "input_message_content" to send a message with
+ * the specified content instead of the video.
  *
- * If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace
- * its content using <em>input_message_content</em>.
+ * If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace
+ * its content using input_message_content.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -24,31 +25,24 @@ use RuntimeException;
 class Video extends InlineQueryResult
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
-     */
-    public string $thumb_url;
-
-    /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $video_url A valid URL for the embedded video player or video file
-     * @param string $mime_type Mime type of the content of video url, “text/html” or “video/mp4”
+     * @param string $mime_type MIME type of the content of the video URL, “text/html” or “video/mp4”
      * @param string $thumbnail_url URL of the thumbnail (JPEG only) for the video
      * @param string $title Title for the result
      * @param string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the video caption. See <a
-     *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * @param string|null $parse_mode Mode for parsing entities in the video caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of <em>parse_mode</em>
+     *     specified instead of "parse_mode"
      * @param int|null $video_width Video width
      * @param int|null $video_height Video height
      * @param int|null $video_duration Video duration in seconds
      * @param string|null $description Short description of the result
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the video.
-     *     This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result
-     *     (e.g., a YouTube video).
+     *     This field is "required" if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube
+     *     video).
+     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media
      */
     public function __construct(
         public string $id,
@@ -65,9 +59,13 @@ class Video extends InlineQueryResult
         public ?string $description = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
         public ?InputMessageContent $input_message_content = null,
+        public ?bool $show_caption_above_media = null,
+
+        #[Deprecated] public ?string $thumb_url = null,
     )
     {
-        $this->thumb_url = &$this->thumbnail_url;
+        $this->thumb_url ??= $this->thumbnail_url;
+        $this->thumbnail_url ??= $this->thumb_url;
     }
 
     public static function getType(): string
@@ -81,7 +79,7 @@ class Video extends InlineQueryResult
             throw new RuntimeException("Wrong inline query result type: {$data['type']}");
         }
 
-        $result = new self(
+        return new self(
             id: $data['id'],
             video_url: $data['video_url'],
             mime_type: $data['mime_type'],
@@ -89,7 +87,12 @@ class Video extends InlineQueryResult
             title: $data['title'],
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
-            caption_entities: null,
+            caption_entities: isset($data['caption_entities'])
+                ? array_map(
+                    static fn(array $caption_entities_data) => MessageEntity::makeByArray($caption_entities_data),
+                    $data['caption_entities'],
+                )
+                : null,
             video_width: $data['video_width'] ?? null,
             video_height: $data['video_height'] ?? null,
             video_duration: $data['video_duration'] ?? null,
@@ -100,15 +103,8 @@ class Video extends InlineQueryResult
             input_message_content: isset($data['input_message_content'])
                 ? InputMessageContent::makeByArray($data['input_message_content'])
                 : null,
+            show_caption_above_media: $data['show_caption_above_media'] ?? null,
         );
-
-        if (isset($data['caption_entities'])) {
-            $result->caption_entities = [];
-            foreach ($data['caption_entities'] as $item_data) {
-                $result->caption_entities[] = MessageEntity::makeByArray($item_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array
@@ -123,6 +119,7 @@ class Video extends InlineQueryResult
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
+            'show_caption_above_media' => $this->show_caption_above_media,
             'video_width' => $this->video_width,
             'video_height' => $this->video_height,
             'video_duration' => $this->video_duration,

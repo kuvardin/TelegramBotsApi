@@ -22,10 +22,10 @@ class Game extends Type
      * @param string|null $text Brief description of the game or high scores included in the game message. Can be
      *     automatically edited to include current high scores for the game when the bot calls setGameScore(), or
      *     manually edited using editMessageText(). 0-4096 characters.
-     * @param MessageEntity[]|null $text_entities Special entities that appear in <em>text</em>, such as usernames,
-     *     URLs, bot commands, etc.
-     * @param Animation|null $animation Animation that will be displayed in the game message in chats. Upload via <a
-     *     href="https://t.me/botfather">BotFather</a>
+     * @param MessageEntity[]|null $text_entities Special entities that appear in "text", such as usernames, URLs, bot
+     *     commands, etc.
+     * @param Animation|null $animation Animation that will be displayed in the game message in chats. Upload via
+     *     BotFather
      */
     public function __construct(
         public string $title,
@@ -41,27 +41,24 @@ class Game extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             title: $data['title'],
             description: $data['description'],
-            photo: [],
+            photo: array_map(
+                static fn(array $photo_data) => PhotoSize::makeByArray($photo_data),
+                $data['photo'],
+            ),
             text: $data['text'] ?? null,
-            text_entities: null,
+            text_entities: isset($data['text_entities'])
+                ? array_map(
+                    static fn(array $text_entities_data) => MessageEntity::makeByArray($text_entities_data),
+                    $data['text_entities'],
+                )
+                : null,
             animation: isset($data['animation'])
                 ? Animation::makeByArray($data['animation'])
                 : null,
         );
-
-        foreach ($data['photo'] as $photo_size_data) {
-            $result->photo[] = PhotoSize::makeByArray($photo_size_data);
-        }
-        if (isset($data['text_entities'])) {
-            $result->text_entities = [];
-            foreach ($data['text_entities'] as $message_entity_data) {
-                $result->text_entities[] = MessageEntity::makeByArray($message_entity_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array

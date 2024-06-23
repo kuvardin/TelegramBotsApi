@@ -109,8 +109,8 @@ class Bot
      * @param int|null $offset Identifier of the first update to be returned. Must be greater by one than the highest
      *     among the identifiers of previously received updates. By default, updates starting with the earliest
      *     unconfirmed update are returned. An update is considered confirmed as soon as getUpdates() is called with an
-     *     <em>offset</em> higher than its <em>update_id</em>. The negative offset can be specified to retrieve updates
-     *     starting from <em>-offset</em> update from the end of the updates queue. All previous updates will
+     *     offset higher than its update_id. The negative offset can be specified to retrieve updates
+     *     starting from -offset update from the end of the updates queue. All previous updates will
      *     forgotten.
      * @param int|null $limit Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults
      *     to 100.
@@ -118,7 +118,7 @@ class Bot
      *     positive, short polling should be used for testing purposes only.
      * @param Enums\UpdateType[]|null $allowed_updates A JSON-serialized list of the update types you want your bot to
      *     receive. See Enums\UpdateType for a complete list of available update types. Specify an empty list to
-     *     receive all update types except <em>chat_member</em> (default). If not specified, the previous setting will
+     *     receive all update types except chat_member (default). If not specified, the previous setting will
      *     be used.<br><br>Please note that this parameter doesn't affect updates created before the call to the
      *     getUpdates, so unwanted updates may be received for a short period of time.
      */
@@ -142,7 +142,7 @@ class Bot
      * update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized
      * Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts.<br><br> If
      * you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter
-     * <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with
+     * secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with
      * the secret token as content.
      *
      * @param string $url HTTPS URL to send updates to. Use an empty string to remove webhook integration
@@ -152,15 +152,15 @@ class Bot
      * @param string|null $ip_address The fixed IP address which will be used to send webhook requests instead of the
      *     IP address resolved through DNS
      * @param int|null $max_connections The maximum allowed number of simultaneous HTTPS connections to the webhook for
-     *     update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot's server,
+     *     update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server,
      *     and higher values to increase your bot's throughput.
      * @param string[]|null $allowed_updates A JSON-serialized list of the update types you want your bot to receive.
      *     For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these
      *     types. See Update for a complete list of available update types. Specify an empty list to receive all update
-     *     types except <em>chat_member</em> (default). If not specified, the previous setting will be used.<br>Please
+     *     types except chat_member (default). If not specified, the previous setting will be used.<br>Please
      *     note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted
      *     updates may be received for a short period of time.
-     * @param bool|null $drop_pending_updates Pass <em>True</em> to drop all pending updates
+     * @param bool|null $drop_pending_updates Pass True to drop all pending updates
      * @param string|null $secret_token A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in
      *     every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed. The header is
      *     useful to ensure that the request comes from a webhook set by you.
@@ -189,7 +189,7 @@ class Bot
     /**
      * Use this method to remove webhook integration if you decide to switch back to getUpdates().
      *
-     * @param bool|null $drop_pending_updates Pass <em>True</em> to drop all pending updates
+     * @param bool|null $drop_pending_updates Pass True to drop all pending updates
      */
     public function deleteWebhook(
         bool $drop_pending_updates = null,
@@ -202,7 +202,7 @@ class Bot
 
     /**
      * Use this method to get current webhook status. Requires no parameters. If the bot is using getUpdates(), will
-     * return an object with the <em>url</em> field empty.
+     * return an object with the url field empty.
      */
     public function getWebhookInfo(): Requests\RequestWebhookInfo
     {
@@ -220,7 +220,7 @@ class Bot
 
     /**
      * Use this method to log out from the cloud Bot API server before launching the bot locally. You
-     * <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot
+     * must log out the bot before running it locally, otherwise there is no guarantee that the bot
      * will receive updates. After a successful call, you can immediately log in on a local server, but will not be
      * able to log in back to the cloud Bot API server for 10 minutes.
      *
@@ -250,14 +250,14 @@ class Bot
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
-     *     text, which can be specified instead of <em>parse_mode</em>
+     *     text, which can be specified instead of parse_mode
      * @param bool|null $disable_web_page_preview Disables link previews for links in this message
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -268,6 +268,10 @@ class Bot
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendMessage(
         int|string $chat_id,
@@ -283,22 +287,27 @@ class Bot
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
         Types\LinkPreviewOptions $link_preview_options = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
             'chat_id' => $chat_id,
             'text' => $text,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
-            'disable_web_page_preview' => $disable_web_page_preview,
+            'link_preview_options' => $link_preview_options,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
+            'disable_web_page_preview' => $disable_web_page_preview,
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
-            'link_preview_options' => $link_preview_options,
         ]);
     }
 
@@ -309,7 +318,7 @@ class Bot
      *     format &#64;channelusername)
      * @param int|string $from_chat_id Unique identifier for the chat where the original message was sent (or channel
      *     username in the format &#64;channelusername)
-     * @param int $message_id Message identifier in the chat specified in <em>from_chat_id</em>
+     * @param int $message_id Message identifier in the chat specified in from_chat_id
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
@@ -345,7 +354,7 @@ class Bot
      *     (in the format &#64;channelusername)
      * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent
      *     (or channel username in the format &#64;channelusername)
-     * @param int[] $message_ids Identifiers of 1-100 messages in the chat <em>from_chat_id</em> to forward.
+     * @param int[] $message_ids Identifiers of 1-100 messages in the chat from_chat_id to forward.
      *     The identifiers must be specified in a strictly increasing order.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
@@ -373,36 +382,33 @@ class Bot
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The
-     * method is analogous to the method forwardMessage(), but the copied message doesn't have a link to the original
-     * message.
+     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages,
+     * and invoice messages can&#39;t be copied. A quiz poll can be copied only if the value of the field
+     * "correct_option_id" is known to the bot. The method is analogous to the method forwardMessage(), but the copied
+     * message doesn&#39;t have a link to the original message.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format &#64;channelusername)
+     *     format "&#64;channelusername")
      * @param int|string $from_chat_id Unique identifier for the chat where the original message was sent (or channel
-     *     username in the format &#64;channelusername)
-     * @param int $message_id Message identifier in the chat specified in <em>from_chat_id</em>
+     *     username in the format "&#64;channelusername")
+     * @param int $message_id Message identifier in the chat specified in "from_chat_id"
      * @param string|null $caption New caption for media, 0-1024 characters after entities parsing. If not specified,
      *     the original caption is kept
-     * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the new caption. See <a
-     *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * @param ParseMode|null $parse_mode Mode for parsing entities in the new caption. See formatting options for more
+     *     details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the new caption, which can be specified instead of <em>parse_mode</em>
-     * @param bool|null $disable_notification Sends the message <a
-     *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
-     *     notification with no sound.
+     *     the new caption, which can be specified instead of "parse_mode"
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
-     * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
-     *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
-     *     interface options. A JSON-serialized object for an <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
-     *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
-     *     keyboard or to force a reply from the user.
-     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
-     *     for forum supergroups only
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
+     *     forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media.
+     *     Ignored if a new caption isn&#39;t specified.
      */
     public function copyMessage(
         int|string $chat_id,
@@ -418,22 +424,25 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        bool $show_caption_above_media = null,
     ): Requests\RequestMessageId
     {
         return new Requests\RequestMessageId($this, 'copyMessage', [
             'chat_id' => $chat_id,
             'from_chat_id' => $from_chat_id,
             'message_id' => $message_id,
+            'message_thread_id' => $message_thread_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -449,14 +458,14 @@ class Bot
      *     (in the format &#64;channelusername)
      * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent
      *     (or channel username in the format &#64;channelusername)
-     * @param int[] $message_ids Identifiers of 1-100 messages in the chat <em>from_chat_id</em> to copy. The
+     * @param int[] $message_ids Identifiers of 1-100 messages in the chat from_chat_id to copy. The
      *     identifiers must be specified in a strictly increasing order.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
      *     forum supergroups only
      * @param bool|null $disable_notification Sends the messages silently. Users will receive a notification with
      *     no sound.
      * @param bool|null $protect_content Protects the contents of the sent messages from forwarding and saving
-     * @param bool|null $remove_caption Pass <em>True</em> to copy the messages without their captions
+     * @param bool|null $remove_caption Pass True to copy the messages without their captions
      */
     public function copyMessages(
         int|string $chat_id,
@@ -489,18 +498,18 @@ class Bot
      *     or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's
      *     width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a
      *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param string|null $caption Photo caption (may also be used when resending photos by <em>file_id</em>), 0-1024
+     * @param string|null $caption Photo caption (may also be used when resending photos by file_id), 0-1024
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the photo caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -511,6 +520,12 @@ class Bot
      *     for forum supergroups only
      * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above
+     *     the message media
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendPhoto(
         int|string $chat_id,
@@ -526,29 +541,37 @@ class Bot
         int $message_thread_id = null,
         bool $has_spoiler = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        bool $show_caption_above_media = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
             'chat_id' => $chat_id,
             'photo' => $photo,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'has_spoiler' => $has_spoiler,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'has_spoiler' => $has_spoiler,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
-     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your
-     * audio must be in the .MP3 or .M4A format.  Bots can currently send audio files of up to 50 MB in size, this
-     * limit may be changed in the future.<br><br>For sending voice messages, use the sendVoice() method instead.
+     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio
+     * must be in the .MP3 or .M4A format. Bots can currently send audio files of up to 50 MB in size, this limit may be
+     * changed in the future.<br><br>
+     * For sending voice messages, use the sendVoice() method instead.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -560,7 +583,7 @@ class Bot
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the audio caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param int|null $duration Duration of the audio in seconds
      * @param string|null $performer Performer
      * @param string|null $title Track name
@@ -576,7 +599,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -587,6 +610,10 @@ class Bot
      *     for forum supergroups only
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendAudio(
         int|string $chat_id,
@@ -606,25 +633,30 @@ class Bot
         int $message_thread_id = null,
         #[Deprecated] Types\InputFile $thumb = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
             'chat_id' => $chat_id,
             'audio' => $audio,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'duration' => $duration,
             'performer' => $performer,
             'title' => $title,
-            'thumb' => $thumbnail ?? $thumb,
+            'thumbnail' => $thumbnail ?? $thumb,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -645,12 +677,12 @@ class Bot
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
      *     Files »</a>
-     * @param string|null $caption Document caption (may also be used when resending documents by <em>file_id</em>),
+     * @param string|null $caption Document caption (may also be used when resending documents by file_id),
      *     0-1024 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the document caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param bool|null $disable_content_type_detection Disables automatic server-side content type detection for files
      *     uploaded using multipart/form-data
      * @param bool|null $disable_notification Sends the message <a
@@ -658,7 +690,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -669,6 +701,10 @@ class Bot
      *     for forum supergroups only
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendDocument(
         int|string $chat_id,
@@ -686,11 +722,15 @@ class Bot
         int $message_thread_id = null,
         #[Deprecated] Types\InputFile $thumb = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
             'chat_id' => $chat_id,
             'document' => $document,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'thumbnail' => $thumbnail ?? $thumb,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
@@ -698,11 +738,12 @@ class Bot
             'disable_content_type_detection' => $disable_content_type_detection,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -726,19 +767,19 @@ class Bot
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
      *     Files »</a>
-     * @param string|null $caption Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024
+     * @param string|null $caption Video caption (may also be used when resending videos by file_id), 0-1024
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the video caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
-     * @param bool|null $supports_streaming Pass <em>True</em>, if the uploaded video is suitable for streaming
+     *     the caption, which can be specified instead of parse_mode
+     * @param bool|null $supports_streaming Pass True, if the uploaded video is suitable for streaming
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -750,6 +791,12 @@ class Bot
      * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above
+     *     the message media
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendVideo(
         int|string $chat_id,
@@ -771,11 +818,16 @@ class Bot
         bool $has_spoiler = null,
         #[Deprecated] Types\InputFile $thumb = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        bool $show_caption_above_media = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
             'chat_id' => $chat_id,
             'video' => $video,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'duration' => $duration,
             'width' => $width,
             'height' => $height,
@@ -783,15 +835,17 @@ class Bot
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'has_spoiler' => $has_spoiler,
             'supports_streaming' => $supports_streaming,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'has_spoiler' => $has_spoiler,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -815,18 +869,18 @@ class Bot
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending
      *     Files »</a>
-     * @param string|null $caption Animation caption (may also be used when resending animation by <em>file_id</em>),
+     * @param string|null $caption Animation caption (may also be used when resending animation by file_id),
      *     0-1024 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the animation caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -838,6 +892,12 @@ class Bot
      * @param bool|null $has_spoiler Pass True if the animation needs to be covered with a spoiler animation
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above
+     *     the message media
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -858,11 +918,16 @@ class Bot
         bool $has_spoiler = null,
         #[Deprecated] Types\InputFile $thumb = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        bool $show_caption_above_media = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
             'chat_id' => $chat_id,
             'animation' => $animation,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'duration' => $duration,
             'width' => $width,
             'height' => $height,
@@ -870,22 +935,24 @@ class Bot
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'has_spoiler' => $has_spoiler,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'has_spoiler' => $has_spoiler,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice
-     * message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as
-     * Audio or Document). Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in
-     * the future.
+     * message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format,
+     * or in .M4A format (other formats may be sent as Audio or Document. Bots can currently send voice messages
+     * of up to 50 MB in size, this limit may be changed in the future.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -897,14 +964,14 @@ class Bot
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the voice message caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param int|null $duration Duration of the voice message in seconds
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -914,6 +981,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendVoice(
         int|string $chat_id,
@@ -929,27 +1000,32 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
             'chat_id' => $chat_id,
             'voice' => $voice,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
             'duration' => $duration,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
-     * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send
+     * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send
      * video messages.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
@@ -972,7 +1048,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -983,6 +1059,10 @@ class Bot
      *     for forum supergroups only
      * @param Types\InputFile|null $thumb Deprecated in v6.6. Use "thumbnail" instead
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendVideoNote(
         int|string $chat_id,
@@ -998,21 +1078,26 @@ class Bot
         int $message_thread_id = null,
         #[Deprecated] Types\InputFile $thumb = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
             'chat_id' => $chat_id,
             'video_note' => $video_note,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'duration' => $duration,
             'length' => $length,
             'thumbnail' => $thumbnail ?? $thumb,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1028,11 +1113,15 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent messages from forwarding and saving
      * @param int|null $reply_to_message_id If the messages are a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendMediaGroup(
         int|string $chat_id,
@@ -1043,17 +1132,22 @@ class Bot
         #[Deprecated] bool $allow_sending_without_reply = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessages
     {
         return new Requests\RequestMessages($this, 'sendMediaGroup', [
             'chat_id' => $chat_id,
             'media' => $media,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1065,8 +1159,8 @@ class Bot
      * @param float $latitude Latitude of the location
      * @param float $longitude Longitude of the location
      * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
-     * @param int|null $live_period Period in seconds for which the location will be updated (see <a
-     *     href="https://telegram.org/blog/live-locations">Live Locations</a>, should be between 60 and 86400.
+     * @param int|null $live_period Period in seconds during which the location will be updated (see Live Locations),
+     *     should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
      * @param int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be
      *     between 1 and 360 if specified.
      * @param int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about
@@ -1076,7 +1170,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -1086,6 +1180,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendLocation(
         int|string $chat_id,
@@ -1102,29 +1200,34 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
             'chat_id' => $chat_id,
             'latitude' => $latitude,
             'longitude' => $longitude,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'horizontal_accuracy' => $horizontal_accuracy,
             'live_period' => $live_period,
             'heading' => $heading,
             'proximity_alert_radius' => $proximity_alert_radius,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
-     * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires
-     * or editing is explicitly disabled by a call to stopMessageLiveLocation().
+     * Use this method to edit live location messages. A location can be edited until its live_period expires or editing
+     * is explicitly disabled by a call to stopMessageLiveLocation().
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -1136,8 +1239,13 @@ class Bot
      *     specified.
      * @param int|null $proximity_alert_radius Maximum distance for proximity alerts about approaching another chat
      *     member, in meters. Must be between 1 and 100000 if specified.
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
+     * @param int|null $live_period New period in seconds during which the location can be updated, starting from
+     *     the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise,
+     *     the new value must not exceed the current live_period by more than a day, and the live location expiration
+     *     date must remain within the next 90 days. If not specified, then live_period remains unchanged
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageLiveLocation(
         int|string $chat_id,
@@ -1148,13 +1256,17 @@ class Bot
         int $heading = null,
         int $proximity_alert_radius = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        int $live_period = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageLiveLocation', [
-            'chat_id' => $chat_id,
-            'message_id' => $message_id,
             'latitude' => $latitude,
             'longitude' => $longitude,
+            'business_connection_id' => $business_connection_id,
+            'chat_id' => $chat_id,
+            'message_id' => $message_id,
+            'live_period' => $live_period,
             'horizontal_accuracy' => $horizontal_accuracy,
             'heading' => $heading,
             'proximity_alert_radius' => $proximity_alert_radius,
@@ -1163,8 +1275,8 @@ class Bot
     }
 
     /**
-     * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires
-     * or editing is explicitly disabled by a call to stopMessageLiveLocation().
+     * Use this method to edit live location messages. A location can be edited until its live_period expires or editing
+     * is explicitly disabled by a call to stopMessageLiveLocation().
      *
      * @param string $inline_message_id Identifier of the inline message
      * @param float $latitude Latitude of new location
@@ -1174,8 +1286,13 @@ class Bot
      *     specified.
      * @param int|null $proximity_alert_radius Maximum distance for proximity alerts about approaching another chat
      *     member, in meters. Must be between 1 and 100000 if specified.
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
+     * @param int|null $live_period New period in seconds during which the location can be updated, starting from
+     *     the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise,
+     *     the new value must not exceed the current live_period by more than a day, and the live location expiration
+     *     date must remain within the next 90 days. If not specified, then live_period remains unchanged
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageLiveLocationInline(
         string $inline_message_id,
@@ -1185,12 +1302,16 @@ class Bot
         int $heading = null,
         int $proximity_alert_radius = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        int $live_period = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageLiveLocation', [
-            'inline_message_id' => $inline_message_id,
             'latitude' => $latitude,
             'longitude' => $longitude,
+            'business_connection_id' => $business_connection_id,
+            'inline_message_id' => $inline_message_id,
+            'live_period' => $live_period,
             'horizontal_accuracy' => $horizontal_accuracy,
             'heading' => $heading,
             'proximity_alert_radius' => $proximity_alert_radius,
@@ -1199,22 +1320,25 @@ class Bot
     }
 
     /**
-     * Use this method to stop updating a live location message before <em>live_period</em> expires.
+     * Use this method to stop updating a live location message before live_period expires.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
-     * @param int $message_id Required if <em>inline_message_id</em> is not specified. Identifier of the message with
+     * @param int $message_id Required if inline_message_id is not specified. Identifier of the message with
      *     live location to stop
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function stopMessageLiveLocation(
         int|string $chat_id,
         int $message_id,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'stopMessageLiveLocation', [
+            'business_connection_id' => $business_connection_id,
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'reply_markup' => $reply_markup,
@@ -1222,18 +1346,21 @@ class Bot
     }
 
     /**
-     * Use this method to stop updating a live location message before <em>live_period</em> expires.
+     * Use this method to stop updating a live location message before live_period expires.
      *
      * @param string $inline_message_id Identifier of the inline message
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function stopMessageLiveLocationInline(
         string $inline_message_id,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'stopMessageLiveLocation', [
+            'business_connection_id' => $business_connection_id,
             'inline_message_id' => $inline_message_id,
             'reply_markup' => $reply_markup,
         ]);
@@ -1259,7 +1386,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -1269,6 +1396,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendVenue(
         int|string $chat_id,
@@ -1287,6 +1418,8 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1295,17 +1428,20 @@ class Bot
             'longitude' => $longitude,
             'title' => $title,
             'address' => $address,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'foursquare_id' => $foursquare_id,
             'foursquare_type' => $foursquare_type,
             'google_place_id' => $google_place_id,
             'google_place_type' => $google_place_type,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1324,7 +1460,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -1334,6 +1470,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendContact(
         int|string $chat_id,
@@ -1348,21 +1488,25 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
-        return new Requests\RequestMessage($this, 'sendContact', [
-            'chat_id' => $chat_id,
+        return new Requests\RequestMessage($this, 'sendContact', ['chat_id' => $chat_id,
             'phone_number' => $phone_number,
             'first_name' => $first_name,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'last_name' => $last_name,
             'vcard' => $vcard,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1372,11 +1516,11 @@ class Bot
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param string $question Poll question, 1-300 characters
-     * @param string[] $options A JSON-serialized list of answer options, 2-10 strings 1-100 characters each
-     * @param bool|null $is_anonymous <em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em>
+     * @param Types\InputPollOption[] $options A JSON-serialized list of 2-10 answer options
+     * @param bool|null $is_anonymous True, if the poll needs to be anonymous, defaults to True
      * @param Enums\PollType|null $type Poll type, “quiz” or “regular”, defaults to “regular”
-     * @param bool|null $allows_multiple_answers <em>True</em>, if the poll allows multiple answers, ignored for polls
-     *     in quiz mode, defaults to <em>False</em>
+     * @param bool|null $allows_multiple_answers True, if the poll allows multiple answers, ignored for polls
+     *     in quiz mode, defaults to False
      * @param int|null $correct_option_id 0-based identifier of the correct answer option, required for polls in quiz
      *     mode
      * @param string|null $explanation Text that is shown when a user chooses an incorrect answer or taps on the lamp
@@ -1384,19 +1528,19 @@ class Bot
      * @param string|null $explanation_parse_mode Mode for parsing entities in the explanation. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $explanation_entities A JSON-serialized list of special entities that appear
-     *     in the poll explanation, which can be specified instead of <em>parse_mode</em>
+     *     in the poll explanation, which can be specified instead of parse_mode
      * @param int|null $open_period Amount of time in seconds the poll will be active after creation, 5-600. Can't
-     *     be used together with <em>close_date</em>.
+     *     be used together with close_date.
      * @param int|null $close_date Point in time (Unix timestamp) when the poll will be automatically closed. Must be
-     *     at least 5 and no more than 600 seconds in the future. Can't be used together with <em>open_period</em>.
-     * @param bool|null $is_closed Pass <em>True</em>, if the poll needs to be immediately closed. This can be useful
+     *     at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
+     * @param bool|null $is_closed Pass True, if the poll needs to be immediately closed. This can be useful
      *     for poll preview.
      * @param bool|null $disable_notification Sends the message <a
      *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -1406,6 +1550,15 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param ParseMode|null $question_parse_mode Mode for parsing entities in the question.
+     *     See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     *     Currently, only custom emoji entities are allowed
+     * @param Types\MessageEntity[]|null $question_entities A JSON-serialized list of special entities that appear
+     *     in the poll question. It can be specified instead of question_parse_mode
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendPoll(
         int|string $chat_id,
@@ -1428,12 +1581,20 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        ParseMode $question_parse_mode = null,
+        array $question_entities = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
             'chat_id' => $chat_id,
             'question' => $question,
             'options' => $options,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
+            'question_parse_mode' => $question_parse_mode ?? $this->parse_mode_default,
+            'question_entities' => $question_entities,
             'is_anonymous' => $is_anonymous,
             'type' => $type?->value,
             'allows_multiple_answers' => $allows_multiple_answers,
@@ -1446,11 +1607,12 @@ class Bot
             'is_closed' => $is_closed,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
@@ -1467,7 +1629,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -1477,6 +1639,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendDice(
         int|string $chat_id,
@@ -1488,41 +1654,50 @@ class Bot
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDice', [
             'chat_id' => $chat_id,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'emoji' => $type?->getEmoji(),
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is
      * set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
-     * We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount 
+     * We only recommend using this method when a response from the bot will take a noticeable amount
      * of time to arrive.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param Enums\Action $action Type of action to broadcast
      * @param int|null $message_thread_id Unique identifier for the target message thread; supergroups only
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
+     *     action will be sent
      */
     public function sendChatAction(
         int|string $chat_id,
         Enums\Action $action,
         int $message_thread_id = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'sendChatAction', [
             'chat_id' => $chat_id,
             'action' => $action->value,
+            'business_connection_id' => $business_connection_id,
             'message_thread_id' => $message_thread_id,
         ]);
     }
@@ -1611,9 +1786,9 @@ class Bot
      * @param int|null $until_date Date when the user will be unbanned, unix time. If user is banned for more than 366
      *     days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
      *     supergroups and channels only.
-     * @param bool|null $revoke_messages Pass <em>True</em> to delete all messages from the chat for the user that is
-     *     being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before
-     *     the user was removed. Always <em>True</em> for supergroups and channels.
+     * @param bool|null $revoke_messages Pass True to delete all messages from the chat for the user that is
+     *     being removed. If False, the user will be able to see messages in the group that were sent before
+     *     the user was removed. Always True for supergroups and channels.
      */
     public function banChatMember(
         int|string $chat_id,
@@ -1631,11 +1806,11 @@ class Bot
     }
 
     /**
-     * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong>
+     * Use this method to unban a previously banned user in a supergroup or channel. The user will not
      * return to the group or channel automatically, but will be able to join via link, etc. The bot must be an
      * administrator for this to work. By default, this method guarantees that after the call the user is not a member
      * of the chat, but will be able to join it. So if the user is a member of the chat they will also be
-     * <strong>removed</strong> from the chat. If you don't want this, use the parameter <em>only_if_banned</em>.
+     * removed from the chat. If you don't want this, use the parameter only_if_banned.
      *
      * @param int|string $chat_id Unique identifier for the target group or username of the target supergroup or
      *     channel (in the format &#64;channelusername)
@@ -1657,19 +1832,19 @@ class Bot
 
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
-     * to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift
+     * to work and must have the appropriate administrator rights. Pass True for all permissions to lift
      * restrictions from a user.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
      *     format &#64;supergroupusername)
      * @param int $user_id Unique identifier of the target user
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new user permissions
-     * @param bool|null $use_independent_chat_permissions Pass <em>True</em> if chat permissions are set independently.
-     *     Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply
-     *     the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>,
-     *     <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>,
-     *     and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply
-     *     the <em>can_send_messages</em> permission.
+     * @param bool|null $use_independent_chat_permissions Pass True if chat permissions are set independently.
+     *     Otherwise, the can_send_other_messages and can_add_web_page_previews permissions will imply
+     *     the can_send_messages, can_send_audios, can_send_documents,
+     *     can_send_photos, can_send_videos, can_send_video_notes,
+     *     and can_send_voice_notes permissions; the can_send_polls permission will imply
+     *     the can_send_messages permission.
      * @param int|null $until_date Date when restrictions will be lifted for the user, unix time. If user is restricted
      *     for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted
      *     forever
@@ -1693,39 +1868,39 @@ class Bot
 
     /**
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in
-     * the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all
+     * the chat for this to work and must have the appropriate administrator rights. Pass False for all
      * boolean parameters to demote a user.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int $user_id Unique identifier of the target user
-     * @param bool|null $is_anonymous Pass <em>True</em>, if the administrator's presence in the chat is hidden
-     * @param bool|null $can_manage_chat Pass <em>True</em>, if the administrator can access the chat event log, chat
+     * @param bool|null $is_anonymous Pass True, if the administrator's presence in the chat is hidden
+     * @param bool|null $can_manage_chat Pass True, if the administrator can access the chat event log, chat
      *     statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups
      *     and ignore slow mode. Implied by any other administrator privilege
-     * @param bool|null $can_post_messages Pass <em>True</em>, if the administrator can create channel posts, channels
+     * @param bool|null $can_post_messages Pass True, if the administrator can create channel posts, channels
      *     only
-     * @param bool|null $can_edit_messages Pass <em>True</em>, if the administrator can edit messages of other users
+     * @param bool|null $can_edit_messages Pass True, if the administrator can edit messages of other users
      *     and can pin messages, channels only
-     * @param bool|null $can_delete_messages Pass <em>True</em>, if the administrator can delete messages of other
+     * @param bool|null $can_delete_messages Pass True, if the administrator can delete messages of other
      *     users
-     * @param bool|null $can_manage_video_chats Pass <em>True</em>, if the administrator can manage video chats
-     * @param bool|null $can_restrict_members Pass <em>True</em>, if the administrator can restrict, ban or unban chat
+     * @param bool|null $can_manage_video_chats Pass True, if the administrator can manage video chats
+     * @param bool|null $can_restrict_members Pass True, if the administrator can restrict, ban or unban chat
      *     members
-     * @param bool|null $can_promote_members Pass <em>True</em>, if the administrator can add new administrators with a
+     * @param bool|null $can_promote_members Pass True, if the administrator can add new administrators with a
      *     subset of their own privileges or demote administrators that he has promoted, directly or indirectly
      *     (promoted by administrators that were appointed by him)
-     * @param bool|null $can_change_info Pass <em>True</em>, if the administrator can change chat title, photo and
+     * @param bool|null $can_change_info Pass True, if the administrator can change chat title, photo and
      *     other settings
-     * @param bool|null $can_invite_users Pass <em>True</em>, if the administrator can invite new users to the chat
-     * @param bool|null $can_pin_messages Pass <em>True</em>, if the administrator can pin messages, supergroups only
-     * @param bool|null $can_manage_topics Pass <em>True</em> if the user is allowed to create, rename, close, and
+     * @param bool|null $can_invite_users Pass True, if the administrator can invite new users to the chat
+     * @param bool|null $can_pin_messages Pass True, if the administrator can pin messages, supergroups only
+     * @param bool|null $can_manage_topics Pass True if the user is allowed to create, rename, close, and
      *     reopen forum topics, supergroups only
-     * @param bool|null $can_post_stories Pass <em>True</em> if the administrator can post stories in the channel;
+     * @param bool|null $can_post_stories Pass True if the administrator can post stories in the channel;
      *     channels only
-     * @param bool|null $can_edit_stories Pass <em>True</em> if the administrator can edit stories posted by other
+     * @param bool|null $can_edit_stories Pass True if the administrator can edit stories posted by other
      *     users; channels only
-     * @param bool|null $can_delete_stories Pass <em>True</em> if the administrator can delete stories posted by other
+     * @param bool|null $can_delete_stories Pass True if the administrator can delete stories posted by other
      *     users; channels only
      */
     public function promoteChatMember(
@@ -1824,7 +1999,7 @@ class Bot
     /**
      * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a
      * href="https://core.telegram.org/bots/api#unbanchatsenderchat">unbanned</a>, the owner of the banned chat
-     * won't be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an
+     * won't be able to send messages on behalf of any of their channels. The bot must be an
      * administrator in the supergroup or channel for this to work and must have the appropriate administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
@@ -1863,17 +2038,17 @@ class Bot
 
     /**
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group
-     * or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights.
+     * or a supergroup for this to work and must have the can_restrict_members administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
      *     format &#64;supergroupusername)
      * @param Types\ChatPermissions $permissions A JSON-serialized object for new default chat permissions
-     * @param bool|null $use_independent_chat_permissions Pass <em>True</em> if chat permissions are set independently.
-     *     Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will
-     *     imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>,
-     *     <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>,
-     *     and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the
-     *     <em>can_send_messages</em> permission.
+     * @param bool|null $use_independent_chat_permissions Pass True if chat permissions are set independently.
+     *     Otherwise, the can_send_other_messages and can_add_web_page_previews permissions will
+     *     imply the can_send_messages, can_send_audios, can_send_documents,
+     *     can_send_photos, can_send_videos, can_send_video_notes,
+     *     and can_send_voice_notes permissions; the can_send_polls permission will imply the
+     *     can_send_messages permission.
      */
     public function setChatPermissions(
         int|string $chat_id,
@@ -1916,8 +2091,8 @@ class Bot
      * @param int|null $expire_date Point in time (Unix timestamp) when the link will expire
      * @param int|null $member_limit Maximum number of users that can be members of the chat simultaneously after
      *     joining the chat via this invite link; 1-99999
-     * @param bool|null $creates_join_request <em>True</em>, if users joining the chat via the link need to be approved
-     *     by chat administrators. If <em>True</em>, <em>member_limit</em> can't be specified
+     * @param bool|null $creates_join_request True, if users joining the chat via the link need to be approved
+     *     by chat administrators. If True, member_limit can't be specified
      */
     public function createChatInviteLink(
         int|string $chat_id,
@@ -1947,8 +2122,8 @@ class Bot
      * @param int|null $expire_date Point in time (Unix timestamp) when the link will expire
      * @param int|null $member_limit Maximum number of users that can be members of the chat simultaneously after
      *     joining the chat via this invite link; 1-99999
-     * @param bool|null $creates_join_request <em>True</em>, if users joining the chat via the link need to be approved
-     *     by chat administrators. If <em>True</em>, <em>member_limit</em> can't be specified
+     * @param bool|null $creates_join_request True, if users joining the chat via the link need to be approved
+     *     by chat administrators. If True, member_limit can't be specified
      */
     public function editChatInviteLink(
         int|string $chat_id,
@@ -1991,7 +2166,7 @@ class Bot
 
     /**
      * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work
-     * and must have the <em>can_invite_users</em> administrator right.
+     * and must have the can_invite_users administrator right.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -2010,7 +2185,7 @@ class Bot
 
     /**
      * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work
-     * and must have the <em>can_invite_users</em> administrator right.
+     * and must have the can_invite_users administrator right.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -2106,7 +2281,7 @@ class Bot
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int $message_id Identifier of a message to pin
-     * @param bool|null $disable_notification Pass <em>True</em>, if it is not necessary to send a notification to all
+     * @param bool|null $disable_notification Pass True, if it is not necessary to send a notification to all
      *     chat members about the new pinned message. Notifications are always disabled in channels and private chats.
      */
     public function pinChatMessage(
@@ -2174,15 +2349,14 @@ class Bot
     }
 
     /**
-     * Use this method to get up to date information about the chat (current name of the user for one-on-one
-     * conversations, current username of a user, group or channel, etc.).
+     * Use this method to get up-to-date information about the chat.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel
-     *     (in the format &#64;channelusername)
+     *     (in the format "&#64;channelusername")
      */
-    public function getChat(int|string $chat_id): Requests\RequestChat
+    public function getChat(int|string $chat_id): Requests\RequestChatFullInfo
     {
-        return new Requests\RequestChat($this, 'getChat', [
+        return new Requests\RequestChatFullInfo($this, 'getChat', [
             'chat_id' => $chat_id,
         ]);
     }
@@ -2236,7 +2410,7 @@ class Bot
 
     /**
      * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat
-     * for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em>
+     * for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set
      * optionally returned in getChat() requests to check if the bot can use this method.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
@@ -2256,7 +2430,7 @@ class Bot
 
     /**
      * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator
-     * in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup.
+     * in the chat for this to work and must have the can_pin_messages administrator right in the supergroup.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2273,19 +2447,18 @@ class Bot
     /**
      * Use this method to send answers to callback queries sent from <a
      * href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboards</a>. The answer
-     * will be displayed to the user as a notification at the top of the chat screen or as an alert. On success,
-     * <em>True</em> is returned.
+     * will be displayed to the user as a notification at the top of the chat screen or as an alert.
      *
      * @param string $callback_query_id Unique identifier for the query to be answered
      * @param string|null $text Text of the notification. If not specified, nothing will be shown to the user, 0-200
      *     characters
-     * @param bool|null $show_alert If <em>True</em>, an alert will be shown by the client instead of a notification at
-     *     the top of the chat screen. Defaults to <em>false</em>.
+     * @param bool|null $show_alert If True, an alert will be shown by the client instead of a notification at
+     *     the top of the chat screen. Defaults to false.
      * @param string|null $url URL that will be opened by the user's client. If you have created a <a
      *     href="https://core.telegram.org/bots/api#game">Game</a> and accepted the conditions via <a
      *     href="https://t.me/botfather">@Botfather</a>, specify the URL that opens your game — note that this will
      *     only work if the query comes from a <a
-     *     href="https://core.telegram.org/bots/api#inlinekeyboardbutton"><em>callback_game</em></a>
+     *     href="https://core.telegram.org/bots/api#inlinekeyboardbutton">callback_game</a>
      *     button.<br><br>Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot
      *     with a parameter.
      * @param int|null $cache_time The maximum amount of time in seconds that the result of the callback query may be
@@ -2310,7 +2483,6 @@ class Bot
 
     /**
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat.
-     * Returns a UserChatBoosts object.
      *
      * @param int|string $chat_id Unique identifier for the chat or username of the channel
      *     (in the format &#64;channelusername)
@@ -2328,8 +2500,22 @@ class Bot
     }
 
     /**
+     * Use this method to get information about the connection of the bot with a business account.
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     */
+    public function getBusinessConnection(
+        string $business_connection_id,
+    ): Requests\RequestBusinessConnection
+    {
+        return new Requests\RequestBusinessConnection($this, 'getBusinessConnection', [
+            'business_connection_id' => $business_connection_id,
+        ]);
+    }
+
+    /**
      * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat
-     * for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em>
+     * for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set
      * optionally returned in getChat() requests to check if the bot can use this method.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
@@ -2353,7 +2539,7 @@ class Bot
 
     /**
      * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for
-     * this to work and must have the <em>can_manage_topics</em> administrator rights.
+     * this to work and must have the can_manage_topics administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2380,7 +2566,7 @@ class Bot
 
     /**
      * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat
-     * for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of
+     * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of
      * the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
@@ -2400,7 +2586,7 @@ class Bot
 
     /**
      * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in
-     * the chat for this to work and must have <em>can_manage_topics</em> administrator rights, unless it is the creator
+     * the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator
      * of the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
@@ -2429,7 +2615,7 @@ class Bot
 
     /**
      * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat
-     * for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of
+     * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of
      * the topic.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
@@ -2449,7 +2635,7 @@ class Bot
 
     /**
      * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be
-     * an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator
+     * an administrator in the chat for this to work and must have the can_delete_messages administrator
      * rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
@@ -2469,7 +2655,7 @@ class Bot
 
     /**
      * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the
-     * chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup.
+     * chat for this to work and must have the can_pin_messages administrator right in the supergroup.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2489,7 +2675,7 @@ class Bot
 
     /**
      * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
-     * administrator in the chat for this to work and must have <em>can_manage_topics</em> administrator rights.
+     * administrator in the chat for this to work and must have can_manage_topics administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2508,7 +2694,7 @@ class Bot
 
     /**
      * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
-     * the chat for this to work and must have the <em>can_manage_topics</em> administrator rights.
+     * the chat for this to work and must have the can_manage_topics administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2524,7 +2710,7 @@ class Bot
 
     /**
      * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator
-     * in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be
+     * in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be
      * automatically unhidden if it was hidden.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
@@ -2541,7 +2727,7 @@ class Bot
 
     /**
      * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
-     * chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be
+     * chat for this to work and must have the can_manage_topics administrator rights. The topic will be
      * automatically closed if it was open.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
@@ -2558,7 +2744,7 @@ class Bot
 
     /**
      * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
-     * chat for this to work and must have the <em>can_manage_topics</em> administrator rights.
+     * chat for this to work and must have the can_manage_topics administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup
      *     (in the format &#64;supergroupusername)
@@ -2691,7 +2877,7 @@ class Bot
     }
 
     /**
-     * Use this method to get the current bot description for the given user language. 
+     * Use this method to get the current bot description for the given user language.
      * Returns BotDescription on success.
      *
      * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
@@ -2780,7 +2966,7 @@ class Bot
      *
      * @param Types\ChatAdministratorRights|null $rights A JSON-serialized object describing new default administrator
      *     rights. If not specified, the default administrator rights will be cleared.
-     * @param bool|null $for_channels Pass <em>True</em> to change the default administrator rights of the bot in
+     * @param bool|null $for_channels Pass True to change the default administrator rights of the bot in
      *     channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
      */
     public function setMyDefaultAdministratorRights(
@@ -2797,7 +2983,7 @@ class Bot
     /**
      * Use this method to get the current default administrator rights of the bot.
      *
-     * @param bool|null $for_channels Pass <em>True</em> to get default administrator rights of the bot in channels.
+     * @param bool|null $for_channels Pass True to get default administrator rights of the bot in channels.
      *     Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
      */
     public function getMyDefaultAdministratorRights(bool $for_channels = null): Requests\RequestChatAdministratorRights
@@ -2809,6 +2995,8 @@ class Bot
 
     /**
      * Use this method to edit text and <a href="https://core.telegram.org/bots/api#games">game</a> messages.
+     * Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
+     * edited within 48 hours from the time they were sent.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -2817,11 +3005,13 @@ class Bot
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
-     *     text, which can be specified instead of <em>parse_mode</em>
+     *     text, which can be specified instead of parse_mode
      * @param bool|null $disable_web_page_preview Disables link previews for links in this message
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
      * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageText(
         int|string $chat_id,
@@ -2832,32 +3022,40 @@ class Bot
         #[Deprecated] bool $disable_web_page_preview = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
         Types\LinkPreviewOptions $link_preview_options = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageText', [
+            'text' => $text,
+            'business_connection_id' => $business_connection_id,
             'chat_id' => $chat_id,
             'message_id' => $message_id,
-            'text' => $text,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
-            'disable_web_page_preview' => $disable_web_page_preview,
-            'reply_markup' => $reply_markup,
             'link_preview_options' => $link_preview_options,
+            'reply_markup' => $reply_markup,
+
+            'disable_web_page_preview' => $disable_web_page_preview,
         ]);
     }
 
     /**
      * Use this method to edit text and <a href="https://core.telegram.org/bots/api#games">game</a> messages
+     * Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
+     * edited within 48 hours from the time they were sent.
      *
      * @param string $inline_message_id Identifier of the inline message
      * @param string $text New text of the message, 1-4096 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
-     *     text, which can be specified instead of <em>parse_mode</em>
+     *     text, which can be specified instead of parse_mode
      * @param bool|null $disable_web_page_preview Disables link previews for links in this message
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageTextInline(
         string $inline_message_id,
@@ -2866,15 +3064,20 @@ class Bot
         array $entities = null,
         bool $disable_web_page_preview = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        Types\LinkPreviewOptions $link_preview_options = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageText', [
-            'inline_message_id' => $inline_message_id,
             'text' => $text,
+            'business_connection_id' => $business_connection_id,
+            'inline_message_id' => $inline_message_id,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'entities' => $entities,
-            'disable_web_page_preview' => $disable_web_page_preview,
+            'link_preview_options' => $link_preview_options,
             'reply_markup' => $reply_markup,
+
+            'disable_web_page_preview' => $disable_web_page_preview,
         ]);
     }
 
@@ -2888,9 +3091,13 @@ class Bot
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message
+     *     media. Supported only for animation, photo and video messages.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageCaption(
         int|string $chat_id,
@@ -2899,14 +3106,18 @@ class Bot
         Enums\ParseMode $parse_mode = null,
         array $caption_entities = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        bool $show_caption_above_media = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageCaption', [
+            'business_connection_id' => $business_connection_id,
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -2914,15 +3125,19 @@ class Bot
     /**
      * Use this method to edit captions of messages.
      *
-     * @param string $inline_message_id Required if <em>chat_id</em> and <em>message_id</em> are not specified.
+     * @param string $inline_message_id Required if chat_id and message_id are not specified.
      *     Identifier of the inline message
      * @param string|null $caption New caption of the message, 0-1024 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message caption. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the caption, which can be specified instead of <em>parse_mode</em>
+     *     the caption, which can be specified instead of parse_mode
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message
+     *     media. Supported only for animation, photo and video messages.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageCaptionInline(
         string $inline_message_id,
@@ -2930,13 +3145,17 @@ class Bot
         Enums\ParseMode $parse_mode = null,
         array $caption_entities = null,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        bool $show_caption_above_media = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageCaption', [
+            'business_connection_id' => $business_connection_id,
             'inline_message_id' => $inline_message_id,
             'caption' => $caption,
             'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
             'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -2951,20 +3170,24 @@ class Bot
      *     format &#64;channelusername)
      * @param int $message_id Identifier of the message to edit
      * @param Types\InputMedia $media A JSON-serialized object for a new media content of the message
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new
+     *     <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageMedia(
         int|string $chat_id,
         int $message_id,
         Types\InputMedia $media,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageMedia', [
+            'media' => $media,
+            'business_connection_id' => $business_connection_id,
             'chat_id' => $chat_id,
             'message_id' => $message_id,
-            'media' => $media,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -2977,18 +3200,22 @@ class Bot
      *
      * @param string $inline_message_id Identifier of the inline message
      * @param Types\InputMedia $media A JSON-serialized object for a new media content of the message
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new
+     *     <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageMediaInline(
         string $inline_message_id,
         Types\InputMedia $media,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageMedia', [
-            'inline_message_id' => $inline_message_id,
             'media' => $media,
+            'business_connection_id' => $business_connection_id,
+            'inline_message_id' => $inline_message_id,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -2999,16 +3226,20 @@ class Bot
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int $message_id Identifier of the message to edit
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an
+     *     <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageReplyMarkup(
         int|string $chat_id,
         int $message_id,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageReplyMarkup', [
+            'business_connection_id' => $business_connection_id,
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'reply_markup' => $reply_markup,
@@ -3019,15 +3250,19 @@ class Bot
      * Use this method to edit only the reply markup of messages.
      *
      * @param string $inline_message_id Identifier of the inline message
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an
+     *     <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function editMessageReplyMarkupInline(
         string $inline_message_id,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageReplyMarkup', [
+            'business_connection_id' => $business_connection_id,
             'inline_message_id' => $inline_message_id,
             'reply_markup' => $reply_markup,
         ]);
@@ -3039,18 +3274,22 @@ class Bot
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int $message_id Identifier of the original message with the poll
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new message <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new message
+     *     <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message to be edited was sent
      */
     public function stopPoll(
         int|string $chat_id,
         int $message_id,
         Types\InlineKeyboardMarkup $reply_markup = null,
+        string $business_connection_id = null,
     ): Requests\RequestPoll
     {
         return new Requests\RequestPoll($this, 'stopPoll', [
             'chat_id' => $chat_id,
             'message_id' => $message_id,
+            'business_connection_id' => $business_connection_id,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -3062,9 +3301,9 @@ class Bot
      * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>
      * - Bots can delete outgoing messages in private chats, groups, and supergroups.<br>
      * - Bots can delete incoming messages in private chats.<br>
-     * - Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>
+     * - Bots granted can_post_messages permissions can delete outgoing messages in channels.<br>
      * - If the bot is an administrator of a group, it can delete any message there.<br>
-     * - If the bot has <em>can_delete_messages</em> permission in a supergroup or a channel, it can delete any message
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message
      * there.<br>
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
@@ -3103,21 +3342,18 @@ class Bot
     }
 
     /**
-     * Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS,
-     * or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers.
+     * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param Types\InputFile $sticker Sticker to send. Pass a file_id as String to send a file that exists on the
      *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
-     *     Internet, or upload a new one using multipart/form-data. <a
-     *     href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
-     * @param bool|null $disable_notification Sends the message <a
-     *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
-     *     notification with no sound.
+     *     Internet, or upload a new one using multipart/form-data.
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with
+     *     no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
@@ -3128,6 +3364,10 @@ class Bot
      *     for forum supergroups only
      * @param string|null $emoji Emoji associated with the sticker; only for just uploaded stickers
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendSticker(
         int|string $chat_id,
@@ -3140,19 +3380,24 @@ class Bot
         int $message_thread_id = null,
         string $emoji = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
             'chat_id' => $chat_id,
             'sticker' => $sticker,
-            'disable_notification' => $disable_notification,
-            'protect_content' => $protect_content,
-            'reply_to_message_id' => $reply_to_message_id,
-            'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
+            'business_connection_id' => $business_connection_id,
             'message_thread_id' => $message_thread_id,
             'emoji' => $emoji,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
+            'reply_to_message_id' => $reply_to_message_id,
+            'allow_sending_without_reply' => $allow_sending_without_reply,
         ]);
     }
 
@@ -3183,51 +3428,52 @@ class Bot
     }
 
     /**
-     * Use this method to upload a file with a sticker for later use in the createNewStickerSet() and addStickerToSet()
-     * methods (the file can be used multiple times).
+     * Use this method to upload a file with a sticker for later use in the createNewStickerSet(), addStickerToSet(),
+     * or replaceStickerInSet() methods (the file can be used multiple times).
      *
      * @param int $user_id User identifier of sticker file owner
-     * @param Types\InputFile $sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See
-     *     <a href="https://core.telegram.org/stickers">more info</a> for technical requirements.
-     * @param string $sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
+     * @param Types\InputFile $sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format.
+     *     See <a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a> for technical
+     *     requirements.
+     * @param Enums\StickerFormat $sticker_format Format of the sticker
      */
     public function uploadStickerFile(
         int $user_id,
         Types\InputFile $sticker,
-        string $sticker_format,
+        Enums\StickerFormat $sticker_format,
     ): Requests\RequestFile
     {
         return new Requests\RequestFile($this, 'uploadStickerFile', [
             'user_id' => $user_id,
             'sticker' => $sticker,
-            'sticker_format' => $sticker_format,
+            'sticker_format' => $sticker_format->value,
         ]);
     }
 
     /**
      * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus
-     * created. Returns <em>True</em> on success.
+     * created.
      *
      * @param int $user_id User identifier of created sticker set owner
-     * @param string $name Short name of sticker set, to be used in <code>t.me/addstickers/</code>
-     *     URLs (e.g., <em>animals</em>). Can contain only English letters, digits and underscores. Must begin with
-     *     a letter, can't contain consecutive underscores and must end in <code>"_by_<bot_username>"</code>.
-     *     <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.
+     * @param string $name Short name of sticker set, to be used in "t.me/addstickers/" URLs (e.g., "animals"). Can
+     *     contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain
+     *     consecutive underscores and must end in "&quot;_by_&lt;bot_username&gt;&quot;". "&lt;bot_username&gt;" is
+     *     case insensitive. 1-64 characters.
      * @param string $title Sticker set title, 1-64 characters
-     * @param Types\InputSticker[] $stickers A JSON-serialized list of 1-50 initial stickers to be added
-     *     to the sticker set
-     * @param Enums\StickerFormat $sticker_format Format of stickers in the set
-     * @param Enums\StickerType|null $sticker_type Type of stickers in the set. By default, a regular sticker set
-     *     is created.
-     * @param bool|null $needs_repainting Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
+     * @param Types\InputSticker[] $stickers A JSON-serialized list of 1-50 initial stickers to be added to the sticker
+     *     set
+     * @param Enums\StickerType|null $sticker_type Type of stickers in the set. By default, a regular sticker set is
+     *     created.
+     * @param bool|null $needs_repainting Pass "True" if stickers in the sticker set must be repainted to the color of
+     *     text when used in messages, the accent color if used as emoji status, white on chat photos, or another
+     *     appropriate color based on context; for custom emoji sticker sets only
      */
     public function createNewStickerSet(
         int $user_id,
         string $name,
         string $title,
         array $stickers,
-        Enums\StickerFormat $sticker_format,
-        Enums\StickerType $sticker_type = null,
+        string $sticker_type = null,
         bool $needs_repainting = null,
     ): Requests\RequestVoid
     {
@@ -3236,8 +3482,7 @@ class Bot
             'name' => $name,
             'title' => $title,
             'stickers' => $stickers,
-            'sticker_format' => $sticker_format->value,
-            'sticker_type' => $sticker_type?->value,
+            'sticker_type' => $sticker_type,
             'needs_repainting' => $needs_repainting,
         ]);
     }
@@ -3245,7 +3490,7 @@ class Bot
     /**
      * Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match
      * the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video
-     * sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
+     * sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers.
      *
      * @param int $user_id User identifier of sticker set owner
      * @param string $name Sticker set name
@@ -3290,6 +3535,31 @@ class Bot
     public function deleteStickerFromSet(string $sticker): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'deleteStickerFromSet', [
+            'sticker' => $sticker,
+        ]);
+    }
+
+    /**
+     * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to
+     * calling deleteStickerFromSet(), then addStickerToSet(), then setStickerPositionInSet().
+     *
+     * @param int $user_id User identifier of the sticker set owner
+     * @param string $name Sticker set name
+     * @param string $old_sticker File identifier of the replaced sticker
+     * @param Types\InputSticker $sticker A JSON-serialized object with information about the added sticker.
+     *     If exactly the same sticker had already been added to the set, then the set remains unchanged.
+     */
+    public function replaceStickerInSet(
+        int $user_id,
+        string $name,
+        string $old_sticker,
+        Types\InputSticker $sticker,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'replaceStickerInSet', [
+            'user_id' => $user_id,
+            'name' => $name,
+            'old_sticker' => $old_sticker,
             'sticker' => $sticker,
         ]);
     }
@@ -3367,36 +3637,20 @@ class Bot
         ]);
     }
 
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->setStickerSetThumbnail() instead
-     */
-    public function setStickerSetThumb(
-        string $name,
-        int $user_id,
-        #[Deprecated] Types\InputFile $thumb = null,
-    ): Requests\RequestVoid
-    {
-        return $this->setStickerSetThumbnail(
-            name: $name,
-            user_id: $user_id,
-            thumbnail: $thumb,
-        );
-    }
-
     /**
      * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must
      * match the format of the stickers in the set.
      *
      * @param string $name Sticker set name
      * @param int $user_id User identifier of the sticker set owner
-     * @param Types\InputFile|null $thumbnail A <strong>.WEBP</strong> or <strong>.PNG</strong> image with the
+     * @param Enums\StickerFormat $format Format of the thumbnail
+     * @param Types\InputFile|null $thumbnail A .WEBP or .PNG image with the
      *     thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px,
-     *     or a <strong>.TGS</strong> animation with a thumbnail up to 32 kilobytes in size
+     *     or a .TGS animation with a thumbnail up to 32 kilobytes in size
      *     (see <a href="https://core.telegram.org/stickers#animated-sticker-requirements">info</a> for animated sticker
-     *     technical requirements), or a <strong>WEBM</strong> video with the thumbnail up to 32 kilobytes in size;
+     *     technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size;
      *     see <a href="https://core.telegram.org/stickers#video-sticker-requirements">info</a> for video sticker
-     *     technical requirements. Pass a <em>file_id</em> as a String to send a file that already exists on the
+     *     technical requirements. Pass a file_id as a String to send a file that already exists on the
      *     Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new
      *     one using multipart/form-data. Animated and video sticker set thumbnails can't be uploaded via HTTP URL.
      *     If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
@@ -3404,12 +3658,14 @@ class Bot
     public function setStickerSetThumbnail(
         string $name,
         int $user_id,
+        Enums\StickerFormat $format,
         Types\InputFile $thumbnail = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setStickerSetThumbnail', [
             'name' => $name,
             'user_id' => $user_id,
+            'format' => $format,
             'thumbnail' => $thumbnail,
         ]);
     }
@@ -3447,14 +3703,14 @@ class Bot
     }
 
     /**
-     * Use this method to send answers to an inline query. No more than <strong>50</strong> results per query are
+     * Use this method to send answers to an inline query. No more than 50 results per query are
      * allowed.
      *
      * @param string $inline_query_id Unique identifier for the answered query
      * @param Types\InlineQueryResult[] $results A JSON-serialized array of results for the inline query
      * @param int|null $cache_time The maximum amount of time in seconds that the result of the inline query may be
      *     cached on the server. Defaults to 300.
-     * @param bool|null $is_personal Pass <em>True</em>, if results may be cached on the server side only for the user
+     * @param bool|null $is_personal Pass True, if results may be cached on the server side only for the user
      *     that sent the query. By default, results may be returned to any user who sends the same query
      * @param string|null $next_offset Pass the offset that a client should send in the next query with the same text
      *     to receive more results. Pass an empty string if there are no more results or if you don't support
@@ -3503,71 +3759,67 @@ class Bot
      * Use this method to send invoices.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format &#64;channelusername)
+     *     format "&#64;channelusername")
      * @param string $title Product name, 1-32 characters
      * @param string $description Product description, 1-255 characters
      * @param string $payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for
      *     your internal processes.
-     * @param string $provider_token Payments provider token, obtained via <a
-     *     href="https://t.me/botfather">Botfather</a>
-     * @param string $currency Three-letter ISO 4217 currency code, see <a
-     *     href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
+     * @param string|null $provider_token Payment provider token, obtained via &#64;BotFather. Pass an empty string for
+     *       payments in Telegram Stars.
+     * @param string $currency Three-letter ISO 4217 currency code, see . Pass “XTR” for payments in Telegram Stars.
      * @param Types\LabeledPrice[] $prices Price breakdown, a JSON-serialized list of components (e.g. product price,
-     *     tax, discount, delivery cost, delivery tax, bonus, etc.)
-     * @param int|null $max_tip_amount The maximum accepted amount for tips in the <em>smallest units</em> of the
-     *     currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of US$
-     *     1.45 pass max_tip_amount = 145. See the <em>exp</em> parameter in <a
-     *     href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of
-     *     digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
-     * @param int[]|null $suggested_tip_amounts A JSON-serialized array of suggested amounts of tips in the
-     *     <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested
-     *     tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased
-     *     order and must not exceed <em>max_tip_amount</em>.
-     * @param string|null $start_parameter Unique deep-linking parameter. If left empty, <strong>forwarded
-     *     copies</strong> of the sent message will have a <em>Pay</em> button, allowing multiple users to pay directly
-     *     from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will
-     *     have a <em>URL</em> button with a deep link to the bot (instead of a <em>Pay</em> button), with the value
-     *     used as the start parameter
-     * @param string|null $provider_data A JSON-serialized data about the invoice, which will be shared with the
-     *     payment provider. A detailed description of required fields should be provided by the payment provider.
+     *     tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in
+     *     Telegram Stars.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
+     *     forum supergroups only
+     * @param int|null $max_tip_amount The maximum accepted amount for tips in the smallest units of the currency
+     *     (integer, not float/double). For example, for a maximum tip of "US$ 1.45" pass "max_tip_amount = 145". See
+     *     the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency
+     *     (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars.
+     * @param int[]|null $suggested_tip_amounts A JSON-serialized array of suggested amounts of tips in the smallest
+     *     units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The
+     *     suggested tip amounts must be positive, passed in a strictly increased order and must not exceed
+     *     max_tip_amount.
+     * @param string|null $start_parameter Unique deep-linking parameter. If left empty, forwarded copies of the sent
+     *     message will have a Pay button, allowing multiple users to pay directly from the forwarded message, using
+     *     the same invoice. If non-empty, forwarded copies of the sent message will have a URL button with a deep link
+     *     to the bot (instead of a Pay button), with the value used as the start parameter
+     * @param string|null $provider_data JSON-serialized data about the invoice, which will be shared with the payment
+     *     provider. A detailed description of required fields should be provided by the payment provider.
      * @param string|null $photo_url URL of the product photo for the invoice. Can be a photo of the goods or a
      *     marketing image for a service. People like it better when they see what they are paying for.
-     * @param int|null $photo_size Photo size
+     * @param int|null $photo_size Photo size in bytes
      * @param int|null $photo_width Photo width
      * @param int|null $photo_height Photo height
-     * @param bool|null $need_name Pass <em>True</em>, if you require the user's full name to complete the order
-     * @param bool|null $need_phone_number Pass <em>True</em>, if you require the user's phone number to complete
-     *     the order
-     * @param bool|null $need_email Pass <em>True</em>, if you require the user's email address to complete the
-     *     order
-     * @param bool|null $need_shipping_address Pass <em>True</em>, if you require the user's shipping address to
-     *     complete the order
-     * @param bool|null $send_phone_number_to_provider Pass <em>True</em>, if user's phone number should be sent to
-     *     provider
-     * @param bool|null $send_email_to_provider Pass <em>True</em>, if user's email address should be sent to
-     *     provider
-     * @param bool|null $is_flexible Pass <em>True</em>, if the final price depends on the shipping method
-     * @param bool|null $disable_notification Sends the message <a
-     *     href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a
-     *     notification with no sound.
+     * @param bool|null $need_name Pass True if you require the user&#39;s full name to complete the order. Ignored for
+     *     payments in Telegram Stars.
+     * @param bool|null $need_phone_number Pass True if you require the user&#39;s phone number to complete the order.
+     *     Ignored for payments in Telegram Stars.
+     * @param bool|null $need_email Pass True if you require the user&#39;s email address to complete the order.
+     *     Ignored for payments in Telegram Stars.
+     * @param bool|null $need_shipping_address Pass True if you require the user&#39;s shipping address to complete the
+     *     order. Ignored for payments in Telegram Stars.
+     * @param bool|null $send_phone_number_to_provider Pass True if the user&#39;s phone number should be sent to the
+     *     provider. Ignored for payments in Telegram Stars.
+     * @param bool|null $send_email_to_provider Pass True if the user&#39;s email address should be sent to the
+     *     provider. Ignored for payments in Telegram Stars.
+     * @param bool|null $is_flexible Pass True if the final price depends on the shipping method. Ignored for payments
+     *     in Telegram Stars.
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
-     * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
-     *     specified replied-to message is not found
-     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>. If
-     *     empty, one 'Pay total price' button will be shown. If not empty, the first button must
-     *     be a Pay button.
-     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
-     *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard. If empty,
+     *     one &#39;Pay "total price"&#39; button will be shown. If not empty, the first button must be a Pay button.
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
+     *      private chats only
      */
     public function sendInvoice(
         int|string $chat_id,
         string $title,
         string $description,
         string $payload,
-        string $provider_token,
+        ?string $provider_token,
         string $currency,
         array $prices,
         int $max_tip_amount = null,
@@ -3592,6 +3844,7 @@ class Bot
         Types\InlineKeyboardMarkup $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendInvoice', [
@@ -3599,9 +3852,10 @@ class Bot
             'title' => $title,
             'description' => $description,
             'payload' => $payload,
-            'provider_token' => $provider_token,
             'currency' => $currency,
             'prices' => $prices,
+            'message_thread_id' => $message_thread_id,
+            'provider_token' => $provider_token,
             'max_tip_amount' => $max_tip_amount,
             'suggested_tip_amounts' => $suggested_tip_amounts,
             'start_parameter' => $start_parameter,
@@ -3619,36 +3873,36 @@ class Bot
             'is_flexible' => $is_flexible,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
-     * Use this method to create a link for an invoice.
+     * Use this method to create a link for an invoice. Returns the created invoice link as "String" on success.
      *
      * @param string $title Product name, 1-32 characters
      * @param string $description Product description, 1-255 characters
      * @param string $payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for
      *     your internal processes.
-     * @param string $provider_token Payment provider token, obtained via <a
-     *     href="https://t.me/botfather">BotFather</a>
-     * @param string $currency Three-letter ISO 4217 currency code, see <a
-     *     href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>
+     * @param string $currency Three-letter ISO 4217 currency code, see . Pass “XTR” for payments in Telegram Stars.
      * @param Types\LabeledPrice[] $prices Price breakdown, a JSON-serialized list of components (e.g. product price,
-     *     tax, discount, delivery cost, delivery tax, bonus, etc.)
-     * @param int|null $max_tip_amount The maximum accepted amount for tips in the <em>smallest units</em> of the
-     *     currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of US$ 1.45 pass
-     *     max_tip_amount = 145. See the <em>exp</em> parameter in <a
-     *     href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of
-     *     digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
-     * @param int[]|null $suggested_tip_amounts A JSON-serialized array of suggested amounts of tips in the
-     *     <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested
-     *     tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased
-     *     order and must not exceed <em>max_tip_amount</em>.
+     *     tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in
+     *     Telegram Stars.
+     * @param string|null $provider_token Payment provider token, obtained via &#64;BotFather. Pass an empty string for
+     *     payments in Telegram Stars.
+     * @param int|null $max_tip_amount The maximum accepted amount for tips in the "smallest units" of the currency
+     *     (integer, "not" float/double). For example, for a maximum tip of "US$ 1.45" pass "max_tip_amount = 145". See
+     *     the "exp" parameter in currencies.json, it shows the number of digits past the decimal point for each
+     *     currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars.
+     * @param int[]|null $suggested_tip_amounts A JSON-serialized array of suggested amounts of tips in the "smallest
+     *     units" of the currency (integer, "not" float/double). At most 4 suggested tip amounts can be specified. The
+     *     suggested tip amounts must be positive, passed in a strictly increased order and must not exceed
+     *     "max_tip_amount".
      * @param string|null $provider_data JSON-serialized data about the invoice, which will be shared with the payment
      *     provider. A detailed description of required fields should be provided by the payment provider.
      * @param string|null $photo_url URL of the product photo for the invoice. Can be a photo of the goods or a
@@ -3656,25 +3910,28 @@ class Bot
      * @param int|null $photo_size Photo size in bytes
      * @param int|null $photo_width Photo width
      * @param int|null $photo_height Photo height
-     * @param bool|null $need_name Pass <em>True</em> if you require the user's full name to complete the order
-     * @param bool|null $need_phone_number Pass <em>True</em> if you require the user's phone number to complete the
-     *     order
-     * @param bool|null $need_email Pass <em>True</em> if you require the user's email address to complete the order
-     * @param bool|null $need_shipping_address Pass <em>True</em> if you require the user's shipping address to
-     *     complete the order
-     * @param bool|null $send_phone_number_to_provider Pass <em>True</em> if the user's phone number should be sent to
-     *     the provider
-     * @param bool|null $send_email_to_provider Pass <em>True</em> if the user's email address should be sent to the
-     *     provider
-     * @param bool|null $is_flexible Pass <em>True</em> if the final price depends on the shipping method
+     * @param bool|null $need_name Pass "True" if you require the user&#39;s full name to complete the order. Ignored
+     *     for payments in Telegram Stars.
+     * @param bool|null $need_phone_number Pass "True" if you require the user&#39;s phone number to complete the
+     *     order. Ignored for payments in Telegram Stars.
+     * @param bool|null $need_email Pass "True" if you require the user&#39;s email address to complete the order.
+     *     Ignored for payments in Telegram Stars.
+     * @param bool|null $need_shipping_address Pass "True" if you require the user&#39;s shipping address to complete
+     *     the order. Ignored for payments in Telegram Stars.
+     * @param bool|null $send_phone_number_to_provider Pass "True" if the user&#39;s phone number should be sent to the
+     *     provider. Ignored for payments in Telegram Stars.
+     * @param bool|null $send_email_to_provider Pass "True" if the user&#39;s email address should be sent to the
+     *     provider. Ignored for payments in Telegram Stars.
+     * @param bool|null $is_flexible Pass "True" if the final price depends on the shipping method. Ignored for
+     *     payments in Telegram Stars.
      */
     public function createInvoiceLink(
         string $title,
         string $description,
         string $payload,
-        string $provider_token,
         string $currency,
         array $prices,
+        string $provider_token = null,
         int $max_tip_amount = null,
         array $suggested_tip_amounts = null,
         string $provider_data = null,
@@ -3695,9 +3952,9 @@ class Bot
             'title' => $title,
             'description' => $description,
             'payload' => $payload,
-            'provider_token' => $provider_token,
             'currency' => $currency,
             'prices' => $prices,
+            'provider_token' => $provider_token,
             'max_tip_amount' => $max_tip_amount,
             'suggested_tip_amounts' => $suggested_tip_amounts,
             'provider_data' => $provider_data,
@@ -3716,16 +3973,16 @@ class Bot
     }
 
     /**
-     * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the
-     * Bot API will send an Update with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping
+     * If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the
+     * Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping
      * queries.
      *
      * @param string $shipping_query_id Unique identifier for the query to be answered
-     * @param bool $ok Specify <em>True</em> if delivery to the specified address is possible and False if there are
+     * @param bool $ok Specify True if delivery to the specified address is possible and False if there are
      *     any problems (for example, if delivery to the specified address is not possible)
-     * @param Types\ShippingOption[]|null $shipping_options Required if <em>ok</em> is <em>True</em>. A JSON-serialized
+     * @param Types\ShippingOption[]|null $shipping_options Required if ok is True. A JSON-serialized
      *     array of available shipping options.
-     * @param string|null $error_message Required if <em>ok</em> is False. Error message in human readable form that
+     * @param string|null $error_message Required if ok is False. Error message in human readable form that
      *     explains why it is impossible to complete the order (e.g. &quot;Sorry, delivery to your desired address is
      *     unavailable'). Telegram will display this message to the user.
      */
@@ -3746,15 +4003,15 @@ class Bot
 
     /**
      * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the
-     * form of an Update with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout
+     * form of an Update with the field pre_checkout_query. Use this method to respond to such pre-checkout
      * queries.<br><br>
-     * <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout
+     * Note: The Bot API must receive an answer within 10 seconds after the pre-checkout
      * query was sent.
      *
      * @param string $pre_checkout_query_id Unique identifier for the query to be answered
-     * @param bool $ok Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready
-     *     to proceed with the order. Use <em>False</em> if there are any problems.
-     * @param string|null $error_message Required if <em>ok</em> is <em>False</em>. Error message in human readable
+     * @param bool $ok Specify True if everything is alright (goods are available, etc.) and the bot is ready
+     *     to proceed with the order. Use False if there are any problems.
+     * @param string|null $error_message Required if ok is False. Error message in human readable
      *     form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just
      *     bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please
      *     choose a different color or garment!&quot;). Telegram will display this message to the user.
@@ -3769,6 +4026,42 @@ class Bot
             'pre_checkout_query_id' => $pre_checkout_query_id,
             'ok' => $ok,
             'error_message' => $error_message,
+        ]);
+    }
+
+
+    /**
+     * Returns the bot&#39;s Telegram Star transactions in chronological order.
+     *
+     * @param int|null $offset Number of transactions to skip in the response
+     * @param int|null $limit The maximum number of transactions to be retrieved. Values between 1-100 are accepted.
+     *     Defaults to 100.
+     */
+    public function getStarTransactions(
+        int $offset = null,
+        int $limit = null,
+    ): Requests\RequestStarTransactions
+    {
+        return new Requests\RequestStarTransactions($this, 'getStarTransactions', [
+            'offset' => $offset,
+            'limit' => $limit,
+        ]);
+    }
+
+    /**
+     * Refunds a successful payment in Telegram Stars.
+     *
+     * @param int $user_id Identifier of the user whose payment will be refunded
+     * @param string $telegram_payment_charge_id Telegram payment identifier
+     */
+    public function refundStarPayment(
+        int $user_id,
+        string $telegram_payment_charge_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'refundStarPayment', [
+            'user_id' => $user_id,
+            'telegram_payment_charge_id' => $telegram_payment_charge_id,
         ]);
     }
 
@@ -3806,7 +4099,7 @@ class Bot
      *     notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
-     * @param bool|null $allow_sending_without_reply Pass <em>True</em>, if the message should be sent even if the
+     * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>. If
@@ -3815,6 +4108,10 @@ class Bot
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum;
      *     for forum supergroups only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
+     *     for private chats only
      */
     public function sendGame(
         int $chat_id,
@@ -3826,32 +4123,37 @@ class Bot
         Types\InlineKeyboardMarkup $reply_markup = null,
         int $message_thread_id = null,
         Types\ReplyParameters $reply_parameters = null,
+        string $business_connection_id = null,
+        string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendGame', [
             'chat_id' => $chat_id,
             'game_short_name' => $game_short_name,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
             'disable_notification' => $disable_notification,
             'protect_content' => $protect_content,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
-            'reply_markup' => $reply_markup,
-            'message_thread_id' => $message_thread_id,
-            'reply_parameters' => $reply_parameters,
         ]);
     }
 
     /**
      * Use this method to set the score of the specified user in a game message. Returns an error, if the new score is
-     * not greater than the user's current score in the chat and <em>force</em> is <em>False</em>.
+     * not greater than the user's current score in the chat and force is False.
      *
      * @param int $chat_id Unique identifier for the target chat
      * @param int $message_id Identifier of the sent message
      * @param int $user_id User identifier
      * @param int $score New score, must be non-negative
-     * @param bool|null $force Pass <em>True</em>, if the high score is allowed to decrease. This can be useful when
+     * @param bool|null $force Pass True, if the high score is allowed to decrease. This can be useful when
      *     fixing mistakes or banning cheaters
-     * @param bool|null $disable_edit_message Pass <em>True</em>, if the game message should not be automatically
+     * @param bool|null $disable_edit_message Pass True, if the game message should not be automatically
      *     edited to include the current scoreboard
      */
     public function setGameScore(
@@ -3875,15 +4177,15 @@ class Bot
 
     /**
      * Use this method to set the score of the specified user in a game message. Returns an error, if the new score is
-     * not greater than the user's current score in the chat and <em>force</em> is <em>False</em>.
+     * not greater than the user's current score in the chat and force is False.
      *
-     * @param string $inline_message_id Required if <em>chat_id</em> and <em>message_id</em> are not specified.
+     * @param string $inline_message_id Required if chat_id and message_id are not specified.
      *     Identifier of the inline message
      * @param int $user_id User identifier
      * @param int $score New score, must be non-negative
-     * @param bool|null $force Pass <em>True</em>, if the high score is allowed to decrease. This can be useful when
+     * @param bool|null $force Pass True, if the high score is allowed to decrease. This can be useful when
      *     fixing mistakes or banning cheaters
-     * @param bool|null $disable_edit_message Pass <em>True</em>, if the game message should not be automatically
+     * @param bool|null $disable_edit_message Pass True, if the game message should not be automatically
      *     edited to include the current scoreboard
      */
     public function setGameScoreInline(

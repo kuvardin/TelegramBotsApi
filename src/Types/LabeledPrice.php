@@ -16,10 +16,10 @@ class LabeledPrice extends Type
 {
     /**
      * @param string $label Portion label
-     * @param int $amount Price of the product in the <em>smallest units</em> of the <a
+     * @param int $amount Price of the product in the smallest units of the <a
      *     href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> (integer,
-     *     <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount =
-     *     145</code>. See the <em>exp</em> parameter in <a
+     *     not float/double). For example, for a price of "US$ 1.45" pass <code>amount =
+     *     145</code>. See the exp parameter in <a
      *     href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of
      *     digits past the decimal point for each currency (2 for the majority of currencies).
      */

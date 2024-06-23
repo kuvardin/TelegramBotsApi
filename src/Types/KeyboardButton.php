@@ -7,9 +7,9 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents one button of the reply keyboard. For simple text buttons, <em>String</em> can be used instead
- * of this object to specify the button text. The optional fields <em>web_app</em>, <em>request_user</em>,
- * <em>request_chat</em>, <em>request_contact</em>, <em>request_location</em>, and <em>request_poll</em> are mutually
+ * This object represents one button of the reply keyboard. For simple text buttons, String can be used instead
+ * of this object to specify the button text. The optional fields web_app, request_user,
+ * request_chat, request_contact, request_location, and request_poll are mutually
  * exclusive.
  *
  * @package Kuvardin\TelegramBotsApi
@@ -20,9 +20,9 @@ class KeyboardButton extends Type
     /**
      * @param string $text Text of the button. If none of the optional fields are used, it will be sent as a message
      *     when the button is pressed
-     * @param bool|null $request_contact If <em>True</em>, the user's phone number will be sent as a contact when the
+     * @param bool|null $request_contact If True, the user's phone number will be sent as a contact when the
      *     button is pressed. Available in private chats only.
-     * @param bool|null $request_location If <em>True</em>, the user's current location will be sent when the button is
+     * @param bool|null $request_location If True, the user's current location will be sent when the button is
      *     pressed. Available in private chats only.
      * @param KeyboardButtonPollType|null $request_poll If specified, the user will be asked to create a poll and send
      *     it to the bot when the button is pressed. Available in private chats only.

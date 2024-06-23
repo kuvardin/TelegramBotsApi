@@ -23,7 +23,7 @@ class Text extends InputMessageContent
      * @param string|null $parse_mode Mode for parsing entities in the message text. See <a
      *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      * @param MessageEntity[]|null $entities List of special entities that appear in message text, which can be
-     *     specified instead of <em>parse_mode</em>
+     *     specified instead of parse_mode
      * @param bool|null $disable_web_page_preview Disables link previews for links in the sent message
      * @param LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      */

@@ -20,13 +20,13 @@ class Photo extends InputMedia
      * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
-     *     <a href="https://core.telegram.org/bots/api#sending-files">More info on Sending Files »</a>
      * @param string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the photo caption. See <a
-     *     href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * @param string|null $parse_mode Mode for parsing entities in the photo caption. See formatting options for more
+     *     details.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of <em>parse_mode</em>
+     *     specified instead of parse_mode
      * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
         public string $media,
@@ -34,6 +34,7 @@ class Photo extends InputMedia
         public ?string $parse_mode = null,
         public ?array $caption_entities = null,
         public ?bool $has_spoiler = null,
+        public ?bool $show_caption_above_media = null,
     )
     {
 
@@ -50,21 +51,19 @@ class Photo extends InputMedia
             throw new RuntimeException("Wrong input media type: {$data['type']}");
         }
 
-        $result = new self(
+        return new self(
             media: $data['media'],
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
-            caption_entities: null,
+            caption_entities: isset($data['caption_entities'])
+                ? array_map(
+                    static fn(array $caption_entities_data) => MessageEntity::makeByArray($caption_entities_data),
+                    $data['caption_entities'],
+                )
+                : null,
             has_spoiler: $data['has_spoiler'] ?? null,
+            show_caption_above_media: $data['show_caption_above_media'] ?? null,
         );
-
-        if (isset($data['caption_entities'])) {
-            $result->caption_entities = [];
-            foreach ($data['caption_entities'] as $item_data) {
-                $result->caption_entities[] = MessageEntity::makeByArray($item_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array
@@ -75,6 +74,7 @@ class Photo extends InputMedia
             'caption' => $this->caption,
             'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
+            'show_caption_above_media' => $this->show_caption_above_media,
             'has_spoiler' => $this->has_spoiler,
         ];
     }

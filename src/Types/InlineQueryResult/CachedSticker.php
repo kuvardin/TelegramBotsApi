@@ -11,8 +11,8 @@ use RuntimeException;
 
 /**
  * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user.
- * Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of
- * the sticker.
+ * Alternatively, you can use "input_message_content" to send a message with the specified content instead of the
+ * sticker.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -22,9 +22,7 @@ class CachedSticker extends InlineQueryResult
     /**
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $sticker_file_id A valid file identifier of the sticker
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the sticker
      */
     public function __construct(

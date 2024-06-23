@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -11,7 +12,7 @@ use RuntimeException;
 
 /**
  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use
- * <em>input_message_content</em> to send a message with the specified content instead of the location.
+ * "input_message_content" to send a message with the specified content instead of the location.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,35 +20,18 @@ use RuntimeException;
 class Location extends InlineQueryResult
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
-     */
-    public ?string $thumb_url;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_width instead
-     */
-    public ?int $thumb_width;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_height instead
-     */
-    public ?int $thumb_height;
-
-    /**
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param float $latitude Location latitude in degrees
      * @param float $longitude Location longitude in degrees
      * @param string $title Location title
      * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
-     * @param int|null $live_period Period in seconds for which the location can be updated, should be between 60 and
-     *     86400.
+     * @param int|null $live_period Period in seconds during which the location can be updated, should be between 60
+     *     and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
      * @param int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be
      *     between 1 and 360 if specified.
      * @param int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about
      *     approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the location
      * @param string|null $thumbnail_url Url of the thumbnail for the result
      * @param int|null $thumbnail_width Thumbnail width
@@ -67,11 +51,20 @@ class Location extends InlineQueryResult
         public ?string $thumbnail_url = null,
         public ?int $thumbnail_width = null,
         public ?int $thumbnail_height = null,
+
+        #[Deprecated] public ?string $thumb_url = null,
+        #[Deprecated] public ?int $thumb_width = null,
+        #[Deprecated] public ?int $thumb_height = null,
     )
     {
-        $this->thumb_url = &$this->thumbnail_url;
-        $this->thumb_width = &$this->thumbnail_width;
-        $this->thumb_height = &$this->thumbnail_height;
+        $this->thumb_url ??= $this->thumbnail_url;
+        $this->thumbnail_url ??= $this->thumb_url;
+
+        $this->thumb_width ??= $this->thumbnail_width;
+        $this->thumbnail_width ??= $this->thumb_width;
+
+        $this->thumb_height ??= $this->thumbnail_height;
+        $this->thumbnail_height ??= $this->thumb_height;
     }
 
     public static function getType(): string

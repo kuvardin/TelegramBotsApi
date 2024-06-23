@@ -19,7 +19,11 @@ class InputFile extends Type
     protected ?string $url = null;
     protected ?string $attach_name;
 
-    private function __construct(string $file_id = null, string $url = null, string $attach_name = null)
+    private function __construct(
+        string $file_id = null,
+        string $url = null,
+        string $attach_name = null,
+    )
     {
         $this->file_id = $file_id;
         $this->url = $url;
@@ -45,6 +49,9 @@ class InputFile extends Type
         return new self(url: $url);
     }
 
+    /**
+     * to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name.
+     */
     public static function makeByAttachName(string $attach_name): self
     {
         return new self(attach_name: $attach_name);

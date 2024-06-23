@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains information about Telegram Passport data shared with the bot by the user.
+ * Describes Telegram Passport data shared with the bot by the user.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -29,15 +29,13 @@ class PassportData extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
-            data: [],
+        return new self(
+            data: array_map(
+                static fn(array $data_data) => EncryptedPassportElement::makeByArray($data_data),
+                $data['data'],
+            ),
             credentials: EncryptedCredentials::makeByArray($data['credentials']),
         );
-
-        foreach ($data['data'] as $item_data) {
-            $result->data[] = EncryptedPassportElement::makeByArray($item_data);
-        }
-        return $result;
     }
 
     public function getRequestData(): array

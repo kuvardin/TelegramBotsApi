@@ -14,18 +14,14 @@ use Kuvardin\TelegramBotsApi\Type;
  */
 class ForumTopicReopened extends Type
 {
-    public function __construct(
-
-    )
+    public function __construct()
     {
 
     }
 
     public static function makeByArray(array $data): self
     {
-        return new self(
-
-        );
+        return new self();
     }
 
     public function getRequestData(): array

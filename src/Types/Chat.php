@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\ChatType;
 use Kuvardin\TelegramBotsApi\Type;
 use Kuvardin\TelegramBotsApi\Username;
@@ -27,68 +28,6 @@ class Chat extends Type
      * @param string|null $first_name First name of the other party in a private chat
      * @param string|null $last_name Last name of the other party in a private chat
      * @param bool|null $is_forum True, if the supergroup chat is a forum (has topics enabled)
-     * @param ChatPhoto|null $photo Chat photo. Returned only in getChat().
-     * @param string[]|null $active_usernames Optional. If non-empty, the list of all active chat usernames;
-     *     for private chats, supergroups and channels. Returned only in getChat().
-     * @param ReactionType[]|null $available_reactions List of available reactions allowed in the chat. If omitted, then
-     *     all <a href="https://core.telegram.org/bots/api#reactiontypeemoji">emoji reactions</a> are allowed.
-     *     Returned only in getChat().
-     * @param int|null $accent_color_id Identifier of the accent color for the chat name and backgrounds of the chat
-     *     photo, reply header, and link preview. See <a href="https://core.telegram.org/bots/api#accent-colors">accent
-     *     colors</a> for more details. Returned only in getChat(). Always returned in getChat().
-     * @param string|null $background_custom_emoji_id Custom emoji identifier of emoji chosen by the chat for the reply
-     *     header and link preview background. Returned only in getChat().
-     * @param int|null $profile_accent_color_id Identifier of the accent color for the chat's profile background.
-     *     See <a href="https://core.telegram.org/bots/api#profile-accent-colors">profile accent colors</a> for more
-     *     details. Returned only in getChat().
-     * @param string|null $profile_background_custom_emoji_id Custom emoji identifier of the emoji chosen by the chat
-     *     for its profile background. Returned only in getChat().
-     * @param string|null $emoji_status_custom_emoji_id Custom emoji identifier of emoji status of the other party in
-     *     a private chat. Returned only in getChat().
-     * @param int|null $emoji_status_expiration_date Expiration date of the emoji status of the other party in a private
-     *     chat in Unix time, if any. Returned only in getChat().
-     * @param string|null $bio Bio of the other party in a private chat. Returned only in getChat().
-     * @param bool|null $has_private_forwards True, if privacy settings of the other party in the private chat allows
-     *     to use <code>tg://user?id=<user_id></code> links only in chats with the user. Returned only in getChat().
-     * @param bool|null $has_restricted_voice_and_video_messages True, if the privacy settings of the other party
-     *     restrict sending voice and video note messages in the private chat. Returned only in getChat().
-     * @param bool|null $join_to_send_messages True, if users need to join the supergroup before they can send messages.
-     *     Returned only in getChat().
-     * @param bool|null $join_by_request True, if all users directly joining the supergroup need to be approved by
-     *     supergroup administrators. Returned only in getChat().
-     * @param string|null $description Description, for groups, supergroups and channel chats. Returned only in
-     *     getChat().
-     * @param string|null $invite_link Primary invite link, for groups, supergroups and channel chats. Returned only in
-     *     getChat().
-     * @param Message|null $pinned_message The most recent pinned message (by sending date). Returned only in getChat().
-     * @param ChatPermissions|null $permissions Default chat member permissions, for groups and supergroups. Returned
-     *     only in getChat().
-     * @param int|null $slow_mode_delay For supergroups, the minimum allowed delay between consecutive messages sent by
-     *     each unpriviledged user; in seconds. Returned only in getChat().
-     * @param int|null $unrestrict_boost_count For supergroups, the minimum number of boosts that a non-administrator
-     *     user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat().
-     * @param int|null $message_auto_delete_time The time after which all messages sent to the chat will be
-     *     automatically deleted; in seconds. Returned only in Returned only in getChat().
-     * @param bool|null $has_protected_content True, if messages from the chat can't be forwarded to other chats.
-     *     Returned only in getChat().
-     * @param bool|null $has_visible_history True, if new chat members will have access to old messages; available only
-     *     to chat administrators. Returned only in getChat().
-     * @param string|null $sticker_set_name For supergroups, name of group sticker set. Returned only in getChat().
-     * @param bool|null $can_set_sticker_set <em>True</em>, if the bot can change the group sticker set. Returned only
-     *     in getChat().
-     * @param string|null $custom_emoji_sticker_set_name For supergroups, the name of the group's custom emoji sticker
-     *     set. Custom emoji from this set can be used by all users and bots in the group. Returned only in getChat().
-     * @param int|null $linked_chat_id Unique identifier for the linked chat, i.e. the discussion group identifier for
-     *     a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and
-     *     some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52
-     *     bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
-     *     Returned only in getChat().
-     * @param ChatLocation|null $location For supergroups, the location to which the supergroup is connected. Returned
-     *     only in getChat().
-     * @param bool|null $has_hidden_members True, if non-administrators can only get the list of bots and administrators
-     *     in the chat. Returned only in getChat().
-     * @param bool|null $has_aggressive_anti_spam_enabled True, if aggressive anti-spam checks are enabled in the
-     *     supergroup. The field is only available to chat administrators. Returned only in getChat().
      */
     public function __construct(
         public int $id,
@@ -98,36 +37,37 @@ class Chat extends Type
         public ?string $first_name = null,
         public ?string $last_name = null,
         public ?bool $is_forum = null,
-        public ?ChatPhoto $photo = null,
-        public ?array $active_usernames = null,
-        public ?array $available_reactions = null,
-        public ?int $accent_color_id = null,
-        public ?string $background_custom_emoji_id = null,
-        public ?int $profile_accent_color_id = null,
-        public ?string $profile_background_custom_emoji_id = null,
-        public ?string $emoji_status_custom_emoji_id = null,
-        public ?int $emoji_status_expiration_date = null,
-        public ?string $bio = null,
-        public ?bool $has_private_forwards = null,
-        public ?bool $has_restricted_voice_and_video_messages = null,
-        public ?bool $join_to_send_messages = null,
-        public ?bool $join_by_request = null,
-        public ?string $description = null,
-        public ?string $invite_link = null,
-        public ?Message $pinned_message = null,
-        public ?ChatPermissions $permissions = null,
-        public ?int $slow_mode_delay = null,
-        public ?int $unrestrict_boost_count = null,
-        public ?int $message_auto_delete_time = null,
-        public ?bool $has_protected_content = null,
-        public ?bool $has_visible_history = null,
-        public ?string $sticker_set_name = null,
-        public ?bool $can_set_sticker_set = null,
-        public ?string $custom_emoji_sticker_set_name = null,
-        public ?int $linked_chat_id = null,
-        public ?ChatLocation $location = null,
-        public ?bool $has_hidden_members = null,
-        public ?bool $has_aggressive_anti_spam_enabled = null,
+
+        #[Deprecated] public ?ChatPhoto $photo = null,
+        #[Deprecated] public ?array $active_usernames = null,
+        #[Deprecated] public ?array $available_reactions = null,
+        #[Deprecated] public ?int $accent_color_id = null,
+        #[Deprecated] public ?string $background_custom_emoji_id = null,
+        #[Deprecated] public ?int $profile_accent_color_id = null,
+        #[Deprecated] public ?string $profile_background_custom_emoji_id = null,
+        #[Deprecated] public ?string $emoji_status_custom_emoji_id = null,
+        #[Deprecated] public ?int $emoji_status_expiration_date = null,
+        #[Deprecated] public ?string $bio = null,
+        #[Deprecated] public ?bool $has_private_forwards = null,
+        #[Deprecated] public ?bool $has_restricted_voice_and_video_messages = null,
+        #[Deprecated] public ?bool $join_to_send_messages = null,
+        #[Deprecated] public ?bool $join_by_request = null,
+        #[Deprecated] public ?string $description = null,
+        #[Deprecated] public ?string $invite_link = null,
+        #[Deprecated] public ?Message $pinned_message = null,
+        #[Deprecated] public ?ChatPermissions $permissions = null,
+        #[Deprecated] public ?int $slow_mode_delay = null,
+        #[Deprecated] public ?int $unrestrict_boost_count = null,
+        #[Deprecated] public ?int $message_auto_delete_time = null,
+        #[Deprecated] public ?bool $has_protected_content = null,
+        #[Deprecated] public ?bool $has_visible_history = null,
+        #[Deprecated] public ?string $sticker_set_name = null,
+        #[Deprecated] public ?bool $can_set_sticker_set = null,
+        #[Deprecated] public ?string $custom_emoji_sticker_set_name = null,
+        #[Deprecated] public ?int $linked_chat_id = null,
+        #[Deprecated] public ?ChatLocation $location = null,
+        #[Deprecated] public ?bool $has_hidden_members = null,
+        #[Deprecated] public ?bool $has_aggressive_anti_spam_enabled = null,
     )
     {
 
@@ -145,6 +85,7 @@ class Chat extends Type
             first_name: $data['first_name'] ?? null,
             last_name: $data['last_name'] ?? null,
             is_forum: $data['is_forum'] ?? null,
+
             photo: isset($data['photo'])
                 ? ChatPhoto::makeByArray($data['photo'])
                 : null,
@@ -201,6 +142,7 @@ class Chat extends Type
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'is_forum' => $this->is_forum,
+
             'photo' => $this->photo,
             'active_usernames' => $this->active_usernames,
             'available_reactions' => $this->available_reactions,
@@ -235,7 +177,7 @@ class Chat extends Type
     }
 
     /**
-     * @return ChatType|null Returns <em>Null</em> if the chat type is unknown.
+     * @return ChatType|null Returns Null if the chat type is unknown.
      */
     public function getType(): ?ChatType
     {

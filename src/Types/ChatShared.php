@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object contains information about the chat whose identifier was shared with the bot using
- * a KeyboardButtonRequestChat button.
+ * This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -22,10 +21,16 @@ class ChatShared extends Type
      *     significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
      *     The bot may not have access to the chat and could be unable to use this identifier, unless the chat is
      *     already known to the bot by some other means.
+     * @param string|null $title Title of the chat, if the title was requested by the bot.
+     * @param string|null $username Username of the chat, if the username was requested by the bot and available.
+     * @param PhotoSize[]|null $photo Available sizes of the chat photo, if the photo was requested by the bot
      */
     public function __construct(
         public int $request_id,
         public int $chat_id,
+        public ?string $title = null,
+        public ?string $username = null,
+        public ?array $photo = null,
     )
     {
 
@@ -36,6 +41,14 @@ class ChatShared extends Type
         return new self(
             request_id: $data['request_id'],
             chat_id: $data['chat_id'],
+            title: $data['title'] ?? null,
+            username: $data['username'] ?? null,
+            photo: isset($data['photo'])
+                ? array_map(
+                    static fn(array $photo_size_data) => PhotoSize::makeByArray($photo_size_data),
+                    $data['photo'],
+                )
+                : null,
         );
     }
 
@@ -44,6 +57,9 @@ class ChatShared extends Type
         return [
             'request_id' => $this->request_id,
             'chat_id' => $this->chat_id,
+            'title' => $this->title,
+            'username' => $this->username,
+            'photo' => $this->photo,
         ];
     }
 }

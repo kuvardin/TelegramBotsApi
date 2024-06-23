@@ -17,7 +17,7 @@ class CallbackGame extends Type
 {
     public static function makeByArray(array $data): self
     {
-        return new self;
+        return new self();
     }
 
     public function getRequestData(): array

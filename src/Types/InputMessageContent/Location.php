@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 
 /**
- * Represents the <a href="https://core.telegram.org/bots/api#inputmessagecontent">content</a> of a location message to
- * be sent as the result of an inline query.
+ * Represents the content of a location message to be sent as the result of an inline query.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,8 +18,8 @@ class Location extends InputMessageContent
      * @param float $latitude Latitude of the location in degrees
      * @param float $longitude Longitude of the location in degrees
      * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
-     * @param int|null $live_period Period in seconds for which the location can be updated, should be between 60 and
-     *     86400.
+     * @param int|null $live_period Period in seconds during which the location can be updated, should be between
+     *     60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
      * @param int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be
      *     between 1 and 360 if specified.
      * @param int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about

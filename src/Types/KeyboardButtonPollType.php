@@ -17,8 +17,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class KeyboardButtonPollType extends Type
 {
     /**
-     * @param string|null $type_value One of Enums\PollType. If <em>quiz</em> is passed, the user will be allowed to
-     *     create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed.
+     * @param string|null $type_value One of Enums\PollType. If quiz is passed, the user will be allowed to
+     *     create only polls in the quiz mode. If regular is passed, only regular polls will be allowed.
      *     Otherwise, the user will be allowed to create a poll of any type.
      */
     public function __construct(
@@ -43,7 +43,7 @@ class KeyboardButtonPollType extends Type
     }
 
     /**
-     * @return PollType|null Returns <em>Null</em> if the poll type value is null or unknown.
+     * @return PollType|null Returns Null if the poll type value is null or unknown.
      */
     public function getType(): ?PollType
     {

@@ -18,14 +18,13 @@ class Giveaway extends Type
      * @param Chat[] $chats The list of chats which the user must join to participate in the giveaway
      * @param int $winners_selection_date Point in time (Unix timestamp) when winners of the giveaway will be selected
      * @param int $winner_count The number of users which are supposed to be selected as winners of the giveaway
-     * @param bool|null $only_new_members <em>True</em>, if only users who join the chats after the giveaway started
-     *     should be eligible to win
-     * @param bool|null $has_public_winners <em>True</em>, if the list of giveaway winners will be visible to everyone
+     * @param bool|null $only_new_members "True", if only users who join the chats after the giveaway started should be
+     *     eligible to win
+     * @param bool|null $has_public_winners "True", if the list of giveaway winners will be visible to everyone
      * @param string|null $prize_description Description of additional giveaway prize
-     * @param string[]|null $country_codes A list of two-letter
-     *     <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating
-     *     the countries from which eligible users for the giveaway must come. If empty, then all users can participate
-     *     in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
+     * @param string[]|null $country_codes A list of two-letter ISO 3166-1 alpha-2 country codes indicating the
+     *     countries from which eligible users for the giveaway must come. If empty, then all users can participate in
+     *     the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
      * @param int|null $premium_subscription_month_count The number of months the Telegram Premium subscription won
      *     from the giveaway will be active for
      */
@@ -45,8 +44,11 @@ class Giveaway extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
-            chats: [],
+        return new self(
+            chats: array_map(
+                static fn(array $chats_data) => Chat::makeByArray($chats_data),
+                $data['chats'],
+            ),
             winners_selection_date: $data['winners_selection_date'],
             winner_count: $data['winner_count'],
             only_new_members: $data['only_new_members'] ?? null,
@@ -55,12 +57,6 @@ class Giveaway extends Type
             country_codes: $data['country_codes'] ?? null,
             premium_subscription_month_count: $data['premium_subscription_month_count'] ?? null,
         );
-
-        foreach ($data['chats'] as $item_data) {
-            $result->chats[] = Chat::makeByArray($item_data);
-        }
-
-        return $result;
     }
 
     public function getRequestData(): array

@@ -16,19 +16,18 @@ class GiveawayWinners extends Type
 {
     /**
      * @param Chat $chat The chat that created the giveaway
-     * @param int $giveaway_message_id Identifier of the messsage with the giveaway in the chat
+     * @param int $giveaway_message_id Identifier of the message with the giveaway in the chat
      * @param int $winners_selection_date Point in time (Unix timestamp) when winners of the giveaway were selected
      * @param int $winner_count Total number of winners in the giveaway
      * @param User[] $winners List of up to 100 winners of the giveaway
-     * @param int|null $additional_chat_count The number of other chats the user had to join in order to be eligible for
-     *     the giveaway
-     * @param int|null $premium_subscription_month_count The number of months the Telegram Premium subscription won from
-     *     the giveaway will be active for
+     * @param int|null $additional_chat_count The number of other chats the user had to join in order to be eligible
+     *     for the giveaway
+     * @param int|null $premium_subscription_month_count The number of months the Telegram Premium subscription won
+     *     from the giveaway will be active for
      * @param int|null $unclaimed_prize_count Number of undistributed prizes
-     * @param bool|null $only_new_members <em>True</em>, if only users who had joined the chats after the giveaway
-     *     started were eligible to win
-     * @param bool|null $was_refunded <em>True</em>, if the giveaway was canceled because the payment for it was
-     *     refunded
+     * @param bool|null $only_new_members "True", if only users who had joined the chats after the giveaway started
+     *     were eligible to win
+     * @param bool|null $was_refunded "True", if the giveaway was canceled because the payment for it was refunded
      * @param string|null $prize_description Description of additional giveaway prize
      */
     public function __construct(
@@ -50,12 +49,15 @@ class GiveawayWinners extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             chat: Chat::makeByArray($data['chat']),
             giveaway_message_id: $data['giveaway_message_id'],
             winners_selection_date: $data['winners_selection_date'],
             winner_count: $data['winner_count'],
-            winners: [],
+            winners: array_map(
+                static fn(array $winners_data) => User::makeByArray($winners_data),
+                $data['winners'],
+            ),
             additional_chat_count: $data['additional_chat_count'] ?? null,
             premium_subscription_month_count: $data['premium_subscription_month_count'] ?? null,
             unclaimed_prize_count: $data['unclaimed_prize_count'] ?? null,
@@ -63,12 +65,6 @@ class GiveawayWinners extends Type
             was_refunded: $data['was_refunded'] ?? null,
             prize_description: $data['prize_description'] ?? null,
         );
-
-        foreach ($data['winners'] as $item_data) {
-            $result->winners[] = User::makeByArray($item_data);
-        }
-
-        return $result;
     }
 
     public function getRequestData(): array

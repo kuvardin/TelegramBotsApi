@@ -4,22 +4,16 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use JetBrains\PhpStorm\Deprecated;
+
 /**
- * This object represents a general file (as opposed to <a
- * href="https://core.telegram.org/bots/api#photosize">photos</a>, <a
- * href="https://core.telegram.org/bots/api#voice">voice messages</a> and <a
- * href="https://core.telegram.org/bots/api#audio">audio files</a>).
+ * This object represents a general file (as opposed to photos, voice messages and audio files).
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
 class Document extends FileAbstract
 {
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
-     */
-    public ?PhotoSize $thumb = null;
-
     /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
@@ -32,18 +26,18 @@ class Document extends FileAbstract
      *     64-bit integer or double-precision float type are safe for storing this value.
      */
     public function __construct(
-        string $file_id,
-        string $file_unique_id,
+        public string $file_id,
+        public string $file_unique_id,
         public ?PhotoSize $thumbnail = null,
         public ?string $file_name = null,
         public ?string $mime_type = null,
-        ?int $file_size = null,
+        public ?int $file_size = null,
+
+        #[Deprecated] public ?PhotoSize $thumb = null,
     )
     {
-        $this->file_id = $file_id;
-        $this->file_unique_id = $file_unique_id;
-        $this->file_size = $file_size;
-        $this->thumb = $this->thumbnail;
+        $this->thumb ??= $this->thumbnail;
+        $this->thumbnail ??= $this->thumb;
     }
 
     public static function makeByArray(array $data): self

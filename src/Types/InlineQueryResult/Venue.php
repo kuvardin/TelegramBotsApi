@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -11,7 +12,7 @@ use RuntimeException;
 
 /**
  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use
- * <em>input_message_content</em> to send a message with the specified content instead of the venue.
+ * "input_message_content" to send a message with the specified content instead of the venue.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,22 +20,6 @@ use RuntimeException;
 class Venue extends InlineQueryResult
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
-     */
-    public ?string $thumb_url;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_width instead
-     */
-    public ?int $thumb_width;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_height instead
-     */
-    public ?int $thumb_height;
-
-    /**
-     * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param float $latitude Latitude of the venue location in degrees
      * @param float $longitude Longitude of the venue location in degrees
      * @param string $title Title of the venue
@@ -43,11 +28,8 @@ class Venue extends InlineQueryResult
      * @param string|null $foursquare_type Foursquare type of the venue, if known. (For example,
      *     “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
      * @param string|null $google_place_id Google Places identifier of the venue
-     * @param string|null $google_place_type Google Places type of the venue. (See <a
-     *     href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param string|null $google_place_type Google Places type of the venue. (See supported types.)
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the venue
      * @param string|null $thumbnail_url Url of the thumbnail for the result
      * @param int|null $thumbnail_width Thumbnail width
@@ -68,11 +50,20 @@ class Venue extends InlineQueryResult
         public ?string $thumbnail_url = null,
         public ?int $thumbnail_width = null,
         public ?int $thumbnail_height = null,
+
+        #[Deprecated] public ?string $thumb_url = null,
+        #[Deprecated] public ?int $thumb_width = null,
+        #[Deprecated] public ?int $thumb_height = null,
     )
     {
-        $this->thumb_url = &$this->thumbnail_url;
-        $this->thumb_width = &$this->thumbnail_width;
-        $this->thumb_height = &$this->thumbnail_height;
+        $this->thumb_url ??= $this->thumbnail_url;
+        $this->thumbnail_url ??= $this->thumb_url;
+
+        $this->thumb_width ??= $this->thumbnail_width;
+        $this->thumbnail_width ??= $this->thumb_width;
+
+        $this->thumb_height ??= $this->thumbnail_height;
+        $this->thumbnail_height ??= $this->thumb_height;
     }
 
     public static function getType(): string

@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents an <a href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline
- * keyboard</a> that appears right next to the message it belongs to.
+ * This object represents an inline keyboard that appears right next to the message it belongs to.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -39,6 +38,7 @@ class InlineKeyboardMarkup extends Type
             }
             $result->inline_keyboard[] = $buttons_row;
         }
+
         return $result;
     }
 

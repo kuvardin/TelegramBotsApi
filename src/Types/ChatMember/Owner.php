@@ -19,7 +19,7 @@ class Owner extends ChatMember
 {
     /**
      * @param User $user Information about the user
-     * @param bool $is_anonymous <em>True</em>, if the user's presence in the chat is hidden
+     * @param bool $is_anonymous True, if the user's presence in the chat is hidden
      * @param string|null $custom_title Custom title for this user
      */
     public function __construct(

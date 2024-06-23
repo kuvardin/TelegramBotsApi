@@ -12,7 +12,7 @@ use Kuvardin\TelegramBotsApi\Type;
  * create user-friendly step-by-step interfaces without having to sacrifice <a
  * href="https://core.telegram.org/bots#privacy-mode">privacy mode</a>.<br><br>
  *
- * <strong>Example:</strong> A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only
+ * Example: A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only
  * receives commands, replies to its messages and mentions). There could be two ways to create a new poll:<br>
  *
  * <ul>
@@ -38,8 +38,8 @@ class ForceReply extends Type
      * @param string|null $input_field_placeholder The placeholder to be shown in the input field when the reply is
      *     active; 1-64 characters
      * @param bool|null $selective Use this parameter if you want to force reply from specific users only. Targets: 1)
-     *     users that are @mentioned in the <em>text</em> of the Message object; 2) if the bot's message is a reply
-     *     (has <em>reply_to_message_id</em>), sender of the original message.
+     *     users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply
+     *     (has reply_to_message_id), sender of the original message.
      */
     public function __construct(
         public bool $force_reply,

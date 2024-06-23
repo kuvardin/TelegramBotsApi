@@ -24,17 +24,17 @@ class LoginUrl extends Type
      *     button is pressed. If the user refuses to provide authorization data, the original URL without information
      *     about the user will be opened. The data added is the same as described in <a
      *     href="https://core.telegram.org/widgets/login#receiving-authorization-data">Receiving authorization
-     *     data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data
+     *     data</a>.<br><br>NOTE: You must always check the hash of the received data
      *     to verify the authentication and the integrity of the data as described in <a
      *     href="https://core.telegram.org/widgets/login#checking-authorization">Checking authorization</a>.
      * @param string|null $forward_text New text of the button in forwarded messages.
      * @param string|null $bot_username Username of a bot, which will be used for user authorization. See <a
      *     href="https://core.telegram.org/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If
-     *     not specified, the current bot's username will be assumed. The <em>url</em>'s domain must be the same as the
+     *     not specified, the current bot's username will be assumed. The url's domain must be the same as the
      *     domain linked with the bot. See <a
      *     href="https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the
      *     bot</a> for more details.
-     * @param bool|null $request_write_access Pass <em>True</em> to request the permission for your bot to send
+     * @param bool|null $request_write_access Pass True to request the permission for your bot to send
      *     messages to the user.
      */
     public function __construct(

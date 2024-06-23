@@ -7,18 +7,10 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents an incoming callback query from a callback button in an <a
- * href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>. If the button
- * that originated the query was attached to a message sent by the bot, the field <em>message</em> will be present. If
- * the button was attached to a message sent via the bot (in <a
- * href="https://core.telegram.org/bots/api#inline-mode">inline mode</a>), the field <em>inline_message_id</em> will be
- * present. Exactly one of the fields <em>data</em> or <em>game_short_name</em> will be present.<br><br>
- *
- * <strong>NOTE:</strong> After the user presses a callback button, Telegram clients will display a progress bar until
- * you call <a href="https://core.telegram.org/bots/api#answercallbackquery">answerCallbackQuery</a>. It is, therefore,
- * necessary to react by calling <a
- * href="https://core.telegram.org/bots/api#answercallbackquery">answerCallbackQuery</a> even if no notification to the
- * user is needed (e.g., without specifying any of the optional parameters).
+ * This object represents an incoming callback query from a callback button in an inline keyboard. If the button that
+ * originated the query was attached to a message sent by the bot, the field "message" will be present. If the button
+ * was attached to a message sent via the bot (in inline mode), the field "inline_message_id" will be present. Exactly
+ * one of the fields "data" or "game_short_name" will be present.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -29,16 +21,15 @@ class CallbackQuery extends Type
      * @param string $id Unique identifier for this query
      * @param User $from Sender
      * @param string $chat_instance Global identifier, uniquely corresponding to the chat to which the message with the
-     *     callback button was sent. Useful for high scores in <a
-     *     href="https://core.telegram.org/bots/api#games">games</a>.
+     *     callback button was sent. Useful for high scores in games.
      * @param MaybeInaccessibleMessage|null $message Message sent by the bot with the callback button that originated
      *     the query
      * @param string|null $inline_message_id Identifier of the message sent via the bot in inline mode, that originated
      *     the query.
-     * @param string|null $data Data associated with the callback button. Be aware that a bad client can send arbitrary
-     *     data in this field.
-     * @param string|null $game_short_name Short name of a <a href="https://core.telegram.org/bots/api#games">Game</a>
-     *     to be returned, serves as the unique identifier for the game
+     * @param string|null $data Data associated with the callback button. Be aware that the message originated the
+     *     query can contain no callback buttons with this data.
+     * @param string|null $game_short_name Short name of a Game to be returned, serves as the unique identifier for the
+     *     game
      */
     public function __construct(
         public string $id,

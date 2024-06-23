@@ -15,25 +15,25 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChatPermissions extends Type
 {
     /**
-     * @param bool|null $can_send_messages <em>True</em>, if the user is allowed to send text messages, contacts,
+     * @param bool|null $can_send_messages True, if the user is allowed to send text messages, contacts,
      *     invoices, locations and venues
-     * @param bool|null $can_send_audios <em>True</em>, if the user is allowed to send audios
-     * @param bool|null $can_send_documents <em>True</em>, if the user is allowed to send documents
-     * @param bool|null $can_send_photos <em>True</em>, if the user is allowed to send photos
-     * @param bool|null $can_send_videos <em>True</em>, if the user is allowed to send videos
-     * @param bool|null $can_send_video_notes <em>True</em>, if the user is allowed to send video notes
-     * @param bool|null $can_send_voice_notes <em>True</em>, if the user is allowed to send voice notes
-     * @param bool|null $can_send_polls <em>True</em>, if the user is allowed to send polls
-     * @param bool|null $can_send_other_messages <em>True</em>, if the user is allowed to send animations, games,
+     * @param bool|null $can_send_audios True, if the user is allowed to send audios
+     * @param bool|null $can_send_documents True, if the user is allowed to send documents
+     * @param bool|null $can_send_photos True, if the user is allowed to send photos
+     * @param bool|null $can_send_videos True, if the user is allowed to send videos
+     * @param bool|null $can_send_video_notes True, if the user is allowed to send video notes
+     * @param bool|null $can_send_voice_notes True, if the user is allowed to send voice notes
+     * @param bool|null $can_send_polls True, if the user is allowed to send polls
+     * @param bool|null $can_send_other_messages True, if the user is allowed to send animations, games,
      *     stickers and use inline bots
-     * @param bool|null $can_add_web_page_previews <em>True</em>, if the user is allowed to add web page previews
+     * @param bool|null $can_add_web_page_previews True, if the user is allowed to add web page previews
      *     to their messages
-     * @param bool|null $can_change_info <em>True</em>, if the user is allowed to change the chat title, photo and
+     * @param bool|null $can_change_info True, if the user is allowed to change the chat title, photo and
      *     other settings. Ignored in public supergroups
-     * @param bool|null $can_invite_users <em>True</em>, if the user is allowed to invite new users to the chat
-     * @param bool|null $can_pin_messages <em>True</em>, if the user is allowed to pin messages. Ignored in public
+     * @param bool|null $can_invite_users True, if the user is allowed to invite new users to the chat
+     * @param bool|null $can_pin_messages True, if the user is allowed to pin messages. Ignored in public
      *     supergroups
-     * @param bool|null $can_manage_topics <em>True</em>, if the user is allowed to create forum topics. If omitted
+     * @param bool|null $can_manage_topics True, if the user is allowed to create forum topics. If omitted
      *     defaults to the value of can_pin_messages
      */
     public function __construct(

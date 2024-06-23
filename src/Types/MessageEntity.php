@@ -67,7 +67,7 @@ class MessageEntity extends Type
     }
 
     /**
-     * @return MessageEntityType|null Returns <em>Null</em> if the message entity type value is unknown.
+     * @return MessageEntityType|null Returns Null if the message entity type value is unknown.
      */
     public function getType(): ?MessageEntityType
     {

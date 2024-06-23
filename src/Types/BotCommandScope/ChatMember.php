@@ -18,7 +18,7 @@ class ChatMember extends BotCommandScope
 {
     /**
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format <code>@supergroupusername</code>)
+     *     format "@supergroupusername")
      * @param int $user_id Unique identifier of the target user
      */
     public function __construct(

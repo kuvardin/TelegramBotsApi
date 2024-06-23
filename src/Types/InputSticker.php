@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use Kuvardin\TelegramBotsApi\Enums\StickerFormat;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
@@ -15,12 +16,9 @@ use Kuvardin\TelegramBotsApi\Type;
 class InputSticker extends Type
 {
     /**
-     * @param InputFile $sticker The added sticker. Pass a <em>file_id</em> as a String to send a file that already
-     *     exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet,
-     *     upload a new one using multipart/form-data, or pass “attach://&lt;file_attach_name&gt;” to upload a new one
-     *     using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can't be uploaded
-     *     via HTTP URL.
+     * @param InputFile $sticker The added sticker. Animated and video stickers can't be uploaded via HTTP URL.
      * @param string[] $emoji_list List of 1-20 emoji associated with the sticker
+     * @param string $format_value Format of the added sticker, must be one of Enums\StickerFormat::*->value
      * @param MaskPosition|null $mask_position Position where the mask should be placed on faces. For “mask” stickers
      *     only.
      * @param string[]|null $keywords List of 0-20 search keywords for the sticker with total length of up to
@@ -29,6 +27,7 @@ class InputSticker extends Type
     public function __construct(
         public InputFile $sticker,
         public array $emoji_list,
+        public string $format_value,
         public ?MaskPosition $mask_position = null,
         public ?array $keywords = null,
     )
@@ -41,6 +40,7 @@ class InputSticker extends Type
         return new self(
             sticker: InputFile::makeByString($data['sticker']),
             emoji_list: $data['emoji_list'],
+            format_value: $data['format'],
             mask_position: isset($data['mask_position'])
                 ? MaskPosition::makeByArray($data['mask_position'])
                 : null,
@@ -52,9 +52,15 @@ class InputSticker extends Type
     {
         return [
             'sticker' => $this->sticker,
+            'format' => $this->format_value,
             'emoji_list' => $this->emoji_list,
             'mask_position' => $this->mask_position,
             'keywords' => $this->keywords,
         ];
+    }
+
+    public function getFormat(): ?StickerFormat
+    {
+        return StickerFormat::tryFrom($this->format_value);
     }
 }

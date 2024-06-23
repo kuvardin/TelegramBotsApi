@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -18,29 +19,12 @@ use RuntimeException;
 class Article extends InlineQueryResult
 {
     /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_url instead
-     */
-    public ?string $thumb_url;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_width instead
-     */
-    public ?int $thumb_width;
-
-    /**
-     * @deprecated Deprecated in v6.6. Use ->thumbnail_height instead
-     */
-    public ?int $thumb_height;
-
-    /**
      * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param string $title Title of the result
      * @param InputMessageContent $input_message_content Content of the message to be sent
-     * @param InlineKeyboardMarkup|null $reply_markup <a
-     *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">Inline keyboard</a> attached
-     *     to the message
+     * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param string|null $url URL of the result
-     * @param bool|null $hide_url Pass <em>True</em>, if you don't want the URL to be shown in the message
+     * @param bool|null $hide_url Pass True if you don't want the URL to be shown in the message
      * @param string|null $description Short description of the result
      * @param string|null $thumbnail_url Url of the thumbnail for the result
      * @param int|null $thumbnail_width Thumbnail width
@@ -57,11 +41,20 @@ class Article extends InlineQueryResult
         public ?string $thumbnail_url = null,
         public ?int $thumbnail_width = null,
         public ?int $thumbnail_height = null,
+
+        #[Deprecated] public ?string $thumb_url = null,
+        #[Deprecated] public ?int $thumb_width = null,
+        #[Deprecated] public ?int $thumb_height = null,
     )
     {
-        $this->thumb_url = &$this->thumbnail_url;
-        $this->thumb_width = &$this->thumbnail_width;
-        $this->thumb_height = &$this->thumbnail_height;
+        $this->thumb_url ??= $this->thumbnail_url;
+        $this->thumbnail_url ??= $this->thumb_url;
+
+        $this->thumb_width ??= $this->thumbnail_width;
+        $this->thumbnail_width ??= $this->thumb_width;
+
+        $this->thumb_height ??= $this->thumbnail_height;
+        $this->thumbnail_height ??= $this->thumb_height;
     }
 
     public static function getType(): string

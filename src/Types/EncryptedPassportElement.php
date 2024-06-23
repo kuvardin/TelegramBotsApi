@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Enums\PassportElementType;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains information about documents or other Telegram Passport elements shared with the bot by the user.
+ * Describes documents or other Telegram Passport elements shared with the bot by the user.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -18,25 +18,26 @@ class EncryptedPassportElement extends Type
     /**
      * @param string $type_value Element type. One of Enums\PassportElementType::*.
      * @param string $hash Base64-encoded element hash for using in PassportElementErrorUnspecified
-     * @param string|null $data Base64-encoded encrypted Telegram Passport element data provided by the user, available
-     *     for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address”
-     *     types. Can be decrypted and verified using the accompanying EncryptedCredentials.
-     * @param string|null $phone_number User's verified phone number, available only for “phone_number” type
-     * @param string|null $email User's verified email address, available only for “email” type
-     * @param PassportFile[]|null $files Array of encrypted files with documents provided by the user, available for
-     *     “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration”
-     *     types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
-     * @param PassportFile|null $front_side Encrypted file with the front side of the document, provided by the user.
-     *     Available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be
+     * @param string|null $data Base64-encoded encrypted Telegram Passport element data provided by the user; available
+     *     only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and
+     *     “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials.
+     * @param string|null $phone_number User's verified phone number; available only for “phone_number” type
+     * @param string|null $email User's verified email address; available only for “email” type
+     * @param PassportFile[]|null $files Array of encrypted files with documents provided by the user; available only
+     *     for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and
+     *     “temporary_registration” types. Files can be decrypted and verified using the accompanying
+     *     EncryptedCredentials.
+     * @param PassportFile|null $front_side Encrypted file with the front side of the document, provided by the user;
+     *     available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be
      *     decrypted and verified using the accompanying EncryptedCredentials.
      * @param PassportFile|null $reverse_side Encrypted file with the reverse side of the document, provided by the
-     *     user. Available for “driver_license” and “identity_card”. The file can be decrypted and verified using the
-     *     accompanying EncryptedCredentials.
+     *     user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using
+     *     the accompanying EncryptedCredentials.
      * @param PassportFile|null $selfie Encrypted file with the selfie of the user holding a document, provided by the
-     *     user; available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be
-     *     decrypted and verified using the accompanying EncryptedCredentials.
+     *     user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The
+     *     file can be decrypted and verified using the accompanying EncryptedCredentials.
      * @param PassportFile[]|null $translation Array of encrypted files with translated versions of documents provided
-     *     by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”,
+     *     by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”,
      *     “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration”
      *     types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
      */
@@ -58,13 +59,18 @@ class EncryptedPassportElement extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             type_value: $data['type'],
             hash: $data['hash'],
             data: $data['data'] ?? null,
             phone_number: $data['phone_number'] ?? null,
             email: $data['email'] ?? null,
-            files: null,
+            files: isset($data['files'])
+                ? array_map(
+                    static fn(array $files_data) => PassportFile::makeByArray($files_data),
+                    $data['files'],
+                )
+                : null,
             front_side: isset($data['front_side'])
                 ? PassportFile::makeByArray($data['front_side'])
                 : null,
@@ -74,22 +80,13 @@ class EncryptedPassportElement extends Type
             selfie: isset($data['selfie'])
                 ? PassportFile::makeByArray($data['selfie'])
                 : null,
-            translation: null
+            translation: isset($data['translation'])
+                ? array_map(
+                    static fn(array $translation_data) => PassportFile::makeByArray($translation_data),
+                    $data['translation'],
+                )
+                : null,
         );
-
-        if (isset($data['files'])) {
-            $result->files = [];
-            foreach ($data['files'] as $passport_file_data) {
-                $result->files[] = PassportFile::makeByArray($passport_file_data);
-            }
-        }
-        if (isset($data['translation'])) {
-            $result->translation = [];
-            foreach ($data['translation'] as $translation_passport_file_data) {
-                $result->translation[] = PassportFile::makeByArray($translation_passport_file_data);
-            }
-        }
-        return $result;
     }
 
     public function getRequestData(): array
@@ -109,7 +106,7 @@ class EncryptedPassportElement extends Type
     }
 
     /**
-     * @return PassportElementType|null Returns <em>Null</em> if the encrypted passport element type value is unknown.
+     * @return PassportElementType|null Returns Null if the encrypted passport element type value is unknown.
      */
     public function getType(): ?PassportElementType
     {

@@ -9,7 +9,7 @@ use Kuvardin\TelegramBotsApi\Type;
 
 /**
  * This <a href="https://core.telegram.org/bots/api#available-types">object</a> represents an incoming update.<br>At
- * most <strong>one</strong> of the optional parameters can be present in any given update.
+ * most one of the optional parameters can be present in any given update.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -26,12 +26,18 @@ class Update extends Type
      * @param Message|null $edited_message New version of a message that is known to the bot and was edited
      * @param Message|null $channel_post New incoming channel post of any kind — text, photo, sticker, etc.
      * @param Message|null $edited_channel_post New version of a channel post that is known to the bot and was edited
+     * @param BusinessConnection|null $business_connection The bot was connected to or disconnected from a business
+     *     account, or a user edited an existing connection with the bot
+     * @param Message|null $business_message New message from a connected business account
+     * @param Message|null $edited_business_message New version of a message from a connected business account
+     * @param BusinessMessagesDeleted|null $deleted_business_messages Messages were deleted from a connected business
+     *     account
      * @param MessageReactionUpdated|null $message_reaction A reaction to a message was changed by a user. The bot must
-     *     be an administrator in the chat and must explicitly specify <code>"message_reaction"</code> in the list of
-     *     <em>allowed_updates</em> to receive these updates. The update isn't received for reactions set by bots.
+     *     be an administrator in the chat and must explicitly specify ""message_reaction"" in the list of
+     *     allowed_updates to receive these updates. The update isn't received for reactions set by bots.
      * @param MessageReactionCountUpdated|null $message_reaction_count Reactions to a message with anonymous reactions
      *     were changed. The bot must be an administrator in the chat and must explicitly specify
-     *     <code>"message_reaction_count"</code> in the list of <em>allowed_updates</em> to receive these updates.
+     *     ""message_reaction_count"" in the list of allowed_updates to receive these updates.
      * @param InlineQuery|null $inline_query New incoming <a
      *     href="https://core.telegram.org/bots/api#inline-mode">inline</a> query
      * @param ChosenInlineResult|null $chosen_inline_result The result of an <a
@@ -50,10 +56,10 @@ class Update extends Type
      * @param ChatMemberUpdated|null $my_chat_member The bot's chat member status was updated in a chat. For private
      *     chats, this update is received only when the bot is blocked or unblocked by the user.
      * @param ChatMemberUpdated|null $chat_member A chat member's status was updated in a chat. The bot must be an
-     *     administrator in the chat and must explicitly specify “chat_member” in the list of <em>allowed_updates</em>
+     *     administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates
      *     to receive these updates.
      * @param ChatJoinRequest|null $chat_join_request A request to join the chat has been sent. The bot must have the
-     *     <em>can_invite_users</em> administrator right in the chat to receive these updates.
+     *     can_invite_users administrator right in the chat to receive these updates.
      * @param ChatBoostUpdated|null $chat_boost A chat boost was added or changed. The bot must be an administrator in
      *     the chat to receive these updates.
      * @param ChatBoostRemoved|null $removed_chat_boost A boost was removed from a chat. The bot must be an
@@ -65,6 +71,10 @@ class Update extends Type
         public ?Message $edited_message = null,
         public ?Message $channel_post = null,
         public ?Message $edited_channel_post = null,
+        public ?BusinessConnection $business_connection = null,
+        public ?Message $business_message = null,
+        public ?Message $edited_business_message = null,
+        public ?BusinessMessagesDeleted $deleted_business_messages = null,
         public ?MessageReactionUpdated $message_reaction = null,
         public ?MessageReactionCountUpdated $message_reaction_count = null,
         public ?InlineQuery $inline_query = null,
@@ -99,6 +109,18 @@ class Update extends Type
                 : null,
             edited_channel_post: isset($data['edited_channel_post'])
                 ? Message::makeByArray($data['edited_channel_post'])
+                : null,
+            business_connection: isset($data['business_connection'])
+                ? BusinessConnection::makeByArray($data['business_connection'])
+                : null,
+            business_message: isset($data['business_message'])
+                ? Message::makeByArray($data['business_message'])
+                : null,
+            edited_business_message: isset($data['edited_business_message'])
+                ? Message::makeByArray($data['edited_business_message'])
+                : null,
+            deleted_business_messages: isset($data['deleted_business_messages'])
+                ? BusinessMessagesDeleted::makeByArray($data['deleted_business_messages'])
                 : null,
             message_reaction: isset($data['message_reaction'])
                 ? MessageReactionUpdated::makeByArray($data['message_reaction'])
@@ -153,6 +175,10 @@ class Update extends Type
             'edited_message' => $this->edited_message,
             'channel_post' => $this->channel_post,
             'edited_channel_post' => $this->edited_channel_post,
+            'business_connection' => $this->business_connection,
+            'business_message' => $this->business_message,
+            'edited_business_message' => $this->edited_business_message,
+            'deleted_business_messages' => $this->deleted_business_messages,
             'message_reaction' => $this->message_reaction,
             'message_reaction_count' => $this->message_reaction_count,
             'inline_query' => $this->inline_query,
@@ -176,6 +202,9 @@ class Update extends Type
             ?? $this->edited_message?->chat
             ?? $this->channel_post?->chat
             ?? $this->edited_channel_post?->chat
+            ?? $this->business_message?->chat
+            ?? $this->edited_business_message?->chat
+            ?? $this->deleted_business_messages?->chat
             ?? $this->message_reaction?->chat
             ?? $this->message_reaction_count?->chat
             ?? $this->callback_query?->message?->chat
@@ -192,6 +221,9 @@ class Update extends Type
             ?? $this->edited_message?->from
             ?? $this->channel_post?->from
             ?? $this->edited_channel_post?->from
+            ?? $this->business_connection?->user
+            ?? $this->business_message?->from
+            ?? $this->edited_business_message?->from
             ?? $this->message_reaction?->user
             ?? $this->inline_query?->from
             ?? $this->chosen_inline_result?->from
@@ -204,8 +236,24 @@ class Update extends Type
             ?? $this->chat_join_request?->from;
     }
 
+    public function getDate(): ?int
+    {
+        return $this->message?->date
+            ?? $this->edited_message?->edit_date
+            ?? $this->channel_post?->date
+            ?? $this->edited_channel_post?->edit_date
+            ?? $this->business_connection?->date
+            ?? $this->business_message?->date
+            ?? $this->edited_business_message?->edit_date
+            ?? $this->message_reaction?->date
+            ?? $this->message_reaction_count?->date
+            ?? $this->my_chat_member?->date
+            ?? $this->chat_member?->date
+            ?? $this->chat_join_request?->date;
+    }
+
     /**
-     * Returns <em>Null</em> if the update type is unknown.
+     * Returns Null if the update type is unknown.
      *
      * @return UpdateType|null
      */
@@ -216,6 +264,10 @@ class Update extends Type
             $this->edited_message !== null => UpdateType::EditedMessage,
             $this->channel_post !== null => UpdateType::ChannelPost,
             $this->edited_channel_post !== null => UpdateType::EditedChannelPost,
+            $this->business_connection !== null => UpdateType::BusinessConnection,
+            $this->business_message !== null => UpdateType::BusinessMessage,
+            $this->edited_business_message !== null => UpdateType::EditedBusinessMessage,
+            $this->deleted_business_messages !== null => UpdateType::DeletedBusinessMessages,
             $this->message_reaction !== null => UpdateType::MessageReaction,
             $this->message_reaction_count !== null => UpdateType::MessageReactionCount,
             $this->inline_query !== null => UpdateType::InlineQuery,

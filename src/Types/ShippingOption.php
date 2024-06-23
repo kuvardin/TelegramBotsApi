@@ -30,16 +30,14 @@ class ShippingOption extends Type
 
     public static function makeByArray(array $data): self
     {
-        $result = new self(
+        return new self(
             id: $data['id'],
             title: $data['title'],
-            prices: [],
+            prices: array_map(
+                static fn(array $prices_data) => LabeledPrice::makeByArray($prices_data),
+                $data['prices'],
+            ),
         );
-
-        foreach ($data['prices'] as $item_data) {
-            $result->prices[] = LabeledPrice::makeByArray($item_data);
-        }
-        return $result;
     }
 
     public function getRequestData(): array

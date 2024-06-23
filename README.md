@@ -1,6 +1,6 @@
-# TelegramBotsApi v.7.1
+# TelegramBotsApi v.7.5
 
-SDK for latest version of Telegram bots API (from February 16, 2024)
+SDK for latest version of Telegram bots API (from June 18, 2024)
 
 ## Using Examples
 ### Installing

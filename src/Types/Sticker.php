@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\StickerType;
 
 /**
@@ -15,37 +16,29 @@ use Kuvardin\TelegramBotsApi\Enums\StickerType;
 class Sticker extends FileAbstract
 {
     /**
-     * @var PhotoSize|null
-     * @deprecated Deprecated in v6.6. Use ->thumbnail instead
-     */
-    public ?PhotoSize $thumb = null;
-
-    /**
      * @param string $file_id Identifier for this file, which can be used to download or reuse the file
      * @param string $file_unique_id Unique identifier for this file, which is supposed to be the same over time and
      *     for different bots. Can't be used to download or reuse the file.
-     * @param string $type_value Type of the sticker, currently one of Enums\StickerType. The type of the sticker
-     *     is independent from its format, which is determined by the fields is_animated and is_video.
+     * @param string $type_value Type of the sticker, currently one of Enums\StickerType. The type of the sticker is
+     *     independent from its format, which is determined by the fields is_animated and is_video.
      * @param int $width Sticker width
      * @param int $height Sticker height
-     * @param bool $is_animated <em>True</em>, if the sticker is <a
-     *     href="https://telegram.org/blog/animated-stickers">animated</a>
-     * @param bool $is_video <em>True</em>, if the sticker is a <a
-     *     href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
+     * @param bool $is_animated "True", if the sticker is animated
+     * @param bool $is_video "True", if the sticker is a video sticker
      * @param PhotoSize|null $thumbnail Sticker thumbnail in the .WEBP or .JPG format
      * @param string|null $emoji Emoji associated with the sticker
      * @param string|null $set_name Name of the sticker set to which the sticker belongs
      * @param File|null $premium_animation For premium regular stickers, premium animation for the sticker
      * @param MaskPosition|null $mask_position For mask stickers, the position where the mask should be placed
      * @param string|null $custom_emoji_id For custom emoji stickers, unique identifier of the custom emoji
-     * @param bool|null $needs_repainting <em>True</em>, if the sticker must be repainted to a text color in messages,
-     *     the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate
+     * @param bool|null $needs_repainting "True", if the sticker must be repainted to a text color in messages, the
+     *     color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate
      *     color in other places
      * @param int|null $file_size File size in bytes
      */
     public function __construct(
-        string $file_id,
-        string $file_unique_id,
+        public string $file_id,
+        public string $file_unique_id,
         public string $type_value,
         public int $width,
         public int $height,
@@ -58,13 +51,13 @@ class Sticker extends FileAbstract
         public ?MaskPosition $mask_position = null,
         public ?string $custom_emoji_id = null,
         public ?bool $needs_repainting = null,
-        ?int $file_size = null,
+        public ?int $file_size = null,
+
+        #[Deprecated] public ?PhotoSize $thumb = null,
     )
     {
-        $this->file_id = $file_id;
-        $this->file_unique_id = $file_unique_id;
-        $this->file_size = $file_size;
-        $this->thumb = $this->thumbnail;
+        $this->thumb ??= $this->thumbnail;
+        $this->thumbnail ??= $this->thumb;
     }
 
     public static function makeByArray(array $data): self
@@ -116,7 +109,7 @@ class Sticker extends FileAbstract
     }
 
     /**
-     * @return StickerType|null Returns <em>Null</em> if the sticker type is unknown.
+     * @return StickerType|null Returns Null if the sticker type is unknown.
      */
     public function getType(): ?StickerType
     {
