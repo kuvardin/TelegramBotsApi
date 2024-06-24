@@ -7,8 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents one button of an inline keyboard. You must use exactly one of the optional
- * fields.
+ * This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify
+ * type of the button.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

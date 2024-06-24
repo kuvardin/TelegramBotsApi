@@ -9,7 +9,8 @@ use Kuvardin\TelegramBotsApi\Type;
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a
  * great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do is
- * tap/click a button and confirm that they want to log in.<br><br>
+ * tap/click a button and confirm that they want to log in:<br><br>
+ * Telegram apps support these buttons as of version 5.7.
  *
  * Telegram apps support these buttons as of <a
  * href="https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots">version 5.7</a>.

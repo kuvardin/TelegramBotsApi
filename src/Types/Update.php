@@ -8,8 +8,8 @@ use Kuvardin\TelegramBotsApi\Enums\UpdateType;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This <a href="https://core.telegram.org/bots/api#available-types">object</a> represents an incoming update.<br>At
- * most one of the optional parameters can be present in any given update.
+ * This object represents an incoming update.<br>
+ * At most one of the optional parameters can be present in any given update.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

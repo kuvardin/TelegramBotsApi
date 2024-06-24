@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains information about the current status of a webhook.
+ * Describes the current status of a webhook.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

@@ -7,8 +7,9 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a service message about a user allowing a bot to write messages after adding the bot to
- * the attachment menu or launching a Web App from a link.
+ * This object represents a service message about a user allowing a bot to write messages after adding it to the
+ * attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method
+ * requestWriteAccess.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

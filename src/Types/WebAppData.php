@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains data sent from a <a href="https://core.telegram.org/bots/webapps">Web App</a> to the bot.
+ * Describes data sent from a Web App to the bot.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

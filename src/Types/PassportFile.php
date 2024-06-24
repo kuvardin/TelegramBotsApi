@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Type;
 
 /**
  * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG
- * format when decrypted and don't exceed 10MB.
+ * format when decrypted and don&#39;t exceed 10MB.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

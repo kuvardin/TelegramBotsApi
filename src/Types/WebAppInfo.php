@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains information about a <a href="https://core.telegram.org/bots/webapps">Web App</a>.
+ * Describes a Web App.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

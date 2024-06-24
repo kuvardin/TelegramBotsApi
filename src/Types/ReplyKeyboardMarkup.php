@@ -7,8 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a <a href="https://core.telegram.org/bots#keyboards">custom keyboard</a> with reply options
- * (see <a href="https://core.telegram.org/bots#keyboards">Introduction to bots</a> for details and examples).
+ * This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not
+ * supported in channels and for messages sent on behalf of a Telegram Business account.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

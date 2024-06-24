@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Type;
 use Kuvardin\TelegramBotsApi\Enums\PollType;
 
 /**
- * This object contains information about a poll.
+ * This object represents an answer of a user in a non-anonymous poll.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

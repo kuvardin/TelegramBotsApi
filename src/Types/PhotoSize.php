@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 /**
- * This object represents one size of a photo or a <a href="https://core.telegram.org/bots/api#document">file</a> / <a
- * href="https://core.telegram.org/bots/api#sticker">sticker</a> thumbnail.
+ * This object represents one size of a photo or a file / sticker thumbnail.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

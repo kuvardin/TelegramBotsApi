@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your
- * game.
+ * A placeholder, currently holds no information. Use BotFather to set up your game.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

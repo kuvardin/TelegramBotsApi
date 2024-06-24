@@ -7,9 +7,9 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared
- * with the bot when the corresponding button is pressed.<br><br>
- * <a href="https://core.telegram.org/bots/features#chat-and-user-selection">More about requesting chats »</a>
+ * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared
+ * with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if
+ * appropriate.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

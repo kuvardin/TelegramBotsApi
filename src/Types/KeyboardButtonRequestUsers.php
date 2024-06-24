@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object defines the criteria used to request suitable users. The identifiers of the selected users will be shared
+ * This object defines the criteria used to request suitable users. Information about the selected users will be shared
  * with the bot when the corresponding button is pressed.
  *
  * @package Kuvardin\TelegramBotsApi

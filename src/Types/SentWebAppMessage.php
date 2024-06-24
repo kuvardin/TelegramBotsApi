@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains information about an inline message sent by a <a href="https://core.telegram.org/bots/webapps">Web App</a>
- * on behalf of a user.
+ * Describes an inline message sent by a Web App on behalf of a user.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

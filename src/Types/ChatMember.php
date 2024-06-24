@@ -8,8 +8,7 @@ use Kuvardin\TelegramBotsApi\Type;
 use RuntimeException;
 
 /**
- * This object contains information about one member of a chat. Currently, the following 6 types of chat members are
- * supported:
+ * This object contains information about one member of a chat.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

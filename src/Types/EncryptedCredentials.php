@@ -7,10 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Contains data required for decrypting and authenticating <a
- * href="https://core.telegram.org/bots/api#encryptedpassportelement">EncryptedPassportElement</a>. See the <a
- * href="https://core.telegram.org/passport#receiving-information">Telegram Passport Documentation</a> for a complete
- * description of the data decryption and authentication processes.
+ * Describes data required for decrypting and authenticating EncryptedPassportElement. See the Telegram Passport
+ * Documentation for a complete description of the data decryption and authentication processes.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

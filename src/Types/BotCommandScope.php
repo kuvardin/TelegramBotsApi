@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Type;
 use RuntimeException;
 
 /**
- * This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
+ * This object represents the scope to which bot commands are applied.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

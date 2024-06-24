@@ -7,8 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object contains information about the users whose identifiers were shared with the bot using
- * a KeyboardButtonRequestUsers button.
+ * This object contains information about the users whose identifiers were shared with the bot using a
+ * KeyboardButtonRequestUsers button.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

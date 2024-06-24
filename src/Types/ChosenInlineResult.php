@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#inlinequeryresult">result</a> of an inline query that was
- * chosen by the user and sent to their chat partner.
+ * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

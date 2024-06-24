@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Type;
 use RuntimeException;
 
 /**
- * This object describes the bot's menu button in a private chat. It should be one of MenuButton\*
+ * This object describes the bot&#39;s menu button in a private chat. It should be one of MenuButton\*
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
