@@ -1,7 +1,7 @@
 # TelegramBotsApi v.7.6
 
-[![Latest Version](https://img.shields.io/github/release/kuvardin/telegrambotsapi.svg?style=flat-square)](https://github.com/guzzle/guzzle/releases)
-[![Total Downloads](https://img.shields.io/packagist/dt/kuvardin/telegram-bots-api.svg?style=flat-square)](https://packagist.org/packages/guzzlehttp/guzzle)
+[![Latest Version](https://img.shields.io/github/release/kuvardin/telegrambotsapi.svg?style=flat-square)](https://github.com/kuvardin/TelegramBotsApi/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/kuvardin/telegram-bots-api.svg?style=flat-square)](https://packagist.org/packages/kuvardin/telegram-bots-api)
 
 SDK for latest version of Telegram bots API (from July 1, 2024)
 
