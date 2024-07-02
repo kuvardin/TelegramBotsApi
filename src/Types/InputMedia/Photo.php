@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
@@ -21,8 +22,7 @@ class Photo extends InputMedia
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
      * @param string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the photo caption. See formatting options for more
-     *     details.
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the photo caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of parse_mode
      * @param bool|null $has_spoiler Pass True if the photo needs to be covered with a spoiler animation
@@ -31,7 +31,7 @@ class Photo extends InputMedia
     public function __construct(
         public string $media,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?bool $has_spoiler = null,
         public ?bool $show_caption_above_media = null,
@@ -72,7 +72,7 @@ class Photo extends InputMedia
             'type' => self::getType(),
             'media' => $this->media,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'has_spoiler' => $this->has_spoiler,

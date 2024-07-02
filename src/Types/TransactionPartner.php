@@ -23,6 +23,7 @@ abstract class TransactionPartner extends Type
             TransactionPartner\Fragment::getType() => TransactionPartner\Fragment::makeByArray($data),
             TransactionPartner\Other::getType() => TransactionPartner\Other::makeByArray($data),
             TransactionPartner\User::getType() => TransactionPartner\User::makeByArray($data),
+            TransactionPartner\TelegramAds::getType() => TransactionPartner\TelegramAds::makeByArray($data),
             default => throw new RuntimeException("Wrong transaction partner type: {$data['type']}"),
         };
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 use JetBrains\PhpStorm\Deprecated;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -31,7 +32,7 @@ class Video extends InlineQueryResult
      * @param string $thumbnail_url URL of the thumbnail (JPEG only) for the video
      * @param string $title Title for the result
      * @param string|null $caption Caption of the video to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the video caption
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the video caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of "parse_mode"
      * @param int|null $video_width Video width
@@ -51,7 +52,7 @@ class Video extends InlineQueryResult
         public string $thumbnail_url,
         public string $title,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?int $video_width = null,
         public ?int $video_height = null,
@@ -117,7 +118,7 @@ class Video extends InlineQueryResult
             'thumbnail_url' => $this->thumbnail_url,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'video_width' => $this->video_width,

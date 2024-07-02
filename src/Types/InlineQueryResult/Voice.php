@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -25,7 +26,7 @@ class Voice extends InlineQueryResult
      * @param string $voice_url A valid URL for the voice recording
      * @param string $title Recording title
      * @param string|null $caption Caption, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the voice message caption
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the voice message caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of "parse_mode"
      * @param int|null $voice_duration Recording duration in seconds
@@ -38,7 +39,7 @@ class Voice extends InlineQueryResult
         public string $voice_url,
         public string $title,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?int $voice_duration = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
@@ -89,7 +90,7 @@ class Voice extends InlineQueryResult
             'voice_url' => $this->voice_url,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'voice_duration' => $this->voice_duration,
             'reply_markup' => $this->reply_markup,

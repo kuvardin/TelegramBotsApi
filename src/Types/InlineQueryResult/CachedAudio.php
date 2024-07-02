@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -24,7 +25,7 @@ class CachedAudio extends InlineQueryResult
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $audio_file_id A valid file identifier for the audio file
      * @param string|null $caption Caption, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the audio caption
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the audio caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of parse_mode
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
@@ -34,7 +35,7 @@ class CachedAudio extends InlineQueryResult
         public string $id,
         public string $audio_file_id,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
         public ?InputMessageContent $input_message_content = null,
@@ -81,7 +82,7 @@ class CachedAudio extends InlineQueryResult
             'id' => $this->id,
             'audio_file_id' => $this->audio_file_id,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,

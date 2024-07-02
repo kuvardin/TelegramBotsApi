@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
 use JetBrains\PhpStorm\Deprecated;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputFile;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
@@ -29,8 +30,7 @@ class Animation extends InputMedia
      *     “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under
      *     <file_attach_name>.
      * @param string|null $caption Caption of the animation to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the animation caption. See formatting options for
-     *     more details.
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the animation caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of parse_mode
      * @param int|null $width Animation width
@@ -43,7 +43,7 @@ class Animation extends InputMedia
         public string $media,
         public ?InputFile $thumbnail = null,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?int $width = null,
         public ?int $height = null,
@@ -97,7 +97,7 @@ class Animation extends InputMedia
             'media' => $this->media,
             'thumbnail' => $this->thumbnail,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'width' => $this->width,

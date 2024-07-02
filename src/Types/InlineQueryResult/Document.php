@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 
 use JetBrains\PhpStorm\Deprecated;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\InlineQueryResult;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
@@ -27,7 +28,7 @@ class Document extends InlineQueryResult
      * @param string $document_url A valid URL for the file
      * @param string $mime_type MIME type of the content of the file, either “application/pdf” or “application/zip”
      * @param string|null $caption Caption of the document to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the document caption
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the document caption
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of "parse_mode"
      * @param string|null $description Short description of the result
@@ -43,7 +44,7 @@ class Document extends InlineQueryResult
         public string $document_url,
         public string $mime_type,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?string $description = null,
         public ?InlineKeyboardMarkup $reply_markup = null,
@@ -111,7 +112,7 @@ class Document extends InlineQueryResult
             'id' => $this->id,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode,
+            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'document_url' => $this->document_url,
             'mime_type' => $this->mime_type,

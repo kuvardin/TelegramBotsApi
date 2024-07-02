@@ -382,10 +382,11 @@ class Bot
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages,
-     * and invoice messages can&#39;t be copied. A quiz poll can be copied only if the value of the field
-     * "correct_option_id" is known to the bot. The method is analogous to the method forwardMessage(), but the copied
-     * message doesn&#39;t have a link to the original message.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway
+     * winners messages, and invoice messages can&#39;t be copied. A quiz poll can be copied only if the value of the
+     * field "correct_option_id" is known to the bot. The method is analogous to the method forwardMessage(), but the
+     * copied message doesn&#39;t have a link to the original message. Returns the MessageId of the sent message on
+     * success.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format "&#64;channelusername")
@@ -447,25 +448,25 @@ class Bot
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they
-     * are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be
-     * copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot.
-     * The method is analogous to the method forwardMessages(), but the copied messages don't have a link to the
-     * original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent
-     * messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied,
+     * they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and
+     * invoice messages can&#39;t be copied. A quiz poll can be copied only if the value of the field
+     * "correct_option_id" is known to the bot. The method is analogous to the method forwardMessages(), but the copied
+     * messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success,
+     * an array of MessageId of the sent messages is returned.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
-     *     (in the format &#64;channelusername)
-     * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent
-     *     (or channel username in the format &#64;channelusername)
-     * @param int[] $message_ids Identifiers of 1-100 messages in the chat from_chat_id to copy. The
-     *     identifiers must be specified in a strictly increasing order.
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
+     *     format "&#64;channelusername")
+     * @param int|string $from_chat_id Unique identifier for the chat where the original messages were sent (or channel
+     *     username in the format "&#64;channelusername")
+     * @param int[] $message_ids A JSON-serialized list of 1-100 identifiers of messages in the chat "from_chat_id" to
+     *     copy. The identifiers must be specified in a strictly increasing order.
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
      *     forum supergroups only
-     * @param bool|null $disable_notification Sends the messages silently. Users will receive a notification with
-     *     no sound.
+     * @param bool|null $disable_notification Sends the messages silently. Users will receive a notification with no
+     *     sound.
      * @param bool|null $protect_content Protects the contents of the sent messages from forwarding and saving
-     * @param bool|null $remove_caption Pass True to copy the messages without their captions
+     * @param bool|null $remove_caption Pass "True" to copy the messages without their captions
      */
     public function copyMessages(
         int|string $chat_id,
@@ -1098,6 +1099,56 @@ class Bot
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
+        ]);
+    }
+
+    /**
+     * Use this method to send paid media to channel chats
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
+     *     format "&#64;channelusername")
+     * @param int $star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param Types\InputPaidMedia[] $media A JSON-serialized array describing the media to be sent; up to 10 items
+     * @param string|null $caption Media caption, 0-1024 characters after entities parsing
+     * @param ParseMode|null $parse_mode Mode for parsing entities in the media caption. See formatting options for more
+     *     details.
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of "parse_mode"
+     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
+     * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user
+     */
+    public function sendPaidMedia(
+        int|string $chat_id,
+        int $star_count,
+        array $media,
+        string $caption = null,
+        ParseMode $parse_mode = null,
+        array $caption_entities = null,
+        bool $show_caption_above_media = null,
+        bool $disable_notification = null,
+        bool $protect_content = null,
+        Types\ReplyParameters $reply_parameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+    ): Requests\RequestMessage
+    {
+        return new Requests\RequestMessage($this, 'sendPaidMedia', [
+            'chat_id' => $chat_id,
+            'star_count' => $star_count,
+            'media' => $media,
+            'caption' => $caption,
+            'parse_mode' => $parse_mode?->value ?? $this->parse_mode_default->value,
+            'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
         ]);
     }
 
@@ -3473,7 +3524,7 @@ class Bot
         string $name,
         string $title,
         array $stickers,
-        string $sticker_type = null,
+        Enums\StickerType $sticker_type = null,
         bool $needs_repainting = null,
     ): Requests\RequestVoid
     {
@@ -3482,7 +3533,7 @@ class Bot
             'name' => $name,
             'title' => $title,
             'stickers' => $stickers,
-            'sticker_type' => $sticker_type,
+            'sticker_type' => $sticker_type?->value,
             'needs_repainting' => $needs_repainting,
         ]);
     }
