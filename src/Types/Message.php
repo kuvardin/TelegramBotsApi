@@ -112,6 +112,8 @@ class Message extends MaybeInaccessibleMessage
      * @param Invoice|null $invoice Message is an invoice for a payment, information about the invoice.
      * @param SuccessfulPayment|null $successful_payment Message is a service message about a successful payment,
      *     information about the payment.
+     * @param RefundedPayment|null $refunded_payment Message is a service message about a refunded payment, information
+     *     about the payment.
      * @param UsersShared|null $users_shared Service message: users were shared with the bot
      * @param ChatShared|null $chat_shared Service message: a chat was shared with the bot
      * @param string|null $connected_website The domain name of the website on which the user has logged in.
@@ -216,6 +218,7 @@ class Message extends MaybeInaccessibleMessage
         public ?MaybeInaccessibleMessage $pinned_message = null,
         public ?Invoice $invoice = null,
         public ?SuccessfulPayment $successful_payment = null,
+        public ?RefundedPayment $refunded_payment = null,
         public ?UsersShared $users_shared = null,
         public ?ChatShared $chat_shared = null,
         public ?string $connected_website = null,
@@ -400,6 +403,9 @@ class Message extends MaybeInaccessibleMessage
             successful_payment: isset($data['successful_payment'])
                 ? SuccessfulPayment::makeByArray($data['successful_payment'])
                 : null,
+            refunded_payment: isset($data['refunded_payment'])
+                ? RefundedPayment::makeByArray($data['refunded_payment'])
+                : null,
             users_shared: isset($data['users_shared'])
                 ? UsersShared::makeByArray($data['users_shared'])
                 : null,
@@ -547,6 +553,7 @@ class Message extends MaybeInaccessibleMessage
             'pinned_message' => $this->pinned_message,
             'invoice' => $this->invoice,
             'successful_payment' => $this->successful_payment,
+            'refunded_payment' => $this->refunded_payment,
             'users_shared' => $this->users_shared,
             'chat_shared' => $this->chat_shared,
             'connected_website' => $this->connected_website,
