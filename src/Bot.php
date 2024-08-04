@@ -2326,46 +2326,54 @@ class Bot
 
     /**
      * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat,
-     * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages'
-     * administrator right in a supergroup or 'can_edit_messages' administrator right in a channel.
+     * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
+     * right in a supergroup or 'can_edit_messages' administrator right in a channel.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int $message_id Identifier of a message to pin
      * @param bool|null $disable_notification Pass True, if it is not necessary to send a notification to all
      *     chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be pinned
      */
     public function pinChatMessage(
         int|string $chat_id,
         int $message_id,
         bool $disable_notification = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'pinChatMessage', [
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'disable_notification' => $disable_notification,
+            'business_connection_id' => $business_connection_id,
         ]);
     }
 
     /**
-     * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private
-     * chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages'
-     * administrator right in a supergroup or 'can_edit_messages' administrator right in a channel.
+     * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat,
+     * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
+     * right in a supergroup or 'can_edit_messages' administrator right in a channel.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
      * @param int|null $message_id Identifier of a message to unpin. If not specified, the most recent pinned message
      *     (by sending date) will be unpinned.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be pinned
      */
     public function unpinChatMessage(
         int|string $chat_id,
         int $message_id = null,
+        string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'unpinChatMessage', [
             'chat_id' => $chat_id,
             'message_id' => $message_id,
+            'business_connection_id' => $business_connection_id,
         ]);
     }
 

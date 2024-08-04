@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Username;
 
 /**
  * This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.
@@ -22,14 +23,14 @@ class ChatShared extends Type
      *     The bot may not have access to the chat and could be unable to use this identifier, unless the chat is
      *     already known to the bot by some other means.
      * @param string|null $title Title of the chat, if the title was requested by the bot.
-     * @param string|null $username Username of the chat, if the username was requested by the bot and available.
+     * @param Username|null $username Username of the chat, if the username was requested by the bot and available.
      * @param PhotoSize[]|null $photo Available sizes of the chat photo, if the photo was requested by the bot
      */
     public function __construct(
         public int $request_id,
         public int $chat_id,
         public ?string $title = null,
-        public ?string $username = null,
+        public ?Username $username = null,
         public ?array $photo = null,
     )
     {
@@ -42,7 +43,7 @@ class ChatShared extends Type
             request_id: $data['request_id'],
             chat_id: $data['chat_id'],
             title: $data['title'] ?? null,
-            username: $data['username'] ?? null,
+            username: empty($data['username']) ? null : new Username($data['username']),
             photo: isset($data['photo'])
                 ? array_map(
                     static fn(array $photo_size_data) => PhotoSize::makeByArray($photo_size_data),
@@ -58,7 +59,7 @@ class ChatShared extends Type
             'request_id' => $this->request_id,
             'chat_id' => $this->chat_id,
             'title' => $this->title,
-            'username' => $this->username,
+            'username' => $this->username?->getShort(),
             'photo' => $this->photo,
         ];
     }

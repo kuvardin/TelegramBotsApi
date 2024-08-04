@@ -79,9 +79,7 @@ class Chat extends Type
             id: $data['id'],
             type_value: $data['type'],
             title: $data['title'] ?? null,
-            username: isset($data['username'])
-                ? new Username($data['username'])
-                : null,
+            username: empty($data['username']) ? null : new Username($data['username']),
             first_name: $data['first_name'] ?? null,
             last_name: $data['last_name'] ?? null,
             is_forum: $data['is_forum'] ?? null,
@@ -138,7 +136,7 @@ class Chat extends Type
             'id' => $this->id,
             'type' => $this->type_value,
             'title' => $this->title,
-            'username' => $this->username,
+            'username' => $this->username?->getShort(),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'is_forum' => $this->is_forum,

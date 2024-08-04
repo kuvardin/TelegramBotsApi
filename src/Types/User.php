@@ -33,6 +33,7 @@ class User extends Type
      *     Returned only in getMe().
      * @param bool|null $can_connect_to_business True, if the bot can be connected to a Telegram Business account
      *     to receive its messages. Returned only in getMe().
+     * @param bool|null $has_main_web_app True, if the bot has a main Web App. Returned only in getMe().
      */
     public function __construct(
         public int $id,
@@ -47,6 +48,7 @@ class User extends Type
         public ?bool $can_read_all_group_messages = null,
         public ?bool $supports_inline_queries = null,
         public ?bool $can_connect_to_business = null,
+        public ?bool $has_main_web_app = null,
     )
     {
 
@@ -59,9 +61,7 @@ class User extends Type
             is_bot: $data['is_bot'],
             first_name: $data['first_name'],
             last_name: $data['last_name'] ?? null,
-            username: isset($data['username'])
-                ? new Username($data['username'])
-                : null,
+            username: empty($data['username']) ? null : new Username($data['username']),
             language_code: $data['language_code'] ?? null,
             is_premium: $data['is_premium'] ?? null,
             added_to_attachment_menu: $data['added_to_attachment_menu'] ?? null,
@@ -69,6 +69,7 @@ class User extends Type
             can_read_all_group_messages: $data['can_read_all_group_messages'] ?? null,
             supports_inline_queries: $data['supports_inline_queries'] ?? null,
             can_connect_to_business: $data['can_connect_to_business'] ?? null,
+            has_main_web_app: $data['has_main_web_app'] ?? null,
         );
     }
 
@@ -87,6 +88,7 @@ class User extends Type
             'can_read_all_group_messages' => $this->can_read_all_group_messages,
             'supports_inline_queries' => $this->supports_inline_queries,
             'can_connect_to_business' => $this->can_connect_to_business,
+            'has_main_web_app' => $this->has_main_web_app,
         ];
     }
 }

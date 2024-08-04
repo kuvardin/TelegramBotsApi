@@ -6,6 +6,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Enums\ChatType;
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Username;
 
 /**
  * This object contains full information about a chat.
@@ -25,7 +26,7 @@ class ChatFullInfo extends Type
      *     reply header, and link preview. See accent colors for more details.
      * @param int $max_reaction_count The maximum number of reactions that can be set on a message in the chat
      * @param string|null $title Title, for supergroups, channels and group chats
-     * @param string|null $username Username, for private chats, supergroups and channels if available
+     * @param Username|null $username Username, for private chats, supergroups and channels if available
      * @param string|null $first_name First name of the other party in a private chat
      * @param string|null $last_name Last name of the other party in a private chat
      * @param bool|null $is_forum True, if the supergroup chat is a forum (has topics enabled)
@@ -92,7 +93,7 @@ class ChatFullInfo extends Type
         public int $accent_color_id,
         public int $max_reaction_count,
         public ?string $title = null,
-        public ?string $username = null,
+        public ?Username $username = null,
         public ?string $first_name = null,
         public ?string $last_name = null,
         public ?bool $is_forum = null,
@@ -143,7 +144,7 @@ class ChatFullInfo extends Type
             accent_color_id: $data['accent_color_id'],
             max_reaction_count: $data['max_reaction_count'],
             title: $data['title'] ?? null,
-            username: $data['username'] ?? null,
+            username: empty($data['username']) ? null : new Username($data['username']),
             first_name: $data['first_name'] ?? null,
             last_name: $data['last_name'] ?? null,
             is_forum: $data['is_forum'] ?? null,
@@ -213,7 +214,7 @@ class ChatFullInfo extends Type
             'id' => $this->id,
             'type' => $this->type_value,
             'title' => $this->title,
-            'username' => $this->username,
+            'username' => $this->username?->getShort(),
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'is_forum' => $this->is_forum,
