@@ -7,8 +7,10 @@ namespace Kuvardin\TelegramBotsApi;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use JsonException;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException;
+use StringBackedEnum;
 
 /**
  * @package Kuvardin\TelegramBotsApi
@@ -102,6 +104,8 @@ abstract class Request
         foreach ($parameters as $parameter_key => $parameter_value) {
             if ($parameter_value instanceof Type) {
                 $parameter_value = $parameter_value->getRequestData();
+            } elseif ($parameter_value instanceof StringBackedEnum) {
+                $parameter_value = $parameter_value->value;
             }
 
             if ($parameter_value === null) {
