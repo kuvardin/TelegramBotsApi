@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 
 use Kuvardin\TelegramBotsApi\Enums\ParseMode;
+use Kuvardin\TelegramBotsApi\Types\InputFile;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
@@ -18,7 +19,7 @@ use RuntimeException;
 class Photo extends InputMedia
 {
     /**
-     * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
+     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
      * @param string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
@@ -29,7 +30,7 @@ class Photo extends InputMedia
      * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
-        public string $media,
+        public InputFile|string $media,
         public ?string $caption = null,
         public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
@@ -52,7 +53,7 @@ class Photo extends InputMedia
         }
 
         return new self(
-            media: $data['media'],
+            media: InputFile::makeByString($data['media']),
             caption: $data['caption'] ?? null,
             parse_mode: $data['parse_mode'] ?? null,
             caption_entities: isset($data['caption_entities'])

@@ -20,7 +20,7 @@ use RuntimeException;
 class Animation extends InputMedia
 {
     /**
-     * @param string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
+     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
      *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
      *     “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name.
      * @param InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the file
@@ -40,7 +40,7 @@ class Animation extends InputMedia
      * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
-        public string $media,
+        public InputFile|string $media,
         public ?InputFile $thumbnail = null,
         public ?string $caption = null,
         public ParseMode|string|null $parse_mode = null,
@@ -70,7 +70,7 @@ class Animation extends InputMedia
         }
 
         return new self(
-            media: $data['media'],
+            media: InputFile::makeByString($data['media']),
             thumbnail: isset($data['thumbnail'])
                 ? InputFile::makeByString($data['thumbnail'])
                 : null,

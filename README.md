@@ -28,12 +28,12 @@ $bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
 <?php
 require 'vendor/autoload.php';
 
-$client = new GuzzleHttp\Client();
 $token = '123456:AAAAAAAAAAAAAAA';
-$bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
-
 $chat_id = 123456789;
 $message_text = 'Hi!';
+
+$client = new GuzzleHttp\Client();
+$bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
 $request = $bot->sendMessage($chat_id, $message_text);
 
 try {
@@ -46,16 +46,60 @@ try {
 }
 ```
 
+```php
+<?php
+require 'vendor/autoload.php';
+
+$token = '123456:AAAAAAAAAAAAAAA';
+$chat_id = 123456789;
+
+$client = new GuzzleHttp\Client();
+$bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
+$attached_files = new Kuvardin\TelegramBotsApi\AttachedFiles();
+
+$request = $bot->sendMediaGroup(
+    chat_id: $chat_id,
+    media: [
+        new Kuvardin\TelegramBotsApi\Types\InputMedia\Photo(
+            media: $attached_files->attachByPath('photo1.jpg'),
+            caption: 'First photo',
+        ),
+        new Kuvardin\TelegramBotsApi\Types\InputMedia\Video(
+            media: $attached_files->attachByPath('video1.mp4'),
+            caption: 'First video',
+        ),
+        new Kuvardin\TelegramBotsApi\Types\InputMedia\Video(
+            media: $attached_files->attachByPath('video2.mp4'),
+            caption: 'Second video',
+        ),
+    ],
+);
+
+$attached_files->attachToRequest($request);
+
+try {
+    $messages = $request->sendRequest();
+
+    foreach ($messages as $message) {
+        echo "Message #{$message->message_id} successfully sent to chat with ID {$message->chat->id}\n";
+    }
+} catch (Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException $e) {
+    echo "API error #{$e->getCode()}: {$e->getMessage()}";
+} catch (GuzzleHttp\Exception\GuzzleException $e) {
+    echo "cURL error #{$e->getCode()}: {$e->getMessage()}";
+}
+```
+
 ### Set webhooks handler
 ```php
 <?php
 require 'vendor/autoload.php';
 
-$client = new GuzzleHttp\Client();
 $token = '123456:AAAAAAAAAAAAAAA';
-$bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
-
 $webhooks_handler_url = 'https://example.com/script.php';
+
+$client = new GuzzleHttp\Client();
+$bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
 $request = $bot->setWebhook($webhooks_handler_url);
 
 try {
@@ -73,8 +117,9 @@ try {
 <?php
 require 'vendor/autoload.php';
 
-$client = new GuzzleHttp\Client();
 $token = '123456:AAAAAAAAAAAAAAA';
+
+$client = new GuzzleHttp\Client();
 $bot = new Kuvardin\TelegramBotsApi\Bot($client, $token);
 
 $input = file_get_contents('php://input');

@@ -37,6 +37,11 @@ abstract class Request
      */
     protected array $parameters;
 
+    /**
+     * @var array<string, string> Attached file paths
+     */
+    protected array $attached_file_paths = [];
+
     public function __construct(Bot $bot, string $method, array $parameters = [])
     {
         $this->bot = $bot;
@@ -128,6 +133,21 @@ abstract class Request
         return $result;
     }
 
+    public function attachFileByPath(string $attach_name, string $file_path): self
+    {
+        if (!file_exists($file_path)) {
+            throw new RuntimeException("File not exists: $file_path");
+        }
+
+        if (array_key_exists($attach_name, $this->attached_file_paths)) {
+            throw new RuntimeException("File $attach_name already attached");
+        }
+
+        $this->attached_file_paths[$attach_name] = $file_path;
+
+        return $this;
+    }
+
     /**
      * @throws GuzzleException
      * @throws TelegramBotsApiException
@@ -144,21 +164,47 @@ abstract class Request
         $this->bot->last_response = null;
         $this->bot->last_response_decoded = null;
 
+        $request_options = [
+            RequestOptions::HTTP_ERRORS => false,
+            RequestOptions::HEADERS => [
+                'Content-Type: application/json',
+            ],
+            RequestOptions::TIMEOUT => $this->request_timeout,
+            RequestOptions::READ_TIMEOUT => $this->read_timeout,
+            RequestOptions::CONNECT_TIMEOUT => $this->connect_timeout,
+        ];
+
+        if ($this->attached_file_paths !== []) {
+            $multipart = [];
+
+            foreach ($this->attached_file_paths as $attach_name => $attached_file_path) {
+                $multipart[] = [
+                    'name' => $attach_name,
+                    'contents' => fopen($attached_file_path, 'r'),
+                ];
+            }
+
+            foreach ($this->getRequestData() as $data_key => $data_value) {
+                $multipart[] = [
+                    'name' => $data_key,
+                    'contents' => is_array($data_value)
+                        ? json_encode($data_value, JSON_THROW_ON_ERROR)
+                        : $data_value,
+                ];
+            }
+
+            $request_options[RequestOptions::MULTIPART] = $multipart;
+        } else {
+            $request_options[RequestOptions::JSON] = $this->getRequestData();
+        }
+
         $i = 0;
+
         do {
             $i++;
 
             try {
-                $response = $this->bot->getClient()->post($uri, [
-                    RequestOptions::HTTP_ERRORS => false,
-                    RequestOptions::HEADERS => [
-                        'Content-Type: application/json',
-                    ],
-                    RequestOptions::JSON => $this->getRequestData(),
-                    RequestOptions::TIMEOUT => $this->request_timeout,
-                    RequestOptions::READ_TIMEOUT => $this->read_timeout,
-                    RequestOptions::CONNECT_TIMEOUT => $this->connect_timeout,
-                ]);
+                $response = $this->bot->getClient()->post($uri, $request_options);
 
                 $this->bot->last_response = $response;
                 $contents = $response->getBody()->getContents();
