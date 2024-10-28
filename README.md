@@ -46,6 +46,7 @@ try {
 }
 ```
 
+### Sending media group
 ```php
 <?php
 require 'vendor/autoload.php';
