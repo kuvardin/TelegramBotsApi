@@ -16,7 +16,7 @@ class AttachedFiles
 
     public function attachByPath(
         string $file_path,
-        string $attach_name = null,
+        ?string $attach_name = null,
     ): InputFile
     {
         if ($attach_name === null) {

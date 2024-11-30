@@ -48,7 +48,7 @@ class Username
         return '@' . $this->value;
     }
 
-    public function getUrl(string $url_format = null): string
+    public function getUrl(?string $url_format = null): string
     {
         return sprintf($url_format ?? self::URL_FORMAT_DEFAULT, $this->value);
     }

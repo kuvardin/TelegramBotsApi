@@ -7,7 +7,6 @@ namespace Kuvardin\TelegramBotsApi;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use JsonException;
-use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException;
 use StringBackedEnum;

@@ -15,19 +15,13 @@ use Kuvardin\TelegramBotsApi\Type;
  */
 class InputFile extends Type
 {
-    protected ?string $file_id = null;
-    protected ?string $url = null;
-    protected ?string $attach_name;
-
     private function __construct(
-        string $file_id = null,
-        string $url = null,
-        string $attach_name = null,
+        protected ?string $file_id = null,
+        protected ?string $url = null,
+        protected ?string $attach_name = null,
     )
     {
-        $this->file_id = $file_id;
-        $this->url = $url;
-        $this->attach_name = $attach_name;
+
     }
 
     /**

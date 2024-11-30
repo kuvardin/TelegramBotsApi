@@ -71,7 +71,7 @@ class Bot
         $this->token = $token;
     }
 
-    public static function filterString(string $text, ParseMode $parse_mode = null): string
+    public static function filterString(string $text, ?ParseMode $parse_mode = null): string
     {
         switch ($parse_mode ?? ParseMode::HTML) {
             case ParseMode::HTML:
@@ -123,10 +123,10 @@ class Bot
      *     getUpdates, so unwanted updates may be received for a short period of time.
      */
     public function getUpdates(
-        int $offset = null,
-        int $limit = null,
-        int $timeout = null,
-        array $allowed_updates = null,
+        ?int $offset = null,
+        ?int $limit = null,
+        ?int $timeout = null,
+        ?array $allowed_updates = null,
     ): Requests\RequestUpdates
     {
         return new Requests\RequestUpdates($this, 'getUpdates', [
@@ -167,12 +167,12 @@ class Bot
      */
     public function setWebhook(
         string $url,
-        Types\InputFile $certificate = null,
-        string $ip_address = null,
-        int $max_connections = null,
-        array $allowed_updates = null,
-        bool $drop_pending_updates = null,
-        string $secret_token = null,
+        ?Types\InputFile $certificate = null,
+        ?string $ip_address = null,
+        ?int $max_connections = null,
+        ?array $allowed_updates = null,
+        ?bool $drop_pending_updates = null,
+        ?string $secret_token = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setWebhook', [
@@ -192,7 +192,7 @@ class Bot
      * @param bool|null $drop_pending_updates Pass True to drop all pending updates
      */
     public function deleteWebhook(
-        bool $drop_pending_updates = null,
+        ?bool $drop_pending_updates = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'deleteWebhook', [
@@ -259,7 +259,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -276,19 +276,19 @@ class Bot
     public function sendMessage(
         int|string $chat_id,
         string $text,
-        Enums\ParseMode $parse_mode = null,
-        array $entities = null,
-        #[Deprecated] bool $disable_web_page_preview = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        Types\LinkPreviewOptions $link_preview_options = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $entities = null,
+        #[Deprecated] ?bool $disable_web_page_preview = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?Types\LinkPreviewOptions $link_preview_options = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
@@ -330,9 +330,9 @@ class Bot
         int|string $chat_id,
         int|string $from_chat_id,
         int $message_id,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        int $message_thread_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?int $message_thread_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'forwardMessage', [
@@ -366,9 +366,9 @@ class Bot
         int|string $chat_id,
         int|string $from_chat_id,
         array $message_ids,
-        int $message_thread_id = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
+        ?int $message_thread_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
     ): Requests\RequestMessageIds
     {
         return new Requests\RequestMessageIds($this, 'forwardMessages', [
@@ -402,7 +402,7 @@ class Bot
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
      *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
      *     remove a reply keyboard or to force a reply from the user
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of the forum; for
@@ -415,17 +415,17 @@ class Bot
         int|string $chat_id,
         int|string $from_chat_id,
         int $message_id,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        bool $show_caption_above_media = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?bool $show_caption_above_media = null,
     ): Requests\RequestMessageId
     {
         return new Requests\RequestMessageId($this, 'copyMessage', [
@@ -472,10 +472,10 @@ class Bot
         int|string $chat_id,
         int|string $from_chat_id,
         array $message_ids,
-        int $message_thread_id = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        bool $remove_caption = null,
+        ?int $message_thread_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?bool $remove_caption = null,
     ): Requests\RequestMessageIds
     {
         return new Requests\RequestMessageIds($this, 'copyMessages', [
@@ -512,7 +512,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -531,20 +531,20 @@ class Bot
     public function sendPhoto(
         int|string $chat_id,
         Types\InputFile $photo,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        bool $has_spoiler = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        bool $show_caption_above_media = null,
-        string $message_effect_id = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?bool $has_spoiler = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?bool $show_caption_above_media = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -602,7 +602,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -619,23 +619,23 @@ class Bot
     public function sendAudio(
         int|string $chat_id,
         Types\InputFile $audio,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        int $duration = null,
-        string $performer = null,
-        string $title = null,
-        Types\InputFile $thumbnail = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        #[Deprecated] Types\InputFile $thumb = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?int $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+        ?Types\InputFile $thumbnail = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        #[Deprecated] ?Types\InputFile $thumb = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -693,7 +693,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -710,21 +710,21 @@ class Bot
     public function sendDocument(
         int|string $chat_id,
         Types\InputFile $document,
-        Types\InputFile $thumbnail = null,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $disable_content_type_detection = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        #[Deprecated] Types\InputFile $thumb = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?Types\InputFile $thumbnail = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $disable_content_type_detection = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        #[Deprecated] ?Types\InputFile $thumb = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
@@ -782,7 +782,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -802,26 +802,26 @@ class Bot
     public function sendVideo(
         int|string $chat_id,
         Types\InputFile $video,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        Types\InputFile $thumbnail = null,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $supports_streaming = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        bool $has_spoiler = null,
-        #[Deprecated] Types\InputFile $thumb = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        bool $show_caption_above_media = null,
-        string $message_effect_id = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        ?Types\InputFile $thumbnail = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $supports_streaming = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?bool $has_spoiler = null,
+        #[Deprecated] ?Types\InputFile $thumb = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?bool $show_caption_above_media = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -883,7 +883,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -903,25 +903,25 @@ class Bot
     public function sendAnimation(
         int|string $chat_id,
         Types\InputFile $animation,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        Types\InputFile $thumbnail = null,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        bool $has_spoiler = null,
-        #[Deprecated] Types\InputFile $thumb = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        bool $show_caption_above_media = null,
-        string $message_effect_id = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        ?Types\InputFile $thumbnail = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?bool $has_spoiler = null,
+        #[Deprecated] ?Types\InputFile $thumb = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?bool $show_caption_above_media = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -974,7 +974,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -990,19 +990,19 @@ class Bot
     public function sendVoice(
         int|string $chat_id,
         Types\InputFile $voice,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        int $duration = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?int $duration = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
@@ -1051,7 +1051,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -1068,19 +1068,19 @@ class Bot
     public function sendVideoNote(
         int|string $chat_id,
         Types\InputFile $video_note,
-        int $duration = null,
-        int $length = null,
-        Types\InputFile $thumbnail = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        #[Deprecated] Types\InputFile $thumb = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?int $duration = null,
+        ?int $length = null,
+        ?Types\InputFile $thumbnail = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        #[Deprecated] ?Types\InputFile $thumb = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -1119,7 +1119,7 @@ class Bot
      *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
      *     remove a reply keyboard or to force a reply from the user
      */
@@ -1127,14 +1127,14 @@ class Bot
         int|string $chat_id,
         int $star_count,
         array $media,
-        string $caption = null,
-        ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        bool $show_caption_above_media = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        Types\ReplyParameters $reply_parameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
+        ?string $caption = null,
+        ?ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPaidMedia', [
@@ -1177,14 +1177,14 @@ class Bot
     public function sendMediaGroup(
         int|string $chat_id,
         array $media,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessages
     {
         return new Requests\RequestMessages($this, 'sendMediaGroup', [
@@ -1223,7 +1223,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -1240,19 +1240,19 @@ class Bot
         int|string $chat_id,
         float $latitude,
         float $longitude,
-        float $horizontal_accuracy = null,
-        int $live_period = null,
-        int $heading = null,
-        int $proximity_alert_radius = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?float $horizontal_accuracy = null,
+        ?int $live_period = null,
+        ?int $heading = null,
+        ?int $proximity_alert_radius = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
@@ -1303,12 +1303,12 @@ class Bot
         int $message_id,
         float $latitude,
         float $longitude,
-        float $horizontal_accuracy = null,
-        int $heading = null,
-        int $proximity_alert_radius = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        int $live_period = null,
-        string $business_connection_id = null,
+        ?float $horizontal_accuracy = null,
+        ?int $heading = null,
+        ?int $proximity_alert_radius = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?int $live_period = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageLiveLocation', [
@@ -1349,12 +1349,12 @@ class Bot
         string $inline_message_id,
         float $latitude,
         float $longitude,
-        float $horizontal_accuracy = null,
-        int $heading = null,
-        int $proximity_alert_radius = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        int $live_period = null,
-        string $business_connection_id = null,
+        ?float $horizontal_accuracy = null,
+        ?int $heading = null,
+        ?int $proximity_alert_radius = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?int $live_period = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageLiveLocation', [
@@ -1384,8 +1384,8 @@ class Bot
     public function stopMessageLiveLocation(
         int|string $chat_id,
         int $message_id,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'stopMessageLiveLocation', [
@@ -1406,8 +1406,8 @@ class Bot
      */
     public function stopMessageLiveLocationInline(
         string $inline_message_id,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'stopMessageLiveLocation', [
@@ -1439,7 +1439,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -1458,19 +1458,19 @@ class Bot
         float $longitude,
         string $title,
         string $address,
-        string $foursquare_id = null,
-        string $foursquare_type = null,
-        string $google_place_id = null,
-        string $google_place_type = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?string $foursquare_id = null,
+        ?string $foursquare_type = null,
+        ?string $google_place_id = null,
+        ?string $google_place_type = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1513,7 +1513,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove keyboard
@@ -1530,17 +1530,17 @@ class Bot
         int|string $chat_id,
         string $phone_number,
         string $first_name,
-        string $last_name = null,
-        string $vcard = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?string $last_name = null,
+        ?string $vcard = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendContact', ['chat_id' => $chat_id,
@@ -1593,7 +1593,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -1615,27 +1615,27 @@ class Bot
         int|string $chat_id,
         string $question,
         array $options,
-        bool $is_anonymous = null,
-        Enums\PollType $type = null,
-        bool $allows_multiple_answers = null,
-        int $correct_option_id = null,
-        string $explanation = null,
-        string $explanation_parse_mode = null,
-        array $explanation_entities = null,
-        int $open_period = null,
-        int $close_date = null,
-        bool $is_closed = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        ParseMode $question_parse_mode = null,
-        array $question_entities = null,
-        string $message_effect_id = null,
+        ?bool $is_anonymous = null,
+        ?Enums\PollType $type = null,
+        ?bool $allows_multiple_answers = null,
+        ?int $correct_option_id = null,
+        ?string $explanation = null,
+        ?string $explanation_parse_mode = null,
+        ?array $explanation_entities = null,
+        ?int $open_period = null,
+        ?int $close_date = null,
+        ?bool $is_closed = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?ParseMode $question_parse_mode = null,
+        ?array $question_entities = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
@@ -1682,7 +1682,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -1697,16 +1697,16 @@ class Bot
      */
     public function sendDice(
         int|string $chat_id,
-        Enums\DiceType $type = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?Enums\DiceType $type = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDice', [
@@ -1741,8 +1741,8 @@ class Bot
     public function sendChatAction(
         int|string $chat_id,
         Enums\Action $action,
-        int $message_thread_id = null,
-        string $business_connection_id = null,
+        ?int $message_thread_id = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'sendChatAction', [
@@ -1770,8 +1770,8 @@ class Bot
     public function setMessageReaction(
         int|string $chat_id,
         int $message_id,
-        array $reaction = null,
-        bool $is_big = null,
+        ?array $reaction = null,
+        ?bool $is_big = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMessageReaction', [
@@ -1793,8 +1793,8 @@ class Bot
      */
     public function getUserProfilePhotos(
         int $user_id,
-        int $offset = null,
-        int $limit = null,
+        ?int $offset = null,
+        ?int $limit = null,
     ): Requests\RequestUserProfilePhotos
     {
         return new Requests\RequestUserProfilePhotos($this, 'getUserProfilePhotos', [
@@ -1844,8 +1844,8 @@ class Bot
     public function banChatMember(
         int|string $chat_id,
         int $user_id,
-        int $until_date = null,
-        bool $revoke_messages = null,
+        ?int $until_date = null,
+        ?bool $revoke_messages = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'banChatMember', [
@@ -1871,7 +1871,7 @@ class Bot
     public function unbanChatMember(
         int|string $chat_id,
         int $user_id,
-        bool $only_if_banned = null,
+        ?bool $only_if_banned = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'unbanChatMember', [
@@ -1904,8 +1904,8 @@ class Bot
         int|string $chat_id,
         int $user_id,
         Types\ChatPermissions $permissions,
-        bool $use_independent_chat_permissions = null,
-        int $until_date = null,
+        ?bool $use_independent_chat_permissions = null,
+        ?int $until_date = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'restrictChatMember', [
@@ -1957,21 +1957,21 @@ class Bot
     public function promoteChatMember(
         int|string $chat_id,
         int $user_id,
-        bool $is_anonymous = null,
-        bool $can_manage_chat = null,
-        bool $can_post_messages = null,
-        bool $can_edit_messages = null,
-        bool $can_delete_messages = null,
-        bool $can_manage_video_chats = null,
-        bool $can_restrict_members = null,
-        bool $can_promote_members = null,
-        bool $can_change_info = null,
-        bool $can_invite_users = null,
-        bool $can_pin_messages = null,
-        bool $can_manage_topics = null,
-        bool $can_post_stories = null,
-        bool $can_edit_stories = null,
-        bool $can_delete_stories = null,
+        ?bool $is_anonymous = null,
+        ?bool $can_manage_chat = null,
+        ?bool $can_post_messages = null,
+        ?bool $can_edit_messages = null,
+        ?bool $can_delete_messages = null,
+        ?bool $can_manage_video_chats = null,
+        ?bool $can_restrict_members = null,
+        ?bool $can_promote_members = null,
+        ?bool $can_change_info = null,
+        ?bool $can_invite_users = null,
+        ?bool $can_pin_messages = null,
+        ?bool $can_manage_topics = null,
+        ?bool $can_post_stories = null,
+        ?bool $can_edit_stories = null,
+        ?bool $can_delete_stories = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'promoteChatMember', [
@@ -2104,7 +2104,7 @@ class Bot
     public function setChatPermissions(
         int|string $chat_id,
         Types\ChatPermissions $permissions,
-        bool $use_independent_chat_permissions = null,
+        ?bool $use_independent_chat_permissions = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setChatPermissions', [
@@ -2147,10 +2147,10 @@ class Bot
      */
     public function createChatInviteLink(
         int|string $chat_id,
-        string $name = null,
-        int $expire_date = null,
-        int $member_limit = null,
-        bool $creates_join_request = null,
+        ?string $name = null,
+        ?int $expire_date = null,
+        ?int $member_limit = null,
+        ?bool $creates_join_request = null,
     ): Requests\RequestChatInviteLink
     {
         return new Requests\RequestChatInviteLink($this, 'createChatInviteLink', [
@@ -2179,10 +2179,10 @@ class Bot
     public function editChatInviteLink(
         int|string $chat_id,
         string $invite_link,
-        string $name = null,
-        int $expire_date = null,
-        int $member_limit = null,
-        bool $creates_join_request = null,
+        ?string $name = null,
+        ?int $expire_date = null,
+        ?int $member_limit = null,
+        ?bool $creates_join_request = null,
     ): Requests\RequestChatInviteLink
     {
         return new Requests\RequestChatInviteLink($this, 'editChatInviteLink', [
@@ -2315,7 +2315,7 @@ class Bot
      */
     public function setChatDescription(
         int|string $chat_id,
-        string $description = null,
+        ?string $description = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setChatDescription', [
@@ -2340,8 +2340,8 @@ class Bot
     public function pinChatMessage(
         int|string $chat_id,
         int $message_id,
-        bool $disable_notification = null,
-        string $business_connection_id = null,
+        ?bool $disable_notification = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'pinChatMessage', [
@@ -2366,8 +2366,8 @@ class Bot
      */
     public function unpinChatMessage(
         int|string $chat_id,
-        int $message_id = null,
-        string $business_connection_id = null,
+        ?int $message_id = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'unpinChatMessage', [
@@ -2525,10 +2525,10 @@ class Bot
      */
     public function answerCallbackQuery(
         string $callback_query_id,
-        string $text = null,
-        bool $show_alert = null,
-        string $url = null,
-        int $cache_time = null,
+        ?string $text = null,
+        ?bool $show_alert = null,
+        ?string $url = null,
+        ?int $cache_time = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'answerCallbackQuery', [
@@ -2611,8 +2611,8 @@ class Bot
     public function createForumTopic(
         int|string $chat_id,
         string $name,
-        int $icon_color = null,
-        string $icon_custom_emoji_id = null,
+        ?int $icon_color = null,
+        ?string $icon_custom_emoji_id = null,
     ): Requests\RequestForumTopic
     {
         return new Requests\RequestForumTopic($this, 'createForumTopic', [
@@ -2661,7 +2661,7 @@ class Bot
         int|string $chat_id,
         int $message_thread_id,
         string $name,
-        string $icon_custom_emoji_id = null,
+        ?string $icon_custom_emoji_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editForumTopic', [
@@ -2831,8 +2831,8 @@ class Bot
      */
     public function setMyCommands(
         array $commands,
-        Types\BotCommandScope $scope = null,
-        string $language_code = null,
+        ?Types\BotCommandScope $scope = null,
+        ?string $language_code = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMyCommands', [
@@ -2854,8 +2854,8 @@ class Bot
      *     all users from the given scope, for whose language there are no dedicated commands
      */
     public function deleteMyCommands(
-        Types\BotCommandScope $scope = null,
-        string $language_code = null,
+        ?Types\BotCommandScope $scope = null,
+        ?string $language_code = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'deleteMyCommands', [
@@ -2873,8 +2873,8 @@ class Bot
      * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
      */
     public function getMyCommands(
-        Types\BotCommandScope $scope = null,
-        string $language_code = null,
+        ?Types\BotCommandScope $scope = null,
+        ?string $language_code = null,
     ): Requests\RequestBotCommands
     {
         return new Requests\RequestBotCommands($this, 'getMyCommands', [
@@ -2892,8 +2892,8 @@ class Bot
      *     users for whose language there is no dedicated name.
      */
     public function setMyName(
-        string $name = null,
-        string $language_code = null,
+        ?string $name = null,
+        ?string $language_code = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMyName', [
@@ -2908,7 +2908,7 @@ class Bot
      * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
      */
     public function getMyName(
-        string $language_code = null,
+        ?string $language_code = null,
     ): Requests\RequestBotName
     {
         return new Requests\RequestBotName($this, 'getMyName', [
@@ -2925,8 +2925,8 @@ class Bot
      *     applied to all users for whose language there is no dedicated description.
      */
     public function setMyDescription(
-        string $description = null,
-        string $language_code = null,
+        ?string $description = null,
+        ?string $language_code = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMyDescription', [
@@ -2942,7 +2942,7 @@ class Bot
      * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
      */
     public function getMyDescription(
-        string $language_code = null,
+        ?string $language_code = null,
     ): Requests\RequestBotDescription
     {
         return new Requests\RequestBotDescription($this, 'getMyDescription', [
@@ -2960,8 +2960,8 @@ class Bot
      *     applied to all users for whose language there is no dedicated short description.
      */
     public function setMyShortDescription(
-        string $short_description = null,
-        string $language_code = null,
+        ?string $short_description = null,
+        ?string $language_code = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMyShortDescription', [
@@ -2977,7 +2977,7 @@ class Bot
      * @param string|null $language_code A two-letter ISO 639-1 language code or an empty string
      */
     public function getMyShortDescription(
-        string $language_code = null,
+        ?string $language_code = null,
     ): Requests\RequestBotShortDescription
     {
         return new Requests\RequestBotShortDescription($this, 'getMyShortDescription', [
@@ -2994,8 +2994,8 @@ class Bot
      *     to <a href="https://core.telegram.org/bots/api#menubuttondefault">MenuButtonDefault</a>
      */
     public function setChatMenuButton(
-        int $chat_id = null,
-        Types\MenuButton $menu_button = null,
+        ?int $chat_id = null,
+        ?Types\MenuButton $menu_button = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setChatMenuButton', [
@@ -3011,7 +3011,7 @@ class Bot
      * @param int|null $chat_id Unique identifier for the target private chat. If not specified, default bot's menu
      *     button will be returned
      */
-    public function getChatMenuButton(int $chat_id = null): Requests\RequestMenuButton
+    public function getChatMenuButton(?int $chat_id = null): Requests\RequestMenuButton
     {
         return new Requests\RequestMenuButton($this, 'getChatMenuButton', [
             'chat_id' => $chat_id,
@@ -3029,8 +3029,8 @@ class Bot
      *     channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
      */
     public function setMyDefaultAdministratorRights(
-        Types\ChatAdministratorRights $rights = null,
-        bool $for_channels = null,
+        ?Types\ChatAdministratorRights $rights = null,
+        ?bool $for_channels = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setMyDefaultAdministratorRights', [
@@ -3045,7 +3045,7 @@ class Bot
      * @param bool|null $for_channels Pass True to get default administrator rights of the bot in channels.
      *     Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
      */
-    public function getMyDefaultAdministratorRights(bool $for_channels = null): Requests\RequestChatAdministratorRights
+    public function getMyDefaultAdministratorRights(?bool $for_channels = null): Requests\RequestChatAdministratorRights
     {
         return new Requests\RequestChatAdministratorRights($this, 'getMyDefaultAdministratorRights', [
             'for_channels' => $for_channels,
@@ -3076,12 +3076,12 @@ class Bot
         int|string $chat_id,
         int $message_id,
         string $text,
-        Enums\ParseMode $parse_mode = null,
-        array $entities = null,
-        #[Deprecated] bool $disable_web_page_preview = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        Types\LinkPreviewOptions $link_preview_options = null,
-        string $business_connection_id = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $entities = null,
+        #[Deprecated] ?bool $disable_web_page_preview = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?Types\LinkPreviewOptions $link_preview_options = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageText', [
@@ -3119,12 +3119,12 @@ class Bot
     public function editMessageTextInline(
         string $inline_message_id,
         string $text,
-        Enums\ParseMode $parse_mode = null,
-        array $entities = null,
-        bool $disable_web_page_preview = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        Types\LinkPreviewOptions $link_preview_options = null,
-        string $business_connection_id = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $entities = null,
+        ?bool $disable_web_page_preview = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?Types\LinkPreviewOptions $link_preview_options = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageText', [
@@ -3161,12 +3161,12 @@ class Bot
     public function editMessageCaption(
         int|string $chat_id,
         int $message_id,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        bool $show_caption_above_media = null,
-        string $business_connection_id = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?bool $show_caption_above_media = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageCaption', [
@@ -3200,12 +3200,12 @@ class Bot
      */
     public function editMessageCaptionInline(
         string $inline_message_id,
-        string $caption = null,
-        Enums\ParseMode $parse_mode = null,
-        array $caption_entities = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        bool $show_caption_above_media = null,
-        string $business_connection_id = null,
+        ?string $caption = null,
+        ?Enums\ParseMode $parse_mode = null,
+        ?array $caption_entities = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?bool $show_caption_above_media = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageCaption', [
@@ -3238,8 +3238,8 @@ class Bot
         int|string $chat_id,
         int $message_id,
         Types\InputMedia $media,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageMedia', [
@@ -3267,8 +3267,8 @@ class Bot
     public function editMessageMediaInline(
         string $inline_message_id,
         Types\InputMedia $media,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageMedia', [
@@ -3293,8 +3293,8 @@ class Bot
     public function editMessageReplyMarkup(
         int|string $chat_id,
         int $message_id,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageReplyMarkup', [
@@ -3316,8 +3316,8 @@ class Bot
      */
     public function editMessageReplyMarkupInline(
         string $inline_message_id,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageReplyMarkup', [
@@ -3341,8 +3341,8 @@ class Bot
     public function stopPoll(
         int|string $chat_id,
         int $message_id,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        string $business_connection_id = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?string $business_connection_id = null,
     ): Requests\RequestPoll
     {
         return new Requests\RequestPoll($this, 'stopPoll', [
@@ -3414,7 +3414,7 @@ class Bot
      * @param int|null $reply_to_message_id If the message is a reply, ID of the original message
      * @param bool|null $allow_sending_without_reply Pass True, if the message should be sent even if the
      *     specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an <a
      *     href="https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating">inline keyboard</a>, <a
      *     href="https://core.telegram.org/bots#keyboards">custom reply keyboard</a>, instructions to remove reply
@@ -3431,16 +3431,16 @@ class Bot
     public function sendSticker(
         int|string $chat_id,
         Types\InputFile $sticker,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $reply_markup = null,
-        int $message_thread_id = null,
-        string $emoji = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?string $emoji = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -3532,8 +3532,8 @@ class Bot
         string $name,
         string $title,
         array $stickers,
-        Enums\StickerType $sticker_type = null,
-        bool $needs_repainting = null,
+        ?Enums\StickerType $sticker_type = null,
+        ?bool $needs_repainting = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'createNewStickerSet', [
@@ -3651,7 +3651,7 @@ class Bot
      */
     public function setStickerKeywords(
         string $sticker,
-        array $keywords = null,
+        ?array $keywords = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setStickerKeywords', [
@@ -3670,7 +3670,7 @@ class Bot
      */
     public function setStickerMaskPosition(
         string $sticker,
-        Types\MaskPosition $mask_position = null,
+        ?Types\MaskPosition $mask_position = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setStickerMaskPosition', [
@@ -3718,7 +3718,7 @@ class Bot
         string $name,
         int $user_id,
         Enums\StickerFormat $format,
-        Types\InputFile $thumbnail = null,
+        ?Types\InputFile $thumbnail = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setStickerSetThumbnail', [
@@ -3738,7 +3738,7 @@ class Bot
      */
     public function setCustomEmojiStickerSetThumbnail(
         string $name,
-        string $custom_emoji_id = null,
+        ?string $custom_emoji_id = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setCustomEmojiStickerSetThumbnail', [
@@ -3780,10 +3780,10 @@ class Bot
     public function answerInlineQuery(
         string $inline_query_id,
         array $results,
-        int $cache_time = null,
-        bool $is_personal = null,
-        string $next_offset = null,
-        Types\InlineQueryResultsButton $button = null,
+        ?int $cache_time = null,
+        ?bool $is_personal = null,
+        ?string $next_offset = null,
+        ?Types\InlineQueryResultsButton $button = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'answerInlineQuery', [
@@ -3881,29 +3881,29 @@ class Bot
         ?string $provider_token,
         string $currency,
         array $prices,
-        int $max_tip_amount = null,
-        array $suggested_tip_amounts = null,
-        string $start_parameter = null,
-        string $provider_data = null,
-        string $photo_url = null,
-        int $photo_size = null,
-        int $photo_width = null,
-        int $photo_height = null,
-        bool $need_name = null,
-        bool $need_phone_number = null,
-        bool $need_email = null,
-        bool $need_shipping_address = null,
-        bool $send_phone_number_to_provider = null,
-        bool $send_email_to_provider = null,
-        bool $is_flexible = null,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $message_effect_id = null,
+        ?int $max_tip_amount = null,
+        ?array $suggested_tip_amounts = null,
+        ?string $start_parameter = null,
+        ?string $provider_data = null,
+        ?string $photo_url = null,
+        ?int $photo_size = null,
+        ?int $photo_width = null,
+        ?int $photo_height = null,
+        ?bool $need_name = null,
+        ?bool $need_phone_number = null,
+        ?bool $need_email = null,
+        ?bool $need_shipping_address = null,
+        ?bool $send_phone_number_to_provider = null,
+        ?bool $send_email_to_provider = null,
+        ?bool $is_flexible = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendInvoice', [
@@ -3990,21 +3990,21 @@ class Bot
         string $payload,
         string $currency,
         array $prices,
-        string $provider_token = null,
-        int $max_tip_amount = null,
-        array $suggested_tip_amounts = null,
-        string $provider_data = null,
-        string $photo_url = null,
-        int $photo_size = null,
-        int $photo_width = null,
-        int $photo_height = null,
-        bool $need_name = null,
-        bool $need_phone_number = null,
-        bool $need_email = null,
-        bool $need_shipping_address = null,
-        bool $send_phone_number_to_provider = null,
-        bool $send_email_to_provider = null,
-        bool $is_flexible = null,
+        ?string $provider_token = null,
+        ?int $max_tip_amount = null,
+        ?array $suggested_tip_amounts = null,
+        ?string $provider_data = null,
+        ?string $photo_url = null,
+        ?int $photo_size = null,
+        ?int $photo_width = null,
+        ?int $photo_height = null,
+        ?bool $need_name = null,
+        ?bool $need_phone_number = null,
+        ?bool $need_email = null,
+        ?bool $need_shipping_address = null,
+        ?bool $send_phone_number_to_provider = null,
+        ?bool $send_email_to_provider = null,
+        ?bool $is_flexible = null,
     ): Requests\RequestString
     {
         return new Requests\RequestString($this, 'createInvoiceLink', [
@@ -4048,8 +4048,8 @@ class Bot
     public function answerShippingQuery(
         string $shipping_query_id,
         bool $ok,
-        array $shipping_options = null,
-        string $error_message = null,
+        ?array $shipping_options = null,
+        ?string $error_message = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'answerShippingQuery', [
@@ -4078,7 +4078,7 @@ class Bot
     public function answerPreCheckoutQuery(
         string $pre_checkout_query_id,
         bool $ok,
-        string $error_message = null,
+        ?string $error_message = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'answerPreCheckoutQuery', [
@@ -4097,8 +4097,8 @@ class Bot
      *     Defaults to 100.
      */
     public function getStarTransactions(
-        int $offset = null,
-        int $limit = null,
+        ?int $offset = null,
+        ?int $limit = null,
     ): Requests\RequestStarTransactions
     {
         return new Requests\RequestStarTransactions($this, 'getStarTransactions', [
@@ -4175,15 +4175,15 @@ class Bot
     public function sendGame(
         int $chat_id,
         string $game_short_name,
-        bool $disable_notification = null,
-        bool $protect_content = null,
-        #[Deprecated] int $reply_to_message_id = null,
-        #[Deprecated] bool $allow_sending_without_reply = null,
-        Types\InlineKeyboardMarkup $reply_markup = null,
-        int $message_thread_id = null,
-        Types\ReplyParameters $reply_parameters = null,
-        string $business_connection_id = null,
-        string $message_effect_id = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        #[Deprecated] ?int $reply_to_message_id = null,
+        #[Deprecated] ?bool $allow_sending_without_reply = null,
+        ?Types\InlineKeyboardMarkup $reply_markup = null,
+        ?int $message_thread_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        ?string $business_connection_id = null,
+        ?string $message_effect_id = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendGame', [
@@ -4220,8 +4220,8 @@ class Bot
         int $message_id,
         int $user_id,
         int $score,
-        bool $force = null,
-        bool $disable_edit_message = null,
+        ?bool $force = null,
+        ?bool $disable_edit_message = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'setGameScore', [
@@ -4251,8 +4251,8 @@ class Bot
         string $inline_message_id,
         int $user_id,
         int $score,
-        bool $force = null,
-        bool $disable_edit_message = null,
+        ?bool $force = null,
+        ?bool $disable_edit_message = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setGameScore', [

@@ -20,7 +20,7 @@ class TelegramBotsApiException extends Exception
         int $code,
         string $message,
         ?ResponseParameters $parameters,
-        Throwable $previous = null,
+        ?Throwable $previous = null,
     )
     {
         parent::__construct($message, $code, $previous);
