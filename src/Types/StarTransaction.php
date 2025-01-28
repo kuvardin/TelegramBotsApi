@@ -7,7 +7,9 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Describes a Telegram Star transaction.
+ * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider
+ * from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted
+ * from the bot's balance. This is outside of Telegram's control.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -24,6 +26,8 @@ class StarTransaction extends Type
      *     services, Fragment refunding a failed withdrawal). Only for incoming transactions
      * @param TransactionPartner|null $receiver Receiver of an outgoing transaction (e.g., a user for a purchase
      *     refund, Fragment for a withdrawal). Only for outgoing transactions
+     * @param int|null $nanostar_amount The number of 1/1000000000 shares of Telegram Stars transferred
+     *     by the transaction; from 0 to 999999999
      */
     public function __construct(
         public string $id,
@@ -31,6 +35,7 @@ class StarTransaction extends Type
         public int $date,
         public ?TransactionPartner $source = null,
         public ?TransactionPartner $receiver = null,
+        public ?int $nanostar_amount = null,
     )
     {
 
@@ -48,6 +53,7 @@ class StarTransaction extends Type
             receiver: isset($data['receiver'])
                 ? TransactionPartner::makeByArray($data['receiver'])
                 : null,
+            nanostar_amount: $data['nanostar_amount'] ?? null,
         );
     }
 
@@ -59,6 +65,7 @@ class StarTransaction extends Type
             'date' => $this->date,
             'source' => $this->source,
             'receiver' => $this->receiver,
+            'nanostar_amount' => $this->nanostar_amount,
         ];
     }
 }

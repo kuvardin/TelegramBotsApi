@@ -27,6 +27,10 @@ class ChatInviteLink extends Type
      * @param int|null $member_limit Maximum number of users that can be members of the chat simultaneously after
      *     joining the chat via this invite link; 1-99999
      * @param int|null $pending_join_request_count Number of pending join requests created using this link
+     * @param int|null $subscription_period The number of seconds the subscription will be active for before the next
+     *     payment
+     * @param int|null $subscription_price The amount of Telegram Stars a user must pay initially and after each
+     *     subsequent subscription period to be a member of the chat using the link
      */
     public function __construct(
         public string $invite_link,
@@ -38,6 +42,8 @@ class ChatInviteLink extends Type
         public ?int $expire_date = null,
         public ?int $member_limit = null,
         public ?int $pending_join_request_count = null,
+        public ?int $subscription_period = null,
+        public ?int $subscription_price = null,
     )
     {
 
@@ -55,6 +61,8 @@ class ChatInviteLink extends Type
             expire_date: $data['expire_date'] ?? null,
             member_limit: $data['member_limit'] ?? null,
             pending_join_request_count: $data['pending_join_request_count'] ?? null,
+            subscription_period: $data['subscription_period'] ?? null,
+            subscription_price: $data['subscription_price'] ?? null,
         );
     }
 
@@ -70,6 +78,8 @@ class ChatInviteLink extends Type
             'expire_date' => $this->expire_date,
             'member_limit' => $this->member_limit,
             'pending_join_request_count' => $this->pending_join_request_count,
+            'subscription_period' => $this->subscription_period,
+            'subscription_price' => $this->subscription_price,
         ];
     }
 }

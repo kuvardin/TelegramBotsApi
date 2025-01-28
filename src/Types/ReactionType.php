@@ -22,6 +22,7 @@ abstract class ReactionType extends Type
         return match ($data['type']) {
             ReactionType\Emoji::getType() => ReactionType\Emoji::makeByArray($data),
             ReactionType\CustomEmoji::getType() => ReactionType\CustomEmoji::makeByArray($data),
+            ReactionType\Paid::getType() => ReactionType\Paid::makeByArray($data),
             default => throw new RuntimeException("Unknown reaction type: {$data['type']}"),
         };
     }

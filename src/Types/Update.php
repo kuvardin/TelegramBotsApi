@@ -64,6 +64,8 @@ class Update extends Type
      *     the chat to receive these updates.
      * @param ChatBoostRemoved|null $removed_chat_boost A boost was removed from a chat. The bot must be an
      *     administrator in the chat to receive these updates.
+     * @param PaidMediaPurchased|null $purchased_paid_media A user purchased paid media with a non-empty payload sent
+     *     by the bot in a non-channel chat
      */
     public function __construct(
         public int $update_id,
@@ -89,6 +91,7 @@ class Update extends Type
         public ?ChatJoinRequest $chat_join_request = null,
         public ?ChatBoostUpdated $chat_boost = null,
         public ?ChatBoostRemoved $removed_chat_boost = null,
+        public ?PaidMediaPurchased $purchased_paid_media = null,
     )
     {
 
@@ -164,6 +167,9 @@ class Update extends Type
             removed_chat_boost: isset($data['removed_chat_boost'])
                 ? ChatBoostRemoved::makeByArray($data['removed_chat_boost'])
                 : null,
+            purchased_paid_media: isset($data['purchased_paid_media'])
+                ? PaidMediaPurchased::makeByArray($data['purchased_paid_media'])
+                : null,
         );
     }
 
@@ -193,6 +199,7 @@ class Update extends Type
             'chat_join_request' => $this->chat_join_request,
             'chat_boost' => $this->chat_boost,
             'removed_chat_boost' => $this->removed_chat_boost,
+            'purchased_paid_media' => $this->purchased_paid_media,
         ];
     }
 
@@ -233,7 +240,8 @@ class Update extends Type
             ?? $this->poll_answer?->user
             ?? $this->my_chat_member?->from
             ?? $this->chat_member?->from
-            ?? $this->chat_join_request?->from;
+            ?? $this->chat_join_request?->from
+            ?? $this->purchased_paid_media?->from;
     }
 
     public function getDate(): ?int
@@ -282,6 +290,7 @@ class Update extends Type
             $this->chat_join_request !== null => UpdateType::ChatJoinRequest,
             $this->chat_boost !== null => UpdateType::ChatBoost,
             $this->removed_chat_boost !== null => UpdateType::RemovedChatBoost,
+            $this->purchased_paid_media !== null => UpdateType::PurchasedPaidMedia,
             default => null,
         };
     }

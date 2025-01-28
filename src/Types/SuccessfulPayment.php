@@ -7,7 +7,9 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object contains basic information about a successful payment.
+ * This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with
+ * the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside
+ * of Telegram's control.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -24,6 +26,10 @@ class SuccessfulPayment extends Type
      * @param string $provider_payment_charge_id Provider payment identifier
      * @param string|null $shipping_option_id Identifier of the shipping option chosen by the user
      * @param OrderInfo|null $order_info Order information provided by the user
+     * @param int|null $subscription_expiration_date Expiration date of the subscription, in Unix time;
+     *     for recurring payments only
+     * @param bool|null $is_recurring True, if the payment is a recurring payment for a subscription
+     * @param bool|null $is_first_recurring True, if the payment is the first payment for a subscription
      */
     public function __construct(
         public string $currency,
@@ -33,6 +39,9 @@ class SuccessfulPayment extends Type
         public string $provider_payment_charge_id,
         public ?string $shipping_option_id = null,
         public ?OrderInfo $order_info = null,
+        public ?int $subscription_expiration_date = null,
+        public ?bool $is_recurring = null,
+        public ?bool $is_first_recurring = null,
     )
     {
 
@@ -50,6 +59,9 @@ class SuccessfulPayment extends Type
             order_info: isset($data['order_info'])
                 ? OrderInfo::makeByArray($data['order_info'])
                 : null,
+            subscription_expiration_date: $data['subscription_expiration_date'] ?? null,
+            is_recurring: $data['is_recurring'] ?? null,
+            is_first_recurring: $data['is_first_recurring'] ?? null,
         );
     }
 
@@ -63,6 +75,9 @@ class SuccessfulPayment extends Type
             'order_info' => $this->order_info,
             'telegram_payment_charge_id' => $this->telegram_payment_charge_id,
             'provider_payment_charge_id' => $this->provider_payment_charge_id,
+            'subscription_expiration_date' => $this->subscription_expiration_date,
+            'is_recurring' => $this->is_recurring,
+            'is_first_recurring' => $this->is_first_recurring,
         ];
     }
 }

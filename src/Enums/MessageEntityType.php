@@ -10,8 +10,7 @@ namespace Kuvardin\TelegramBotsApi\Enums;
  */
 enum MessageEntityType: string
 {
-
-    /** @username */
+    /** &#64;username */
     case Mention = 'mention';
 
     /** #hashtag */

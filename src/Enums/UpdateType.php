@@ -32,4 +32,5 @@ enum UpdateType: string
     case ChatJoinRequest = 'chat_join_request';
     case ChatBoost = 'chat_boost';
     case RemovedChatBoost = 'removed_chat_boost';
+    case PurchasedPaidMedia = 'purchased_paid_media';
 }

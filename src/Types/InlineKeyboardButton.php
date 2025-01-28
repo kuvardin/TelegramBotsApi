@@ -49,6 +49,7 @@ class InlineKeyboardButton extends Type
      *     will be replaced with a Telegram Star icon.<br><br>
      *     NOTE: This type of button must always be the first button in the first row and can only be used in invoice
      *     messages.
+     * @param CopyTextButton|null $copy_text Description of the button that copies the specified text to the clipboard.
      */
     public function __construct(
         public string $text,
@@ -61,6 +62,7 @@ class InlineKeyboardButton extends Type
         public ?SwitchInlineQueryChosenChat $switch_inline_query_chosen_chat = null,
         public ?CallbackGame $callback_game = null,
         public ?bool $pay = null,
+        public ?CopyTextButton $copy_text = null,
     )
     {
 
@@ -87,6 +89,9 @@ class InlineKeyboardButton extends Type
                 ? CallbackGame::makeByArray($data['callback_game'])
                 : null,
             pay: $data['pay'] ?? null,
+            copy_text: isset($data['copy_text'])
+                ? CopyTextButton::makeByArray($data['copy_text'])
+                : null,
         );
     }
 
@@ -103,6 +108,7 @@ class InlineKeyboardButton extends Type
             'switch_inline_query_chosen_chat' => $this->switch_inline_query_chosen_chat,
             'callback_game' => $this->callback_game,
             'pay' => $this->pay,
+            'copy_text' => $this->copy_text,
         ];
     }
 }

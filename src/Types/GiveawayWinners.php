@@ -29,6 +29,8 @@ class GiveawayWinners extends Type
      *     were eligible to win
      * @param bool|null $was_refunded "True", if the giveaway was canceled because the payment for it was refunded
      * @param string|null $prize_description Description of additional giveaway prize
+     * @param int|null $prize_star_count The number of Telegram Stars that were split between giveaway winners;
+     *     for Telegram Star giveaways only
      */
     public function __construct(
         public Chat $chat,
@@ -42,6 +44,7 @@ class GiveawayWinners extends Type
         public ?bool $only_new_members = null,
         public ?bool $was_refunded = null,
         public ?string $prize_description = null,
+        public ?int $prize_star_count = null,
     )
     {
 
@@ -64,6 +67,7 @@ class GiveawayWinners extends Type
             only_new_members: $data['only_new_members'] ?? null,
             was_refunded: $data['was_refunded'] ?? null,
             prize_description: $data['prize_description'] ?? null,
+            prize_star_count: $data['prize_star_count'] ?? null,
         );
     }
 
@@ -81,6 +85,7 @@ class GiveawayWinners extends Type
             'only_new_members' => $this->only_new_members,
             'was_refunded' => $this->was_refunded,
             'prize_description' => $this->prize_description,
+            'prize_star_count' => $this->prize_star_count,
         ];
     }
 }

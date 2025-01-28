@@ -19,9 +19,11 @@ class Member extends ChatMember
 {
     /**
      * @param User $user Information about the user
+     * @param int|null $until_date Date when the user's subscription will expire; Unix time
      */
     public function __construct(
         public User $user,
+        public ?int $until_date = null,
     )
     {
 
@@ -40,6 +42,7 @@ class Member extends ChatMember
 
         return new self(
             user: User::makeByArray($data['user']),
+            until_date: $data['until_date'] ?? null,
         );
     }
 
@@ -48,6 +51,7 @@ class Member extends ChatMember
         return [
             'status' => self::getStatus(),
             'user' => $this->user,
+            'until_date' => $this->until_date,
         ];
     }
 }

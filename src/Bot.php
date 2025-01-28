@@ -272,6 +272,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendMessage(
         int|string $chat_id,
@@ -289,6 +292,7 @@ class Bot
         ?Types\LinkPreviewOptions $link_preview_options = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
@@ -304,6 +308,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'disable_web_page_preview' => $disable_web_page_preview,
             'reply_to_message_id' => $reply_to_message_id,
@@ -410,6 +415,9 @@ class Bot
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media.
      *     Ignored if a new caption isn&#39;t specified.
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function copyMessage(
         int|string $chat_id,
@@ -426,6 +434,7 @@ class Bot
         ?int $message_thread_id = null,
         ?Types\ReplyParameters $reply_parameters = null,
         ?bool $show_caption_above_media = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessageId
     {
         return new Requests\RequestMessageId($this, 'copyMessage', [
@@ -441,6 +450,7 @@ class Bot
             'protect_content' => $protect_content,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -527,6 +537,9 @@ class Bot
      *     the message media
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendPhoto(
         int|string $chat_id,
@@ -545,6 +558,7 @@ class Bot
         ?string $business_connection_id = null,
         ?bool $show_caption_above_media = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -562,6 +576,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -615,6 +630,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendAudio(
         int|string $chat_id,
@@ -636,6 +654,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -655,6 +674,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -706,6 +726,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendDocument(
         int|string $chat_id,
@@ -725,6 +748,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
@@ -742,6 +766,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -798,6 +823,9 @@ class Bot
      *     the message media
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendVideo(
         int|string $chat_id,
@@ -822,6 +850,7 @@ class Bot
         ?string $business_connection_id = null,
         ?bool $show_caption_above_media = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -844,6 +873,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -899,6 +929,9 @@ class Bot
      *     the message media
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendAnimation(
         int|string $chat_id,
@@ -922,6 +955,7 @@ class Bot
         ?string $business_connection_id = null,
         ?bool $show_caption_above_media = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -943,6 +977,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -986,6 +1021,8 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance
      */
     public function sendVoice(
         int|string $chat_id,
@@ -1003,6 +1040,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
@@ -1019,6 +1057,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1027,7 +1066,7 @@ class Bot
 
     /**
      * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send
-     * video messages.
+     * video messages
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -1064,6 +1103,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendVideoNote(
         int|string $chat_id,
@@ -1081,6 +1123,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -1096,6 +1139,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1103,10 +1147,11 @@ class Bot
     }
 
     /**
-     * Use this method to send paid media to channel chats
+     * Use this method to send paid media
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format
+     *     "&#64;channelusername"). If the chat is a channel, all Telegram Star proceeds from this media will be
+     *     credited to the chat's balance. Otherwise, they will be credited to the bot's balance.
      * @param int $star_count The number of Telegram Stars that must be paid to buy access to the media
      * @param Types\InputPaidMedia[] $media A JSON-serialized array describing the media to be sent; up to 10 items
      * @param string|null $caption Media caption, 0-1024 characters after entities parsing
@@ -1122,6 +1167,13 @@ class Bot
      * @param ForceReply|InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
      *     remove a reply keyboard or to force a reply from the user
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which
+     *     the message will be sent
+     * @param string|null $payload Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user,
+     *     use it for your internal processes.
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendPaidMedia(
         int|string $chat_id,
@@ -1135,6 +1187,9 @@ class Bot
         ?bool $protect_content = null,
         ?Types\ReplyParameters $reply_parameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?string $business_connection_id = null,
+        ?string $payload = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPaidMedia', [
@@ -1149,6 +1204,9 @@ class Bot
             'protect_content' => $protect_content,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'business_connection_id' => $business_connection_id,
+            'payload' => $payload,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
         ]);
     }
 
@@ -1173,6 +1231,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendMediaGroup(
         int|string $chat_id,
@@ -1185,6 +1246,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessages
     {
         return new Requests\RequestMessages($this, 'sendMediaGroup', [
@@ -1196,6 +1258,7 @@ class Bot
             'protect_content' => $protect_content,
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1235,6 +1298,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendLocation(
         int|string $chat_id,
@@ -1253,6 +1319,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
@@ -1270,6 +1337,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1451,6 +1519,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendVenue(
         int|string $chat_id,
@@ -1471,6 +1542,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1490,6 +1562,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1525,6 +1598,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendContact(
         int|string $chat_id,
@@ -1541,6 +1617,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendContact', ['chat_id' => $chat_id,
@@ -1555,6 +1632,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1610,6 +1688,9 @@ class Bot
      *     in the poll question. It can be specified instead of question_parse_mode
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendPoll(
         int|string $chat_id,
@@ -1636,6 +1717,7 @@ class Bot
         ?ParseMode $question_parse_mode = null,
         ?array $question_entities = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
@@ -1661,6 +1743,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1694,6 +1777,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendDice(
         int|string $chat_id,
@@ -1707,6 +1793,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDice', [
@@ -1719,6 +1806,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1801,6 +1889,28 @@ class Bot
             'user_id' => $user_id,
             'offset' => $offset,
             'limit' => $limit,
+        ]);
+    }
+
+    /**
+     * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via
+     * the Mini App method requestEmojiStatusAccess
+     *
+     * @param int $user_id Unique identifier of the target user
+     * @param string|null $emoji_status_custom_emoji_id Custom emoji identifier of the emoji status to set.
+     *     Pass an empty string to remove the status.
+     * @param int|null $emoji_status_expiration_date Expiration date of the emoji status, if any
+     */
+    public function setUserEmojiStatus(
+        int $user_id,
+        string $emoji_status_custom_emoji_id = null,
+        int $emoji_status_expiration_date = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setUserEmojiStatus', [
+            'user_id' => $user_id,
+            'emoji_status_custom_emoji_id' => $emoji_status_custom_emoji_id,
+            'emoji_status_expiration_date' => $emoji_status_expiration_date,
         ]);
     }
 
@@ -2192,6 +2302,56 @@ class Bot
             'expire_date' => $expire_date,
             'member_limit' => $member_limit,
             'creates_join_request' => $creates_join_request,
+        ]);
+    }
+
+    /**
+     * Use this method to create a subscription invite link for a channel chat. The bot must have the "can_invite_users"
+     * administrator rights. The link can be edited using the method editChatSubscriptionInviteLink() or revoked using
+     * the method revokeChatInviteLink()
+     *
+     * @param int|string $chat_id Unique identifier for the target channel chat or username of the target channel
+     *     (in the format "&#64;channelusername")
+     * @param int $subscription_period The number of seconds the subscription will be active for before the next
+     *     payment. Currently, it must always be 2592000 (30 days).
+     * @param int $subscription_price The amount of Telegram Stars a user must pay initially and after each subsequent
+     *     subscription period to be a member of the chat; 1-2500
+     * @param string|null $name Invite link name; 0-32 characters
+     */
+    public function createChatSubscriptionInviteLink(
+        int|string $chat_id,
+        int $subscription_period,
+        int $subscription_price,
+        string $name = null,
+    ): Requests\RequestChatInviteLink
+    {
+        return new Requests\RequestChatInviteLink($this, 'createChatSubscriptionInviteLink', [
+            'chat_id' => $chat_id,
+            'subscription_period' => $subscription_period,
+            'subscription_price' => $subscription_price,
+            'name' => $name,
+        ]);
+    }
+
+    /**
+     * Use this method to edit a subscription invite link created by the bot. The bot must have the "can_invite_users"
+     * administrator rights
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format "&#64;channelusername")
+     * @param string $invite_link The invite link to edit
+     * @param string|null $name Invite link name; 0-32 characters
+     */
+    public function editChatSubscriptionInviteLink(
+        int|string $chat_id,
+        string $invite_link,
+        string $name = null,
+    ): Requests\RequestChatInviteLink
+    {
+        return new Requests\RequestChatInviteLink($this, 'editChatSubscriptionInviteLink', [
+            'chat_id' => $chat_id,
+            'invite_link' => $invite_link,
+            'name' => $name,
         ]);
     }
 
@@ -3220,10 +3380,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message
-     * album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a
-     * photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously
-     * uploaded file via its file_id or specify a URL.
+     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages.
+     * If a message is part of a message album, then it can be edited only to an audio for audio albums, only to
+     * a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file
+     * can't be uploaded; use a previously uploaded file via its file_id or specify a URL. Note that business messages
+     * that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from
+     * the time they were sent.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -3252,10 +3414,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message
-     * album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a
-     * photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously
-     * uploaded file via its file_id or specify a URL.
+     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages.
+     * If a message is part of a message album, then it can be edited only to an audio for audio albums, only to
+     * a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file
+     * can't be uploaded; use a previously uploaded file via its file_id or specify a URL. Note that business messages
+     * that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from
+     * the time they were sent.
      *
      * @param string $inline_message_id Identifier of the inline message
      * @param Types\InputMedia $media A JSON-serialized object for a new media content of the message
@@ -3427,6 +3591,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendSticker(
         int|string $chat_id,
@@ -3441,6 +3608,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -3454,6 +3622,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -3762,6 +3931,116 @@ class Bot
     }
 
     /**
+     * Returns the list of gifts that can be sent by the bot to users
+     */
+    public function getAvailableGifts(): Requests\RequestGifts
+    {
+        return new Requests\RequestGifts($this, 'getAvailableGifts', [
+
+        ]);
+    }
+
+    /**
+     * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user
+     *
+     * @param int $user_id Unique identifier of the target user that will receive the gift
+     * @param string $gift_id Identifier of the gift
+     * @param bool|null $pay_for_upgrade Pass "True" to pay for the gift upgrade from the bot's balance, thereby making
+     *     the upgrade free for the receiver
+     * @param string|null $text Text that will be shown along with the gift; 0-255 characters
+     * @param ParseMode|null $text_parse_mode Mode for parsing entities in the text. See formatting options for more
+     *     details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji”
+     *     are ignored.
+     * @param Types\MessageEntity[]|null $text_entities A JSON-serialized list of special entities that appear in
+     *     the gift text. It can be specified instead of "text_parse_mode". Entities other than “bold”, “italic”,
+     *     “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
+     */
+    public function sendGift(
+        int $user_id,
+        string $gift_id,
+        ?bool $pay_for_upgrade = null,
+        ?string $text = null,
+        ?ParseMode $text_parse_mode = null,
+        ?array $text_entities = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'sendGift', [
+            'user_id' => $user_id,
+            'gift_id' => $gift_id,
+            'pay_for_upgrade' => $pay_for_upgrade,
+            'text' => $text,
+            'text_parse_mode' => $text_parse_mode?->value ?? $this->parse_mode_default->value,
+            'text_entities' => $text_entities,
+        ]);
+    }
+
+    /**
+     * Verifies a user on behalf of the organization which is represented by the bot
+     *
+     * @param int $user_id Unique identifier of the target user
+     * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
+     *     if the organization isn't allowed to provide a custom verification description.
+     */
+    public function verifyUser(
+        int $user_id,
+        string $custom_description = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'verifyUser', [
+            'user_id' => $user_id,
+            'custom_description' => $custom_description,
+        ]);
+    }
+
+    /**
+     * Verifies a chat on behalf of the organization which is represented by the bot
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format "&#64;channelusername")
+     * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
+     *     if the organization isn't allowed to provide a custom verification description.
+     */
+    public function verifyChat(
+        int|string $chat_id,
+        string $custom_description = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'verifyChat', [
+            'chat_id' => $chat_id,
+            'custom_description' => $custom_description,
+        ]);
+    }
+
+    /**
+     * Removes verification from a user who is currently verified on behalf of the organization represented by the bot
+     *
+     * @param int $user_id Unique identifier of the target user
+     */
+    public function removeUserVerification(
+        int $user_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'removeUserVerification', [
+            'user_id' => $user_id,
+        ]);
+    }
+
+    /**
+     * Removes verification from a chat that is currently verified on behalf of the organization represented by the bot
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel
+     *     (in the format "&#64;channelusername")
+     */
+    public function removeChatVerification(
+        int|string $chat_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'removeChatVerification', [
+            'chat_id' => $chat_id,
+        ]);
+    }
+
+    /**
      * Use this method to send answers to an inline query. No more than 50 results per query are
      * allowed.
      *
@@ -3871,7 +4150,10 @@ class Bot
      * @param Types\InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard. If empty,
      *     one &#39;Pay "total price"&#39; button will be shown. If not empty, the first button must be a Pay button.
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
-     *      private chats only
+     *     private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendInvoice(
         int|string $chat_id,
@@ -3904,6 +4186,7 @@ class Bot
         ?int $message_thread_id = null,
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendInvoice', [
@@ -3935,6 +4218,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -3983,6 +4267,13 @@ class Bot
      *     provider. Ignored for payments in Telegram Stars.
      * @param bool|null $is_flexible Pass "True" if the final price depends on the shipping method. Ignored for
      *     payments in Telegram Stars.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
+     *     link will be created. For payments in Telegram Stars only.
+     * @param int|null $subscription_period The number of seconds the subscription will be active for before the next
+     *     payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must
+     *     always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at
+     *     the same time, including multiple concurrent subscriptions from the same user. Subscription price must no
+     *     exceed 2500 Telegram Stars.
      */
     public function createInvoiceLink(
         string $title,
@@ -4005,6 +4296,8 @@ class Bot
         ?bool $send_phone_number_to_provider = null,
         ?bool $send_email_to_provider = null,
         ?bool $is_flexible = null,
+        ?string $business_connection_id = null,
+        ?int $subscription_period = null,
     ): Requests\RequestString
     {
         return new Requests\RequestString($this, 'createInvoiceLink', [
@@ -4028,6 +4321,8 @@ class Bot
             'send_phone_number_to_provider' => $send_phone_number_to_provider,
             'send_email_to_provider' => $send_email_to_provider,
             'is_flexible' => $is_flexible,
+            'business_connection_id' => $business_connection_id,
+            'subscription_period' => $subscription_period,
         ]);
     }
 
@@ -4090,7 +4385,7 @@ class Bot
 
 
     /**
-     * Returns the bot&#39;s Telegram Star transactions in chronological order.
+     * Returns the bot's Telegram Star transactions in chronological order.
      *
      * @param int|null $offset Number of transactions to skip in the response
      * @param int|null $limit The maximum number of transactions to be retrieved. Values between 1-100 are accepted.
@@ -4121,6 +4416,28 @@ class Bot
         return new Requests\RequestVoid($this, 'refundStarPayment', [
             'user_id' => $user_id,
             'telegram_payment_charge_id' => $telegram_payment_charge_id,
+        ]);
+    }
+
+    /**
+     * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars
+     *
+     * @param int $user_id Identifier of the user whose subscription will be edited
+     * @param string $telegram_payment_charge_id Telegram payment identifier for the subscription
+     * @param bool $is_canceled Pass "True" to cancel extension of the user subscription; the subscription must be
+     *     active up to the end of the current subscription period. Pass "False" to allow the user to re-enable
+     *     a subscription that was previously canceled by the bot.
+     */
+    public function editUserStarSubscription(
+        int $user_id,
+        string $telegram_payment_charge_id,
+        bool $is_canceled,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editUserStarSubscription', [
+            'user_id' => $user_id,
+            'telegram_payment_charge_id' => $telegram_payment_charge_id,
+            'is_canceled' => $is_canceled,
         ]);
     }
 
@@ -4171,6 +4488,9 @@ class Bot
      *     the message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message;
      *     for private chats only
+     * @param bool|null $allow_paid_broadcast Pass "True" to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
      */
     public function sendGame(
         int $chat_id,
@@ -4184,6 +4504,7 @@ class Bot
         ?Types\ReplyParameters $reply_parameters = null,
         ?string $business_connection_id = null,
         ?string $message_effect_id = null,
+        ?bool $allow_paid_broadcast = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendGame', [
@@ -4196,6 +4517,7 @@ class Bot
             'message_effect_id' => $message_effect_id,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,

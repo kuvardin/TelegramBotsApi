@@ -7,19 +7,18 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a service message about the creation of a scheduled giveaway.
+ * This object represent a list of gifts.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class GiveawayCreated extends Type
+class Gifts extends Type
 {
     /**
-     * @param int|null $prize_star_count The number of Telegram Stars to be split between giveaway winners;
-     *     for Telegram Star giveaways only
+     * @param Gift[] $gifts The list of gifts
      */
     public function __construct(
-        public ?int $prize_star_count = null,
+        public array $gifts,
     )
     {
 
@@ -28,14 +27,17 @@ class GiveawayCreated extends Type
     public static function makeByArray(array $data): self
     {
         return new self(
-            prize_star_count: $data['prize_star_count'] ?? null,
+            gifts: array_map(
+				static fn(array $gifts_data) => Gift::makeByArray($gifts_data),
+				$data['gifts'],
+			),
         );
     }
 
     public function getRequestData(): array
     {
         return [
-            'prize_star_count' => $this->prize_star_count,
+            'gifts' => $this->gifts,
         ];
     }
 }

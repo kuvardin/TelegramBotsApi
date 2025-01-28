@@ -18,11 +18,14 @@ class GiveawayCompleted extends Type
      * @param int $winner_count Number of winners in the giveaway
      * @param int|null $unclaimed_prize_count Number of undistributed prizes
      * @param Message|null $giveaway_message Message with the giveaway that was completed, if it wasn't deleted
+     * @param bool|null $is_star_giveaway "True", if the giveaway is a Telegram Star giveaway. Otherwise, currently,
+     *     the giveaway is a Telegram Premium giveaway.
      */
     public function __construct(
         public int $winner_count,
         public ?int $unclaimed_prize_count = null,
         public ?Message $giveaway_message = null,
+        public ?bool $is_star_giveaway = null,
     )
     {
 
@@ -36,6 +39,7 @@ class GiveawayCompleted extends Type
             giveaway_message: isset($data['giveaway_message'])
                 ? Message::makeByArray($data['giveaway_message'])
                 : null,
+            is_star_giveaway: $data['is_star_giveaway'] ?? null,
         );
     }
 
@@ -45,6 +49,7 @@ class GiveawayCompleted extends Type
             'winner_count' => $this->winner_count,
             'unclaimed_prize_count' => $this->unclaimed_prize_count,
             'giveaway_message' => $this->giveaway_message,
+            'is_star_giveaway' => $this->is_star_giveaway,
         ];
     }
 }

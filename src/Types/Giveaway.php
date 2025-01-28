@@ -27,6 +27,8 @@ class Giveaway extends Type
      *     the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
      * @param int|null $premium_subscription_month_count The number of months the Telegram Premium subscription won
      *     from the giveaway will be active for
+     * @param int|null $prize_star_count The number of Telegram Stars to be split between giveaway winners;
+     *     for Telegram Star giveaways only
      */
     public function __construct(
         public array $chats,
@@ -37,6 +39,7 @@ class Giveaway extends Type
         public ?string $prize_description = null,
         public ?array $country_codes = null,
         public ?int $premium_subscription_month_count = null,
+        public ?int $prize_star_count = null,
     )
     {
 
@@ -56,6 +59,7 @@ class Giveaway extends Type
             prize_description: $data['prize_description'] ?? null,
             country_codes: $data['country_codes'] ?? null,
             premium_subscription_month_count: $data['premium_subscription_month_count'] ?? null,
+            prize_star_count: $data['prize_star_count'] ?? null,
         );
     }
 
@@ -70,6 +74,7 @@ class Giveaway extends Type
             'prize_description' => $this->prize_description,
             'country_codes' => $this->country_codes,
             'premium_subscription_month_count' => $this->premium_subscription_month_count,
+            'prize_star_count' => $this->prize_star_count,
         ];
     }
 }

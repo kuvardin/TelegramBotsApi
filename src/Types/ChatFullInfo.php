@@ -86,6 +86,8 @@ class ChatFullInfo extends Type
      *     and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than
      *     52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
      * @param ChatLocation|null $location For supergroups, the location to which the supergroup is connected
+     * @param bool|null $can_send_paid_media "True", if paid media messages can be sent or forwarded to the channel
+     *     chat. The field is available only for channel chats.
      */
     public function __construct(
         public int $id,
@@ -131,6 +133,7 @@ class ChatFullInfo extends Type
         public ?string $custom_emoji_sticker_set_name = null,
         public ?int $linked_chat_id = null,
         public ?ChatLocation $location = null,
+        public ?bool $can_send_paid_media = null,
     )
     {
 
@@ -205,6 +208,7 @@ class ChatFullInfo extends Type
             location: isset($data['location'])
                 ? ChatLocation::makeByArray($data['location'])
                 : null,
+            can_send_paid_media: $data['can_send_paid_media'] ?? null,
         );
     }
 
@@ -254,6 +258,7 @@ class ChatFullInfo extends Type
             'custom_emoji_sticker_set_name' => $this->custom_emoji_sticker_set_name,
             'linked_chat_id' => $this->linked_chat_id,
             'location' => $this->location,
+            'can_send_paid_media' => $this->can_send_paid_media,
         ];
     }
 

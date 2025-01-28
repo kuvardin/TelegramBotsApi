@@ -24,7 +24,6 @@ class Article extends InlineQueryResult
      * @param InputMessageContent $input_message_content Content of the message to be sent
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param string|null $url URL of the result
-     * @param bool|null $hide_url Pass True if you don't want the URL to be shown in the message
      * @param string|null $description Short description of the result
      * @param string|null $thumbnail_url Url of the thumbnail for the result
      * @param int|null $thumbnail_width Thumbnail width
@@ -36,7 +35,7 @@ class Article extends InlineQueryResult
         public InputMessageContent $input_message_content,
         public ?InlineKeyboardMarkup $reply_markup = null,
         public ?string $url = null,
-        public ?bool $hide_url = null,
+        #[Deprecated] public ?bool $hide_url = null,
         public ?string $description = null,
         public ?string $thumbnail_url = null,
         public ?int $thumbnail_width = null,
