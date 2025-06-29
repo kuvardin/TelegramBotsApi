@@ -1903,8 +1903,8 @@ class Bot
      */
     public function setUserEmojiStatus(
         int $user_id,
-        string $emoji_status_custom_emoji_id = null,
-        int $emoji_status_expiration_date = null,
+        ?string $emoji_status_custom_emoji_id = null,
+        ?int $emoji_status_expiration_date = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'setUserEmojiStatus', [
@@ -2322,7 +2322,7 @@ class Bot
         int|string $chat_id,
         int $subscription_period,
         int $subscription_price,
-        string $name = null,
+        ?string $name = null,
     ): Requests\RequestChatInviteLink
     {
         return new Requests\RequestChatInviteLink($this, 'createChatSubscriptionInviteLink', [
@@ -2345,7 +2345,7 @@ class Bot
     public function editChatSubscriptionInviteLink(
         int|string $chat_id,
         string $invite_link,
-        string $name = null,
+        ?string $name = null,
     ): Requests\RequestChatInviteLink
     {
         return new Requests\RequestChatInviteLink($this, 'editChatSubscriptionInviteLink', [
@@ -3983,7 +3983,7 @@ class Bot
      */
     public function verifyUser(
         int $user_id,
-        string $custom_description = null,
+        ?string $custom_description = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'verifyUser', [
@@ -4002,7 +4002,7 @@ class Bot
      */
     public function verifyChat(
         int|string $chat_id,
-        string $custom_description = null,
+        ?string $custom_description = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'verifyChat', [
