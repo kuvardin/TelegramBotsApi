@@ -217,8 +217,8 @@ abstract class Request
                 $this->bot->last_response_decoded = $decoded;
 
                 if ($decoded['ok'] !== true) {
-                    $response_parameters = isset($response_decoded['parameters'])
-                        ? Types\ResponseParameters::makeByArray($response_decoded['parameters'])
+                    $response_parameters = isset($decoded['parameters'])
+                        ? Types\ResponseParameters::makeByArray($decoded['parameters'])
                         : null;
 
                     throw new TelegramBotsApiException(
