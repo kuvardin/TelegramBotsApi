@@ -134,7 +134,7 @@ if (!is_array($input_decoded)) {
 }
 
 $request = null;
-$update = new Kuvardin\TelegramBotsApi\Types\Update($input_decoded);
+$update = Kuvardin\TelegramBotsApi\Types\Update::makeByArray($input_decoded);
 
 switch ($update->getType()) {
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::Message:
