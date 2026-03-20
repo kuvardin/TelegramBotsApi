@@ -37,9 +37,9 @@ abstract class Request
     protected array $parameters;
 
     /**
-     * @var array<string, string> Attached file paths
+     * @var array<string, AttachedFile> Attached files
      */
-    protected array $attached_file_paths = [];
+    protected array $attached_files = [];
 
     public function __construct(Bot $bot, string $method, array $parameters = [])
     {
@@ -132,17 +132,17 @@ abstract class Request
         return $result;
     }
 
-    public function attachFileByPath(string $attach_name, string $file_path): self
+    public function attachFileByPath(string $attach_name, string $file_path, ?string $filename = null): self
     {
-        if (!file_exists($file_path)) {
+        if (!file_exists($file_path) || is_dir($file_path)) {
             throw new RuntimeException("File not exists: $file_path");
         }
 
-        if (array_key_exists($attach_name, $this->attached_file_paths)) {
+        if (array_key_exists($attach_name, $this->attached_files)) {
             throw new RuntimeException("File $attach_name already attached");
         }
 
-        $this->attached_file_paths[$attach_name] = $file_path;
+        $this->attached_files[$attach_name] = new AttachedFile($attach_name, $file_path, $filename);
 
         return $this;
     }
@@ -173,14 +173,20 @@ abstract class Request
             RequestOptions::CONNECT_TIMEOUT => $this->connect_timeout,
         ];
 
-        if ($this->attached_file_paths !== []) {
+        if ($this->attached_files !== []) {
             $multipart = [];
 
-            foreach ($this->attached_file_paths as $attach_name => $attached_file_path) {
-                $multipart[] = [
-                    'name' => $attach_name,
-                    'contents' => fopen($attached_file_path, 'r'),
+            foreach ($this->attached_files as $attached_file) {
+                $multipart_item = [
+                    'name' => $attached_file->attach_name,
+                    'contents' => fopen($attached_file->file_path, 'r'),
                 ];
+
+                if ($attached_file->filename !== null) {
+                    $multipart_item['filename'] = $attached_file->filename;
+                }
+
+                $multipart[] = $multipart_item;
             }
 
             foreach ($this->getRequestData() as $data_key => $data_value) {

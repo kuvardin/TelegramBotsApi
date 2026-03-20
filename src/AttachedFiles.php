@@ -10,31 +10,36 @@ use RuntimeException;
 class AttachedFiles
 {
     /**
-     * @var array<string, string>
+     * @var array<string, AttachedFile>
      */
-    protected array $attached_by_paths = [];
+    protected array $attached_files = [];
 
     public function attachByPath(
         string $file_path,
         ?string $attach_name = null,
+        ?string $filename = null,
     ): InputFile
     {
         if ($attach_name === null) {
             do {
                 $attach_name = 'file' . rand(1, 9999999);
-            } while (array_key_exists($attach_name, $this->attached_by_paths));
-        } elseif (array_key_exists($attach_name, $this->attached_by_paths)) {
+            } while (array_key_exists($attach_name, $this->attached_files));
+        } elseif (array_key_exists($attach_name, $this->attached_files)) {
             throw new RuntimeException("File $attach_name already attached");
         }
 
-        $this->attached_by_paths[$attach_name] = $file_path;
+        $this->attached_files[$attach_name] = new AttachedFile($file_path, $filename, $attach_name);
         return InputFile::makeByAttachName($attach_name);
     }
 
     public function attachToRequest(Request $request): void
     {
-        foreach ($this->attached_by_paths as $attach_name => $file_path) {
-            $request->attachFileByPath($attach_name, $file_path);
+        foreach ($this->attached_files as $attached_file) {
+            $request->attachFileByPath(
+                $attached_file->attach_name,
+                $attached_file->file_path,
+                $attached_file->filename,
+            );
         }
     }
 }
