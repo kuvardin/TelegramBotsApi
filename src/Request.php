@@ -9,7 +9,7 @@ use GuzzleHttp\RequestOptions;
 use JsonException;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Exceptions\TelegramBotsApiException;
-use StringBackedEnum;
+use BackedEnum;
 
 /**
  * @package Kuvardin\TelegramBotsApi
@@ -87,9 +87,6 @@ abstract class Request
         }
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return (string)json_encode($this->getRequestData(), JSON_THROW_ON_ERROR);
@@ -108,7 +105,7 @@ abstract class Request
         foreach ($parameters as $parameter_key => $parameter_value) {
             if ($parameter_value instanceof Type) {
                 $parameter_value = $parameter_value->getRequestData();
-            } elseif ($parameter_value instanceof StringBackedEnum) {
+            } elseif ($parameter_value instanceof BackedEnum && is_string($parameter_value->value)) {
                 $parameter_value = $parameter_value->value;
             }
 
