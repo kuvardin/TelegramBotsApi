@@ -15,8 +15,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class WebAppInfo extends Type
 {
     /**
-     * @param string $url An HTTPS URL of a Web App to be opened with additional data as specified in <a
-     *     href="https://core.telegram.org/bots/webapps#initializing-web-apps">Initializing Web Apps</a>
+     * @param string $url An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web
+     *     Apps
      */
     public function __construct(
         public string $url,

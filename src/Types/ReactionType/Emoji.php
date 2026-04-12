@@ -16,8 +16,10 @@ use RuntimeException;
 class Emoji extends ReactionType
 {
     /**
-     * @param string $emoji Reaction emoji. Currently, it can be one
-     *     of <a href="https://core.telegram.org/bots/api#reactiontypeemoji">available emojis</a>
+     * @param string $emoji Reaction emoji. Currently, it can be one of ❤, 👍, 👎, 🔥, 🥰, 👏, 😁, 🤔, 🤯, 😱, 🤬,
+     *     😢,🎉, 🤩, 🤮, 💩, 🙏, 👌, 🕊, 🤡, 🥱, 🥴, 😍, 🐳, ❤‍🔥, 🌚, 🌭, 💯, 🤣, ⚡, 🍌, 🏆, 💔, 🤨, 😐, 🍓, 🍾, 💋,
+     *     🖕, 😈, 😴, 😭, 🤓, 👻, 👨‍💻, 👀, 🎃, 🙈, 😇, 😨, 🤝, ✍, 🤗, 🫡, 🎅, 🎄, ☃, 💅, 🤪, 🗿, 🆒, 💘, 🙉, 🦄, 😘,
+     *     💊, 🙊, 😎, 👾, 🤷‍♂, 🤷, 🤷‍♀, 😡
      */
     public function __construct(
         public string $emoji,
@@ -30,8 +32,6 @@ class Emoji extends ReactionType
     {
         return 'emoji';
     }
-
-
     public static function makeByArray(array $data): static
     {
         if ($data['type'] !== self::getType()) {

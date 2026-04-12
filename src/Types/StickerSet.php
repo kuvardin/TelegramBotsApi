@@ -19,14 +19,14 @@ class StickerSet extends Type
     /**
      * @param string $name Sticker set name
      * @param string $title Sticker set title
-     * @param string $sticker_type_value Type of stickers in the set, currently one of Enums\StickerType::*->value
+     * @param StickerType|string $sticker_type_value Type of stickers in the set
      * @param Sticker[] $stickers List of all set stickers
      * @param PhotoSize|null $thumbnail Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
      */
     public function __construct(
         public string $name,
         public string $title,
-        public string $sticker_type_value,
+        public StickerType|string $sticker_type_value,
         public array $stickers,
 
         #[Deprecated] public ?bool $is_animated = null,
@@ -78,6 +78,8 @@ class StickerSet extends Type
      */
     public function getStickerType(): ?StickerType
     {
-        return StickerType::tryFrom($this->sticker_type_value);
+        return is_string($this->sticker_type_value)
+            ? StickerType::tryFrom($this->sticker_type_value)
+            : $this->sticker_type_value;
     }
 }

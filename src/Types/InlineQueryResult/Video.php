@@ -15,10 +15,10 @@ use RuntimeException;
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be
  * sent by the user with an optional caption. Alternatively, you can use "input_message_content" to send a message with
- * the specified content instead of the video.
+ * the specified content instead of the video.<br>
  *
- * If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace
- * its content using input_message_content.
+ * If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace
+ * its content using "input_message_content".
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -41,9 +41,9 @@ class Video extends InlineQueryResult
      * @param string|null $description Short description of the result
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the video.
-     *     This field is "required" if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube
-     *     video).
-     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media
+     *     This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result
+     *     (e.g., a YouTube video).
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
         public string $id,
@@ -118,7 +118,7 @@ class Video extends InlineQueryResult
             'thumbnail_url' => $this->thumbnail_url,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'video_width' => $this->video_width,

@@ -15,8 +15,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class GiveawayCreated extends Type
 {
     /**
-     * @param int|null $prize_star_count The number of Telegram Stars to be split between giveaway winners;
-     *     for Telegram Star giveaways only
+     * @param int|null $prize_star_count The number of Telegram Stars to be split between giveaway winners; for
+     *     Telegram Star giveaways only
      */
     public function __construct(
         public ?int $prize_star_count = null,

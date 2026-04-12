@@ -11,8 +11,7 @@ use Kuvardin\TelegramBotsApi\Types\LinkPreviewOptions;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 
 /**
- * Represents the <a href="https://core.telegram.org/bots/api#inputmessagecontent">content</a> of a text message to be
- * sent as the result of an inline query.
+ * Represents the content of a text message to be sent as the result of an inline query.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -21,10 +20,9 @@ class Text extends InputMessageContent
 {
     /**
      * @param string $message_text Text of the message to be sent, 1-4096 characters
-     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the message text
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the message text.
      * @param MessageEntity[]|null $entities List of special entities that appear in message text, which can be
-     *     specified instead of parse_mode
-     * @param bool|null $disable_web_page_preview Disables link previews for links in the sent message
+     *     specified instead of "parse_mode"
      * @param LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      */
     public function __construct(
@@ -60,7 +58,7 @@ class Text extends InputMessageContent
     {
         return [
             'message_text' => $this->message_text,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'entities' => $this->entities,
             'disable_web_page_preview' => $this->disable_web_page_preview,
             'link_preview_options' => $this->link_preview_options,

@@ -90,7 +90,7 @@ class Voice extends InlineQueryResult
             'voice_url' => $this->voice_url,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'voice_duration' => $this->voice_duration,
             'reply_markup' => $this->reply_markup,

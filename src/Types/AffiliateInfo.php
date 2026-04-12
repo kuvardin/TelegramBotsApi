@@ -17,8 +17,8 @@ class AffiliateInfo extends Type
     /**
      * @param int $commission_per_mille The number of Telegram Stars received by the affiliate for each 1000 Telegram
      *     Stars received by the bot from referred users
-     * @param int $amount Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to 0;
-     *     can be negative for refunds
+     * @param int $amount Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to
+     *     0; can be negative for refunds
      * @param User|null $affiliate_user The bot or the user that received an affiliate commission if it was received by
      *     a bot or a user
      * @param Chat|null $affiliate_chat The chat that received an affiliate commission if it was received by a chat

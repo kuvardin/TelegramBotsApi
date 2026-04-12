@@ -21,6 +21,7 @@ abstract class TransactionPartner extends Type
     {
         return match ($data['type']) {
             TransactionPartner\AffiliateProgram::getType() => TransactionPartner\AffiliateProgram::makeByArray($data),
+            TransactionPartner\Chat::getType() => TransactionPartner\Chat::makeByArray($data),
             TransactionPartner\Fragment::getType() => TransactionPartner\Fragment::makeByArray($data),
             TransactionPartner\Other::getType() => TransactionPartner\Other::makeByArray($data),
             TransactionPartner\User::getType() => TransactionPartner\User::makeByArray($data),
@@ -29,6 +30,4 @@ abstract class TransactionPartner extends Type
             default => throw new RuntimeException("Wrong transaction partner type: {$data['type']}"),
         };
     }
-
-    abstract public function getRequestData(): array;
 }

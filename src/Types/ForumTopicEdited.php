@@ -16,8 +16,8 @@ class ForumTopicEdited extends Type
 {
     /**
      * @param string|null $name New name of the topic, if it was edited
-     * @param string|null $icon_custom_emoji_id New identifier of the custom emoji shown as the topic icon,
-     *     if it was edited; an empty string if the icon was removed
+     * @param string|null $icon_custom_emoji_id New identifier of the custom emoji shown as the topic icon, if it was
+     *     edited; an empty string if the icon was removed
      */
     public function __construct(
         public ?string $name = null,

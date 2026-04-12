@@ -13,7 +13,7 @@ use RuntimeException;
 
 /**
  * Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can
- * use input_message_content to send a message with the specified content instead of the audio.
+ * use "input_message_content" to send a message with the specified content instead of the audio.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -27,7 +27,7 @@ class Audio extends InlineQueryResult
      * @param string|null $caption Caption, 0-1024 characters after entities parsing
      * @param ParseMode|string|null $parse_mode Mode for parsing entities in the audio caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of parse_mode
+     *     specified instead of "parse_mode"
      * @param string|null $performer Performer
      * @param int|null $audio_duration Audio duration in seconds
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
@@ -91,7 +91,7 @@ class Audio extends InlineQueryResult
             'audio_url' => $this->audio_url,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'performer' => $this->performer,
             'audio_duration' => $this->audio_duration,

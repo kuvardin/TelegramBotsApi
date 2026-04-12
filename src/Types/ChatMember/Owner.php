@@ -9,8 +9,7 @@ use Kuvardin\TelegramBotsApi\Types\User;
 use RuntimeException;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#chatmember">chat member</a> that owns the chat and has all
- * administrator privileges.
+ * Represents a chat member that owns the chat and has all administrator privileges.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

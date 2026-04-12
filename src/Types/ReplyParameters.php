@@ -19,19 +19,21 @@ class ReplyParameters extends Type
      *     "chat_id" if it is specified
      * @param int|string|null $chat_id If the message to be replied to is from a different chat, unique identifier for
      *     the chat or username of the channel (in the format "&#64;channelusername"). Not supported for messages sent
-     *     on behalf of a business account.
-     * @param bool|null $allow_sending_without_reply Pass "True" if the message should be sent even if the specified
+     *     on behalf of a business account and messages from channel direct messages chats.
+     * @param bool|null $allow_sending_without_reply Pass True if the message should be sent even if the specified
      *     message to be replied to is not found. Always "False" for replies in another chat or forum topic. Always
-     *     "True" for messages sent on behalf of a business account.
+     *     True for messages sent on behalf of a business account.
      * @param string|null $quote Quoted part of the message to be replied to; 0-1024 characters after entities parsing.
      *     The quote must be an exact substring of the message to be replied to, including "bold", "italic",
-     *     "underline", "strikethrough", "spoiler", and "custom_emoji" entities. The message will fail to send if the
-     *     quote isn't found in the original message.
+     *     "underline", "strikethrough", "spoiler", "custom_emoji", and "date_time" entities. The message will fail to
+     *     send if the quote isn't found in the original message.
      * @param string|null $quote_parse_mode Mode for parsing entities in the quote. See formatting options for more
      *     details.
      * @param MessageEntity[]|null $quote_entities A JSON-serialized list of special entities that appear in the quote.
      *     It can be specified instead of "quote_parse_mode".
      * @param int|null $quote_position Position of the quote in the original message in UTF-16 code units
+     * @param int|null $checklist_task_id Identifier of the specific checklist task to be replied to
+     * @param string|null $poll_option_id Persistent identifier of the specific poll option to be replied to
      */
     public function __construct(
         public int $message_id,
@@ -41,6 +43,8 @@ class ReplyParameters extends Type
         public ?string $quote_parse_mode = null,
         public ?array $quote_entities = null,
         public ?int $quote_position = null,
+        public ?int $checklist_task_id = null,
+        public ?string $poll_option_id = null,
     )
     {
 
@@ -61,6 +65,8 @@ class ReplyParameters extends Type
                 )
                 : null,
             quote_position: $data['quote_position'] ?? null,
+            checklist_task_id: $data['checklist_task_id'] ?? null,
+            poll_option_id: $data['poll_option_id'] ?? null,
         );
     }
 
@@ -74,6 +80,8 @@ class ReplyParameters extends Type
             'quote_parse_mode' => $this->quote_parse_mode,
             'quote_entities' => $this->quote_entities,
             'quote_position' => $this->quote_position,
+            'checklist_task_id' => $this->checklist_task_id,
+            'poll_option_id' => $this->poll_option_id,
         ];
     }
 }

@@ -87,7 +87,7 @@ class CachedVoice extends InlineQueryResult
             'voice_file_id' => $this->voice_file_id,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,

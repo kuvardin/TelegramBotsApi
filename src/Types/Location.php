@@ -15,14 +15,14 @@ use Kuvardin\TelegramBotsApi\Type;
 class Location extends Type
 {
     /**
-     * @param float $longitude Longitude as defined by sender
-     * @param float $latitude Latitude as defined by sender
+     * @param float $latitude Latitude as defined by the sender
+     * @param float $longitude Longitude as defined by the sender
      * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
      * @param int|null $live_period Time relative to the message sending date, during which the location can be
      *     updated; in seconds. For active live locations only.
      * @param int|null $heading The direction in which user is moving, in degrees; 1-360. For active live locations
      *     only.
-     * @param int|null $proximity_alert_radius Maximum distance for proximity alerts about approaching another chat
+     * @param int|null $proximity_alert_radius The maximum distance for proximity alerts about approaching another chat
      *     member, in meters. For sent live locations only.
      */
     public function __construct(

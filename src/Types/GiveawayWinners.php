@@ -23,14 +23,14 @@ class GiveawayWinners extends Type
      * @param int|null $additional_chat_count The number of other chats the user had to join in order to be eligible
      *     for the giveaway
      * @param int|null $premium_subscription_month_count The number of months the Telegram Premium subscription won
-     *     from the giveaway will be active for
+     *     from the giveaway will be active for; for Telegram Premium giveaways only
      * @param int|null $unclaimed_prize_count Number of undistributed prizes
-     * @param bool|null $only_new_members "True", if only users who had joined the chats after the giveaway started
-     *     were eligible to win
-     * @param bool|null $was_refunded "True", if the giveaway was canceled because the payment for it was refunded
+     * @param bool|null $only_new_members True, if only users who had joined the chats after the giveaway started were
+     *     eligible to win
+     * @param bool|null $was_refunded True, if the giveaway was canceled because the payment for it was refunded
      * @param string|null $prize_description Description of additional giveaway prize
-     * @param int|null $prize_star_count The number of Telegram Stars that were split between giveaway winners;
-     *     for Telegram Star giveaways only
+     * @param int|null $prize_star_count The number of Telegram Stars that were split between giveaway winners; for
+     *     Telegram Star giveaways only
      */
     public function __construct(
         public Chat $chat,

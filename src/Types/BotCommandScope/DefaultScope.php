@@ -8,8 +8,7 @@ use Kuvardin\TelegramBotsApi\Types\BotCommandScope;
 use RuntimeException;
 
 /**
- * Represents the default <a href="https://core.telegram.org/bots/api#botcommandscope">scope</a> of bot commands.
- * Default commands are used if no commands with a <a
+ * Represents the default scope of bot commands. Default commands are used if no commands with a <a
  * href="https://core.telegram.org/bots/api#determining-list-of-commands">narrower scope</a> are specified for the
  * user.
  *

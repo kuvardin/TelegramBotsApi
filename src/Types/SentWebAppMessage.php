@@ -15,8 +15,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class SentWebAppMessage extends Type
 {
     /**
-     * @param string|null $inline_message_id Identifier of the sent inline message. Available only if there is an <a
-     *     href="https://core.telegram.org/bots/api#inlinekeyboardmarkup">inline keyboard</a> attached to the message.
+     * @param string|null $inline_message_id Identifier of the sent inline message. Available only if there is an
+     *     inline keyboard attached to the message.
      */
     public function __construct(
         public ?string $inline_message_id = null,

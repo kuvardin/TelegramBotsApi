@@ -16,7 +16,7 @@ use Kuvardin\TelegramBotsApi\Type;
 class EncryptedPassportElement extends Type
 {
     /**
-     * @param string $type_value Element type. One of Enums\PassportElementType::*.
+     * @param PassportElementType|string $type_value Element type
      * @param string $hash Base64-encoded element hash for using in PassportElementErrorUnspecified
      * @param string|null $data Base64-encoded encrypted Telegram Passport element data provided by the user; available
      *     only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and
@@ -42,7 +42,7 @@ class EncryptedPassportElement extends Type
      *     types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
      */
     public function __construct(
-        public string $type_value,
+        public PassportElementType|string $type_value,
         public string $hash,
         public ?string $data = null,
         public ?string $phone_number = null,
@@ -110,6 +110,8 @@ class EncryptedPassportElement extends Type
      */
     public function getType(): ?PassportElementType
     {
-        return PassportElementType::tryFrom($this->type_value);
+        return is_string($this->type_value)
+            ? PassportElementType::tryFrom($this->type_value)
+            : $this->type_value;
     }
 }

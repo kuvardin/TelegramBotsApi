@@ -8,8 +8,7 @@ use Kuvardin\TelegramBotsApi\Types\BotCommandScope;
 use RuntimeException;
 
 /**
- * Represents the <a href="https://core.telegram.org/bots/api#botcommandscope">scope</a> of bot commands, covering all
- * group and supergroup chats.
+ * Represents the scope of bot commands, covering all group and supergroup chats.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

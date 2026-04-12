@@ -9,8 +9,7 @@ use Kuvardin\TelegramBotsApi\Types\User;
 use RuntimeException;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#chatmember">chat member</a> that was banned in the chat and
- * can't return to the chat or view chat messages.
+ * Represents a chat member that was banned in the chat and can't return to the chat or view chat messages.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,7 +18,7 @@ class Banned extends ChatMember
 {
     /**
      * @param User $user Information about the user
-     * @param int $until_date Date when restrictions will be lifted for this user; unix time. If 0, then the user is
+     * @param int $until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the user is
      *     banned forever
      */
     public function __construct(

@@ -16,8 +16,7 @@ class WebhookInfo extends Type
 {
     /**
      * @param string $url Webhook URL, may be empty if webhook is not set up
-     * @param bool $has_custom_certificate True, if a custom certificate was provided for webhook certificate
-     *     checks
+     * @param bool $has_custom_certificate True, if a custom certificate was provided for webhook certificate checks
      * @param int $pending_update_count Number of updates awaiting delivery
      * @param string|null $ip_address Currently used webhook IP address
      * @param int|null $last_error_date Unix time for the most recent error that happened when trying to deliver an
@@ -26,10 +25,10 @@ class WebhookInfo extends Type
      *     happened when trying to deliver an update via webhook
      * @param int|null $last_synchronization_error_date Unix time of the most recent error that happened when trying to
      *     synchronize available updates with Telegram datacenters
-     * @param int|null $max_connections Maximum allowed number of simultaneous HTTPS connections to the webhook for
+     * @param int|null $max_connections The maximum allowed number of simultaneous HTTPS connections to the webhook for
      *     update delivery
      * @param string[]|null $allowed_updates A list of update types the bot is subscribed to. Defaults to all update
-     *     types except chat_member
+     *     types except "chat_member"
      */
     public function __construct(
         public string $url,

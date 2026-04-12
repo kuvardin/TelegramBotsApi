@@ -15,7 +15,7 @@ use RuntimeException;
 /**
  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively,
  * you can use "input_message_content" to send a message with the specified content instead of the file. Currently,
- * only ".PDF" and ".ZIP" files can be sent using this method.
+ * only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -112,7 +112,7 @@ class Document extends InlineQueryResult
             'id' => $this->id,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'document_url' => $this->document_url,
             'mime_type' => $this->mime_type,

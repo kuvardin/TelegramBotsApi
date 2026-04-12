@@ -18,8 +18,8 @@ class GiveawayCompleted extends Type
      * @param int $winner_count Number of winners in the giveaway
      * @param int|null $unclaimed_prize_count Number of undistributed prizes
      * @param Message|null $giveaway_message Message with the giveaway that was completed, if it wasn't deleted
-     * @param bool|null $is_star_giveaway "True", if the giveaway is a Telegram Star giveaway. Otherwise, currently,
-     *     the giveaway is a Telegram Premium giveaway.
+     * @param bool|null $is_star_giveaway True, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the
+     *     giveaway is a Telegram Premium giveaway.
      */
     public function __construct(
         public int $winner_count,

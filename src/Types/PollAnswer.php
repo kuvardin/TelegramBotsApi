@@ -17,12 +17,15 @@ class PollAnswer extends Type
     /**
      * @param string $poll_id Unique poll identifier
      * @param int[] $option_ids 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
+     * @param string[] $option_persistent_ids Persistent identifiers of the chosen answer options. May be empty if the
+     *     vote was retracted.
      * @param Chat|null $voter_chat The chat that changed the answer to the poll, if the voter is anonymous
      * @param User|null $user The user that changed the answer to the poll, if the voter isn't anonymous
      */
     public function __construct(
         public string $poll_id,
         public array $option_ids,
+        public array $option_persistent_ids,
         public ?Chat $voter_chat = null,
         public ?User $user = null,
     )
@@ -35,6 +38,7 @@ class PollAnswer extends Type
         return new self(
             poll_id: $data['poll_id'],
             option_ids: $data['option_ids'],
+            option_persistent_ids: $data['option_persistent_ids'],
             voter_chat: isset($data['voter_chat'])
                 ? Chat::makeByArray($data['voter_chat'])
                 : null,
@@ -49,6 +53,7 @@ class PollAnswer extends Type
         return [
             'poll_id' => $this->poll_id,
             'voter_chat' => $this->voter_chat,
+            'option_persistent_ids' => $this->option_persistent_ids,
             'user' => $this->user,
             'option_ids' => $this->option_ids,
         ];

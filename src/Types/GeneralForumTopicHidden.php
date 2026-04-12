@@ -7,8 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents a service message about General forum topic hidden in the chat.
- * Currently holds no information.
+ * This object represents a service message about General forum topic hidden in the chat. Currently holds no
+ * information.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

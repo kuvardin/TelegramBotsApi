@@ -9,8 +9,7 @@ use Kuvardin\TelegramBotsApi\Types\User;
 use RuntimeException;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#chatmember">chat member</a> that isn't currently a
- * member of the chat, but may join it themselves.
+ * Represents a chat member that isn't currently a member of the chat, but may join it themselves.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

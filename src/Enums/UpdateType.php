@@ -33,4 +33,5 @@ enum UpdateType: string
     case ChatBoost = 'chat_boost';
     case RemovedChatBoost = 'removed_chat_boost';
     case PurchasedPaidMedia = 'purchased_paid_media';
+    case ManagedBot = 'managed_bot';
 }

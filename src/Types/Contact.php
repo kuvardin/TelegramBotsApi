@@ -22,8 +22,7 @@ class Contact extends Type
      *     bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at
      *     most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this
      *     identifier.
-     * @param string|null $vcard Additional data about the contact in the form of a <a
-     *     href="https://en.wikipedia.org/wiki/VCard">vCard</a>
+     * @param string|null $vcard Additional data about the contact in the form of a vCard
      */
     public function __construct(
         public string $phone_number,

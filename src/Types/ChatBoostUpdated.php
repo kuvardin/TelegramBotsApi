@@ -16,7 +16,7 @@ class ChatBoostUpdated extends Type
 {
     /**
      * @param Chat $chat Chat which was boosted
-     * @param ChatBoost $boost Infomation about the chat boost
+     * @param ChatBoost $boost Information about the chat boost
      */
     public function __construct(
         public Chat $chat,

@@ -17,8 +17,8 @@ class ChatBoost extends Type
     /**
      * @param string $boost_id Unique identifier of the boost
      * @param int $add_date Point in time (Unix timestamp) when the chat was boosted
-     * @param int $expiration_date Point in time (Unix timestamp) when the boost will automatically expire, unless
-     *     the booster's Telegram Premium subscription is prolonged
+     * @param int $expiration_date Point in time (Unix timestamp) when the boost will automatically expire, unless the
+     *     booster's Telegram Premium subscription is prolonged
      * @param ChatBoostSource $source Source of the added boost
      */
     public function __construct(

@@ -24,7 +24,7 @@ class Gif extends InlineQueryResult
 {
     /**
      * @param string $id Unique identifier for this result, 1-64 bytes
-     * @param string $gif_url A valid URL for the GIF file. File size must not exceed 1MB
+     * @param string $gif_url A valid URL for the GIF file
      * @param string $thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
      * @param int|null $gif_width Width of the GIF
      * @param int|null $gif_height Height of the GIF
@@ -39,7 +39,7 @@ class Gif extends InlineQueryResult
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the GIF
      *     animation
-     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
         public string $id,
@@ -119,7 +119,7 @@ class Gif extends InlineQueryResult
             'thumbnail_mime_type' => $this->thumbnail_mime_type,
             'title' => $this->title,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'reply_markup' => $this->reply_markup,

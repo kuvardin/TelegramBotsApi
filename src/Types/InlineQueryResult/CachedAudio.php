@@ -13,7 +13,7 @@ use RuntimeException;
 
 /**
  * Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by
- * the user. Alternatively, you can use input_message_content to send a message with the specified content instead of
+ * the user. Alternatively, you can use "input_message_content" to send a message with the specified content instead of
  * the audio.
  *
  * @package Kuvardin\TelegramBotsApi
@@ -25,9 +25,9 @@ class CachedAudio extends InlineQueryResult
      * @param string $id Unique identifier for this result, 1-64 bytes
      * @param string $audio_file_id A valid file identifier for the audio file
      * @param string|null $caption Caption, 0-1024 characters after entities parsing
-     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the audio caption
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the audio caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
-     *     specified instead of parse_mode
+     *     specified instead of "parse_mode"
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the audio
      */
@@ -82,7 +82,7 @@ class CachedAudio extends InlineQueryResult
             'id' => $this->id,
             'audio_file_id' => $this->audio_file_id,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'reply_markup' => $this->reply_markup,
             'input_message_content' => $this->input_message_content,

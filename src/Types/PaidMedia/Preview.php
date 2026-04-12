@@ -8,7 +8,7 @@ use Kuvardin\TelegramBotsApi\Types\PaidMedia;
 use RuntimeException;
 
 /**
- * The paid media isn&#39;t available before the payment.
+ * The paid media isn't available before the payment.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

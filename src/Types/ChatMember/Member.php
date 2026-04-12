@@ -9,8 +9,7 @@ use Kuvardin\TelegramBotsApi\Types\User;
 use RuntimeException;
 
 /**
- * Represents a <a href="https://core.telegram.org/bots/api#chatmember">chat member</a> that has no additional
- * privileges or restrictions.
+ * Represents a chat member that has no additional privileges or restrictions.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -20,10 +19,12 @@ class Member extends ChatMember
     /**
      * @param User $user Information about the user
      * @param int|null $until_date Date when the user's subscription will expire; Unix time
+     * @param string|null $tag Tag of the member
      */
     public function __construct(
         public User $user,
         public ?int $until_date = null,
+        public ?string $tag = null,
     )
     {
 
@@ -43,6 +44,7 @@ class Member extends ChatMember
         return new self(
             user: User::makeByArray($data['user']),
             until_date: $data['until_date'] ?? null,
+            tag: $data['tag'] ?? null,
         );
     }
 
@@ -52,6 +54,7 @@ class Member extends ChatMember
             'status' => self::getStatus(),
             'user' => $this->user,
             'until_date' => $this->until_date,
+            'tag' => $this->tag,
         ];
     }
 }

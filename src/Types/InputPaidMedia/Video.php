@@ -17,28 +17,29 @@ use RuntimeException;
 class Video extends InputPaidMedia
 {
     /**
-     * @param InputFile $media File to send. Pass a file_id to send a file that exists on the Telegram servers
-     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under
-     *     &lt;file_attach_name&gt; name.
-     * @param InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the file
-     *     is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's
-     *     width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
-     *     Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
+     * @param InputFile|string $media File to send.
+     * @param InputFile|string|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
+     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
      *     &lt;file_attach_name&gt;.
      * @param int|null $width Video width
      * @param int|null $height Video height
      * @param int|null $duration Video duration in seconds
-     * @param bool|null $supports_streaming Pass "True" if the uploaded video is suitable for streaming
+     * @param bool|null $supports_streaming Pass True if the uploaded video is suitable for streaming
+     * @param InputFile|string|null $cover Cover for the video in the message.
+     * @param int|null $start_timestamp Start timestamp for the video in the message
      */
     public function __construct(
-        public InputFile $media,
-        public ?InputFile $thumbnail = null,
+        public InputFile|string $media,
+        public InputFile|string|null $thumbnail = null,
         public ?int $width = null,
         public ?int $height = null,
         public ?int $duration = null,
         public ?bool $supports_streaming = null,
+        public InputFile|string|null $cover = null,
+        public ?int $start_timestamp = null,
     )
     {
 
@@ -64,6 +65,8 @@ class Video extends InputPaidMedia
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
             supports_streaming: $data['supports_streaming'] ?? null,
+            cover: $data['cover'] ?? null,
+            start_timestamp: $data['start_timestamp'] ?? null,
         );
     }
 
@@ -77,6 +80,8 @@ class Video extends InputPaidMedia
             'height' => $this->height,
             'duration' => $this->duration,
             'supports_streaming' => $this->supports_streaming,
+            'cover' => $this->cover,
+            'start_timestamp' => $this->start_timestamp,
         ];
     }
 }

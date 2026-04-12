@@ -21,13 +21,23 @@ class User extends TransactionPartner
 {
     /**
      * @param TelegramUser $user Information about the user
-     * @param string|null $invoice_payload Bot-specified invoice payload
+     * @param string|null $invoice_payload Bot-specified invoice payload. Can be available only for “invoice_payment”
+     *     transactions.
      * @param AffiliateInfo|null $affiliate Information about the affiliate that received a commission via this
-     *     transaction
-     * @param int|null $subscription_period The duration of the paid subscription
-     * @param PaidMedia[]|null $paid_media Information about the paid media bought by the user
-     * @param string|null $paid_media_payload Bot-specified paid media payload
-     * @param Gift|null $gift The gift sent to the user by the bot
+     *     transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.
+     * @param int|null $subscription_period The duration of the paid subscription. Can be available only for
+     *     “invoice_payment” transactions.
+     * @param PaidMedia[]|null $paid_media Information about the paid media bought by the user; for
+     *     “paid_media_payment” transactions only
+     * @param string|null $paid_media_payload Bot-specified paid media payload. Can be available only for
+     *     “paid_media_payment” transactions.
+     * @param Gift|null $gift The gift sent to the user by the bot; for “gift_purchase” transactions only
+     * @param string $transaction_type Type of the transaction, currently one of “invoice_payment” for payments via
+     *     invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot,
+     *     “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for
+     *     direct transfers from managed business accounts
+     * @param int|null $premium_subscription_duration Number of months the gifted Telegram Premium subscription will be
+     *     active for; for “premium_purchase” transactions only
      */
     public function __construct(
         public TelegramUser $user,
@@ -37,6 +47,8 @@ class User extends TransactionPartner
         public ?array $paid_media = null,
         public ?string $paid_media_payload = null,
         public ?Gift $gift = null,
+        public string $transaction_type,
+        public ?int $premium_subscription_duration = null,
     )
     {
 
@@ -70,6 +82,8 @@ class User extends TransactionPartner
             gift: isset($data['gift'])
                 ? Gift::makeByArray($data['gift'])
                 : null,
+            transaction_type: $data['transaction_type'],
+            premium_subscription_duration: $data['premium_subscription_duration'] ?? null,
         );
     }
 
@@ -84,6 +98,8 @@ class User extends TransactionPartner
             'paid_media' => $this->paid_media,
             'paid_media_payload' => $this->paid_media_payload,
             'gift' => $this->gift,
+            'transaction_type' => $this->transaction_type,
+            'premium_subscription_duration' => $this->premium_subscription_duration,
         ];
     }
 }

@@ -20,6 +20,7 @@ use RuntimeException;
 class Venue extends InlineQueryResult
 {
     /**
+     * @param string $id Unique identifier for this result, 1-64 Bytes
      * @param float $latitude Latitude of the venue location in degrees
      * @param float $longitude Longitude of the venue location in degrees
      * @param string $title Title of the venue

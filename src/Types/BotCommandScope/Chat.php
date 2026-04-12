@@ -8,8 +8,7 @@ use Kuvardin\TelegramBotsApi\Types\BotCommandScope;
 use RuntimeException;
 
 /**
- * Represents the <a href="https://core.telegram.org/bots/api#botcommandscope">scope</a> of bot commands, covering a
- * specific chat.
+ * Represents the scope of bot commands, covering a specific chat.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -18,7 +17,7 @@ class Chat extends BotCommandScope
 {
     /**
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
-     *     format "@supergroupusername")
+     *     format "&#64;supergroupusername"). Channel direct messages chats and channel chats aren't supported.
      */
     public function __construct(
         public int|string $chat_id,

@@ -16,8 +16,8 @@ class BusinessMessagesDeleted extends Type
 {
     /**
      * @param string $business_connection_id Unique identifier of the business connection
-     * @param Chat $chat Information about a chat in the business account. The bot may not have access to the chat
-     *     or the corresponding user.
+     * @param Chat $chat Information about a chat in the business account. The bot may not have access to the chat or
+     *     the corresponding user.
      * @param int[] $message_ids The list of identifiers of deleted messages in the chat of the business account
      */
     public function __construct(

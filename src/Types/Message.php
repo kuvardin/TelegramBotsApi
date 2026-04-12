@@ -15,29 +15,34 @@ use JetBrains\PhpStorm\Deprecated;
 class Message extends MaybeInaccessibleMessage
 {
     /**
-     * @param int $message_id Unique message identifier inside this chat
+     * @param int $message_id Unique message identifier inside this chat. In specific instances (e.g., message
+     *     containing a video sent to a big chat), the server might automatically schedule a message instead of sending
+     *     it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is
+     *     actually sent
      * @param int $date Date the message was sent in Unix time. It is always a positive number, representing a valid
      *     date.
      * @param Chat $chat Chat the message belongs to
-     * @param int|null $message_thread_id Unique identifier of a message thread to which the message belongs;
-     *     for supergroups only
-     * @param User|null $from Sender of the message; empty for messages sent to channels. For backward compatibility,
-     *     the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
-     * @param Chat|null $sender_chat Sender of the message, sent on behalf of a chat. For example, the channel itself
-     *     for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel
-     *     for messages automatically forwarded to the discussion group. For backward compatibility, the field "from"
-     *     contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
-     * @param int|null $sender_boost_count If the sender of the message boosted the chat, the number of boosts added
-     *     by the user
+     * @param int|null $message_thread_id Unique identifier of a message thread or forum topic to which the message
+     *     belongs; for supergroups and private chats only
+     * @param User|null $from Sender of the message; may be empty for messages sent to channels. For backward
+     *     compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in
+     *     non-channel chats
+     * @param Chat|null $sender_chat Sender of the message when sent on behalf of a chat. For example, the supergroup
+     *     itself for messages sent by its anonymous administrators or a linked channel for messages automatically
+     *     forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf
+     *     of a chat, the field "from" contains a fake sender user in non-channel chats.
+     * @param int|null $sender_boost_count If the sender of the message boosted the chat, the number of boosts added by
+     *     the user
      * @param User|null $sender_business_bot The bot that actually sent the message on behalf of the business account.
      *     Available only for outgoing messages sent on behalf of the connected business account.
      * @param string|null $business_connection_id Unique identifier of the business connection from which the message
      *     was received. If non-empty, the message belongs to a chat of the corresponding business account that is
      *     independent from any potential bot chat which might share the same identifier.
      * @param MessageOrigin|null $forward_origin Information about the original message for forwarded messages
-     * @param bool|null $is_topic_message True, if the message is sent to a forum topic
-     * @param bool|null $is_automatic_forward True, if the message is a channel post that was automatically
-     *     forwarded to the connected discussion group
+     * @param bool|null $is_topic_message True, if the message is sent to a topic in a forum supergroup or a private
+     *     chat with the bot
+     * @param bool|null $is_automatic_forward True, if the message is a channel post that was automatically forwarded
+     *     to the connected discussion group
      * @param Message|null $reply_to_message For replies in the same chat and message thread, the original message.
      *     Note that the Message object in this field will not contain further "reply_to_message" fields even if it
      *     itself is a reply.
@@ -50,7 +55,8 @@ class Message extends MaybeInaccessibleMessage
      * @param bool|null $has_protected_content True, if the message can't be forwarded
      * @param bool|null $is_from_offline True, if the message was sent by an implicit action, for example, as an away
      *     or a greeting business message, or as a scheduled message
-     * @param string|null $media_group_id The unique identifier of a media message group this message belongs to
+     * @param string|null $media_group_id The unique identifier inside this chat of a media message group this message
+     *     belongs to
      * @param string|null $author_signature Signature of the post author for messages in channels, or the custom title
      *     of an anonymous group administrator
      * @param string|null $text For text messages, the actual UTF-8 text of the message
@@ -60,7 +66,7 @@ class Message extends MaybeInaccessibleMessage
      *     if it is a text message and link preview options were changed
      * @param string|null $effect_id Unique identifier of the message effect added to the message
      * @param Animation|null $animation Message is an animation, information about the animation. For backward
-     *     compatibility, when this field is set, the document field will also be set
+     *     compatibility, when this field is set, the "document" field will also be set
      * @param Audio|null $audio Message is an audio file, information about the file
      * @param Document|null $document Message is a general file, information about the file
      * @param PaidMediaInfo|null $paid_media Message contains paid media; information about the paid media
@@ -70,22 +76,22 @@ class Message extends MaybeInaccessibleMessage
      * @param Video|null $video Message is a video, information about the video
      * @param VideoNote|null $video_note Message is a video note, information about the video message
      * @param Voice|null $voice Message is a voice message, information about the file
-     * @param string|null $caption Caption for the animation, audio, document, photo, video or voice
+     * @param string|null $caption Caption for the animation, audio, document, paid media, photo, video or voice
      * @param MessageEntity[]|null $caption_entities For messages with a caption, special entities like usernames,
      *     URLs, bot commands, etc. that appear in the caption
      * @param bool|null $show_caption_above_media True, if the caption must be shown above the message media
      * @param bool|null $has_media_spoiler True, if the message media is covered by a spoiler animation
      * @param Contact|null $contact Message is a shared contact, information about the contact
      * @param Dice|null $dice Message is a dice with random value
-     * @param Game|null $game Message is a game, information about the game.
+     * @param Game|null $game Message is a game, information about the game. More about games »
      * @param Poll|null $poll Message is a native poll, information about the poll
-     * @param Venue|null $venue Message is a venue, information about the venue. For backward compatibility,
-     *     when this field is set, the "location" field will also be set
+     * @param Venue|null $venue Message is a venue, information about the venue. For backward compatibility, when this
+     *     field is set, the "location" field will also be set
      * @param Location|null $location Message is a shared location, information about the location
-     * @param User[]|null $new_chat_members New members that were added to the group or supergroup and information about
-     *     them (the bot itself may be one of these members)
-     * @param User|null $left_chat_member A member was removed from the group, information about them
-     *     (this member may be the bot itself)
+     * @param User[]|null $new_chat_members New members that were added to the group or supergroup and information
+     *     about them (the bot itself may be one of these members)
+     * @param User|null $left_chat_member A member was removed from the group, information about them (this member may
+     *     be the bot itself)
      * @param string|null $new_chat_title A chat title was changed to this value
      * @param PhotoSize[]|null $new_chat_photo A chat photo was change to this value
      * @param bool|null $delete_chat_photo Service message: the chat photo was deleted
@@ -108,15 +114,17 @@ class Message extends MaybeInaccessibleMessage
      *     difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit
      *     integer or double-precision float type are safe for storing this identifier.
      * @param MaybeInaccessibleMessage|null $pinned_message Specified message was pinned. Note that the Message object
-     *     in this field will not contain further reply_to_message fields even if it itself is a reply.
-     * @param Invoice|null $invoice Message is an invoice for a payment, information about the invoice.
+     *     in this field will not contain further "reply_to_message" fields even if it itself is a reply.
+     * @param Invoice|null $invoice Message is an invoice for a payment, information about the invoice. More about
+     *     payments »
      * @param SuccessfulPayment|null $successful_payment Message is a service message about a successful payment,
-     *     information about the payment.
+     *     information about the payment. More about payments »
      * @param RefundedPayment|null $refunded_payment Message is a service message about a refunded payment, information
-     *     about the payment.
+     *     about the payment. More about payments »
      * @param UsersShared|null $users_shared Service message: users were shared with the bot
      * @param ChatShared|null $chat_shared Service message: a chat was shared with the bot
-     * @param string|null $connected_website The domain name of the website on which the user has logged in.
+     * @param string|null $connected_website The domain name of the website on which the user has logged in. More about
+     *     Telegram Login »
      * @param PassportData|null $passport_data Telegram Passport data
      * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message. A user in the chat triggered
      *     another user's proximity alert while sharing Live Location.
@@ -134,7 +142,8 @@ class Message extends MaybeInaccessibleMessage
      * @param WebAppData|null $web_app_data Service message: data sent by a Web App
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message. "login_url" buttons are
      *     represented as ordinary "url" buttons.
-     * @param GeneralForumTopicHidden|null $general_forum_topic_hidden Service message: the 'General' forum topic hidden
+     * @param GeneralForumTopicHidden|null $general_forum_topic_hidden Service message: the 'General' forum topic
+     *     hidden
      * @param GeneralForumTopicUnhidden|null $general_forum_topic_unhidden Service message: the 'General' forum topic
      *     unhidden
      * @param GiveawayCreated|null $giveaway_created Service message: a scheduled giveaway was created
@@ -143,19 +152,45 @@ class Message extends MaybeInaccessibleMessage
      * @param GiveawayCompleted|null $giveaway_completed Service message: a giveaway without public winners was
      *     completed
      * @param WriteAccessAllowed|null $write_access_allowed Service message: the user allowed the bot to write messages
-     *      after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit
-     *      request from a Web App sent by the method requestWriteAccess()
-     *
-     * @param User|null $forward_from For forwarded messages, sender of the original message
-     * @param Chat|null $forward_from_chat For messages forwarded from channels or from anonymous administrators,
-     *     information about the original sender chat
-     * @param int|null $forward_from_message_id For messages forwarded from channels, identifier of the original
-     *     message in the channel
-     * @param string|null $forward_signature For forwarded messages that were originally sent in channels or by an
-     *     anonymous chat administrator, signature of the message sender if present
-     * @param string|null $forward_sender_name Sender's name for messages forwarded from users who disallow adding a
-     *     link to their account in forwarded messages
-     * @param int|null $forward_date For forwarded messages, date the original message was sent in Unix time
+     *     after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit
+     *     request from a Web App sent by the method requestWriteAccess()
+     * @param DirectMessagesTopic|null $direct_messages_topic Information about the direct messages chat topic that
+     *     contains the message
+     * @param string|null $sender_tag Tag or custom title of the sender of the message; for supergroups only
+     * @param int|null $reply_to_checklist_task_id Identifier of the specific checklist task that is being replied to
+     * @param string|null $reply_to_poll_option_id Persistent identifier of the specific poll option that is being
+     *     replied to
+     * @param bool|null $is_paid_post True, if the message is a paid post. Note that such posts must not be deleted for
+     *     24 hours to receive the payment and can't be edited.
+     * @param int|null $paid_star_count The number of Telegram Stars that were paid by the sender of the message to
+     *     send it
+     * @param SuggestedPostInfo|null $suggested_post_info Information about suggested post parameters if the message is
+     *     a suggested post in a channel direct messages chat. If the message is an approved or declined suggested
+     *     post, then it can't be edited.
+     * @param Checklist|null $checklist Message is a checklist
+     * @param ChatOwnerLeft|null $chat_owner_left Service message: chat owner has left
+     * @param ChatOwnerChanged|null $chat_owner_changed Service message: chat owner has changed
+     * @param GiftInfo|null $gift Service message: a regular gift was sent or received
+     * @param UniqueGiftInfo|null $unique_gift Service message: a unique gift was sent or received
+     * @param GiftInfo|null $gift_upgrade_sent Service message: upgrade of a gift was purchased after the gift was sent
+     * @param ChecklistTasksDone|null $checklist_tasks_done Service message: some tasks in a checklist were marked as
+     *     done or not done
+     * @param ChecklistTasksAdded|null $checklist_tasks_added Service message: tasks were added to a checklist
+     * @param DirectMessagePriceChanged|null $direct_message_price_changed Service message: the price for paid messages
+     *     in the corresponding direct messages chat of a channel has changed
+     * @param ManagedBotCreated|null $managed_bot_created Service message: user created a bot that will be managed by
+     *     the current bot
+     * @param PaidMessagePriceChanged|null $paid_message_price_changed Service message: the price for paid messages has
+     *     changed in the chat
+     * @param PollOptionAdded|null $poll_option_added Service message: answer option was added to a poll
+     * @param PollOptionDeleted|null $poll_option_deleted Service message: answer option was deleted from a poll
+     * @param SuggestedPostApproved|null $suggested_post_approved Service message: a suggested post was approved
+     * @param SuggestedPostApprovalFailed|null $suggested_post_approval_failed Service message: approval of a suggested
+     *     post has failed
+     * @param SuggestedPostDeclined|null $suggested_post_declined Service message: a suggested post was declined
+     * @param SuggestedPostPaid|null $suggested_post_paid Service message: payment for a suggested post was received
+     * @param SuggestedPostRefunded|null $suggested_post_refunded Service message: payment for a suggested post was
+     *     refunded
      */
     public function __construct(
         public int $message_id,
@@ -243,6 +278,31 @@ class Message extends MaybeInaccessibleMessage
         public ?GiveawayWinners $giveaway_winners = null,
         public ?GiveawayCompleted $giveaway_completed = null,
         public ?WriteAccessAllowed $write_access_allowed = null,
+        public ?DirectMessagesTopic $direct_messages_topic = null,
+        public ?string $sender_tag = null,
+        public ?int $reply_to_checklist_task_id = null,
+        public ?string $reply_to_poll_option_id = null,
+        public ?bool $is_paid_post = null,
+        public ?int $paid_star_count = null,
+        public ?SuggestedPostInfo $suggested_post_info = null,
+        public ?Checklist $checklist = null,
+        public ?ChatOwnerLeft $chat_owner_left = null,
+        public ?ChatOwnerChanged $chat_owner_changed = null,
+        public ?GiftInfo $gift = null,
+        public ?UniqueGiftInfo $unique_gift = null,
+        public ?GiftInfo $gift_upgrade_sent = null,
+        public ?ChecklistTasksDone $checklist_tasks_done = null,
+        public ?ChecklistTasksAdded $checklist_tasks_added = null,
+        public ?DirectMessagePriceChanged $direct_message_price_changed = null,
+        public ?ManagedBotCreated $managed_bot_created = null,
+        public ?PaidMessagePriceChanged $paid_message_price_changed = null,
+        public ?PollOptionAdded $poll_option_added = null,
+        public ?PollOptionDeleted $poll_option_deleted = null,
+        public ?SuggestedPostApproved $suggested_post_approved = null,
+        public ?SuggestedPostApprovalFailed $suggested_post_approval_failed = null,
+        public ?SuggestedPostDeclined $suggested_post_declined = null,
+        public ?SuggestedPostPaid $suggested_post_paid = null,
+        public ?SuggestedPostRefunded $suggested_post_refunded = null,
 
         #[Deprecated] public ?User $forward_from = null,
         #[Deprecated] public ?Chat $forward_from_chat = null,
@@ -476,6 +536,71 @@ class Message extends MaybeInaccessibleMessage
             write_access_allowed: isset($data['write_access_allowed'])
                 ? WriteAccessAllowed::makeByArray($data['write_access_allowed'])
                 : null,
+            direct_messages_topic: isset($data['direct_messages_topic'])
+                ? DirectMessagesTopic::makeByArray($data['direct_messages_topic'])
+                : null,
+            sender_tag: $data['sender_tag'] ?? null,
+            reply_to_checklist_task_id: $data['reply_to_checklist_task_id'] ?? null,
+            reply_to_poll_option_id: $data['reply_to_poll_option_id'] ?? null,
+            is_paid_post: $data['is_paid_post'] ?? null,
+            paid_star_count: $data['paid_star_count'] ?? null,
+            suggested_post_info: isset($data['suggested_post_info'])
+                ? SuggestedPostInfo::makeByArray($data['suggested_post_info'])
+                : null,
+            checklist: isset($data['checklist'])
+                ? Checklist::makeByArray($data['checklist'])
+                : null,
+            chat_owner_left: isset($data['chat_owner_left'])
+                ? ChatOwnerLeft::makeByArray($data['chat_owner_left'])
+                : null,
+            chat_owner_changed: isset($data['chat_owner_changed'])
+                ? ChatOwnerChanged::makeByArray($data['chat_owner_changed'])
+                : null,
+            gift: isset($data['gift'])
+                ? GiftInfo::makeByArray($data['gift'])
+                : null,
+            unique_gift: isset($data['unique_gift'])
+                ? UniqueGiftInfo::makeByArray($data['unique_gift'])
+                : null,
+            gift_upgrade_sent: isset($data['gift_upgrade_sent'])
+                ? GiftInfo::makeByArray($data['gift_upgrade_sent'])
+                : null,
+            checklist_tasks_done: isset($data['checklist_tasks_done'])
+                ? ChecklistTasksDone::makeByArray($data['checklist_tasks_done'])
+                : null,
+            checklist_tasks_added: isset($data['checklist_tasks_added'])
+                ? ChecklistTasksAdded::makeByArray($data['checklist_tasks_added'])
+                : null,
+            direct_message_price_changed: isset($data['direct_message_price_changed'])
+                ? DirectMessagePriceChanged::makeByArray($data['direct_message_price_changed'])
+                : null,
+            managed_bot_created: isset($data['managed_bot_created'])
+                ? ManagedBotCreated::makeByArray($data['managed_bot_created'])
+                : null,
+            paid_message_price_changed: isset($data['paid_message_price_changed'])
+                ? PaidMessagePriceChanged::makeByArray($data['paid_message_price_changed'])
+                : null,
+            poll_option_added: isset($data['poll_option_added'])
+                ? PollOptionAdded::makeByArray($data['poll_option_added'])
+                : null,
+            poll_option_deleted: isset($data['poll_option_deleted'])
+                ? PollOptionDeleted::makeByArray($data['poll_option_deleted'])
+                : null,
+            suggested_post_approved: isset($data['suggested_post_approved'])
+                ? SuggestedPostApproved::makeByArray($data['suggested_post_approved'])
+                : null,
+            suggested_post_approval_failed: isset($data['suggested_post_approval_failed'])
+                ? SuggestedPostApprovalFailed::makeByArray($data['suggested_post_approval_failed'])
+                : null,
+            suggested_post_declined: isset($data['suggested_post_declined'])
+                ? SuggestedPostDeclined::makeByArray($data['suggested_post_declined'])
+                : null,
+            suggested_post_paid: isset($data['suggested_post_paid'])
+                ? SuggestedPostPaid::makeByArray($data['suggested_post_paid'])
+                : null,
+            suggested_post_refunded: isset($data['suggested_post_refunded'])
+                ? SuggestedPostRefunded::makeByArray($data['suggested_post_refunded'])
+                : null,
 
             forward_from: isset($data['forward_from'])
                 ? User::makeByArray($data['forward_from'])
@@ -578,6 +703,31 @@ class Message extends MaybeInaccessibleMessage
             'video_chat_participants_invited' => $this->video_chat_participants_invited,
             'web_app_data' => $this->web_app_data,
             'reply_markup' => $this->reply_markup,
+            'direct_messages_topic' => $this->direct_messages_topic,
+            'sender_tag' => $this->sender_tag,
+            'reply_to_checklist_task_id' => $this->reply_to_checklist_task_id,
+            'reply_to_poll_option_id' => $this->reply_to_poll_option_id,
+            'is_paid_post' => $this->is_paid_post,
+            'paid_star_count' => $this->paid_star_count,
+            'suggested_post_info' => $this->suggested_post_info,
+            'checklist' => $this->checklist,
+            'chat_owner_left' => $this->chat_owner_left,
+            'chat_owner_changed' => $this->chat_owner_changed,
+            'gift' => $this->gift,
+            'unique_gift' => $this->unique_gift,
+            'gift_upgrade_sent' => $this->gift_upgrade_sent,
+            'checklist_tasks_done' => $this->checklist_tasks_done,
+            'checklist_tasks_added' => $this->checklist_tasks_added,
+            'direct_message_price_changed' => $this->direct_message_price_changed,
+            'managed_bot_created' => $this->managed_bot_created,
+            'paid_message_price_changed' => $this->paid_message_price_changed,
+            'poll_option_added' => $this->poll_option_added,
+            'poll_option_deleted' => $this->poll_option_deleted,
+            'suggested_post_approved' => $this->suggested_post_approved,
+            'suggested_post_approval_failed' => $this->suggested_post_approval_failed,
+            'suggested_post_declined' => $this->suggested_post_declined,
+            'suggested_post_paid' => $this->suggested_post_paid,
+            'suggested_post_refunded' => $this->suggested_post_refunded,
 
             'forward_from' => $this->forward_from,
             'forward_from_chat' => $this->forward_from_chat,

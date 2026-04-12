@@ -19,12 +19,15 @@ class ForumTopic extends Type
      * @param string $name Name of the topic
      * @param int $icon_color Color of the topic icon in RGB format
      * @param string|null $icon_custom_emoji_id Unique identifier of the custom emoji shown as the topic icon
+     * @param bool|null $is_name_implicit True, if the name of the topic wasn't specified explicitly by its creator and
+     *     likely needs to be changed by the bot
      */
     public function __construct(
         public int $message_thread_id,
         public string $name,
         public int $icon_color,
         public ?string $icon_custom_emoji_id = null,
+        public ?bool $is_name_implicit = null,
     )
     {
 
@@ -37,6 +40,7 @@ class ForumTopic extends Type
             name: $data['name'],
             icon_color: $data['icon_color'],
             icon_custom_emoji_id: $data['icon_custom_emoji_id'] ?? null,
+            is_name_implicit: $data['is_name_implicit'] ?? null,
         );
     }
 
@@ -47,6 +51,7 @@ class ForumTopic extends Type
             'name' => $this->name,
             'icon_color' => $this->icon_color,
             'icon_custom_emoji_id' => $this->icon_custom_emoji_id,
+            'is_name_implicit' => $this->is_name_implicit,
         ];
     }
 }

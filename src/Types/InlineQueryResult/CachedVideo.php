@@ -32,7 +32,7 @@ class CachedVideo extends InlineQueryResult
      *     specified instead of "parse_mode"
      * @param InlineKeyboardMarkup|null $reply_markup Inline keyboard attached to the message
      * @param InputMessageContent|null $input_message_content Content of the message to be sent instead of the video
-     * @param bool|null $show_caption_above_media Pass "True", if the caption must be shown above the message media
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
      */
     public function __construct(
         public string $id,
@@ -93,7 +93,7 @@ class CachedVideo extends InlineQueryResult
             'title' => $this->title,
             'description' => $this->description,
             'caption' => $this->caption,
-            'parse_mode' => $this->parse_mode instanceof ParseMode ? $this->parse_mode->value : $this->parse_mode,
+            'parse_mode' => $this->parse_mode,
             'caption_entities' => $this->caption_entities,
             'show_caption_above_media' => $this->show_caption_above_media,
             'reply_markup' => $this->reply_markup,

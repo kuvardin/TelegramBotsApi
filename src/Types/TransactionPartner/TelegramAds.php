@@ -24,8 +24,6 @@ class TelegramAds extends TransactionPartner
     {
         return 'telegram_ads';
     }
-
-
     public static function makeByArray(array $data): static
     {
         if ($data['type'] !== self::getType()) {

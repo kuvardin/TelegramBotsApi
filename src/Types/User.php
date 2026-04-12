@@ -27,13 +27,18 @@ class User extends Type
      * @param bool|null $is_premium True, if this user is a Telegram Premium user
      * @param bool|null $added_to_attachment_menu True, if this user added the bot to the attachment menu
      * @param bool|null $can_join_groups True, if the bot can be invited to groups. Returned only in getMe().
-     * @param bool|null $can_read_all_group_messages True, if privacy mode is disabled for the bot.
-     *     Returned only in getMe().
-     * @param bool|null $supports_inline_queries True, if the bot supports inline queries.
-     *     Returned only in getMe().
-     * @param bool|null $can_connect_to_business True, if the bot can be connected to a Telegram Business account
-     *     to receive its messages. Returned only in getMe().
+     * @param bool|null $can_read_all_group_messages True, if privacy mode is disabled for the bot. Returned only in
+     *     getMe().
+     * @param bool|null $supports_inline_queries True, if the bot supports inline queries. Returned only in getMe().
+     * @param bool|null $can_connect_to_business True, if the bot can be connected to a Telegram Business account to
+     *     receive its messages. Returned only in getMe().
      * @param bool|null $has_main_web_app True, if the bot has a main Web App. Returned only in getMe().
+     * @param bool|null $has_topics_enabled True, if the bot has forum topic mode enabled in private chats. Returned
+     *     only in getMe().
+     * @param bool|null $allows_users_to_create_topics True, if the bot allows users to create and delete topics in
+     *     private chats. Returned only in getMe().
+     * @param bool|null $can_manage_bots True, if other bots can be created to be controlled by the bot. Returned only
+     *     in getMe().
      */
     public function __construct(
         public int $id,
@@ -49,6 +54,9 @@ class User extends Type
         public ?bool $supports_inline_queries = null,
         public ?bool $can_connect_to_business = null,
         public ?bool $has_main_web_app = null,
+        public ?bool $has_topics_enabled = null,
+        public ?bool $allows_users_to_create_topics = null,
+        public ?bool $can_manage_bots = null,
     )
     {
 
@@ -70,6 +78,9 @@ class User extends Type
             supports_inline_queries: $data['supports_inline_queries'] ?? null,
             can_connect_to_business: $data['can_connect_to_business'] ?? null,
             has_main_web_app: $data['has_main_web_app'] ?? null,
+            has_topics_enabled: $data['has_topics_enabled'] ?? null,
+            allows_users_to_create_topics: $data['allows_users_to_create_topics'] ?? null,
+            can_manage_bots: $data['can_manage_bots'] ?? null,
         );
     }
 
@@ -89,6 +100,9 @@ class User extends Type
             'supports_inline_queries' => $this->supports_inline_queries,
             'can_connect_to_business' => $this->can_connect_to_business,
             'has_main_web_app' => $this->has_main_web_app,
+            'has_topics_enabled' => $this->has_topics_enabled,
+            'allows_users_to_create_topics' => $this->allows_users_to_create_topics,
+            'can_manage_bots' => $this->can_manage_bots,
         ];
     }
 }

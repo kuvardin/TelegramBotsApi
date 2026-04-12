@@ -17,10 +17,7 @@ use RuntimeException;
 class Photo extends InputPaidMedia
 {
     /**
-     * @param InputFile $media File to send. Pass a file_id to send a file that exists on the Telegram servers
-     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under
-     *     &lt;file_attach_name&gt; name.
+     * @param InputFile $media File to send.
      */
     public function __construct(
         public InputFile $media,

@@ -19,9 +19,9 @@ class Wallpaper extends BackgroundType
     /**
      * @param Document $document Document with the wallpaper
      * @param int $dark_theme_dimming Dimming of the background in dark themes, as a percentage; 0-100
-     * @param bool|null $is_blurred "True", if the wallpaper is downscaled to fit in a 450x450 square and then
+     * @param bool|null $is_blurred True, if the wallpaper is downscaled to fit in a 450x450 square and then
      *     box-blurred with radius 12
-     * @param bool|null $is_moving "True", if the background moves slightly when the device is tilted
+     * @param bool|null $is_moving True, if the background moves slightly when the device is tilted
      */
     public function __construct(
         public Document $document,

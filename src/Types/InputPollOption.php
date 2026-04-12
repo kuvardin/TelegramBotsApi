@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object contains information about one answer option in a poll to send.
+ * This object contains information about one answer option in a poll to be sent.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -16,14 +17,14 @@ class InputPollOption extends Type
 {
     /**
      * @param string $text Option text, 1-100 characters
-     * @param string|null $text_parse_mode Mode for parsing entities in the text. See formatting options for more
-     *     details. Currently, only custom emoji entities are allowed
+     * @param ParseMode|string|null $text_parse_mode Mode for parsing entities in the text. See formatting options for
+     *     more details. Currently, only custom emoji entities are allowed
      * @param MessageEntity[]|null $text_entities A JSON-serialized list of special entities that appear in the poll
-     *     option text. It can be specified instead of text_parse_mode
+     *     option text. It can be specified instead of "text_parse_mode"
      */
     public function __construct(
         public string $text,
-        public ?string $text_parse_mode = null,
+        public ParseMode|string|null $text_parse_mode = null,
         public ?array $text_entities = null,
     )
     {

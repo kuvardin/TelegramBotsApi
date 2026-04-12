@@ -22,21 +22,23 @@ class Chat extends Type
      *     programming languages may have difficulty/silent defects in interpreting it. But it has at most 52
      *     significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this
      *     identifier.
-     * @param string $type_value Name of type of chat, can be Enums\ChatType::*
+     * @param ChatType|string $type_value Type of the chat
      * @param string|null $title Title, for supergroups, channels and group chats
      * @param Username|null $username Username, for private chats, supergroups and channels if available
      * @param string|null $first_name First name of the other party in a private chat
      * @param string|null $last_name Last name of the other party in a private chat
      * @param bool|null $is_forum True, if the supergroup chat is a forum (has topics enabled)
+     * @param bool|null $is_direct_messages True, if the chat is the direct messages chat of a channel
      */
     public function __construct(
         public int $id,
-        public string $type_value,
+        public ChatType|string $type_value,
         public ?string $title = null,
         public ?Username $username = null,
         public ?string $first_name = null,
         public ?string $last_name = null,
         public ?bool $is_forum = null,
+        public ?bool $is_direct_messages = null,
 
         #[Deprecated] public ?ChatPhoto $photo = null,
         #[Deprecated] public ?array $active_usernames = null,
@@ -83,6 +85,7 @@ class Chat extends Type
             first_name: $data['first_name'] ?? null,
             last_name: $data['last_name'] ?? null,
             is_forum: $data['is_forum'] ?? null,
+            is_direct_messages: $data['is_direct_messages'] ?? null,
 
             photo: isset($data['photo'])
                 ? ChatPhoto::makeByArray($data['photo'])
@@ -140,6 +143,7 @@ class Chat extends Type
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'is_forum' => $this->is_forum,
+            'is_direct_messages' => $this->is_direct_messages,
 
             'photo' => $this->photo,
             'active_usernames' => $this->active_usernames,
@@ -179,6 +183,8 @@ class Chat extends Type
      */
     public function getType(): ?ChatType
     {
-        return ChatType::tryFrom($this->type_value);
+        return is_string($this->type_value)
+            ? ChatType::tryFrom($this->type_value)
+            : $this->type_value;
     }
 }

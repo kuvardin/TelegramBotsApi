@@ -17,8 +17,8 @@ class ExternalReplyInfo extends Type
 {
     /**
      * @param MessageOrigin $origin Origin of the message replied to by the given message
-     * @param Chat|null $chat Chat the original message belongs to. Available only if the chat is a supergroup
-     *     or a channel.
+     * @param Chat|null $chat Chat the original message belongs to. Available only if the chat is a supergroup or a
+     *     channel.
      * @param int|null $message_id Unique message identifier inside the original chat. Available only if the original
      *     chat is a supergroup or a channel.
      * @param LinkPreviewOptions|null $link_preview_options Options used for link preview generation for the original
@@ -43,6 +43,7 @@ class ExternalReplyInfo extends Type
      * @param Location|null $location Message is a shared location, information about the location
      * @param Poll|null $poll Message is a native poll, information about the poll
      * @param Venue|null $venue Message is a venue, information about the venue
+     * @param Checklist|null $checklist Message is a checklist
      */
     public function __construct(
         public MessageOrigin $origin,
@@ -69,6 +70,7 @@ class ExternalReplyInfo extends Type
         public ?Location $location = null,
         public ?Poll $poll = null,
         public ?Venue $venue = null,
+        public ?Checklist $checklist = null,
     )
     {
 
@@ -146,6 +148,9 @@ class ExternalReplyInfo extends Type
             venue: isset($data['venue'])
                 ? Venue::makeByArray($data['venue'])
                 : null,
+            checklist: isset($data['checklist'])
+                ? Checklist::makeByArray($data['checklist'])
+                : null,
         );
     }
 
@@ -176,6 +181,7 @@ class ExternalReplyInfo extends Type
             'location' => $this->location,
             'poll' => $this->poll,
             'venue' => $this->venue,
+            'checklist' => $this->checklist,
         ];
     }
 }

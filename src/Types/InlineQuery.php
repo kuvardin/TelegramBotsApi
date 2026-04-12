@@ -21,10 +21,9 @@ class InlineQuery extends Type
      * @param User $from Sender
      * @param string $query Text of the query (up to 256 characters)
      * @param string $offset Offset of the results to be returned, can be controlled by the bot
-     * @param string|null $inline_query_chat_type_value Type of the chat, from which the inline query was sent. Can be
-     *     one of Enums\InlineQueryChatType. Can be either “sender” for a private chat with the inline query sender,
-     *     “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from
-     *     official clients and most third-party clients, unless the request was sent from a secret chat
+     * @param InlineQueryChatType|string|null $inline_query_chat_type_value Type of the chat from which the inline
+     *     query was sent. The chat type should be always known for requests sent from official clients and
+     *     most third-party clients, unless the request was sent from a secret chat
      * @param Location|null $location Sender location, only for bots that request user location
      */
     public function __construct(
@@ -32,7 +31,7 @@ class InlineQuery extends Type
         public User $from,
         public string $query,
         public string $offset,
-        public ?string $inline_query_chat_type_value = null,
+        public InlineQueryChatType|string|null $inline_query_chat_type_value = null,
         public ?Location $location = null,
     )
     {
@@ -70,8 +69,8 @@ class InlineQuery extends Type
      */
     public function getInlineQueryChatType(): ?InlineQueryChatType
     {
-        return $this->inline_query_chat_type_value === null
-            ? null
-            : InlineQueryChatType::tryFrom($this->inline_query_chat_type_value);
+        return is_string($this->inline_query_chat_type_value)
+            ? InlineQueryChatType::tryFrom($this->inline_query_chat_type_value)
+            : $this->inline_query_chat_type_value;
     }
 }

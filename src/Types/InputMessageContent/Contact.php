@@ -7,8 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 
 /**
- * Represents the <a href="https://core.telegram.org/bots/api#inputmessagecontent">content</a> of a contact message to
- * be sent as the result of an inline query.
+ * Represents the content of a contact message to be sent as the result of an inline query.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -19,8 +18,7 @@ class Contact extends InputMessageContent
      * @param string $phone_number Contact's phone number
      * @param string $first_name Contact's first name
      * @param string|null $last_name Contact's last name
-     * @param string|null $vcard Additional data about the contact in the form of a <a
-     *     href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+     * @param string|null $vcard Additional data about the contact in the form of a vCard, 0-2048 bytes
      */
     public function __construct(
         public string $phone_number,
