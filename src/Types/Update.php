@@ -221,12 +221,7 @@ class Update extends Type
 
     public function getChat(): ?Chat
     {
-        return $this->message?->chat
-            ?? $this->edited_message?->chat
-            ?? $this->channel_post?->chat
-            ?? $this->edited_channel_post?->chat
-            ?? $this->business_message?->chat
-            ?? $this->edited_business_message?->chat
+        return $this->getMessage()?->chat
             ?? $this->deleted_business_messages?->chat
             ?? $this->message_reaction?->chat
             ?? $this->message_reaction_count?->chat
@@ -235,19 +230,13 @@ class Update extends Type
             ?? $this->chat_member?->chat
             ?? $this->chat_join_request?->chat
             ?? $this->chat_boost?->chat
-            ?? $this->guest_message?->chat
             ?? $this->removed_chat_boost?->chat;
     }
 
     public function getUser(): ?User
     {
-        return $this->message?->from
-            ?? $this->edited_message?->from
-            ?? $this->channel_post?->from
-            ?? $this->edited_channel_post?->from
+        return $this->getMessage()?->from
             ?? $this->business_connection?->user
-            ?? $this->business_message?->from
-            ?? $this->edited_business_message?->from
             ?? $this->message_reaction?->user
             ?? $this->inline_query?->from
             ?? $this->chosen_inline_result?->from
@@ -259,24 +248,16 @@ class Update extends Type
             ?? $this->chat_member?->from
             ?? $this->chat_join_request?->from
             ?? $this->managed_bot?->user
-            ?? $this->guest_message?->from
             ?? $this->purchased_paid_media?->from;
     }
 
     public function getDate(): ?int
     {
-        return $this->message?->date
-            ?? $this->edited_message?->edit_date
-            ?? $this->channel_post?->date
-            ?? $this->edited_channel_post?->edit_date
-            ?? $this->business_connection?->date
-            ?? $this->business_message?->date
-            ?? $this->edited_business_message?->edit_date
+        return $this->getMessage()?->date
             ?? $this->message_reaction?->date
             ?? $this->message_reaction_count?->date
             ?? $this->my_chat_member?->date
             ?? $this->chat_member?->date
-            ?? $this->guest_message?->date
             ?? $this->chat_join_request?->date;
     }
 
@@ -315,5 +296,28 @@ class Update extends Type
             $this->guest_message !== null => UpdateType::GuestMessage,
             default => null,
         };
+    }
+
+    public function getBusinessConnectionId(): ?string
+    {
+        return $this->deleted_business_messages?->business_connection_id
+            ?? $this->message?->business_connection_id
+            ?? $this->edited_message?->business_connection_id
+            ?? $this->channel_post?->business_connection_id
+            ?? $this->edited_channel_post?->business_connection_id
+            ?? $this->business_message?->business_connection_id
+            ?? $this->edited_business_message?->business_connection_id
+            ?? $this->guest_message?->business_connection_id;
+    }
+
+    public function getMessage(): ?Message
+    {
+        return $this->message
+            ?? $this->edited_message
+            ?? $this->channel_post
+            ?? $this->edited_channel_post
+            ?? $this->business_message
+            ?? $this->edited_business_message
+            ?? $this->guest_message;
     }
 }
