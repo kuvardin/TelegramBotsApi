@@ -1,4 +1,4 @@
-# TelegramBotsApi v.10.0 ()
+# TelegramBotsApi v.10.0
 
 [![Latest Version](https://img.shields.io/github/release/kuvardin/telegrambotsapi.svg?style=flat-square)](https://github.com/kuvardin/TelegramBotsApi/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/kuvardin/telegram-bots-api.svg?style=flat-square)](https://packagist.org/packages/kuvardin/telegram-bots-api)
