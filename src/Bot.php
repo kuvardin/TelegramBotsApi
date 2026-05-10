@@ -11,6 +11,7 @@ use Kuvardin\TelegramBotsApi\Types\ForceReply;
 use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardMarkup;
 use Kuvardin\TelegramBotsApi\Types\ReplyKeyboardRemove;
 use Kuvardin\TelegramBotsApi\Types\InlineKeyboardMarkup;
+use Kuvardin\TelegramBotsApi\Types\InputMedia;
 use RuntimeException;
 
 /**
@@ -616,6 +617,89 @@ class Bot
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
+        ]);
+    }
+
+
+    /**
+     * Use this method to send live photos.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
+     *     format "&#64;channelusername")
+     * @param Types\InputFile|string $live_photo Live photo video to send. Sending live photos by a URL is currently
+     *     unsupported.
+     * @param Types\InputFile|string $photo The static photo to send. Sending live photos by a URL is currently
+     *     unsupported.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
+     *     message will be sent
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
+     *     supergroups and private chats of bots with forum topic mode enabled only
+     * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be
+     *     sent; required if the message is sent to a direct messages chat
+     * @param string|null $caption Video caption (may also be used when resending videos by "file_id"), 0-1024
+     *     characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the video caption. See formatting options for more
+     *     details.
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of "parse_mode"
+     * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
+     * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
+     * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance.
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
+     *     private chats only
+     * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
+     *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
+     *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user.
+     */
+    public function sendLivePhoto(
+        int|string $chat_id,
+        Types\InputFile|string $live_photo,
+        Types\InputFile|string $photo,
+        ?string $business_connection_id = null,
+        ?int $message_thread_id = null,
+        ?int $direct_messages_topic_id = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?bool $has_spoiler = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?bool $allow_paid_broadcast = null,
+        ?string $message_effect_id = null,
+        ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+    ): Requests\RequestMessage
+    {
+        return new Requests\RequestMessage($this, 'sendLivePhoto', [
+            'chat_id' => $chat_id,
+            'live_photo' => $live_photo,
+            'photo' => $photo,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
+            'direct_messages_topic_id' => $direct_messages_topic_id,
+            'caption' => $caption,
+            'parse_mode' => $parse_mode,
+            'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'has_spoiler' => $has_spoiler,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
+            'message_effect_id' => $message_effect_id,
+            'suggested_post_parameters' => $suggested_post_parameters,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
         ]);
     }
 
@@ -1242,12 +1326,13 @@ class Bot
     }
 
     /**
-     * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files
-     * can be only grouped in an album with messages of the same type.
+     * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and
+     * audio files can be only grouped in an album with messages of the same type.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
-     * @param Types\InputMedia[] $media A JSON-serialized array describing messages to be sent, must include 2-10 items
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target bot, supergroup or
+     *     channel in the format "&#64;username"
+     * @param InputMedia\Audio[]|InputMedia\Document[]|InputMedia\LivePhoto[]|InputMedia\Photo[]|InputMedia\Video[] $media A
+     *     JSON-serialized array describing messages to be sent, must include 2-10 items
      * @param bool|null $disable_notification Sends messages silently. Users will receive a notification with no sound.
      * @param bool|null $protect_content Protects the contents of the sent messages from forwarding and saving
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
@@ -1257,9 +1342,9 @@ class Bot
      *     message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
      *     private chats only
-     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring
-     *     broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from
-     *     the bot's balance
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance.
      * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the messages will be
      *     sent; required if the messages are sent to a direct messages chat
      */
@@ -1625,6 +1710,13 @@ class Bot
      * @param Enums\ParseMode|null $description_parse_mode Mode for parsing entities in the poll description.
      * @param Types\MessageEntity[]|null $description_entities A JSON-serialized list of special entities that appear
      *     in the poll description, which can be specified instead of "description_parse_mode"
+     * @param bool|null $members_only Pass True, if voting is limited to users who have been members of the chat where
+     *     the poll is being sent for more than 24 hours; for channel chats only
+     * @param string[]|null $country_codes A JSON-serialized list of 0-12 two-letter ISO 3166-1 alpha-2 country codes
+     *     indicating the countries from which users can vote in the poll; for channel chats only. If omitted or empty,
+     *     then users from any country can participate in the poll.
+     * @param Types\InputPollMedia|null $explanation_media Media added to the quiz explanation
+     * @param Types\InputPollMedia|null $media Media added to the poll description
      */
     public function sendPoll(
         int|string $chat_id,
@@ -1660,6 +1752,10 @@ class Bot
         ?string $description = null,
         ?Enums\ParseMode $description_parse_mode = null,
         ?array $description_entities = null,
+        ?bool $members_only = null,
+        ?array $country_codes = null,
+        ?Types\InputPollMedia $explanation_media = null,
+        ?Types\InputPollMedia $media = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPoll', [
@@ -1693,6 +1789,10 @@ class Bot
             'description' => $description,
             'description_parse_mode' => $description_parse_mode ?? $this->parse_mode_default,
             'description_entities' => $description_entities,
+            'members_only' => $members_only,
+            'country_codes' => $country_codes,
+            'explanation_media' => $explanation_media,
+            'media' => $media,
 
             'correct_option_id' => $correct_option_id,
             'reply_to_message_id' => $reply_to_message_id,
@@ -1767,12 +1867,15 @@ class Bot
     }
 
     /**
-     * Use this method to stream a partial message to a user while the message is being generated.
+     * Use this method to stream a partial message to a user while the message is being generated. Note that the
+     * streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you
+     * <strong>must</strong> call sendMessage() with the complete message to persist it in the user's chat.
      *
      * @param int $chat_id Unique identifier for the target private chat
      * @param int $draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same
      *     identifier are animated
-     * @param string $text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param string|null $text Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty
+     *      text to show a “Thinking…” placeholder.
      * @param int|null $message_thread_id Unique identifier for the target message thread
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
@@ -1781,7 +1884,7 @@ class Bot
     public function sendMessageDraft(
         int $chat_id,
         int $draft_id,
-        string $text,
+        ?string $text = null,
         ?int $message_thread_id = null,
         ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
@@ -2622,15 +2725,21 @@ class Bot
     }
 
     /**
-     * Use this method to get a list of administrators in a chat, which aren't bots.
+     * Use this method to get a list of administrators in a chat.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup or channel
-     *     (in the format "&#64;channelusername")
+     *     in the format "&#64;username"
+     * @param bool|null $return_bots Pass True to additionally receive all bots that are administrators of the chat. By
+     *     default, bots other than the current bot are omitted.
      */
-    public function getChatAdministrators(int|string $chat_id): Requests\RequestChatMembers
+    public function getChatAdministrators(
+        int|string $chat_id,
+        ?bool $return_bots = null,
+    ): Requests\RequestChatMembers
     {
         return new Requests\RequestChatMembers($this, 'getChatAdministrators', [
             'chat_id' => $chat_id,
+            'return_bots' => $return_bots,
         ]);
     }
 
@@ -2663,6 +2772,24 @@ class Bot
         return new Requests\RequestChatMember($this, 'getChatMember', [
             'chat_id' => $chat_id,
             'user_id' => $user_id,
+        ]);
+    }
+
+    /**
+     * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their
+     * profile) of a given user.
+     *
+     * @param int $user_id Unique identifier for the target user
+     * @param int $limit The maximum number of messages to return; 1-20
+     */
+    public function getUserPersonalChatMessages(
+        int $user_id,
+        int $limit,
+    ): Requests\RequestMessages
+    {
+        return new Requests\RequestMessages($this, 'getUserPersonalChatMessages', [
+            'user_id' => $user_id,
+            'limit' => $limit,
         ]);
     }
 
@@ -2986,6 +3113,23 @@ class Bot
     }
 
     /**
+     * Use this method to reply to a received guest message.
+     *
+     * @param string $guest_query_id Unique identifier for the query to be answered
+     * @param Types\InlineQueryResult $result A JSON-serialized object describing the message to be sent
+     */
+    public function answerGuestQuery(
+        string $guest_query_id,
+        Types\InlineQueryResult $result,
+    ): Requests\RequestSentGuestMessage
+    {
+        return new Requests\RequestSentGuestMessage($this, 'answerGuestQuery', [
+            'guest_query_id' => $guest_query_id,
+            'result' => $result,
+        ]);
+    }
+
+    /**
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat.
      *
      * @param int|string $chat_id Unique identifier for the chat or username of the channel (in the format
@@ -3043,6 +3187,40 @@ class Bot
     {
         return new Requests\RequestString($this, 'replaceManagedBotToken', [
             'user_id' => $user_id,
+        ]);
+    }
+
+    /**
+     * Use this method to get the access settings of a managed bot.
+     *
+     * @param int $user_id User identifier of the managed bot whose access settings will be returned
+     */
+    public function getManagedBotAccessSettings(
+        int $user_id,
+    ): Requests\RequestBotAccessSettings
+    {
+        return new Requests\RequestBotAccessSettings($this, 'getManagedBotAccessSettings', [
+            'user_id' => $user_id,
+        ]);
+    }
+
+    /**
+     * Use this method to change the access settings of a managed bot.
+     *
+     * @param int $user_id User identifier of the managed bot whose access settings will be changed
+     * @param bool $is_access_restricted Pass True, if only selected users can access the bot. The bot's owner can always access it.
+     * @param int[]|null $added_user_ids A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if "is_access_restricted" is false.
+     */
+    public function setManagedBotAccessSettings(
+        int $user_id,
+        bool $is_access_restricted,
+        ?array $added_user_ids = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'setManagedBotAccessSettings', [
+            'user_id' => $user_id,
+            'is_access_restricted' => $is_access_restricted,
+            'added_user_ids' => $added_user_ids,
         ]);
     }
 
@@ -4210,17 +4388,17 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages.
-     * If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a
-     * document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file
-     * can't be uploaded; use a previously uploaded file via its file_id or specify a URL. Note that business messages
-     * that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48
-     * hours</strong> from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to
+     * text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums,
+     * only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline
+     * message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a
+     * URL. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
+     * edited within <strong>48 hours</strong> from the time they were sent.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
-     * @param int $message_id Identifier of the message to edit
-     * @param Types\InputMedia $media A JSON-serialized object for a new media content of the message
+     * @param int|string $chat_id Required if "inline_message_id" is not specified. Unique identifier for the target
+     *     chat or username of the target bot, supergroup or channel in the format "&#64;username".
+     * @param int $message_id Required if "inline_message_id" is not specified. Identifier of the message to edit
+     * @param InputMedia $media A JSON-serialized object for a new media content of the message
      * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
      * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
      *     message to be edited was sent
@@ -4228,7 +4406,7 @@ class Bot
     public function editMessageMedia(
         int|string $chat_id,
         int $message_id,
-        Types\InputMedia $media,
+        InputMedia $media,
         ?Types\InlineKeyboardMarkup $reply_markup = null,
         ?string $business_connection_id = null,
     ): Requests\RequestMessage
@@ -4243,22 +4421,23 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages.
-     * If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a
-     * document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file
-     * can't be uploaded; use a previously uploaded file via its file_id or specify a URL. Note that business messages
-     * that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48
-     * hours</strong> from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to
+     * text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums,
+     * only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline
+     * message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a
+     * URL. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
+     * edited within <strong>48 hours</strong> from the time they were sent.
      *
-     * @param string $inline_message_id Identifier of the inline message
-     * @param Types\InputMedia $media A JSON-serialized object for a new media content of the message
+     * @param string $inline_message_id Required if "chat_id" and "message_id" are not specified. Identifier of the
+     *     inline message
+     * @param InputMedia $media A JSON-serialized object for a new media content of the message
      * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for a new inline keyboard.
      * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
      *     message to be edited was sent
      */
     public function editMessageMediaInline(
         string $inline_message_id,
-        Types\InputMedia $media,
+        InputMedia $media,
         ?Types\InlineKeyboardMarkup $reply_markup = null,
         ?string $business_connection_id = null,
     ): Requests\RequestVoid
@@ -4604,6 +4783,58 @@ class Bot
         return new Requests\RequestVoid($this, 'deleteMessages', [
             'chat_id' => $chat_id,
             'message_ids' => $message_ids,
+        ]);
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the
+     * 'can_delete_messages' administrator right in the chat.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
+     *     format "&#64;username")
+     * @param int $message_id Identifier of the target message
+     * @param int|null $user_id Identifier of the user whose reaction will be removed, if the reaction was added by a
+     *     user
+     * @param int|null $actor_chat_id Identifier of the chat whose reaction will be removed, if the reaction was added
+     *     by a chat
+     */
+    public function deleteMessageReaction(
+        int|string $chat_id,
+        int $message_id,
+        ?int $user_id = null,
+        ?int $actor_chat_id = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteMessageReaction', [
+            'chat_id' => $chat_id,
+            'message_id' => $message_id,
+            'user_id' => $user_id,
+            'actor_chat_id' => $actor_chat_id,
+        ]);
+    }
+
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or
+     * chat. The bot must have the 'can_delete_messages' administrator right in the chat.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
+     *     format "&#64;username")
+     * @param int|null $user_id Identifier of the user whose reactions will be removed, if the reactions were added by
+     *     a user
+     * @param int|null $actor_chat_id Identifier of the chat whose reactions will be removed, if the reactions were
+     *     added by a chat
+     */
+    public function deleteAllMessageReactions(
+        int|string $chat_id,
+        ?int $user_id = null,
+        ?int $actor_chat_id = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteAllMessageReactions', [
+            'chat_id' => $chat_id,
+            'user_id' => $user_id,
+            'actor_chat_id' => $actor_chat_id,
         ]);
     }
 

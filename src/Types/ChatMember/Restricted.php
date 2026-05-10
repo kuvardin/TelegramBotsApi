@@ -38,6 +38,7 @@ class Restricted extends ChatMember
      * @param int $until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the user is
      *     restricted forever
      * @param bool $can_edit_tag True, if the user is allowed to edit their own tag
+     * @param bool $can_react_to_messages True, if the user is allowed to react to messages
      * @param string|null $tag Tag of the member
      */
     public function __construct(
@@ -59,6 +60,7 @@ class Restricted extends ChatMember
         public bool $can_manage_topics,
         public int $until_date,
         public bool $can_edit_tag,
+        public bool $can_react_to_messages,
         public ?string $tag = null,
     )
     {
@@ -95,6 +97,7 @@ class Restricted extends ChatMember
             can_manage_topics: $data['can_manage_topics'],
             until_date: $data['until_date'],
             can_edit_tag: $data['can_edit_tag'],
+            can_react_to_messages: $data['can_react_to_messages'],
             tag: $data['tag'] ?? null,
         );
     }
@@ -121,6 +124,7 @@ class Restricted extends ChatMember
             'can_manage_topics' => $this->can_manage_topics,
             'until_date' => $this->until_date,
             'can_edit_tag' => $this->can_edit_tag,
+            'can_react_to_messages' => $this->can_react_to_messages,
             'tag' => $this->tag,
         ];
     }

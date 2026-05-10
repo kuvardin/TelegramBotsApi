@@ -8,6 +8,8 @@ use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputFile;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollOptionMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
 
@@ -17,12 +19,10 @@ use RuntimeException;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Video extends InputMedia
+class Video extends InputMedia implements InputPollMedia, InputPollOptionMedia
 {
     /**
-     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
-     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name.
+     * @param InputFile|string $media File to send.
      * @param InputFile|string|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
      *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
      *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
@@ -39,9 +39,7 @@ class Video extends InputMedia
      * @param bool|null $supports_streaming Pass True if the uploaded video is suitable for streaming
      * @param bool|null $has_spoiler Pass True if the video needs to be covered with a spoiler animation
      * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
-     * @param string|null $cover Cover for the video in the message. Pass a file_id to send a file that exists on the
-     *     Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name.
+     * @param InputFile|string|null $cover Cover for the video in the message.
      * @param int|null $start_timestamp Start timestamp for the video in the message
      */
     public function __construct(
@@ -56,7 +54,7 @@ class Video extends InputMedia
         public ?bool $supports_streaming = null,
         public ?bool $has_spoiler = null,
         public ?bool $show_caption_above_media = null,
-        public ?string $cover = null,
+        public InputFile|string|null $cover = null,
         public ?int $start_timestamp = null,
 
         #[Deprecated] public ?InputFile $thumb = null,

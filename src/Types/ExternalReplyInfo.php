@@ -44,6 +44,7 @@ class ExternalReplyInfo extends Type
      * @param Poll|null $poll Message is a native poll, information about the poll
      * @param Venue|null $venue Message is a venue, information about the venue
      * @param Checklist|null $checklist Message is a checklist
+     * @param LivePhoto|null $live_photo Message is a live photo, information about the live photo
      */
     public function __construct(
         public MessageOrigin $origin,
@@ -71,6 +72,7 @@ class ExternalReplyInfo extends Type
         public ?Poll $poll = null,
         public ?Venue $venue = null,
         public ?Checklist $checklist = null,
+        public ?LivePhoto $live_photo = null,
     )
     {
 
@@ -151,6 +153,9 @@ class ExternalReplyInfo extends Type
             checklist: isset($data['checklist'])
                 ? Checklist::makeByArray($data['checklist'])
                 : null,
+            live_photo: isset($data['live_photo'])
+                ? LivePhoto::makeByArray($data['live_photo'])
+                : null,
         );
     }
 
@@ -182,6 +187,7 @@ class ExternalReplyInfo extends Type
             'poll' => $this->poll,
             'venue' => $this->venue,
             'checklist' => $this->checklist,
+            'live_photo' => $this->live_photo,
         ];
     }
 }

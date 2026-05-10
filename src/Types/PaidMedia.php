@@ -23,6 +23,7 @@ abstract class PaidMedia extends Type
             PaidMedia\Preview::getType() => PaidMedia\Preview::makeByArray($data),
             PaidMedia\Photo::getType() => PaidMedia\Photo::makeByArray($data),
             PaidMedia\Video::getType() => PaidMedia\Video::makeByArray($data),
+            PaidMedia\LivePhoto::getType() => PaidMedia\LivePhoto::makeByArray($data),
             default => throw new RuntimeException("Unknown paid media type: {$data['type']}"),
         };
     }

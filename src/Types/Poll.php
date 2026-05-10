@@ -25,6 +25,8 @@ class Poll extends Type
      * @param PollType|string $type_value Poll type
      * @param bool $allows_multiple_answers True, if the poll allows multiple answers
      * @param bool $allows_revoting True, if the poll allows to change the chosen answer options
+     * @param bool $members_only True if voting is limited to users who have been members of the chat where the poll
+     *     was originally sent for more than 24 hours
      * @param int|null $correct_option_id
      * @param string|null $explanation Text that is shown when a user chooses an incorrect answer or taps on the lamp
      *     icon in a quiz-style poll, 0-200 characters
@@ -40,6 +42,11 @@ class Poll extends Type
      * @param string|null $description Description of the poll; for polls inside the Message object only
      * @param MessageEntity[]|null $description_entities Special entities like usernames, URLs, bot commands, etc. that
      *     appear in the description
+     * @param string[]|null $country_codes A list of two-letter ISO 3166-1 alpha-2 country codes indicating the
+     *     countries from which users can vote in the poll. If omitted, then users from any country can participate in
+     *     the poll.
+     * @param PollMedia|null $explanation_media Media added to the quiz explanation
+     * @param PollMedia|null $media Media added to the poll description; for polls inside the Message object only
      */
     public function __construct(
         public string $id,
@@ -51,6 +58,7 @@ class Poll extends Type
         public PollType|string $type_value,
         public bool $allows_multiple_answers,
         public bool $allows_revoting,
+        public bool $members_only,
         public ?int $correct_option_id = null,
         public ?string $explanation = null,
         public ?array $explanation_entities = null,
@@ -60,6 +68,9 @@ class Poll extends Type
         public ?array $correct_option_ids = null,
         public ?string $description = null,
         public ?array $description_entities = null,
+        public ?array $country_codes = null,
+        public ?PollMedia $explanation_media = null,
+        public ?PollMedia $media = null,
     )
     {
 
@@ -80,6 +91,7 @@ class Poll extends Type
             type_value: $data['type'],
             allows_multiple_answers: $data['allows_multiple_answers'],
             allows_revoting: $data['allows_revoting'],
+            members_only: $data['members_only'],
             correct_option_id: $data['correct_option_id'] ?? null,
             explanation: $data['explanation'] ?? null,
             explanation_entities: isset($data['explanation_entities'])
@@ -104,6 +116,13 @@ class Poll extends Type
                     $data['description_entities'],
                 )
                 : null,
+            country_codes: $data['country_codes'] ?? null,
+            explanation_media: isset($data['explanation_media'])
+                ? PollMedia::makeByArray($data['explanation_media'])
+                : null,
+            media: isset($data['media'])
+                ? PollMedia::makeByArray($data['media'])
+                : null,
         );
     }
 
@@ -119,6 +138,7 @@ class Poll extends Type
             'type' => $this->type_value,
             'allows_multiple_answers' => $this->allows_multiple_answers,
             'allows_revoting' => $this->allows_revoting,
+            'members_only' => $this->members_only,
             'correct_option_id' => $this->correct_option_id,
             'explanation' => $this->explanation,
             'explanation_entities' => $this->explanation_entities,
@@ -127,6 +147,9 @@ class Poll extends Type
             'correct_option_ids' => $this->correct_option_ids,
             'description' => $this->description,
             'description_entities' => $this->description_entities,
+            'country_codes' => $this->country_codes,
+            'explanation_media' => $this->explanation_media,
+            'media' => $this->media,
         ];
     }
 

@@ -21,11 +21,13 @@ class InputPollOption extends Type
      *     more details. Currently, only custom emoji entities are allowed
      * @param MessageEntity[]|null $text_entities A JSON-serialized list of special entities that appear in the poll
      *     option text. It can be specified instead of "text_parse_mode"
+     * @param InputPollOptionMedia|null $media Media added to the poll option
      */
     public function __construct(
         public string $text,
         public ParseMode|string|null $text_parse_mode = null,
         public ?array $text_entities = null,
+        public ?InputPollOptionMedia $media = null,
     )
     {
 
@@ -42,6 +44,9 @@ class InputPollOption extends Type
                     $data['text_entities'],
                 )
                 : null,
+            media: isset($data['media'])
+                ? InputMedia::makeByArray($data['media'])
+                : null,
         );
     }
 
@@ -51,6 +56,7 @@ class InputPollOption extends Type
             'text' => $this->text,
             'text_parse_mode' => $this->text_parse_mode,
             'text_entities' => $this->text_entities,
+            'media' => $this->media,
         ];
     }
 }

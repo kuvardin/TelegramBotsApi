@@ -35,6 +35,8 @@ class ChatPermissions extends Type
      * @param bool|null $can_manage_topics True, if the user is allowed to create forum topics. If omitted defaults to
      *     the value of can_pin_messages
      * @param bool|null $can_edit_tag True, if the user is allowed to edit their own tag
+     * @param bool|null $can_react_to_messages True, if the user is allowed to react to messages. If omitted, defaults
+     *     to the value of "can_send_messages".
      */
     public function __construct(
         public ?bool $can_send_messages = null,
@@ -52,6 +54,7 @@ class ChatPermissions extends Type
         public ?bool $can_pin_messages = null,
         public ?bool $can_manage_topics = null,
         public ?bool $can_edit_tag = null,
+        public ?bool $can_react_to_messages = null,
     )
     {
 
@@ -75,6 +78,7 @@ class ChatPermissions extends Type
             can_pin_messages: $data['can_pin_messages'] ?? null,
             can_manage_topics: $data['can_manage_topics'] ?? null,
             can_edit_tag: $data['can_edit_tag'] ?? null,
+            can_react_to_messages: $data['can_react_to_messages'] ?? null,
         );
     }
 
@@ -96,6 +100,7 @@ class ChatPermissions extends Type
             'can_pin_messages' => $this->can_pin_messages,
             'can_manage_topics' => $this->can_manage_topics,
             'can_edit_tag' => $this->can_edit_tag,
+            'can_react_to_messages' => $this->can_react_to_messages,
         ];
     }
 }

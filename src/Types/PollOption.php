@@ -26,6 +26,7 @@ class PollOption extends Type
      *     poll creation
      * @param int|null $addition_date Point in time (Unix timestamp) when the option was added; omitted if the option
      *     existed in the original poll
+     * @param PollMedia|null $media Media added to the poll option
      */
     public function __construct(
         public string $text,
@@ -35,6 +36,7 @@ class PollOption extends Type
         public ?User $added_by_user = null,
         public ?Chat $added_by_chat = null,
         public ?int $addition_date = null,
+        public ?PollMedia $media = null,
     )
     {
 
@@ -59,6 +61,9 @@ class PollOption extends Type
                 ? Chat::makeByArray($data['added_by_chat'])
                 : null,
             addition_date: $data['addition_date'] ?? null,
+            media: isset($data['media'])
+                ? PollMedia::makeByArray($data['media'])
+                : null,
         );
     }
 
@@ -72,6 +77,7 @@ class PollOption extends Type
             'added_by_user' => $this->added_by_user,
             'added_by_chat' => $this->added_by_chat,
             'addition_date' => $this->addition_date,
+            'media' => $this->media,
         ];
     }
 }

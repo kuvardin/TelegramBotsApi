@@ -70,6 +70,8 @@ class Update extends Type
      *     by the bot in a non-channel chat
      * @param ManagedBotUpdated|null $managed_bot A new bot was created to be managed by the bot, or token or owner of
      *     a managed bot was changed
+     * @param Message|null $guest_message New guest message. The bot can use the field "Message.guest_query_id" and the
+     *     method answerGuestQuery() to send a message in response.
      */
     public function __construct(
         public int $update_id,
@@ -97,6 +99,7 @@ class Update extends Type
         public ?ChatBoostRemoved $removed_chat_boost = null,
         public ?PaidMediaPurchased $purchased_paid_media = null,
         public ?ManagedBotUpdated $managed_bot = null,
+        public ?Message $guest_message = null,
     )
     {
 
@@ -178,6 +181,9 @@ class Update extends Type
             managed_bot: isset($data['managed_bot'])
                 ? ManagedBotUpdated::makeByArray($data['managed_bot'])
                 : null,
+            guest_message: isset($data['guest_message'])
+                ? Message::makeByArray($data['guest_message'])
+                : null,
         );
     }
 
@@ -209,6 +215,7 @@ class Update extends Type
             'removed_chat_boost' => $this->removed_chat_boost,
             'purchased_paid_media' => $this->purchased_paid_media,
             'managed_bot' => $this->managed_bot,
+            'guest_message' => $this->guest_message,
         ];
     }
 
@@ -228,6 +235,7 @@ class Update extends Type
             ?? $this->chat_member?->chat
             ?? $this->chat_join_request?->chat
             ?? $this->chat_boost?->chat
+            ?? $this->guest_message?->chat
             ?? $this->removed_chat_boost?->chat;
     }
 
@@ -251,6 +259,7 @@ class Update extends Type
             ?? $this->chat_member?->from
             ?? $this->chat_join_request?->from
             ?? $this->managed_bot?->user
+            ?? $this->guest_message?->from
             ?? $this->purchased_paid_media?->from;
     }
 
@@ -267,6 +276,7 @@ class Update extends Type
             ?? $this->message_reaction_count?->date
             ?? $this->my_chat_member?->date
             ?? $this->chat_member?->date
+            ?? $this->guest_message?->date
             ?? $this->chat_join_request?->date;
     }
 
@@ -302,6 +312,7 @@ class Update extends Type
             $this->removed_chat_boost !== null => UpdateType::RemovedChatBoost,
             $this->purchased_paid_media !== null => UpdateType::PurchasedPaidMedia,
             $this->managed_bot !== null => UpdateType::ManagedBot,
+            $this->guest_message !== null => UpdateType::GuestMessage,
             default => null,
         };
     }

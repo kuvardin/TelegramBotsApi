@@ -22,6 +22,7 @@ abstract class InputPaidMedia extends Type
         return match ($data['type']) {
             InputPaidMedia\Video::getType() => InputPaidMedia\Video::makeByArray($data),
             InputPaidMedia\Photo::getType() => InputPaidMedia\Photo::makeByArray($data),
+            InputPaidMedia\LivePhoto::getType() => InputPaidMedia\LivePhoto::makeByArray($data),
             default => throw new RuntimeException("Unknown input media type: {$data['type']}"),
         };
     }

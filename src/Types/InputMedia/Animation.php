@@ -8,6 +8,8 @@ use JetBrains\PhpStorm\Deprecated;
 use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputFile;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollOptionMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
 
@@ -17,12 +19,10 @@ use RuntimeException;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Animation extends InputMedia
+class Animation extends InputMedia implements InputPollMedia, InputPollOptionMedia
 {
     /**
-     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
-     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name.
+     * @param InputFile|string $media File to send.
      * @param InputFile|string|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
      *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
      *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using

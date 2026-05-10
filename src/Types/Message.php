@@ -191,6 +191,16 @@ class Message extends MaybeInaccessibleMessage
      * @param SuggestedPostPaid|null $suggested_post_paid Service message: payment for a suggested post was received
      * @param SuggestedPostRefunded|null $suggested_post_refunded Service message: payment for a suggested post was
      *     refunded
+     * @param string|null $guest_query_id The unique identifier for the guest query. Use this identifier with the
+     *     method answerGuestQuery() to send a response message. If non-empty, the message belongs to the chat where
+     *     the guest bot was summoned, which may not coincide with other existing bot chats sharing the same
+     *     identifier.
+     * @param User|null $guest_bot_caller_user For a message sent by a guest bot, this is the user whose original
+     *     message triggered the bot's response
+     * @param Chat|null $guest_bot_caller_chat For a message sent by a guest bot, this is the chat whose original
+     *     message triggered the bot's response
+     * @param LivePhoto|null $live_photo Message is a live photo, information about the live photo. For backward
+     *     compatibility, when this field is set, the "photo" field will also be set
      */
     public function __construct(
         public int $message_id,
@@ -303,6 +313,10 @@ class Message extends MaybeInaccessibleMessage
         public ?SuggestedPostDeclined $suggested_post_declined = null,
         public ?SuggestedPostPaid $suggested_post_paid = null,
         public ?SuggestedPostRefunded $suggested_post_refunded = null,
+        public ?string $guest_query_id = null,
+        public ?User $guest_bot_caller_user = null,
+        public ?Chat $guest_bot_caller_chat = null,
+        public ?LivePhoto $live_photo = null,
 
         #[Deprecated] public ?User $forward_from = null,
         #[Deprecated] public ?Chat $forward_from_chat = null,
@@ -601,6 +615,16 @@ class Message extends MaybeInaccessibleMessage
             suggested_post_refunded: isset($data['suggested_post_refunded'])
                 ? SuggestedPostRefunded::makeByArray($data['suggested_post_refunded'])
                 : null,
+            guest_query_id: $data['guest_query_id'] ?? null,
+            guest_bot_caller_user: isset($data['guest_bot_caller_user'])
+                ? User::makeByArray($data['guest_bot_caller_user'])
+                : null,
+            guest_bot_caller_chat: isset($data['guest_bot_caller_chat'])
+                ? Chat::makeByArray($data['guest_bot_caller_chat'])
+                : null,
+            live_photo: isset($data['live_photo'])
+                ? LivePhoto::makeByArray($data['live_photo'])
+                : null,
 
             forward_from: isset($data['forward_from'])
                 ? User::makeByArray($data['forward_from'])
@@ -728,6 +752,10 @@ class Message extends MaybeInaccessibleMessage
             'suggested_post_declined' => $this->suggested_post_declined,
             'suggested_post_paid' => $this->suggested_post_paid,
             'suggested_post_refunded' => $this->suggested_post_refunded,
+            'guest_query_id' => $this->guest_query_id,
+            'guest_bot_caller_user' => $this->guest_bot_caller_user,
+            'guest_bot_caller_chat' => $this->guest_bot_caller_chat,
+            'live_photo' => $this->live_photo,
 
             'forward_from' => $this->forward_from,
             'forward_from_chat' => $this->forward_from_chat,

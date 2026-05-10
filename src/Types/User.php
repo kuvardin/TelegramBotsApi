@@ -39,6 +39,8 @@ class User extends Type
      *     private chats. Returned only in getMe().
      * @param bool|null $can_manage_bots True, if other bots can be created to be controlled by the bot. Returned only
      *     in getMe().
+     * @param bool|null $supports_guest_queries True, if the bot supports guest queries from chats it is not a member
+     *     of. Returned only in getMe().
      */
     public function __construct(
         public int $id,
@@ -57,6 +59,7 @@ class User extends Type
         public ?bool $has_topics_enabled = null,
         public ?bool $allows_users_to_create_topics = null,
         public ?bool $can_manage_bots = null,
+        public ?bool $supports_guest_queries = null,
     )
     {
 
@@ -81,6 +84,7 @@ class User extends Type
             has_topics_enabled: $data['has_topics_enabled'] ?? null,
             allows_users_to_create_topics: $data['allows_users_to_create_topics'] ?? null,
             can_manage_bots: $data['can_manage_bots'] ?? null,
+            supports_guest_queries: $data['supports_guest_queries'] ?? null,
         );
     }
 
@@ -103,6 +107,7 @@ class User extends Type
             'has_topics_enabled' => $this->has_topics_enabled,
             'allows_users_to_create_topics' => $this->allows_users_to_create_topics,
             'can_manage_bots' => $this->can_manage_bots,
+            'supports_guest_queries' => $this->supports_guest_queries,
         ];
     }
 }

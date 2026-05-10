@@ -7,6 +7,8 @@ namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
 use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputFile;
 use Kuvardin\TelegramBotsApi\Types\InputMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollMedia;
+use Kuvardin\TelegramBotsApi\Types\InputPollOptionMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
 
@@ -16,12 +18,10 @@ use RuntimeException;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-class Photo extends InputMedia
+class Photo extends InputMedia implements InputPollMedia, InputPollOptionMedia
 {
     /**
-     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
-     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name.
+     * @param InputFile|string $media File to send.
      * @param InputFile|string|null $caption Caption of the photo to be sent, 0-1024 characters after entities parsing
      * @param ParseMode|string|null $parse_mode Mode for parsing entities in the photo caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
