@@ -163,7 +163,7 @@ abstract class Request
         $request_options = [
             RequestOptions::HTTP_ERRORS => false,
             RequestOptions::HEADERS => [
-                'Content-Type: application/json',
+                'Content-Type' => 'application/json',
             ],
             RequestOptions::TIMEOUT => $this->request_timeout,
             RequestOptions::READ_TIMEOUT => $this->read_timeout,
