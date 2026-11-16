@@ -51,7 +51,3 @@ class Spoiler extends RichTextModel
     }
 }
 
-
-
-
-

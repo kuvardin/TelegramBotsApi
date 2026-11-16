@@ -81,7 +81,3 @@ class Venue extends InputMedia implements InputPollMedia, InputPollOptionMedia
     }
 }
 
-
-
-
-

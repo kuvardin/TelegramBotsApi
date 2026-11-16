@@ -39,7 +39,3 @@ class SentGuestMessage extends Type
     }
 }
 
-
-
-
-

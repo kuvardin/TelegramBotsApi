@@ -55,7 +55,3 @@ class Cashtag extends RichTextModel
     }
 }
 
-
-
-
-

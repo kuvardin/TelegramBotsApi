@@ -18,7 +18,3 @@ interface InputPollMedia
 
 }
 
-
-
-
-

@@ -74,7 +74,7 @@ class ExternalReplyInfo extends Type
         public ?Venue $venue = null,
         public ?Checklist $checklist = null,
         public ?LivePhoto $live_photo = null,
-        public Widget|null $widget = null,
+        public ?Widget $widget = null,
     )
     {
 

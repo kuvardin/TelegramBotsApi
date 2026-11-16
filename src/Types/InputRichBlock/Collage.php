@@ -60,7 +60,3 @@ class Collage extends InputRichBlock
     }
 }
 
-
-
-
-

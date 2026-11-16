@@ -58,7 +58,3 @@ class Photo extends InputRichBlock
     }
 }
 
-
-
-
-

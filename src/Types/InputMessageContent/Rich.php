@@ -41,7 +41,3 @@ class Rich extends InputMessageContent
     }
 }
 
-
-
-
-

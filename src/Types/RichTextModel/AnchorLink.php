@@ -56,7 +56,3 @@ class AnchorLink extends RichTextModel
     }
 }
 
-
-
-
-

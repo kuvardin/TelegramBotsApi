@@ -27,10 +27,10 @@ class RichBlockListItem extends Type
     public function __construct(
         public string $label,
         public array $blocks,
-        public bool|null $has_checkbox = null,
-        public bool|null $is_checked = null,
-        public int|null $value = null,
-        public string|null $type = null,
+        public ?bool $has_checkbox = null,
+        public ?bool $is_checked = null,
+        public ?int $value = null,
+        public ?string $type = null,
     )
     {
 
@@ -63,8 +63,4 @@ class RichBlockListItem extends Type
         ];
     }
 }
-
-
-
-
 

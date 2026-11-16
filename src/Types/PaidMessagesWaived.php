@@ -37,7 +37,3 @@ class PaidMessagesWaived extends Type
     }
 }
 
-
-
-
-

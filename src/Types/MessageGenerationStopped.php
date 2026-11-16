@@ -22,7 +22,7 @@ class MessageGenerationStopped extends Type
     public function __construct(
         public Chat $chat,
         public int $draft_id,
-        public int|null $message_thread_id = null,
+        public ?int $message_thread_id = null,
     )
     {
 
@@ -46,8 +46,4 @@ class MessageGenerationStopped extends Type
         ];
     }
 }
-
-
-
-
 

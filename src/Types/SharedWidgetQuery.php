@@ -57,7 +57,3 @@ class SharedWidgetQuery extends Type
     }
 }
 
-
-
-
-

@@ -24,7 +24,7 @@ class RichText extends Type
         protected ?array $rich_text_models = null,
     )
     {
-        
+
     }
 
     public static function makeByPlainText(string $plain_text): self
@@ -80,8 +80,4 @@ class RichText extends Type
         return $this->rich_text_models;
     }
 }
-
-
-
-
 

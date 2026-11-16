@@ -25,8 +25,8 @@ class PollOptionDeleted extends Type
     public function __construct(
         public string $option_persistent_id,
         public string $option_text,
-        public MaybeInaccessibleMessage|null $poll_message = null,
-        public array|null $option_text_entities = null,
+        public ?MaybeInaccessibleMessage $poll_message = null,
+        public ?array $option_text_entities = null,
     )
     {
 

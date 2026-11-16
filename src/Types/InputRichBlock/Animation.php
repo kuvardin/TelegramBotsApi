@@ -58,7 +58,3 @@ class Animation extends InputRichBlock
     }
 }
 
-
-
-
-

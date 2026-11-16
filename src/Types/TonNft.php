@@ -70,7 +70,3 @@ class TonNft extends Type
     }
 }
 
-
-
-
-

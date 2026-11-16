@@ -40,11 +40,11 @@ class WidgetQuery extends Type
         public string $chat_instance,
         public WidgetQueryType $type,
         public string $data,
-        public Chat|null $chat = null,
-        public int|null $message_id = null,
-        public string|null $inline_message_id = null,
-        public string|null $chat_type = null,
-        public string|null $widget_id = null,
+        public ?Chat $chat = null,
+        public ?int $message_id = null,
+        public ?string $inline_message_id = null,
+        public ?string $chat_type = null,
+        public ?string $widget_id = null,
     )
     {
 
@@ -84,8 +84,4 @@ class WidgetQuery extends Type
         ];
     }
 }
-
-
-
-
 

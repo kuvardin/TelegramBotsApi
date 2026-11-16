@@ -107,10 +107,10 @@ class Update extends Type
         public ?PaidMediaPurchased $purchased_paid_media = null,
         public ?ManagedBotUpdated $managed_bot = null,
         public ?Message $guest_message = null,
-        public WidgetQuery|null $widget_query = null,
-        public SharedWidgetQuery|null $shared_widget_query = null,
-        public BotSubscriptionUpdated|null $subscription = null,
-        public MessageGenerationStopped|null $stopped_message_generation = null,
+        public ?WidgetQuery $widget_query = null,
+        public ?SharedWidgetQuery $shared_widget_query = null,
+        public ?BotSubscriptionUpdated $subscription = null,
+        public ?MessageGenerationStopped $stopped_message_generation = null,
     )
     {
 

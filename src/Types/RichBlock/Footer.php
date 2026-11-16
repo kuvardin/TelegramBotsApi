@@ -51,7 +51,3 @@ class Footer extends RichBlock
     }
 }
 
-
-
-
-

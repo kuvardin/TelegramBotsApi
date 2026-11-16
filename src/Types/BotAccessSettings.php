@@ -49,7 +49,3 @@ class BotAccessSettings extends Type
     }
 }
 
-
-
-
-

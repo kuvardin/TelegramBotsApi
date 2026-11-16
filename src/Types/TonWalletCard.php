@@ -55,7 +55,3 @@ class TonWalletCard extends Type
     }
 }
 
-
-
-
-

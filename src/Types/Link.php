@@ -39,7 +39,3 @@ class Link extends Type
     }
 }
 
-
-
-
-

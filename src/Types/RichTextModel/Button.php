@@ -51,7 +51,3 @@ class Button extends RichTextModel
     }
 }
 
-
-
-
-

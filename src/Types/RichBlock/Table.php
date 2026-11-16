@@ -76,7 +76,3 @@ class Table extends RichBlock
     }
 }
 
-
-
-
-

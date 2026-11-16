@@ -71,7 +71,3 @@ class Map extends InputRichBlock
     }
 }
 
-
-
-
-

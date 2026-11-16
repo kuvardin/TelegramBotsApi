@@ -59,7 +59,3 @@ class Emoji extends ChatShareTheme
     }
 }
 
-
-
-
-

@@ -100,7 +100,3 @@ class PollMedia extends Type
     }
 }
 
-
-
-
-

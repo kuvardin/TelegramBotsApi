@@ -43,7 +43,3 @@ class TonWalletCardSticker extends Type
     }
 }
 
-
-
-
-

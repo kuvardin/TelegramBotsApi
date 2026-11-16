@@ -630,7 +630,6 @@ class Bot
         ]);
     }
 
-
     /**
      * Use this method to send live photos.
      *
@@ -5299,7 +5298,6 @@ class Bot
             'actor_chat_id' => $actor_chat_id,
         ]);
     }
-
 
     /**
      * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or

@@ -51,7 +51,3 @@ class Underline extends RichTextModel
     }
 }
 
-
-
-
-

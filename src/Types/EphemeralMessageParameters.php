@@ -29,9 +29,9 @@ class EphemeralMessageParameters extends Type
      *     using regular "editEphemeralMessage…" methods.
      */
     public function __construct(
-        public int|null $receiver_user_id = null,
-        public string|null $callback_query_id = null,
-        public bool|null $replace_callback_query_message = null,
+        public ?int $receiver_user_id = null,
+        public ?string $callback_query_id = null,
+        public ?bool $replace_callback_query_message = null,
     )
     {
 

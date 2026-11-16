@@ -21,7 +21,7 @@ class Data extends WidgetQueryType
      *     along with the query
      */
     public function __construct(
-        public TonWalletCard|null $wallet_card = null,
+        public ?TonWalletCard $wallet_card = null,
     )
     {
 
@@ -53,8 +53,4 @@ class Data extends WidgetQueryType
         ];
     }
 }
-
-
-
-
 

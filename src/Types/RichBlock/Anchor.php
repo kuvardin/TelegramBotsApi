@@ -50,7 +50,3 @@ class Anchor extends RichBlock
     }
 }
 
-
-
-
-

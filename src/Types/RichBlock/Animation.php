@@ -62,7 +62,3 @@ class Animation extends RichBlock
     }
 }
 
-
-
-
-

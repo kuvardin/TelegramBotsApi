@@ -58,7 +58,3 @@ class VoiceNote extends InputRichBlock
     }
 }
 
-
-
-
-

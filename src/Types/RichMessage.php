@@ -20,7 +20,7 @@ class RichMessage extends Type
      */
     public function __construct(
         public array $blocks,
-        public bool|null $is_rtl = null,
+        public ?bool $is_rtl = null,
     )
     {
 
@@ -45,8 +45,4 @@ class RichMessage extends Type
         ];
     }
 }
-
-
-
-
 

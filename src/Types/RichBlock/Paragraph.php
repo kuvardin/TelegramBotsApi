@@ -51,7 +51,3 @@ class Paragraph extends RichBlock
     }
 }
 
-
-
-
-

@@ -43,7 +43,3 @@ class TonNftAttribute extends Type
     }
 }
 
-
-
-
-

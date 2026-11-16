@@ -51,7 +51,3 @@ abstract class InputRichBlock extends Type
     abstract public function getRequestData(): array;
 }
 
-
-
-
-

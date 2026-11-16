@@ -55,7 +55,3 @@ class EmailAddress extends RichTextModel
     }
 }
 
-
-
-
-

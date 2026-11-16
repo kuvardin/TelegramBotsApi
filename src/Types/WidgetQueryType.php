@@ -30,7 +30,3 @@ abstract class WidgetQueryType extends Type
     abstract public function getRequestData(): array;
 }
 
-
-
-
-

@@ -70,7 +70,3 @@ class Map extends RichBlock
     }
 }
 
-
-
-
-

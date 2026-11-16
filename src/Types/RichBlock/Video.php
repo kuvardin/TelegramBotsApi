@@ -62,7 +62,3 @@ class Video extends RichBlock
     }
 }
 
-
-
-
-

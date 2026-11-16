@@ -51,7 +51,3 @@ class Code extends RichTextModel
     }
 }
 
-
-
-
-

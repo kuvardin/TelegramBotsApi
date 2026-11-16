@@ -158,10 +158,10 @@ class ChatFullInfo extends Type
         public ?UniqueGiftColors $unique_gift_colors = null,
         public ?int $paid_message_star_count = null,
         public ?Chat $parent_chat = null,
-        public User|null $guard_bot = null,
-        public Community|null $community = null,
-        public TonWalletCard|null $ton_wallet_card = null,
-        public ChatShareTheme|null $share_theme = null,
+        public ?User $guard_bot = null,
+        public ?Community $community = null,
+        public ?TonWalletCard $ton_wallet_card = null,
+        public ?ChatShareTheme $share_theme = null,
     )
     {
 

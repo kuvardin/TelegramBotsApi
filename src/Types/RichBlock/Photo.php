@@ -65,7 +65,3 @@ class Photo extends RichBlock
     }
 }
 
-
-
-
-

@@ -55,7 +55,3 @@ class Reference extends RichTextModel
     }
 }
 
-
-
-
-

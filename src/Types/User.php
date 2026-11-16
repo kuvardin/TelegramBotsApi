@@ -62,7 +62,7 @@ class User extends Type
         public ?bool $allows_users_to_create_topics = null,
         public ?bool $can_manage_bots = null,
         public ?bool $supports_guest_queries = null,
-        public bool|null $supports_join_request_queries = null,
+        public ?bool $supports_join_request_queries = null,
     )
     {
 

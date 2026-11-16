@@ -20,7 +20,7 @@ class RichBlockCaption extends Type
      */
     public function __construct(
         public RichText $text,
-        public RichText|null $credit = null,
+        public ?RichText $credit = null,
     )
     {
 
@@ -44,8 +44,4 @@ class RichBlockCaption extends Type
         ];
     }
 }
-
-
-
-
 

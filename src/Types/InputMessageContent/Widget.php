@@ -96,7 +96,3 @@ class Widget extends InputMessageContent
     }
 }
 
-
-
-
-

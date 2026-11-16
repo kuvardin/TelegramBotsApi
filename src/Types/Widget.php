@@ -27,11 +27,11 @@ class Widget extends Type
      */
     public function __construct(
         public string $html,
-        public string|null $id = null,
-        public int|null $width = null,
-        public int|null $height = null,
-        public string|null $public_data = null,
-        public string|null $chat_data = null,
+        public ?string $id = null,
+        public ?int $width = null,
+        public ?int $height = null,
+        public ?string $public_data = null,
+        public ?string $chat_data = null,
     )
     {
 
@@ -61,8 +61,4 @@ class Widget extends Type
         ];
     }
 }
-
-
-
-
 

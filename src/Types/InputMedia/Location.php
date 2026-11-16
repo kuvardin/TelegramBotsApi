@@ -60,7 +60,3 @@ class Location extends InputMedia implements InputPollMedia, InputPollOptionMedi
     }
 }
 
-
-
-
-

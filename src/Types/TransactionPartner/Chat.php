@@ -23,7 +23,7 @@ class Chat extends TransactionPartner
      * */
     public function __construct(
         public TelegramChat $chat,
-        public Gift|null $gift = null,
+        public ?Gift $gift = null,
     )
     {
 

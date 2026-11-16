@@ -9,7 +9,6 @@ use Kuvardin\TelegramBotsApi\Types\InputMedia;
 use Kuvardin\TelegramBotsApi\Types\InputPollOptionMedia;
 use RuntimeException;
 
-
 /**
  * Represents a sticker file to be sent.
  *
@@ -56,8 +55,4 @@ class Sticker extends InputMedia implements InputPollOptionMedia
         ];
     }
 }
-
-
-
-
 

@@ -54,7 +54,3 @@ class ListItems extends InputRichBlock
     }
 }
 
-
-
-
-

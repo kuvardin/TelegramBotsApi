@@ -55,7 +55,3 @@ class TonAddress extends RichTextModel
     }
 }
 
-
-
-
-

@@ -60,7 +60,3 @@ class BlockQuotation extends InputRichBlock
     }
 }
 
-
-
-
-

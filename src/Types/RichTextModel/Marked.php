@@ -51,7 +51,3 @@ class Marked extends RichTextModel
     }
 }
 
-
-
-
-

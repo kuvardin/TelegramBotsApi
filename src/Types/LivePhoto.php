@@ -75,7 +75,3 @@ class LivePhoto extends Type
     }
 }
 
-
-
-
-

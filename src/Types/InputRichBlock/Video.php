@@ -58,7 +58,3 @@ class Video extends InputRichBlock
     }
 }
 
-
-
-
-

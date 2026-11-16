@@ -28,12 +28,12 @@ class InputRichMessage extends Type
      *     addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
      */
     public function __construct(
-        public array|null $blocks = null,
-        public string|null $html = null,
-        public string|null $markdown = null,
-        public array|null $media = null,
-        public bool|null $is_rtl = null,
-        public bool|null $skip_entity_detection = null,
+        public ?array $blocks = null,
+        public ?string $html = null,
+        public ?string $markdown = null,
+        public ?array $media = null,
+        public ?bool $is_rtl = null,
+        public ?bool $skip_entity_detection = null,
     )
     {
 
@@ -73,8 +73,4 @@ class InputRichMessage extends Type
         ];
     }
 }
-
-
-
-
 

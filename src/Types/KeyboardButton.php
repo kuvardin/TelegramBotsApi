@@ -54,7 +54,7 @@ class KeyboardButton extends Type
         public ?KeyboardButtonRequestChat $request_chat = null,
         public ?string $icon_custom_emoji_id = null,
         public KeyboardButtonStyle|string|null $style = null,
-        public KeyboardButtonRequestManagedBot|null $request_managed_bot = null,
+        public ?KeyboardButtonRequestManagedBot $request_managed_bot = null,
     )
     {
 

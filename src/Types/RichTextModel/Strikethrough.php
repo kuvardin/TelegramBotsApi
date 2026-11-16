@@ -51,7 +51,3 @@ class Strikethrough extends RichTextModel
     }
 }
 
-
-
-
-

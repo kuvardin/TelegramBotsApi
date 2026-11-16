@@ -25,10 +25,10 @@ class RichBlockTableCell extends Type
     public function __construct(
         public string $align,
         public string $valign,
-        public RichText|null $text = null,
-        public bool|null $is_header = null,
-        public int|null $colspan = null,
-        public int|null $rowspan = null,
+        public ?RichText $text = null,
+        public ?bool $is_header = null,
+        public ?int $colspan = null,
+        public ?int $rowspan = null,
     )
     {
 
@@ -60,8 +60,4 @@ class RichBlockTableCell extends Type
         ];
     }
 }
-
-
-
-
 

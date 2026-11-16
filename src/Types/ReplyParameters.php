@@ -53,7 +53,7 @@ class ReplyParameters extends Type
      *     may only be replied to within 15 seconds of being sent. Required if 'message_id' isn't specified.
      */
     public function __construct(
-        public int|null $message_id,
+        public ?int $message_id,
         public int|string|null $chat_id = null,
         public ?bool $allow_sending_without_reply = null,
         public ?string $quote = null,
@@ -62,8 +62,8 @@ class ReplyParameters extends Type
         public ?int $quote_position = null,
         public ?int $checklist_task_id = null,
         public ?string $poll_option_id = null,
-        public array|null $quote_rich_texts = null,
-        public int|null $ephemeral_message_id = null,
+        public ?array $quote_rich_texts = null,
+        public ?int $ephemeral_message_id = null,
     )
     {
 

@@ -51,7 +51,3 @@ class Bold extends RichTextModel
     }
 }
 
-
-
-
-

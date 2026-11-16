@@ -36,7 +36,3 @@ class CommunityChatRemoved extends Type
     }
 }
 
-
-
-
-

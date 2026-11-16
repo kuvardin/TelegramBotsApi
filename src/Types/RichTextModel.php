@@ -54,7 +54,3 @@ abstract class RichTextModel extends Type
     abstract public function getRequestData(): array;
 }
 
-
-
-
-

@@ -29,7 +29,3 @@ abstract class EmojiType extends Type
     abstract public function getRequestData(): array;
 }
 
-
-
-
-

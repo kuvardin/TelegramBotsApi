@@ -60,7 +60,3 @@ class Slideshow extends RichBlock
     }
 }
 
-
-
-
-

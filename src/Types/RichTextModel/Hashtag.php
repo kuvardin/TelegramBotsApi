@@ -55,7 +55,3 @@ class Hashtag extends RichTextModel
     }
 }
 
-
-
-
-

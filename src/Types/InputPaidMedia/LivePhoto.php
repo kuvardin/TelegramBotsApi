@@ -56,7 +56,3 @@ class LivePhoto extends InputPaidMedia
     }
 }
 
-
-
-
-

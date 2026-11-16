@@ -51,7 +51,3 @@ class Subscript extends RichTextModel
     }
 }
 
-
-
-
-

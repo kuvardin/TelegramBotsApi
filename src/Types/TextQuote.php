@@ -35,7 +35,7 @@ class TextQuote extends Type
         public int $position,
         public ?array $entities = null,
         public ?bool $is_manual = null,
-        public array|null $rich_texts = null,
+        public ?array $rich_texts = null,
     )
     {
 

@@ -56,7 +56,3 @@ class SignData extends WidgetQueryType
     }
 }
 
-
-
-
-

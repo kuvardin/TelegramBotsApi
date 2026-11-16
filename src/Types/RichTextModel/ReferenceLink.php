@@ -55,7 +55,3 @@ class ReferenceLink extends RichTextModel
     }
 }
 
-
-
-
-

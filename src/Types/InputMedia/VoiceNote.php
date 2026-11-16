@@ -31,10 +31,10 @@ class VoiceNote extends InputMedia
      */
     public function __construct(
         public InputFile|string $media,
-        public string|null $caption = null,
+        public ?string $caption = null,
         public ParseMode|string|null $parse_mode = null,
-        public array|null $caption_entities = null,
-        public int|null $duration = null,
+        public ?array $caption_entities = null,
+        public ?int $duration = null,
     )
     {
 
@@ -77,8 +77,4 @@ class VoiceNote extends InputMedia
         ];
     }
 }
-
-
-
-
 

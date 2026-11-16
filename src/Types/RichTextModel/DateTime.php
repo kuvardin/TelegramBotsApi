@@ -60,7 +60,3 @@ class DateTime extends RichTextModel
     }
 }
 
-
-
-
-

@@ -62,7 +62,3 @@ class Details extends RichBlock
     }
 }
 
-
-
-
-

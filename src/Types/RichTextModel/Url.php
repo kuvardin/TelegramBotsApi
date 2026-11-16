@@ -55,7 +55,3 @@ class Url extends RichTextModel
     }
 }
 
-
-
-
-

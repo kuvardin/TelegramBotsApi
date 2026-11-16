@@ -60,7 +60,3 @@ class Buttons extends InputRichBlock
     }
 }
 
-
-
-
-

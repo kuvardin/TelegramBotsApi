@@ -55,7 +55,3 @@ class SentTransaction extends WidgetQueryType
     }
 }
 
-
-
-
-

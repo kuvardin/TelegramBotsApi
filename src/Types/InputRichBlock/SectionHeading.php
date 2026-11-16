@@ -56,7 +56,3 @@ class SectionHeading extends InputRichBlock
     }
 }
 
-
-
-
-

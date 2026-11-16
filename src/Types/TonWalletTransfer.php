@@ -53,7 +53,3 @@ class TonWalletTransfer extends Type
     }
 }
 
-
-
-
-

@@ -49,16 +49,16 @@ class RichMessageButton extends Type
      */
     public function __construct(
         public RichText $text,
-        public string|null $style = null,
-        public string|null $url = null,
-        public string|null $callback_data = null,
-        public WebAppInfo|null $web_app = null,
-        public LoginUrl|null $login_url = null,
-        public string|null $switch_inline_query = null,
-        public string|null $switch_inline_query_current_chat = null,
-        public SwitchInlineQueryChosenChat|null $switch_inline_query_chosen_chat = null,
-        public CopyTextButton|null $copy_text = null,
-        public DisabledButton|null $disabled = null,
+        public ?string $style = null,
+        public ?string $url = null,
+        public ?string $callback_data = null,
+        public ?WebAppInfo $web_app = null,
+        public ?LoginUrl $login_url = null,
+        public ?string $switch_inline_query = null,
+        public ?string $switch_inline_query_current_chat = null,
+        public ?SwitchInlineQueryChosenChat $switch_inline_query_chosen_chat = null,
+        public ?CopyTextButton $copy_text = null,
+        public ?DisabledButton $disabled = null,
     )
     {
 
@@ -108,8 +108,4 @@ class RichMessageButton extends Type
         ];
     }
 }
-
-
-
-
 

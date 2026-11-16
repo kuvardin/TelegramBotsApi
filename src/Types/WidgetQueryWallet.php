@@ -24,8 +24,8 @@ class WidgetQueryWallet extends Type
     public function __construct(
         public string $address,
         public string $amount,
-        public string|null $public_key = null,
-        public string|null $state_init = null,
+        public ?string $public_key = null,
+        public ?string $state_init = null,
     )
     {
 
@@ -51,8 +51,4 @@ class WidgetQueryWallet extends Type
         ];
     }
 }
-
-
-
-
 

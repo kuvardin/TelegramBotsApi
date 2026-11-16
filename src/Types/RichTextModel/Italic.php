@@ -51,7 +51,3 @@ class Italic extends RichTextModel
     }
 }
 
-
-
-
-

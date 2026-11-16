@@ -57,7 +57,3 @@ class ExpandableBlockQuotation extends RichBlock
     }
 }
 
-
-
-
-

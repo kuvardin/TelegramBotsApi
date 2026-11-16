@@ -46,7 +46,3 @@ class Divider extends InputRichBlock
     }
 }
 
-
-
-
-

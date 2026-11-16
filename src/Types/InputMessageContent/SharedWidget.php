@@ -68,7 +68,3 @@ class SharedWidget extends InputMessageContent
     }
 }
 
-
-
-
-

@@ -50,7 +50,3 @@ class MathematicalExpression extends RichBlock
     }
 }
 
-
-
-
-

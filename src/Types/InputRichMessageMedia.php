@@ -46,7 +46,3 @@ class InputRichMessageMedia extends Type
     }
 }
 
-
-
-
-

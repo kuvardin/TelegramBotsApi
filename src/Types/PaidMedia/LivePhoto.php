@@ -51,7 +51,3 @@ class LivePhoto extends PaidMedia
     }
 }
 
-
-
-
-

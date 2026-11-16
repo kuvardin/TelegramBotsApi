@@ -57,7 +57,3 @@ class PullQuotation extends RichBlock
     }
 }
 
-
-
-
-

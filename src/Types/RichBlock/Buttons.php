@@ -66,7 +66,3 @@ class Buttons extends RichBlock
     }
 }
 
-
-
-
-
