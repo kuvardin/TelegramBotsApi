@@ -42,11 +42,11 @@ class AffiliateInfo extends Type
             commission_per_mille: $data['commission_per_mille'],
             amount: $data['amount'],
             affiliate_user: isset($data['affiliate_user'])
-				? User::makeByArray($data['affiliate_user'])
-				: null,
+                ? User::makeByArray($data['affiliate_user'])
+                : null,
             affiliate_chat: isset($data['affiliate_chat'])
-				? Chat::makeByArray($data['affiliate_chat'])
-				: null,
+                ? Chat::makeByArray($data['affiliate_chat'])
+                : null,
             nanostar_amount: $data['nanostar_amount'] ?? null,
         );
     }

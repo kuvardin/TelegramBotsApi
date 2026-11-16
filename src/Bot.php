@@ -1942,7 +1942,7 @@ class Bot
             'type' => $type?->value,
             'allows_multiple_answers' => $allows_multiple_answers,
             'explanation' => $explanation,
-            'explanation_parse_mode' => $explanation_parse_mode?? $this->parse_mode_default,
+            'explanation_parse_mode' => $explanation_parse_mode ?? $this->parse_mode_default,
             'explanation_entities' => $explanation_entities,
             'open_period' => $open_period,
             'close_date' => $close_date,
@@ -2407,7 +2407,8 @@ class Bot
     }
 
     /**
-     * Use this method to demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+     * Use this method to demote a user in a supergroup or a channel. The bot must be an administrator in the chat for
+     * this to work and must have the appropriate administrator rights.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format &#64;channelusername)
@@ -3440,8 +3441,10 @@ class Bot
      * Use this method to change the access settings of a managed bot.
      *
      * @param int $user_id User identifier of the managed bot whose access settings will be changed
-     * @param bool $is_access_restricted Pass True, if only selected users can access the bot. The bot's owner can always access it.
-     * @param int[]|null $added_user_ids A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if "is_access_restricted" is false.
+     * @param bool $is_access_restricted Pass True, if only selected users can access the bot. The bot's owner can
+     *     always access it.
+     * @param int[]|null $added_user_ids A JSON-serialized list of up to 10 identifiers of users who will have access
+     *     to the bot in addition to its owner. Ignored if "is_access_restricted" is false.
      */
     public function setManagedBotAccessSettings(
         int $user_id,
@@ -3634,8 +3637,7 @@ class Bot
     /**
      * Removes the profile photo of the bot. Requires no parameters.
      */
-    public function removeMyProfilePhoto(
-    ): Requests\RequestVoid
+    public function removeMyProfilePhoto(): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'removeMyProfilePhoto', [
 
@@ -6140,8 +6142,7 @@ class Bot
     /**
      * A method to get the current Telegram Stars balance of the bot. Requires no parameters.
      */
-    public function getMyStarBalance(
-    ): Requests\RequestStarAmount
+    public function getMyStarBalance(): Requests\RequestStarAmount
     {
         return new Requests\RequestStarAmount($this, 'getMyStarBalance', [
 

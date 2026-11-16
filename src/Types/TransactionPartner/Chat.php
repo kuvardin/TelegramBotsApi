@@ -33,6 +33,7 @@ class Chat extends TransactionPartner
     {
         return 'chat';
     }
+
     public static function makeByArray(array $data): static
     {
         if ($data['type'] !== self::getType()) {

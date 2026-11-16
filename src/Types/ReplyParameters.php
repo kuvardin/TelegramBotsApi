@@ -47,7 +47,11 @@ class ReplyParameters extends Type
      *     part of the corresponding text; all other elements must contain the whole text. Formatting of the quoted
      *     parts must be kept, and rich texts must be nested in the same way as in the message received from the
      *     server. Mathematical expressions must be quoted entirely. Buttons in RichBlockButtons, anchors and dividers
-     *     can't be quoted. Up to 32 quoted texts with total length up to 1024 characters can be specified. Only plain text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler, RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji, RichTextMathematicalExpression, and arrays of them are kept in the quote; other rich text types are replaced with their text. If non-empty, then "quote", "quote_parse_mode" and "quote_entities" are ignored.
+     *     can't be quoted. Up to 32 quoted texts with total length up to 1024 characters can be specified. Only plain
+     *     text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler,
+     *     RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji,
+     *     RichTextMathematicalExpression, and arrays of them are kept in the quote; other rich text types are replaced
+     *     with their text. If non-empty, then "quote", "quote_parse_mode" and "quote_entities" are ignored.
      * @param int|null $ephemeral_message_id Identifier of the incoming ephemeral message that will be replied to in
      *     the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message
      *     may only be replied to within 15 seconds of being sent. Required if 'message_id' isn't specified.

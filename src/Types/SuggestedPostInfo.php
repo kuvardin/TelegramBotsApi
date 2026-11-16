@@ -9,7 +9,7 @@ use Kuvardin\TelegramBotsApi\Type;
 
 /**
  * Contains information about a suggested post.
-Contains information about a suggested post.
+ * Contains information about a suggested post.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

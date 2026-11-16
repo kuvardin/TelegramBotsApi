@@ -15,9 +15,7 @@ use RuntimeException;
  */
 class Divider extends RichBlock
 {
-    public function __construct(
-
-    )
+    public function __construct()
     {
 
     }
@@ -33,9 +31,7 @@ class Divider extends RichBlock
             throw new RuntimeException("Wrong rich block type: {$data['type']}");
         }
 
-        return new self(
-
-        );
+        return new self();
     }
 
     public function getRequestData(): array

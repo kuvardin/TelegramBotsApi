@@ -8,6 +8,7 @@ use Kuvardin\TelegramBotsApi\Types\RichBlock;
 use RuntimeException;
 use Kuvardin\TelegramBotsApi\Types\Voice;
 use Kuvardin\TelegramBotsApi\Types\RichBlockCaption;
+
 /**
  * A block with a voice note, corresponding to the HTML tag "&lt;audio&gt;".
  *

@@ -15,18 +15,14 @@ use Kuvardin\TelegramBotsApi\Type;
  */
 class PaidMessagesWaived extends Type
 {
-    public function __construct(
-
-    )
+    public function __construct()
     {
 
     }
 
     public static function makeByArray(array $data): self
     {
-        return new self(
-
-        );
+        return new self();
     }
 
     public function getRequestData(): array

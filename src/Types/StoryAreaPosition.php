@@ -12,7 +12,8 @@ use JetBrains\PhpStorm\Deprecated;
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
  */
-#[Deprecated] class StoryAreaPosition extends AreaPosition
+#[Deprecated]
+class StoryAreaPosition extends AreaPosition
 {
 
 }

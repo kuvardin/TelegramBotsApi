@@ -30,6 +30,7 @@ class TelegramApi extends TransactionPartner
     {
         return 'telegram_api';
     }
+
     public static function makeByArray(array $data): static
     {
         if ($data['type'] !== self::getType()) {

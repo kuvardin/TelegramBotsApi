@@ -15,9 +15,7 @@ use RuntimeException;
  */
 class Paid extends ReactionType
 {
-    public function __construct(
-
-    )
+    public function __construct()
     {
 
     }

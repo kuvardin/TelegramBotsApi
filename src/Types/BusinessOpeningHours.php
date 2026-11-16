@@ -32,7 +32,7 @@ class BusinessOpeningHours extends Type
             time_zone_name: $data['time_zone_name'],
             opening_hours: array_map(
                 static fn(array $opening_hour_data) => BusinessOpeningHoursInterval::makeByArray($opening_hour_data),
-                $data['opening_hours']
+                $data['opening_hours'],
             ),
         );
     }

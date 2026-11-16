@@ -32,6 +32,7 @@ class Emoji extends ReactionType
     {
         return 'emoji';
     }
+
     public static function makeByArray(array $data): static
     {
         if ($data['type'] !== self::getType()) {

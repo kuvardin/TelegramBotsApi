@@ -28,9 +28,9 @@ class Gifts extends Type
     {
         return new self(
             gifts: array_map(
-				static fn(array $gifts_data) => Gift::makeByArray($gifts_data),
-				$data['gifts'],
-			),
+                static fn(array $gifts_data) => Gift::makeByArray($gifts_data),
+                $data['gifts'],
+            ),
         );
     }
 

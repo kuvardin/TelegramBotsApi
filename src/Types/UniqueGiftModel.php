@@ -26,7 +26,7 @@ class UniqueGiftModel extends Type
         public string $name,
         public Sticker $sticker,
         public int $rarity_per_mille,
-        public GiftModelRarity|string|null $rarity_value= null,
+        public GiftModelRarity|string|null $rarity_value = null,
     )
     {
 

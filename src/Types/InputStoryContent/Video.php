@@ -10,7 +10,6 @@ use RuntimeException;
 
 /**
  * Describes a video to post as a story.
-Describes a video to post as a story.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

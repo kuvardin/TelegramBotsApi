@@ -15,9 +15,7 @@ use RuntimeException;
  */
 class Divider extends InputRichBlock
 {
-    public function __construct(
-
-    )
+    public function __construct()
     {
 
     }
@@ -33,9 +31,7 @@ class Divider extends InputRichBlock
             throw new RuntimeException("Wrong input rich block type: {$data['type']}");
         }
 
-        return new self(
-
-        );
+        return new self();
     }
 
     public function getRequestData(): array

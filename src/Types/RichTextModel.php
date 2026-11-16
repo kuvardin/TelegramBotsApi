@@ -8,7 +8,8 @@ use Kuvardin\TelegramBotsApi\Type;
 use RuntimeException;
 
 /**
- * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of RichTextModel, or any of the following types:
+ * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of
+ * RichTextModel, or any of the following types:
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

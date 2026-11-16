@@ -40,6 +40,7 @@ class Giveaway extends ChatBoostSource
     {
         return 'giveaway';
     }
+
     public static function makeByArray(array $data): static
     {
         if ($data['source'] !== self::getSource()) {
