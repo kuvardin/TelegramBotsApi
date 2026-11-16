@@ -7,7 +7,7 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use JetBrains\PhpStorm\Deprecated;
 
 /**
- * This object represents a video message (available in Telegram apps as of v.4.0).
+ * This object represents a video message.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>

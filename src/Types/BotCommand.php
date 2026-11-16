@@ -18,10 +18,13 @@ class BotCommand extends Type
      * @param string $command Text of the command; 1-32 characters. Can contain only lowercase English letters, digits
      *     and underscores.
      * @param string $description Description of the command; 1-256 characters.
+     * @param bool|null $is_ephemeral True, if the command sends an ephemeral message, which can be seen only by the
+     *     sender of the message and the bot
      */
     public function __construct(
         public string $command,
         public string $description,
+        public ?bool $is_ephemeral = null,
     )
     {
 
@@ -32,6 +35,7 @@ class BotCommand extends Type
         return new self(
             command: $data['command'],
             description: $data['description'],
+            is_ephemeral: $data['is_ephemeral'] ?? null,
         );
     }
 
@@ -40,6 +44,7 @@ class BotCommand extends Type
         return [
             'command' => $this->command,
             'description' => $this->description,
+            'is_ephemeral' => $this->is_ephemeral,
         ];
     }
 }

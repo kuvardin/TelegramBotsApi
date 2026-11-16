@@ -20,16 +20,20 @@ class UniqueGiftInfo extends Type
      *     “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users,
      *     “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through
      *     gift purchase offers
-     * @param string|null $last_resale_currency For gifts bought from other users, the currency in which the payment for
-     *     the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.
+     * @param string|null $last_resale_currency For gifts bought from other users, the currency in which the payment
+     *     for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
      * @param int|null $last_resale_amount For gifts bought from other users, the price paid for the gift in either
-     *     Telegram Stars or nanotoncoins
+     *     Telegram Stars or nanograms
      * @param string|null $owned_gift_id Unique identifier of the received gift for the bot; only present for gifts
      *     received on behalf of business accounts
      * @param int|null $transfer_star_count Number of Telegram Stars that must be paid to transfer the gift; omitted if
      *     the bot cannot transfer the gift
      * @param int|null $next_transfer_date Point in time (Unix timestamp) when the gift can be transferred. If it is in
      *     the past, then the gift can be transferred now
+     * @param string|null $text Text of the message that was added to the gift
+     * @param MessageEntity[]|null $entities Special entities that appear in the text
+     * @param bool|null $is_private True, if the sender and gift text are shown only to the gift receiver; otherwise,
+     *     everyone will be able to see them
      */
     public function __construct(
         public UniqueGift $gift,
@@ -39,6 +43,9 @@ class UniqueGiftInfo extends Type
         public ?string $owned_gift_id = null,
         public ?int $transfer_star_count = null,
         public ?int $next_transfer_date = null,
+        public ?string $text = null,
+        public ?array $entities = null,
+        public ?bool $is_private = null,
     )
     {
 
@@ -54,6 +61,14 @@ class UniqueGiftInfo extends Type
             owned_gift_id: $data['owned_gift_id'] ?? null,
             transfer_star_count: $data['transfer_star_count'] ?? null,
             next_transfer_date: $data['next_transfer_date'] ?? null,
+            text: $data['text'] ?? null,
+            entities: isset($data['entities'])
+                ? array_map(
+                    static fn(array $entities_data) => MessageEntity::makeByArray($entities_data),
+                    $data['entities'],
+                )
+                : null,
+            is_private: $data['is_private'] ?? null,
         );
     }
 
@@ -67,6 +82,9 @@ class UniqueGiftInfo extends Type
             'owned_gift_id' => $this->owned_gift_id,
             'transfer_star_count' => $this->transfer_star_count,
             'next_transfer_date' => $this->next_transfer_date,
+            'text' => $this->text,
+            'entities' => $this->entities,
+            'is_private' => $this->is_private,
         ];
     }
 }

@@ -25,6 +25,9 @@ class ChatJoinRequest extends Type
      * @param int $date Date the request was sent in Unix time
      * @param string|null $bio Bio of the user.
      * @param ChatInviteLink|null $invite_link Chat invite link that was used by the user to send the join request
+     * @param string|null $query_id Identifier of the join request query; for bots assigned to process join requests
+     *     only. If present, then the bot must call sendChatJoinRequestWebApp() or directly call
+     *     answerChatJoinRequestQuery() within 10 seconds.
      */
     public function __construct(
         public Chat $chat,
@@ -33,6 +36,7 @@ class ChatJoinRequest extends Type
         public int $date,
         public ?string $bio = null,
         public ?ChatInviteLink $invite_link = null,
+        public ?string $query_id = null,
     )
     {
 
@@ -49,6 +53,7 @@ class ChatJoinRequest extends Type
             invite_link: isset($data['invite_link'])
                 ? ChatInviteLink::makeByArray($data['invite_link'])
                 : null,
+            query_id: $data['query_id'] ?? null,
         );
     }
 
@@ -61,6 +66,7 @@ class ChatJoinRequest extends Type
             'date' => $this->date,
             'bio' => $this->bio,
             'invite_link' => $this->invite_link,
+            'query_id' => $this->query_id,
         ];
     }
 }

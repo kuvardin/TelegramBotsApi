@@ -15,10 +15,10 @@ use JetBrains\PhpStorm\Deprecated;
 class Message extends MaybeInaccessibleMessage
 {
     /**
-     * @param int $message_id Unique message identifier inside this chat. In specific instances (e.g., message
-     *     containing a video sent to a big chat), the server might automatically schedule a message instead of sending
-     *     it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is
-     *     actually sent
+     * @param int $message_id Unique message identifier inside this chat; 0 for ephemeral messages. In specific
+     *     instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a
+     *     message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will
+     *     be unusable until it is actually sent.
      * @param int $date Date the message was sent in Unix time. It is always a positive number, representing a valid
      *     date.
      * @param Chat $chat Chat the message belongs to
@@ -44,8 +44,8 @@ class Message extends MaybeInaccessibleMessage
      * @param bool|null $is_automatic_forward True, if the message is a channel post that was automatically forwarded
      *     to the connected discussion group
      * @param Message|null $reply_to_message For replies in the same chat and message thread, the original message.
-     *     Note that the Message object in this field will not contain further "reply_to_message" fields even if it
-     *     itself is a reply.
+     *     Note that the Message object in this field will not contain further 'reply_to_message' fields even if it
+     *     itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted.
      * @param ExternalReplyInfo|null $external_reply Information about the message that is being replied to, which may
      *     come from another chat or forum topic
      * @param TextQuote|null $quote For replies that quote part of the original message, the quoted part of the message
@@ -76,10 +76,12 @@ class Message extends MaybeInaccessibleMessage
      * @param Video|null $video Message is a video, information about the video
      * @param VideoNote|null $video_note Message is a video note, information about the video message
      * @param Voice|null $voice Message is a voice message, information about the file
-     * @param string|null $caption Caption for the animation, audio, document, paid media, photo, video or voice
+     * @param string|null $caption Caption for the animation, audio, document, live photo, paid media, photo, video,
+     *     voice, or widget
      * @param MessageEntity[]|null $caption_entities For messages with a caption, special entities like usernames,
      *     URLs, bot commands, etc. that appear in the caption
-     * @param bool|null $show_caption_above_media True, if the caption must be shown above the message media
+     * @param bool|null $show_caption_above_media True, if the caption must be shown above the message media or the
+     *     widget
      * @param bool|null $has_media_spoiler True, if the message media is covered by a spoiler animation
      * @param Contact|null $contact Message is a shared contact, information about the contact
      * @param Dice|null $dice Message is a dice with random value
@@ -126,8 +128,8 @@ class Message extends MaybeInaccessibleMessage
      * @param string|null $connected_website The domain name of the website on which the user has logged in. More about
      *     Telegram Login »
      * @param PassportData|null $passport_data Telegram Passport data
-     * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message. A user in the chat triggered
-     *     another user's proximity alert while sharing Live Location.
+     * @param ProximityAlertTriggered|null $proximity_alert_triggered Service message: a user in the chat triggered
+     *     another user's proximity alert while sharing Live Location
      * @param ChatBoostAdded|null $boost_added Service message: user boosted the chat
      * @param ChatBackground|null $chat_background_set Service message: chat background set
      * @param ForumTopicCreated|null $forum_topic_created Service message: forum topic created
@@ -201,6 +203,18 @@ class Message extends MaybeInaccessibleMessage
      *     message triggered the bot's response
      * @param LivePhoto|null $live_photo Message is a live photo, information about the live photo. For backward
      *     compatibility, when this field is set, the "photo" field will also be set
+     * @param User|null $receiver_user For ephemeral messages, the user who received the message
+     * @param int|null $ephemeral_message_id For ephemeral messages, identifier of the ephemeral message inside this
+     *     chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
+     * @param RichMessage|null $rich_message Message is a rich formatted message
+     * @param Widget|null $widget Message is an HTML widget, information about the widget
+     * @param CommunityChatAdded|null $community_chat_added Service message: chat or bot added to a Community
+     * @param CommunityChatJoined|null $community_chat_joined Service message: chat was joined by a user from a
+     *     Community
+     * @param CommunityChatRemoved|null $community_chat_removed Service message: chat or bot removed from a Community
+     * @param PaidMessagesWaived|null $paid_messages_waived Service message: the sender of the message used a link of
+     *     the other user, which allows sending messages to the user without paying Telegram Stars
+     * @param TonWalletTransfer|null $ton_wallet_transfer Service message: a transfer with a TON wallet
      */
     public function __construct(
         public int $message_id,
@@ -317,6 +331,15 @@ class Message extends MaybeInaccessibleMessage
         public ?User $guest_bot_caller_user = null,
         public ?Chat $guest_bot_caller_chat = null,
         public ?LivePhoto $live_photo = null,
+        public User|null $receiver_user = null,
+        public int|null $ephemeral_message_id = null,
+        public RichMessage|null $rich_message = null,
+        public Widget|null $widget = null,
+        public CommunityChatAdded|null $community_chat_added = null,
+        public CommunityChatJoined|null $community_chat_joined = null,
+        public CommunityChatRemoved|null $community_chat_removed = null,
+        public PaidMessagesWaived|null $paid_messages_waived = null,
+        public TonWalletTransfer|null $ton_wallet_transfer = null,
 
         #[Deprecated] public ?User $forward_from = null,
         #[Deprecated] public ?Chat $forward_from_chat = null,
@@ -625,6 +648,31 @@ class Message extends MaybeInaccessibleMessage
             live_photo: isset($data['live_photo'])
                 ? LivePhoto::makeByArray($data['live_photo'])
                 : null,
+            receiver_user: isset($data['receiver_user'])
+                ? User::makeByArray($data['receiver_user'])
+                : null,
+            ephemeral_message_id: $data['ephemeral_message_id'] ?? null,
+            rich_message: isset($data['rich_message'])
+                ? RichMessage::makeByArray($data['rich_message'])
+                : null,
+            widget: isset($data['widget'])
+                ? Widget::makeByArray($data['widget'])
+                : null,
+            community_chat_added: isset($data['community_chat_added'])
+                ? CommunityChatAdded::makeByArray($data['community_chat_added'])
+                : null,
+            community_chat_joined: isset($data['community_chat_joined'])
+                ? CommunityChatJoined::makeByArray($data['community_chat_joined'])
+                : null,
+            community_chat_removed: isset($data['community_chat_removed'])
+                ? CommunityChatRemoved::makeByArray($data['community_chat_removed'])
+                : null,
+            paid_messages_waived: isset($data['paid_messages_waived'])
+                ? PaidMessagesWaived::makeByArray($data['paid_messages_waived'])
+                : null,
+            ton_wallet_transfer: isset($data['ton_wallet_transfer'])
+                ? TonWalletTransfer::makeByArray($data['ton_wallet_transfer'])
+                : null,
 
             forward_from: isset($data['forward_from'])
                 ? User::makeByArray($data['forward_from'])
@@ -756,6 +804,15 @@ class Message extends MaybeInaccessibleMessage
             'guest_bot_caller_user' => $this->guest_bot_caller_user,
             'guest_bot_caller_chat' => $this->guest_bot_caller_chat,
             'live_photo' => $this->live_photo,
+            'receiver_user' => $this->receiver_user,
+            'ephemeral_message_id' => $this->ephemeral_message_id,
+            'rich_message' => $this->rich_message,
+            'widget' => $this->widget,
+            'community_chat_added' => $this->community_chat_added,
+            'community_chat_joined' => $this->community_chat_joined,
+            'community_chat_removed' => $this->community_chat_removed,
+            'paid_messages_waived' => $this->paid_messages_waived,
+            'ton_wallet_transfer' => $this->ton_wallet_transfer,
 
             'forward_from' => $this->forward_from,
             'forward_from_chat' => $this->forward_from_chat,

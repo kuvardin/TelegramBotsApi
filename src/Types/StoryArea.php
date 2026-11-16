@@ -15,11 +15,11 @@ use Kuvardin\TelegramBotsApi\Type;
 class StoryArea extends Type
 {
     /**
-     * @param StoryAreaPosition $position Position of the area
+     * @param AreaPosition $position Position of the area
      * @param StoryAreaType $type Type of the area
      */
     public function __construct(
-        public StoryAreaPosition $position,
+        public AreaPosition $position,
         public StoryAreaType $type,
     )
     {
@@ -29,7 +29,7 @@ class StoryArea extends Type
     public static function makeByArray(array $data): self
     {
         return new self(
-            position: StoryAreaPosition::makeByArray($data['position']),
+            position: AreaPosition::makeByArray($data['position']),
             type: StoryAreaType::makeByArray($data['type']),
         );
     }

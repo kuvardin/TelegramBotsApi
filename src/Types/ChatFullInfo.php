@@ -98,6 +98,13 @@ class ChatFullInfo extends Type
      * @param int|null $paid_message_star_count The number of Telegram Stars a general user have to pay to send a
      *     message to the chat
      * @param Chat|null $parent_chat Information about the corresponding channel chat; for direct messages chats only
+     * @param User|null $guard_bot The bot that processes join request queries in the chat. The field is only available
+     *     to chat administrators.
+     * @param Community|null $community The Community to which the chat belongs
+     * @param TonWalletCard|null $ton_wallet_card For private chats, the TON wallet card of the user, which is shown on
+     *     their profile page
+     * @param ChatShareTheme|null $share_theme For private chats, supergroups and channels, the theme of the screen for
+     *     sharing a link to the user or the chat; omitted if the default theme is used
      */
     public function __construct(
         public int $id,
@@ -151,6 +158,10 @@ class ChatFullInfo extends Type
         public ?UniqueGiftColors $unique_gift_colors = null,
         public ?int $paid_message_star_count = null,
         public ?Chat $parent_chat = null,
+        public User|null $guard_bot = null,
+        public Community|null $community = null,
+        public TonWalletCard|null $ton_wallet_card = null,
+        public ChatShareTheme|null $share_theme = null,
     )
     {
 
@@ -241,6 +252,18 @@ class ChatFullInfo extends Type
             parent_chat: isset($data['parent_chat'])
                 ? Chat::makeByArray($data['parent_chat'])
                 : null,
+            guard_bot: isset($data['guard_bot'])
+                ? User::makeByArray($data['guard_bot'])
+                : null,
+            community: isset($data['community'])
+                ? Community::makeByArray($data['community'])
+                : null,
+            ton_wallet_card: isset($data['ton_wallet_card'])
+                ? TonWalletCard::makeByArray($data['ton_wallet_card'])
+                : null,
+            share_theme: isset($data['share_theme'])
+                ? ChatShareTheme::makeByArray($data['share_theme'])
+                : null,
         );
     }
 
@@ -298,6 +321,10 @@ class ChatFullInfo extends Type
             'first_profile_audio' => $this->first_profile_audio,
             'unique_gift_colors' => $this->unique_gift_colors,
             'paid_message_star_count' => $this->paid_message_star_count,
+            'guard_bot' => $this->guard_bot,
+            'community' => $this->community,
+            'ton_wallet_card' => $this->ton_wallet_card,
+            'share_theme' => $this->share_theme,
         ];
     }
 

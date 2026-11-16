@@ -45,6 +45,7 @@ class ExternalReplyInfo extends Type
      * @param Venue|null $venue Message is a venue, information about the venue
      * @param Checklist|null $checklist Message is a checklist
      * @param LivePhoto|null $live_photo Message is a live photo, information about the live photo
+     * @param Widget|null $widget Message is an HTML widget, information about the widget
      */
     public function __construct(
         public MessageOrigin $origin,
@@ -73,6 +74,7 @@ class ExternalReplyInfo extends Type
         public ?Venue $venue = null,
         public ?Checklist $checklist = null,
         public ?LivePhoto $live_photo = null,
+        public Widget|null $widget = null,
     )
     {
 
@@ -104,7 +106,7 @@ class ExternalReplyInfo extends Type
             photo: isset($data['photo'])
                 ? array_map(
                     static fn(array $item_data) => PhotoSize::makeByArray($item_data),
-                    $data['photo']
+                    $data['photo'],
                 )
                 : null,
             sticker: isset($data['sticker'])
@@ -156,6 +158,9 @@ class ExternalReplyInfo extends Type
             live_photo: isset($data['live_photo'])
                 ? LivePhoto::makeByArray($data['live_photo'])
                 : null,
+            widget: isset($data['widget'])
+                ? Widget::makeByArray($data['widget'])
+                : null,
         );
     }
 
@@ -188,6 +193,7 @@ class ExternalReplyInfo extends Type
             'venue' => $this->venue,
             'checklist' => $this->checklist,
             'live_photo' => $this->live_photo,
+            'widget' => $this->widget,
         ];
     }
 }

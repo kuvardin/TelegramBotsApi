@@ -13,25 +13,31 @@ enum MessageEntityType: string
     /** &#64;username */
     case Mention = 'mention';
 
-    /** #hashtag */
+    /** #hashtag or #hashtag&#64;chatusername */
     case Hashtag = 'hashtag';
 
-    /** $USD */
+    /** $USD or $USD&#64;chatusername */
     case Cashtag = 'cashtag';
 
-    /** /start@jobs_bot */
+    /** /start&#64;jobs_bot */
     case BotCommand = 'bot_command';
 
     /** https://telegram.org */
     case Url = 'url';
 
-    /** do-not-reply@telegram.org */
+    /** do-not-reply&#64;telegram.org */
     case Email = 'email';
 
     /** +1-212-555-0123 */
     case PhoneNumber = 'phone_number';
 
-    /** bold text */
+    /** bank card number */
+    case BankCardNumber = 'bank_card_number';
+
+    /** address in the TON blockchain */
+    case TonAddress = 'ton_address';
+
+    /** <strong>bold text</strong> */
     case Bold = 'bold';
 
     /** italic text */
@@ -66,4 +72,8 @@ enum MessageEntityType: string
 
     /** for inline custom emoji stickers */
     case CustomEmoji = 'custom_emoji';
+
+    /** for formatted date and time */
+    case DateTime = 'date_time';
+
 }

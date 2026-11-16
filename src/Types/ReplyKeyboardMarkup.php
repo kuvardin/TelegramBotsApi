@@ -18,12 +18,12 @@ class ReplyKeyboardMarkup extends Type
     /**
      * @param KeyboardButton[][] $keyboard Array of button rows, each represented by an Array of KeyboardButton objects
      * @param bool|null $resize_keyboard Requests clients to resize the keyboard vertically for optimal fit (e.g., make
-     *     the keyboard smaller if there are just two rows of buttons). Defaults to "false", in which case the custom
+     *     the keyboard smaller if there are just two rows of buttons). Defaults to 'False', in which case the custom
      *     keyboard is always of the same height as the app's standard keyboard.
      * @param bool|null $one_time_keyboard Requests clients to hide the keyboard as soon as it's been used. The
      *     keyboard will still be available, but clients will automatically display the usual letter-keyboard in the
      *     chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to
-     *     "false".
+     *     "False".
      * @param string|null $input_field_placeholder The placeholder to be shown in the input field when the keyboard is
      *     active; 1-64 characters
      * @param bool|null $selective Use this parameter if you want to show the keyboard to specific users only. Targets:
@@ -32,8 +32,10 @@ class ReplyKeyboardMarkup extends Type
      *     requests to change the bot's language, bot replies to the request with a keyboard to select the new
      *     language. Other users in the group don't see the keyboard.
      * @param bool|null $is_persistent Requests clients to always show the keyboard when the regular keyboard is
-     *     hidden. Defaults to "false", in which case the custom keyboard can be hidden and opened with a keyboard
+     *     hidden. Defaults to 'False', in which case the custom keyboard can be hidden and opened with a keyboard
      *     icon.
+     * @param bool|null $force_reply Pass True if the reply interface must be shown to the user, as if they had
+     *     manually selected the bot's message and tapped 'Reply'
      */
     public function __construct(
         public array $keyboard,
@@ -42,6 +44,7 @@ class ReplyKeyboardMarkup extends Type
         public ?string $input_field_placeholder = null,
         public ?bool $selective = null,
         public ?bool $is_persistent = null,
+        public ?bool $force_reply = null,
     )
     {
 
@@ -56,6 +59,7 @@ class ReplyKeyboardMarkup extends Type
             input_field_placeholder: $data['input_field_placeholder'] ?? null,
             selective: $data['selective'] ?? null,
             is_persistent: $data['is_persistent'] ?? null,
+            force_reply: $data['force_reply'] ?? null,
         );
 
         foreach ($data['keyboard'] as $keyboard_buttons_row_data) {
@@ -77,6 +81,7 @@ class ReplyKeyboardMarkup extends Type
             'input_field_placeholder' => $this->input_field_placeholder,
             'selective' => $this->selective,
             'is_persistent' => $this->is_persistent,
+            'force_reply' => $this->force_reply,
         ];
     }
 }

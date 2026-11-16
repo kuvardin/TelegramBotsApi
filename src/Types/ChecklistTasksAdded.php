@@ -17,7 +17,7 @@ class ChecklistTasksAdded extends Type
     /**
      * @param ChecklistTask[] $tasks List of tasks added to the checklist
      * @param Message|null $checklist_message Message containing the checklist to which the tasks were added. Note that
-     *     the Message object in this field will not contain the reply_to_message field even if it itself is a reply.
+     *     the Message object in this field will not contain the 'reply_to_message' field even if it itself is a reply.
      */
     public function __construct(
         public array $tasks,

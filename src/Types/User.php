@@ -41,6 +41,8 @@ class User extends Type
      *     in getMe().
      * @param bool|null $supports_guest_queries True, if the bot supports guest queries from chats it is not a member
      *     of. Returned only in getMe().
+     * @param bool|null $supports_join_request_queries True, if the bot supports join request queries and can be
+     *     assigned to process them. Returned only in getMe().
      */
     public function __construct(
         public int $id,
@@ -60,6 +62,7 @@ class User extends Type
         public ?bool $allows_users_to_create_topics = null,
         public ?bool $can_manage_bots = null,
         public ?bool $supports_guest_queries = null,
+        public bool|null $supports_join_request_queries = null,
     )
     {
 
@@ -85,6 +88,7 @@ class User extends Type
             allows_users_to_create_topics: $data['allows_users_to_create_topics'] ?? null,
             can_manage_bots: $data['can_manage_bots'] ?? null,
             supports_guest_queries: $data['supports_guest_queries'] ?? null,
+            supports_join_request_queries: $data['supports_join_request_queries'] ?? null,
         );
     }
 
@@ -108,6 +112,7 @@ class User extends Type
             'allows_users_to_create_topics' => $this->allows_users_to_create_topics,
             'can_manage_bots' => $this->can_manage_bots,
             'supports_guest_queries' => $this->supports_guest_queries,
+            'supports_join_request_queries' => $this->supports_join_request_queries,
         ];
     }
 }

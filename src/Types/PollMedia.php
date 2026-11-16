@@ -26,6 +26,7 @@ class PollMedia extends Type
      * @param Sticker|null $sticker Media is a sticker, information about the sticker; currently, for poll options only
      * @param Venue|null $venue Media is a venue, information about the venue
      * @param Video|null $video Media is a video, information about the video
+     * @param Link|null $link The HTTP link attached to the poll option
      */
     public function __construct(
         public ?Animation $animation = null,
@@ -37,6 +38,7 @@ class PollMedia extends Type
         public ?Sticker $sticker = null,
         public ?Venue $venue = null,
         public ?Video $video = null,
+        public ?Link $link = null,
     )
     {
 
@@ -75,6 +77,9 @@ class PollMedia extends Type
             video: isset($data['video'])
                 ? Video::makeByArray($data['video'])
                 : null,
+            link: isset($data['link'])
+                ? Link::makeByArray($data['link'])
+                : null,
         );
     }
 
@@ -90,6 +95,7 @@ class PollMedia extends Type
             'sticker' => $this->sticker,
             'venue' => $this->venue,
             'video' => $this->video,
+            'link' => $this->link,
         ];
     }
 }

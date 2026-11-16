@@ -23,12 +23,14 @@ abstract class InputMedia extends Type
             InputMedia\Animation::getType() => InputMedia\Animation::makeByArray($data),
             InputMedia\Audio::getType() => InputMedia\Audio::makeByArray($data),
             InputMedia\Document::getType() => InputMedia\Document::makeByArray($data),
+            InputMedia\Link::getType() => InputMedia\Link::makeByArray($data),
             InputMedia\Photo::getType() => InputMedia\Photo::makeByArray($data),
             InputMedia\Video::getType() => InputMedia\Video::makeByArray($data),
             InputMedia\LivePhoto::getType() => InputMedia\LivePhoto::makeByArray($data),
             InputMedia\Location::getType() => InputMedia\Location::makeByArray($data),
             InputMedia\Sticker::getType() => InputMedia\Sticker::makeByArray($data),
             InputMedia\Venue::getType() => InputMedia\Venue::makeByArray($data),
+            InputMedia\VoiceNote::getType() => InputMedia\VoiceNote::makeByArray($data),
             default => throw new RuntimeException("Unknown input media type: {$data['type']}"),
         };
     }

@@ -103,7 +103,7 @@ class Bot
     }
 
     /**
-     * Use this method to receive incoming updates using long polling.
+     * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
      *
      * @param int|null $offset Identifier of the first update to be returned. Must be greater by one than the highest
      *     among the identifiers of previously received updates. By default, updates starting with the earliest
@@ -119,8 +119,8 @@ class Bot
      *     only receive updates of these types. See Update for a complete list of available update types. Specify an
      *     empty list to receive all update types except "chat_member", "message_reaction", and
      *     "message_reaction_count" (default). If not specified, the previous setting will be used.<br><br>Please note
-     *     that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates
-     *     may be received for a short period of time.
+     *     that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be
+     *     received for a short period of time.
      */
     public function getUpdates(
         ?int $offset = null,
@@ -244,8 +244,9 @@ class Bot
     /**
      * Use this method to send text messages.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param string $text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
@@ -257,24 +258,26 @@ class Bot
      *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
      *     remove a reply keyboard or to force a reply from the user
      * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
-     *       supergroups and private chats of bots with forum topic mode enabled only
+     *     supergroups and private chats of bots with forum topic mode enabled only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
      * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
-     *      message will be sent
+     *     message will be sent
      * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
-     *       private chats only
-     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring
-     *       broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from
-     *       the bot's balance
+     *     private chats only
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance.
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
-     *       parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
-     *       to another suggested post, then that suggested post is automatically declined.
+     *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
+     *     to another suggested post, then that suggested post is automatically declined.
      * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be
-     *      sent; required if the message is sent to a direct messages chat
+     *     sent; required if the message is sent to a direct messages chat
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendMessage(
-        int|string $chat_id,
+        int|string|null $chat_id,
         string $text,
         ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
@@ -292,6 +295,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
         ?int $direct_messages_topic_id = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendMessage', [
@@ -310,6 +314,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'suggested_post_parameters' => $suggested_post_parameters,
             'direct_messages_topic_id' => $direct_messages_topic_id,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'disable_web_page_preview' => $disable_web_page_preview,
             'reply_to_message_id' => $reply_to_message_id,
@@ -408,9 +413,9 @@ class Bot
 
     /**
      * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway
-     * winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the
-     * field "correct_option_id" is known to the bot. The method is analogous to the method forwardMessage(), but the
-     * copied message doesn't have a link to the original message.
+     * winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the
+     * value of the field "correct_option_ids" is known to the bot. The method is analogous to the method
+     * forwardMessage(), but the copied message doesn't have a link to the original message.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format "&#64;channelusername")
@@ -492,11 +497,11 @@ class Bot
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied,
-     * they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and
-     * invoice messages can't be copied. A quiz poll can be copied only if the value of the field
-     * "correct_option_id" is known to the bot. The method is analogous to the method forwardMessages(), but the copied
-     * messages don't have a link to the original message. Album grouping is kept for copied messages.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they
+     * are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice
+     * messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field
+     * 'correct_option_ids' is known to the bot. The method is analogous to the method forwardMessages(), but the
+     * copied messages don't have a link to the original message. Album grouping is kept for copied messages.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format "&#64;channelusername")
@@ -539,8 +544,9 @@ class Bot
     /**
      * Use this method to send photos.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param Types\InputFile $photo Photo to send. Pass a file_id as String to send a photo that exists on the
      *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
      *     or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's
@@ -573,9 +579,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendPhoto(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $photo,
         ?string $caption = null,
         ?Enums\ParseMode $parse_mode = null,
@@ -594,6 +602,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendPhoto', [
@@ -614,6 +623,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -624,8 +634,9 @@ class Bot
     /**
      * Use this method to send live photos.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param Types\InputFile|string $live_photo Live photo video to send. Sending live photos by a URL is currently
      *     unsupported.
      * @param Types\InputFile|string $photo The static photo to send. Sending live photos by a URL is currently
@@ -659,9 +670,11 @@ class Bot
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
      *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
      *     remove a reply keyboard or to force a reply from the user.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendLivePhoto(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile|string $live_photo,
         Types\InputFile|string $photo,
         ?string $business_connection_id = null,
@@ -679,6 +692,7 @@ class Bot
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
         ?Types\ReplyParameters $reply_parameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLivePhoto', [
@@ -700,34 +714,60 @@ class Bot
             'suggested_post_parameters' => $suggested_post_parameters,
             'reply_parameters' => $reply_parameters,
             'reply_markup' => $reply_markup,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
         ]);
     }
 
     /**
-     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future. For sending voice messages, use the sendVoice() method instead.
+     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your
+     * audio must be in the .MP3 or .M4A format. Bots can currently send audio files of up to 50 MB in size, this limit
+     * may be changed in the future.<br> For sending voice messages, use the sendVoice() method instead.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the format "&#64;channelusername")
-     * @param Types\InputFile $audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
+     * @param Types\InputFile $audio Audio file to send. Pass a file_id as String to send an audio file that exists on
+     *     the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
+     *     Internet, or upload a new one using multipart/form-data.
      * @param string|null $caption Audio caption, 0-1024 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the audio caption.
-     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in the caption, which can be specified instead of "parse_mode"
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of "parse_mode"
      * @param int|null $duration Duration of the audio in seconds
      * @param string|null $performer Performer
      * @param string|null $title Track name
-     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;
-     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no sound.
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
+     *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
+     *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
+     *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
+     *     &lt;file_attach_name&gt;
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user
-     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
+     *     supergroups and private chats of bots with forum topic mode enabled only
      * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
-     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
-     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for private chats only
-     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance
-     * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
-     * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
+     *     message will be sent
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
+     *     private chats only
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance
+     * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be
+     *     sent; required if the message is sent to a direct messages chat
+     * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
+     *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
+     *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendAudio(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $audio,
         ?string $caption = null,
         ?Enums\ParseMode $parse_mode = null,
@@ -749,6 +789,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAudio', [
@@ -771,6 +812,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -781,8 +823,9 @@ class Bot
      * Use this method to send general files. Bots can currently send files of any type of up to 50 MB in size, this
      * limit may be changed in the future.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param Types\InputFile $document File to send. Pass a file_id as String to send a file that exists on the
      *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
      *     or upload a new one using multipart/form-data.
@@ -821,9 +864,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendDocument(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $document,
         ?Types\InputFile $thumbnail = null,
         ?string $caption = null,
@@ -843,6 +888,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendDocument', [
@@ -863,6 +909,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -873,15 +920,18 @@ class Bot
      * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as
      * Document). Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
-     * @param Types\InputFile $video Video to send. Pass a file_id as String to send a video that exists on the Telegram
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
+     * @param Types\InputFile $video Video to send. Pass a file_id as String to send a video that exists on the
+     *     Telegram
      *     servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload
      *     a new video using multipart/form-data.
      * @param int|null $duration Duration of sent video in seconds
      * @param int|null $width Video width
      * @param int|null $height Video height
-     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the
      *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
      *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
@@ -890,7 +940,8 @@ class Bot
      * @param string|null $caption Video caption (may also be used when resending videos by "file_id"), 0-1024
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the video caption.
-     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in the
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the
      *     caption, which can be specified instead of "parse_mode"
      * @param bool|null $supports_streaming Pass True if the uploaded video is suitable for streaming
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
@@ -913,17 +964,19 @@ class Bot
      *     the bot's balance
      * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be
      *     sent; required if the message is sent to a direct messages chat
-     * @param Types\InputFile|null $cover Cover for the video in the message. Pass a file_id to send a file that exists on
-     *     the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
-     *     “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under
+     * @param Types\InputFile|null $cover Cover for the video in the message. Pass a file_id to send a file that exists
+     *     on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or
+     *     pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under
      *     &lt;file_attach_name&gt; name.
      * @param int|null $start_timestamp Start timestamp for the video in the message
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendVideo(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $video,
         ?int $duration = null,
         ?int $width = null,
@@ -950,6 +1003,7 @@ class Bot
         Types\InputFile|null $cover = null,
         ?int $start_timestamp = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideo', [
@@ -977,6 +1031,7 @@ class Bot
             'cover' => $cover,
             'start_timestamp' => $start_timestamp,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -987,25 +1042,27 @@ class Bot
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). Bots can currently send
      * animation files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
-     * @param Types\InputFile $animation Animation to send. Pass a file_id as String to send an animation that exists on
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
+     * @param Types\InputFile $animation Animation to send. Pass a file_id as String to send an animation that exists
+     *     on
      *     the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the
      *     Internet, or upload a new animation using multipart/form-data.
      * @param int|null $duration Duration of sent animation in seconds
      * @param int|null $width Animation width
      * @param int|null $height Animation height
-     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
      *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
-     *     &lt;file_attach_name&gt;.
+     *     &lt;file_attach_name&gt;
      * @param string|null $caption Animation caption (may also be used when resending animation by "file_id"), 0-1024
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the animation caption.
-     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in the
-     *     caption, which can be specified instead of "parse_mode"
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of 'parse_mode'
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
      *     sound.
      * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
@@ -1029,9 +1086,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendAnimation(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $animation,
         ?int $duration = null,
         ?int $width = null,
@@ -1055,6 +1114,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendAnimation', [
@@ -1079,6 +1139,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1091,15 +1152,16 @@ class Bot
      * format (other formats may be sent as Audio or Document). Bots can currently send voice messages of up to 50 MB
      * in size, this limit may be changed in the future.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
-     * @param Types\InputFile $voice Audio file to send. Pass a file_id as String to send a file that exists on the 
-     *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or
-     *     upload a new one using multipart/form-data.
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
+     * @param Types\InputFile $voice Audio file to send. Pass a file_id as String to send a file that exists on the
+     *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
+     *     or upload a new one using multipart/form-data.
      * @param string|null $caption Voice message caption, 0-1024 characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the voice message caption.
-     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in the
-     *     caption, which can be specified instead of "parse_mode"
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of 'parse_mode'
      * @param int|null $duration Duration of the voice message in seconds
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
      *     sound.
@@ -1122,9 +1184,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendVoice(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $voice,
         ?string $caption = null,
         ?Enums\ParseMode $parse_mode = null,
@@ -1142,6 +1206,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVoice', [
@@ -1161,6 +1226,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1168,18 +1234,18 @@ class Bot
     }
 
     /**
-     * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to
-     * send video messages.
+     * Use this method to send a rounded square MPEG4 video of up to 1 minute long.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param Types\InputFile $video_note Video note to send. Pass a file_id as String to send a video note that exists
      *     on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes
      *     by a URL is currently unsupported
      * @param int|null $duration Duration of sent video in seconds
      * @param int|null $length Video width and height, i.e. diameter of the video message
-     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for the
-     *     file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
+     * @param Types\InputFile|null $thumbnail Thumbnail of the file sent; can be ignored if thumbnail generation for
+     *     the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
      *     thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using
      *     multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass
      *     “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under
@@ -1205,9 +1271,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendVideoNote(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $video_note,
         ?int $duration = null,
         ?int $length = null,
@@ -1225,6 +1293,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVideoNote', [
@@ -1243,9 +1312,95 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
+        ]);
+    }
+
+    /**
+     * Use this method to send a message with an HTML widget. Currently, in the production environment, widgets can be
+     * sent only to private chats, and sent widgets automatically have protected content and therefore can't be
+     * forwarded.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param string $html HTML code of the widget, 1-32768 bytes. The code must not exceed 4096 bytes when compressed
+     *     by zlib with the maximum compression level.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
+     *     supergroups and private chats of bots with forum topic mode enabled only
+     * @param int|null $width Width of the widget in logical pixels; omit if the widget must occupy the whole width of
+     *     the message bubble. The width is clamped by the app to the range from 200 to the maximum width of the
+     *     message bubble.
+     * @param int|null $height Height of the widget in logical pixels; omit if the height of the widget isn't fixed.
+     *     The height is clamped by the app to the range 50-600.
+     * @param string|null $public_data Public data of the widget, 0-1024 bytes, which will be available wherever the
+     *     widget is shown. If the widget is shared, then all messages with it will have the same public data.
+     * @param string|null $chat_data Data of the widget, which is specific to the message, 0-1024 bytes
+     * @param string|null $caption Widget caption, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the widget caption.
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of "parse_mode"
+     * @param bool|null $show_caption_above_media Pass True if the caption must be shown above the widget
+     * @param bool|null $allow_queries Pass True to allow the widget to send queries to the bot
+     * @param bool|null $is_shared Pass True to create a shared widget, which can be sent again using the method
+     *     sendSharedWidget()
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
+     * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance.
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
+     *     private chats only
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user.
+     */
+    public function sendWidget(
+        int|string $chat_id,
+        string $html,
+        ?int $message_thread_id = null,
+        ?int $width = null,
+        ?int $height = null,
+        ?string $public_data = null,
+        ?string $chat_data = null,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?bool $allow_queries = null,
+        ?bool $is_shared = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?bool $allow_paid_broadcast = null,
+        ?string $message_effect_id = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+    ): Requests\RequestMessage
+    {
+        return new Requests\RequestMessage($this, 'sendWidget', [
+            'chat_id' => $chat_id,
+            'html' => $html,
+            'message_thread_id' => $message_thread_id,
+            'width' => $width,
+            'height' => $height,
+            'public_data' => $public_data,
+            'chat_data' => $chat_data,
+            'caption' => $caption,
+            'parse_mode' => $parse_mode,
+            'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'allow_queries' => $allow_queries,
+            'is_shared' => $is_shared,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
+            'message_effect_id' => $message_effect_id,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
         ]);
     }
 
@@ -1383,13 +1538,15 @@ class Bot
     /**
      * Use this method to send point on the map.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param float $latitude Latitude of the location
      * @param float $longitude Longitude of the location
      * @param float|null $horizontal_accuracy The radius of uncertainty for the location, measured in meters; 0-1500
-     * @param int|null $live_period Period in seconds during which the location will be updated (see Live Locations,
-     *     should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
+     * @param int|null $live_period Period in seconds during which the location will be updated (see Live Locations),
+     *     must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. Must be 0
+     *     for ephemeral messages.
      * @param int|null $heading For live locations, a direction in which the user is moving, in degrees. Must be
      *     between 1 and 360 if specified.
      * @param int|null $proximity_alert_radius For live locations, a maximum distance for proximity alerts about
@@ -1415,9 +1572,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendLocation(
-        int|string $chat_id,
+        int|string|null $chat_id,
         float $latitude,
         float $longitude,
         ?float $horizontal_accuracy = null,
@@ -1436,6 +1595,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendLocation', [
@@ -1456,16 +1616,19 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
         ]);
     }
+
     /**
      * Use this method to send information about a venue.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param float $latitude Latitude of the venue
      * @param float $longitude Longitude of the venue
      * @param string $title Name of the venue
@@ -1496,9 +1659,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendVenue(
-        int|string $chat_id,
+        int|string|null $chat_id,
         float $latitude,
         float $longitude,
         string $title,
@@ -1519,6 +1684,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendVenue', [
@@ -1541,6 +1707,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1550,8 +1717,9 @@ class Bot
     /**
      * Use this method to send phone contacts.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param string $phone_number Contact's phone number
      * @param string $first_name Contact's first name
      * @param string|null $last_name Contact's last name
@@ -1577,9 +1745,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendContact(
-        int|string $chat_id,
+        int|string|null $chat_id,
         string $phone_number,
         string $first_name,
         ?string $last_name = null,
@@ -1596,9 +1766,11 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
-        return new Requests\RequestMessage($this, 'sendContact', ['chat_id' => $chat_id,
+        return new Requests\RequestMessage($this, 'sendContact', [
+            'chat_id' => $chat_id,
             'phone_number' => $phone_number,
             'first_name' => $first_name,
             'business_connection_id' => $business_connection_id,
@@ -1613,6 +1785,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -1872,14 +2045,19 @@ class Bot
      * <strong>must</strong> call sendMessage() with the complete message to persist it in the user's chat.
      *
      * @param int $chat_id Unique identifier for the target private chat
-     * @param int $draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same
-     *     identifier are animated
+     * @param int $draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same
+     *     identifier are animated. Otherwise, the draft is replaced without animation.
      * @param string|null $text Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty
      *      text to show a “Thinking…” placeholder.
      * @param int|null $message_thread_id Unique identifier for the target message thread
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
      *     text, which can be specified instead of "parse_mode"
+     * @param bool|null $can_stop Pass True to show the user a button to stop further drafts. The bot will receive an
+     *     Update “stopped_message_generation” if the user presses the button.
+     * @param bool|null $keep_on_stop Pass True to keep the draft in the chat when the button is pressed. The draft
+     *     will still disappear after a short time or if the bot sends a message. To fully preserve the partial draft,
+     *     the bot should send it as a new message.
      */
     public function sendMessageDraft(
         int $chat_id,
@@ -1888,6 +2066,8 @@ class Bot
         ?int $message_thread_id = null,
         ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
+        ?bool $can_stop = null,
+        ?bool $keep_on_stop = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'sendMessageDraft', [
@@ -1897,6 +2077,8 @@ class Bot
             'message_thread_id' => $message_thread_id,
             'parse_mode' => $parse_mode ?? $this->parse_mode_default,
             'entities' => $entities,
+            'can_stop' => $can_stop,
+            'keep_on_stop' => $keep_on_stop,
         ]);
     }
 
@@ -2175,6 +2357,8 @@ class Bot
      *     the channel and decline suggested posts; for channels only
      * @param bool|null $can_manage_tags Pass True if the administrator can edit the tags of regular members; for
      *     groups and supergroups only
+     * @param bool|null $can_send_welcome_messages Pass True if the administrator can manage chat welcome messages or
+     *     directly send them in the case of bots
      */
     public function promoteChatMember(
         int|string $chat_id,
@@ -2196,6 +2380,7 @@ class Bot
         ?bool $can_delete_stories = null,
         ?bool $can_manage_direct_messages = null,
         ?bool $can_manage_tags = null,
+        ?bool $can_send_welcome_messages = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'promoteChatMember', [
@@ -2218,6 +2403,7 @@ class Bot
             'can_delete_stories' => $can_delete_stories,
             'can_manage_direct_messages' => $can_manage_direct_messages,
             'can_manage_tags' => $can_manage_tags,
+            'can_send_welcome_messages' => $can_send_welcome_messages,
         ]);
     }
 
@@ -2555,6 +2741,23 @@ class Bot
     }
 
     /**
+     * Use this method to process a received chat join request query.
+     *
+     * @param string $chat_join_request_query_id Unique identifier of the join request query
+     * @param Enums\ChatJoinRequestResult $result Result of the query
+     */
+    public function answerChatJoinRequestQuery(
+        string $chat_join_request_query_id,
+        Enums\ChatJoinRequestResult $result,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'answerChatJoinRequestQuery', [
+            'chat_join_request_query_id' => $chat_join_request_query_id,
+            'result' => $result->value,
+        ]);
+    }
+
+    /**
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot
      * must be an administrator in the chat for this to work and must have the appropriate administrator rights.
      *
@@ -2776,6 +2979,15 @@ class Bot
     }
 
     /**
+     * Use this method to get the list of backdrops, which can be used as the background of a theme of the screen for
+     * sharing a link to a user or a chat.
+     */
+    public function getChatShareThemeBackdrops(): Requests\RequestChatShareThemeBackdrops
+    {
+        return new Requests\RequestChatShareThemeBackdrops($this, 'getChatShareThemeBackdrops');
+    }
+
+    /**
      * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their
      * profile) of a given user.
      *
@@ -2840,7 +3052,9 @@ class Bot
     /**
      * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a
      * supergroup chat the bot must be an administrator in the chat for this to work and must have the
-     * "can_manage_topics" administrator right.
+     * 'can_manage_topics' administrator right. In the case of a private chat, a link to the topic can be created in
+     * the format 'https://t.me/&lt;bot_username&gt;/&lt;message_thread_id&gt;'; the link opens the topic only for the
+     * user.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup (in the
      *     format "&#64;supergroupusername")
@@ -3109,6 +3323,25 @@ class Bot
             'show_alert' => $show_alert,
             'url' => $url,
             'cache_time' => $cache_time,
+        ]);
+    }
+
+    /**
+     * Use this method to send an answer to a query from a widget. The query must be answered within 15 seconds. The
+     * answer is received only by the widget that sent the query and doesn't change data of the widget; use
+     * editMessageWidgetData() or editSharedWidgetData() to change it.
+     *
+     * @param string $widget_query_id Unique identifier for the query to be answered
+     * @param string|null $data Data to be returned to the widget, 0-1024 bytes
+     */
+    public function answerWidgetQuery(
+        string $widget_query_id,
+        ?string $data = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'answerWidgetQuery', [
+            'widget_query_id' => $widget_query_id,
+            'data' => $data,
         ]);
     }
 
@@ -3492,8 +3725,8 @@ class Bot
      * @param string $gift_id Identifier of the gift; limited gifts can't be sent to channel chats
      * @param int|null $user_id Required if "chat_id" is not specified. Unique identifier of the target user who will
      *     receive the gift.
-     * @param int|string|null $chat_id Required if "user_id" is not specified. Unique identifier for the chat or
-     *     username of the channel (in the format "&#64;channelusername") that will receive the gift.
+     * @param int|string|null $chat_id Required if 'user_id' is not specified. Unique identifier for the chat that will
+     *     receive the gift or username of the channel in the format '&#64;username'.
      * @param bool|null $pay_for_upgrade Pass True to pay for the gift upgrade from the bot's balance, thereby making
      *     the upgrade free for the receiver
      * @param string|null $text Text that will be shown along with the gift; 0-128 characters
@@ -3565,15 +3798,24 @@ class Bot
      * @param int $user_id Unique identifier of the target user
      * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
      *     if the organization isn't allowed to provide a custom verification description.
+     * @param Enums\ParseMode|null $custom_description_parse_mode Mode for parsing entities in the custom description.
+     *     See formatting options for more details. Only “text_link” entities are supported.
+     * @param Types\MessageEntity[]|null $custom_description_entities A JSON-serialized list of special entities that
+     *     appear in the custom description, which can be specified instead of 'custom_description_parse_mode'. Only
+     *     “text_link” entities are supported.
      */
     public function verifyUser(
         int $user_id,
         ?string $custom_description = null,
+        ?Enums\ParseMode $custom_description_parse_mode = null,
+        ?array $custom_description_entities = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'verifyUser', [
             'user_id' => $user_id,
             'custom_description' => $custom_description,
+            'custom_description_parse_mode' => $custom_description_parse_mode,
+            'custom_description_entities' => $custom_description_entities,
         ]);
     }
 
@@ -3584,15 +3826,24 @@ class Bot
      *     format "&#64;channelusername"). Channel direct messages chats can't be verified.
      * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
      *     if the organization isn't allowed to provide a custom verification description.
+     * @param Enums\ParseMode|null $custom_description_parse_mode Mode for parsing entities in the custom description.
+     *     See formatting options for more details. Only “text_link” entities are supported.
+     * @param Types\MessageEntity[]|null $custom_description_entities A JSON-serialized list of special entities that
+     *     appear in the custom description, which can be specified instead of 'custom_description_parse_mode'. Only
+     *     “text_link” entities are supported.
      */
     public function verifyChat(
         int|string $chat_id,
         ?string $custom_description = null,
+        ?Enums\ParseMode $custom_description_parse_mode = null,
+        ?array $custom_description_entities = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'verifyChat', [
             'chat_id' => $chat_id,
             'custom_description' => $custom_description,
+            'custom_description_parse_mode' => $custom_description_parse_mode,
+            'custom_description_entities' => $custom_description_entities,
         ]);
     }
 
@@ -3970,6 +4221,20 @@ class Bot
     }
 
     /**
+     * Use this method to get information about a unique gift by its name.
+     *
+     * @param string $name Unique name of the gift
+     */
+    public function getUniqueGift(
+        string $name,
+    ): Requests\RequestUniqueGift
+    {
+        return new Requests\RequestUniqueGift($this, 'getUniqueGift', [
+            'name' => $name,
+        ]);
+    }
+
+    /**
      * Converts a given regular gift to Telegram Stars. Requires the "can_convert_gifts_to_stars" business bot right.
      *
      * @param string $business_connection_id Unique identifier of the business connection
@@ -4036,6 +4301,25 @@ class Bot
             'owned_gift_id' => $owned_gift_id,
             'new_owner_chat_id' => $new_owner_chat_id,
             'star_count' => $star_count,
+        ]);
+    }
+
+    /**
+     * Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Requires the
+     * "can_convert_gifts_to_stars" business bot right. The gift can be deleted only if it isn't limited (the field
+     * "total_count" of the Gift is omitted) and wasn't refunded.
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param string $owned_gift_id Unique identifier of the regular gift that should be deleted
+     */
+    public function deleteBusinessAccountGift(
+        string $business_connection_id,
+        string $owned_gift_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteBusinessAccountGift', [
+            'business_connection_id' => $business_connection_id,
+            'owned_gift_id' => $owned_gift_id,
         ]);
     }
 
@@ -4231,13 +4515,15 @@ class Bot
     }
 
     /**
-     * Use this method to edit text and game messages. Note that business messages that were not sent by the bot and do
-     * not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+     * Use this method to edit text, rich and game messages. Note that business messages that were not sent by the bot
+     * and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they
+     * were sent.
      *
      * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
      *     format "&#64;channelusername")
      * @param int $message_id Identifier of the message to edit
-     * @param string $text New text of the message, 1-4096 characters after entities parsing
+     * @param string|null $text New text of the message, 1-4096 characters after entity parsing; required if
+     *     'rich_message' isn't specified
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
      *     text, which can be specified instead of "parse_mode"
@@ -4245,17 +4531,21 @@ class Bot
      * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
      *     message to be edited was sent
+     * @param Types\InputRichMessage|null $rich_message New rich content of the message; required if 'text' isn't
+     *     specified. Direct upload of new files and explicit upload of files by a URL isn't supported when an inline
+     *     message is edited.
      */
     public function editMessageText(
         int|string $chat_id,
         int $message_id,
-        string $text,
+        ?string $text,
         ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
         #[Deprecated] ?bool $disable_web_page_preview = null,
         ?Types\InlineKeyboardMarkup $reply_markup = null,
         ?Types\LinkPreviewOptions $link_preview_options = null,
         ?string $business_connection_id = null,
+        ?Types\InputRichMessage $rich_message = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'editMessageText', [
@@ -4267,17 +4557,20 @@ class Bot
             'entities' => $entities,
             'link_preview_options' => $link_preview_options,
             'reply_markup' => $reply_markup,
+            'rich_message' => $rich_message,
 
             'disable_web_page_preview' => $disable_web_page_preview,
         ]);
     }
 
     /**
-     * Use this method to edit text and game messages. Note that business messages that were not sent by the bot and do
-     * not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+     * Use this method to edit text, rich and game messages. Note that business messages that were not sent by the bot
+     * and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they
+     * were sent.
      *
      * @param string $inline_message_id Identifier of the inline message
-     * @param string $text New text of the message, 1-4096 characters after entities parsing
+     * @param string|null $text New text of the message, 1-4096 characters after entity parsing; required if
+     *     'rich_message' isn't specified
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
      *     text, which can be specified instead of "parse_mode"
@@ -4285,16 +4578,20 @@ class Bot
      * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
      * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
      *     message to be edited was sent
+     * @param Types\InputRichMessage|null $rich_message New rich content of the message; required if 'text' isn't
+     *     specified. Direct upload of new files and explicit upload of files by a URL isn't supported when an inline
+     *     message is edited.
      */
     public function editMessageTextInline(
         string $inline_message_id,
-        string $text,
+        ?string $text,
         ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
         ?bool $disable_web_page_preview = null,
         ?Types\InlineKeyboardMarkup $reply_markup = null,
         ?Types\LinkPreviewOptions $link_preview_options = null,
         ?string $business_connection_id = null,
+        ?Types\InputRichMessage $rich_message = null,
     ): Requests\RequestVoid
     {
         return new Requests\RequestVoid($this, 'editMessageText', [
@@ -4305,6 +4602,7 @@ class Bot
             'entities' => $entities,
             'link_preview_options' => $link_preview_options,
             'reply_markup' => $reply_markup,
+            'rich_message' => $rich_message,
 
             'disable_web_page_preview' => $disable_web_page_preview,
         ]);
@@ -4388,12 +4686,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to
-     * text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums,
-     * only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline
-     * message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a
-     * URL. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
-     * edited within <strong>48 hours</strong> from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text
+     * or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio
+     * for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise.
+     * When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id
+     * or specify a URL. Note that business messages that were not sent by the bot and do not contain an inline
+     * keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      * @param int|string $chat_id Required if "inline_message_id" is not specified. Unique identifier for the target
      *     chat or username of the target bot, supergroup or channel in the format "&#64;username".
@@ -4421,12 +4719,12 @@ class Bot
     }
 
     /**
-     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to
-     * text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums,
-     * only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline
-     * message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a
-     * URL. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be
-     * edited within <strong>48 hours</strong> from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text
+     * or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio
+     * for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise.
+     * When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id
+     * or specify a URL. Note that business messages that were not sent by the bot and do not contain an inline
+     * keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      * @param string $inline_message_id Required if "chat_id" and "message_id" are not specified. Identifier of the
      *     inline message
@@ -4619,6 +4917,38 @@ class Bot
     }
 
     /**
+     * Use this method to edit data of a widget in a message sent by the bot or via the bot (for inline bots). Public
+     * data of a shared widget can be changed at most once per second.
+     *
+     * @param int|string|null $chat_id Required if "inline_message_id" is not specified. Unique identifier for the
+     *     target chat or username of the target supergroup in the format "&#64;username".
+     * @param int|null $message_id Required if "inline_message_id" is not specified. Identifier of the message with the
+     *     widget.
+     * @param string|null $inline_message_id Required if "chat_id" and "message_id" are not specified. Identifier of
+     *     the inline message.
+     * @param string|null $public_data New public data of the widget, 0-1024 bytes; pass an empty string to remove the
+     *     public data. If omitted, then the public data isn't changed.
+     * @param string|null $chat_data New data of the widget, which is specific to the message, 0-1024 bytes; pass an
+     *     empty string to remove the data. If omitted, then the data isn't changed.
+     */
+    public function editMessageWidgetData(
+        int|string|null $chat_id = null,
+        ?int $message_id = null,
+        ?string $inline_message_id = null,
+        ?string $public_data = null,
+        ?string $chat_data = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editMessageWidgetData', [
+            'chat_id' => $chat_id,
+            'message_id' => $message_id,
+            'inline_message_id' => $inline_message_id,
+            'public_data' => $public_data,
+            'chat_data' => $chat_data,
+        ]);
+    }
+
+    /**
      * Use this method to edit only the reply markup of messages. Note that business messages that were not sent by the
      * bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they
      * were sent.
@@ -4689,6 +5019,141 @@ class Bot
             'chat_id' => $chat_id,
             'message_id' => $message_id,
             'business_connection_id' => $business_connection_id,
+            'reply_markup' => $reply_markup,
+        ]);
+    }
+
+    /**
+     * Use this method to edit an ephemeral text or rich message. Note that it is not guaranteed that the user will
+     * receive the message edit event, especially if they are offline.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param int $receiver_user_id Identifier of the user who received the message
+     * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param string|null $text New text of the message, 1-4096 characters after entity parsing; required if
+     *     "rich_message" isn't specified
+     * @param string|null $parse_mode Mode for parsing entities in the message text.
+     * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
+     *     text, which can be specified instead of "parse_mode"
+     * @param Types\InputRichMessage|null $rich_message New rich content of the message; required if "text" isn't
+     *     specified
+     * @param Types\LinkPreviewOptions|null $link_preview_options Link preview generation options for the message
+     * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard
+     */
+    public function editEphemeralMessageText(
+        int|string $chat_id,
+        int $receiver_user_id,
+        int $ephemeral_message_id,
+        ?string $text = null,
+        ?string $parse_mode = null,
+        ?array $entities = null,
+        ?Types\InputRichMessage $rich_message = null,
+        ?Types\LinkPreviewOptions $link_preview_options = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editEphemeralMessageText', [
+            'chat_id' => $chat_id,
+            'receiver_user_id' => $receiver_user_id,
+            'ephemeral_message_id' => $ephemeral_message_id,
+            'text' => $text,
+            'parse_mode' => $parse_mode,
+            'entities' => $entities,
+            'rich_message' => $rich_message,
+            'link_preview_options' => $link_preview_options,
+            'reply_markup' => $reply_markup,
+        ]);
+    }
+
+    /**
+     * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will
+     * receive the message edit event, especially if they are offline.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param int $receiver_user_id Identifier of the user who received the message
+     * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param Types\InputMedia $media A JSON-serialized object for the new media content of the message
+     * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard
+     */
+    public function editEphemeralMessageMedia(
+        int|string $chat_id,
+        int $receiver_user_id,
+        int $ephemeral_message_id,
+        Types\InputMedia $media,
+        ?InlineKeyboardMarkup $reply_markup = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editEphemeralMessageMedia', [
+            'chat_id' => $chat_id,
+            'receiver_user_id' => $receiver_user_id,
+            'ephemeral_message_id' => $ephemeral_message_id,
+            'media' => $media,
+            'reply_markup' => $reply_markup,
+        ]);
+    }
+
+    /**
+     * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will
+     * receive the message edit event, especially if they are offline.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param int $receiver_user_id Identifier of the user who received the message
+     * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param string|null $caption New caption of the message, 0-1024 characters after entities parsing
+     * @param string|null $parse_mode Mode for parsing entities in the message caption.
+     * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
+     *     the caption, which can be specified instead of "parse_mode"
+     * @param bool|null $show_caption_above_media Pass True if the caption must be shown above the message media.
+     *     Supported only for animation, photo and video messages.
+     * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard
+     */
+    public function editEphemeralMessageCaption(
+        int|string $chat_id,
+        int $receiver_user_id,
+        int $ephemeral_message_id,
+        ?string $caption = null,
+        ?string $parse_mode = null,
+        ?array $caption_entities = null,
+        ?bool $show_caption_above_media = null,
+        ?InlineKeyboardMarkup $reply_markup = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editEphemeralMessageCaption', [
+            'chat_id' => $chat_id,
+            'receiver_user_id' => $receiver_user_id,
+            'ephemeral_message_id' => $ephemeral_message_id,
+            'caption' => $caption,
+            'parse_mode' => $parse_mode,
+            'caption_entities' => $caption_entities,
+            'show_caption_above_media' => $show_caption_above_media,
+            'reply_markup' => $reply_markup,
+        ]);
+    }
+
+    /**
+     * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the
+     * user will receive the message edit event, especially if they are offline.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param int $receiver_user_id Identifier of the user who received the message
+     * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param InlineKeyboardMarkup|null $reply_markup A JSON-serialized object for an inline keyboard
+     */
+    public function editEphemeralMessageReplyMarkup(
+        int|string $chat_id,
+        int $receiver_user_id,
+        int $ephemeral_message_id,
+        ?InlineKeyboardMarkup $reply_markup = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'editEphemeralMessageReplyMarkup', [
+            'chat_id' => $chat_id,
+            'receiver_user_id' => $receiver_user_id,
+            'ephemeral_message_id' => $ephemeral_message_id,
             'reply_markup' => $reply_markup,
         ]);
     }
@@ -4787,6 +5252,28 @@ class Bot
     }
 
     /**
+     * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the
+     * message deletion event, especially if they are offline.
+     *
+     * @param int|string $chat_id Unique identifier for the target chat or username of the target supergroup in the
+     *     format "&#64;username"
+     * @param int $receiver_user_id Identifier of the user who received the message
+     * @param int $ephemeral_message_id Identifier of the ephemeral message to delete
+     */
+    public function deleteEphemeralMessage(
+        int|string $chat_id,
+        int $receiver_user_id,
+        int $ephemeral_message_id,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'deleteEphemeralMessage', [
+            'chat_id' => $chat_id,
+            'receiver_user_id' => $receiver_user_id,
+            'ephemeral_message_id' => $ephemeral_message_id,
+        ]);
+    }
+
+    /**
      * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the
      * 'can_delete_messages' administrator right in the chat.
      *
@@ -4841,8 +5328,9 @@ class Bot
     /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers.
      *
-     * @param int|string $chat_id Unique identifier for the target chat or username of the target channel (in the
-     *     format "&#64;channelusername")
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
      * @param Types\InputFile $sticker Sticker to send. Pass a file_id as String to send a file that exists on the
      *     Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the
      *     Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data.  Video and animated
@@ -4869,9 +5357,11 @@ class Bot
      * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
      *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
      *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
      */
     public function sendSticker(
-        int|string $chat_id,
+        int|string|null $chat_id,
         Types\InputFile $sticker,
         ?bool $disable_notification = null,
         ?bool $protect_content = null,
@@ -4886,6 +5376,7 @@ class Bot
         ?bool $allow_paid_broadcast = null,
         ?int $direct_messages_topic_id = null,
         ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
     ): Requests\RequestMessage
     {
         return new Requests\RequestMessage($this, 'sendSticker', [
@@ -4902,6 +5393,7 @@ class Bot
             'allow_paid_broadcast' => $allow_paid_broadcast,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'suggested_post_parameters' => $suggested_post_parameters,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
 
             'reply_to_message_id' => $reply_to_message_id,
             'allow_sending_without_reply' => $allow_sending_without_reply,
@@ -5204,6 +5696,108 @@ class Bot
     {
         return new Requests\RequestVoid($this, 'deleteStickerSet', [
             'name' => $name,
+        ]);
+    }
+
+    /**
+     * Use this method to send rich messages. If the message contains a block with a media element, then the bot must
+     * have the right to send the media to the chat.
+     *
+     * @param int|string|null $chat_id Unique identifier for the target chat or username of the target bot, supergroup,
+     *     or channel in the format '&#64;username'; required unless the message is sent as an ephemeral reply to a
+     *     callback query
+     * @param Types\InputRichMessage $rich_message The message to be sent
+     * @param string|null $business_connection_id Unique identifier of the business connection on behalf of which the
+     *     message will be sent. Bot can send rich messages on behalf of a business account only if the corresponding
+     *     user can send rich messages.
+     * @param int|null $message_thread_id Unique identifier for the target message thread (topic) of a forum; for forum
+     *     supergroups and private chats of bots with forum topic mode enabled only
+     * @param int|null $direct_messages_topic_id Identifier of the direct messages topic to which the message will be
+     *     sent; required if the message is sent to a direct messages chat
+     * @param Types\EphemeralMessageParameters|null $ephemeral_message_parameters A JSON-serialized object containing
+     *     the parameters of the ephemeral message to send
+     * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
+     *     sound.
+     * @param bool|null $protect_content Protects the contents of the sent message from forwarding and saving
+     * @param bool|null $allow_paid_broadcast Pass True to allow up to 1000 messages per second, ignoring broadcasting
+     *     limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's
+     *     balance.
+     * @param string|null $message_effect_id Unique identifier of the message effect to be added to the message; for
+     *     private chats only
+     * @param Types\SuggestedPostParameters|null $suggested_post_parameters A JSON-serialized object containing the
+     *     parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply
+     *     to another suggested post, then that suggested post is automatically declined.
+     * @param Types\ReplyParameters|null $reply_parameters Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup Additional
+     *     interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to
+     *     remove a reply keyboard or to force a reply from the user.
+     */
+    public function sendRichMessage(
+        int|string|null $chat_id,
+        Types\InputRichMessage $rich_message,
+        ?string $business_connection_id = null,
+        ?int $message_thread_id = null,
+        ?int $direct_messages_topic_id = null,
+        ?Types\EphemeralMessageParameters $ephemeral_message_parameters = null,
+        ?bool $disable_notification = null,
+        ?bool $protect_content = null,
+        ?bool $allow_paid_broadcast = null,
+        ?string $message_effect_id = null,
+        ?Types\SuggestedPostParameters $suggested_post_parameters = null,
+        ?Types\ReplyParameters $reply_parameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $reply_markup = null,
+    ): Requests\RequestMessage
+    {
+        return new Requests\RequestMessage($this, 'sendRichMessage', [
+            'chat_id' => $chat_id,
+            'rich_message' => $rich_message,
+            'business_connection_id' => $business_connection_id,
+            'message_thread_id' => $message_thread_id,
+            'direct_messages_topic_id' => $direct_messages_topic_id,
+            'ephemeral_message_parameters' => $ephemeral_message_parameters,
+            'disable_notification' => $disable_notification,
+            'protect_content' => $protect_content,
+            'allow_paid_broadcast' => $allow_paid_broadcast,
+            'message_effect_id' => $message_effect_id,
+            'suggested_post_parameters' => $suggested_post_parameters,
+            'reply_parameters' => $reply_parameters,
+            'reply_markup' => $reply_markup,
+        ]);
+    }
+
+    /**
+     * Use this method to stream a partial rich message to a user while the message is being generated. Note that the
+     * streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you
+     * <strong>must</strong> call sendRichMessage() with the complete message to persist it in the user's chat.
+     *
+     * @param int $chat_id Unique identifier for the target private chat
+     * @param int $draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same
+     *     identifier are animated. Otherwise, the draft is replaced without animation.
+     * @param Types\InputRichMessage $rich_message The partial message to be streamed. Direct upload of new files and
+     *     explicit upload of files by a URL isn't supported.
+     * @param int|null $message_thread_id Unique identifier for the target message thread
+     * @param bool|null $can_stop Pass True to show the user a button to stop further drafts. The bot will receive an
+     *     Update “stopped_message_generation” if the user presses the button.
+     * @param bool|null $keep_on_stop Pass True to keep the draft in the chat when the button is pressed. The draft
+     *     will still disappear after a short time or if the bot sends a message. To fully preserve the partial draft,
+     *     the bot should send it as a new message.
+     */
+    public function sendRichMessageDraft(
+        int $chat_id,
+        int $draft_id,
+        Types\InputRichMessage $rich_message,
+        ?int $message_thread_id = null,
+        ?bool $can_stop = null,
+        ?bool $keep_on_stop = null,
+    ): Requests\RequestVoid
+    {
+        return new Requests\RequestVoid($this, 'sendRichMessageDraft', [
+            'chat_id' => $chat_id,
+            'draft_id' => $draft_id,
+            'rich_message' => $rich_message,
+            'message_thread_id' => $message_thread_id,
+            'can_stop' => $can_stop,
+            'keep_on_stop' => $keep_on_stop,
         ]);
     }
 

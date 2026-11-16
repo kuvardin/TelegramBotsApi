@@ -35,4 +35,8 @@ enum UpdateType: string
     case PurchasedPaidMedia = 'purchased_paid_media';
     case ManagedBot = 'managed_bot';
     case GuestMessage = 'guest_message';
+    case WidgetQuery = 'widget_query';
+    case SharedWidgetQuery = 'shared_widget_query';
+    case Subscription = 'subscription';
+    case StoppedMessageGeneration = 'stopped_message_generation';
 }

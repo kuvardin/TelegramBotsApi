@@ -32,6 +32,8 @@ class ChatAdministratorRights extends Type
      * @param bool $can_edit_stories True, if the administrator can edit stories posted by other users, post stories to
      *     the chat page, pin chat stories, and access the chat's story archive
      * @param bool $can_delete_stories True, if the administrator can delete stories posted by other users
+     * @param bool $can_send_welcome_messages True, if the administrator can manage chat welcome messages or directly
+     *     send them in the case of bots
      * @param bool|null $can_post_messages True, if the administrator can post messages in the channel, approve
      *     suggested posts, or access channel statistics; for channels only
      * @param bool|null $can_edit_messages True, if the administrator can edit messages of other users and can pin
@@ -56,6 +58,7 @@ class ChatAdministratorRights extends Type
         public bool $can_post_stories,
         public bool $can_edit_stories,
         public bool $can_delete_stories,
+        public bool $can_send_welcome_messages,
         public ?bool $can_post_messages = null,
         public ?bool $can_edit_messages = null,
         public ?bool $can_pin_messages = null,
@@ -81,6 +84,7 @@ class ChatAdministratorRights extends Type
             can_post_stories: $data['can_post_stories'],
             can_edit_stories: $data['can_edit_stories'],
             can_delete_stories: $data['can_delete_stories'],
+            can_send_welcome_messages: $data['can_send_welcome_messages'],
             can_post_messages: $data['can_post_messages'] ?? null,
             can_edit_messages: $data['can_edit_messages'] ?? null,
             can_pin_messages: $data['can_pin_messages'] ?? null,
@@ -104,6 +108,7 @@ class ChatAdministratorRights extends Type
             'can_post_stories' => $this->can_post_stories,
             'can_edit_stories' => $this->can_edit_stories,
             'can_delete_stories' => $this->can_delete_stories,
+            'can_send_welcome_messages' => $this->can_send_welcome_messages,
             'can_post_messages' => $this->can_post_messages,
             'can_edit_messages' => $this->can_edit_messages,
             'can_pin_messages' => $this->can_pin_messages,

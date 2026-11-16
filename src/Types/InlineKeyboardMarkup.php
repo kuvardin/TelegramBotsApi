@@ -17,9 +17,13 @@ class InlineKeyboardMarkup extends Type
     /**
      * @param InlineKeyboardButton[][] $inline_keyboard Array of button rows, each represented by an Array of
      *     InlineKeyboardButton objects
+     * @param bool|null $force_reply Pass True if the reply interface must be shown to the user, as if they had
+     *     manually selected the bot's message and tapped 'Reply'. The value of the field can't be changed when the
+     *     inline keyboard is edited.
      */
     public function __construct(
         public array $inline_keyboard,
+        public ?bool $force_reply = null,
     )
     {
 
@@ -29,6 +33,7 @@ class InlineKeyboardMarkup extends Type
     {
         $result = new self(
             inline_keyboard: [],
+            force_reply: $data['force_reply'] ?? null,
         );
 
         foreach ($data['inline_keyboard'] as $buttons_row_data) {
@@ -46,6 +51,7 @@ class InlineKeyboardMarkup extends Type
     {
         return [
             'inline_keyboard' => $this->inline_keyboard,
+            'force_reply' => $this->force_reply,
         ];
     }
 }

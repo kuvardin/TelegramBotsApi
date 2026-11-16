@@ -20,7 +20,8 @@ use RuntimeException;
 class LivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMedia
 {
     /**
-     * @param string $media Video of the live photo to send. Sending live photos by a URL is currently unsupported.
+     * @param InputFile|string $media Video of the live photo to send. Sending live photos by a URL is currently
+     *     unsupported.
      * @param InputFile|string $photo The static photo to send. Sending live photos by a URL is currently unsupported.
      * @param string|null $caption Caption of the live photo to be sent, 0-1024 characters after entities parsing
      * @param string|null $parse_mode Mode for parsing entities in the live photo caption. See formatting options for
@@ -31,7 +32,7 @@ class LivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMed
      * @param bool|null $has_spoiler Pass True if the live photo needs to be covered with a spoiler animation
      */
     public function __construct(
-        public string $media,
+        public InputFile|string $media,
         public InputFile|string $photo,
         public ?string $caption = null,
         public ?string $parse_mode = null,
@@ -84,8 +85,3 @@ class LivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMed
         ];
     }
 }
-
-
-
-
-

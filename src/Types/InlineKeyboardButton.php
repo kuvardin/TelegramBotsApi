@@ -26,9 +26,9 @@ class InlineKeyboardButton extends Type
      * @param WebAppInfo|null $web_app Description of the Web App that will be launched when the user presses the
      *     button. The Web App will be able to send an arbitrary message on behalf of the user using the method
      *     answerWebAppQuery(). Available only in private chats between a user and the bot. Not supported for messages
-     *     sent on behalf of a Telegram Business account.
+     *     sent on behalf of a business account and ephemeral messages.
      * @param LoginUrl|null $login_url An HTTPS URL used to automatically authorize the user. Can be used as a
-     *     replacement for the Telegram Login Widget.
+     *     replacement for the Telegram Login Widget. Not supported for ephemeral messages.
      * @param string|null $switch_inline_query If set, pressing the button will prompt the user to select one of their
      *     chats, open that chat and insert the bot's username and the specified inline query in the input field. May
      *     be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel
@@ -55,6 +55,7 @@ class InlineKeyboardButton extends Type
      *     subscription.
      * @param KeyboardButtonStyle|string|null $style Style of the button. If omitted, then an app-specific style is
      *     used.
+     * @param DisabledButton|null $disabled If set, then the button is disabled and does nothing
      */
     public function __construct(
         public string $text,
@@ -70,6 +71,7 @@ class InlineKeyboardButton extends Type
         public ?CopyTextButton $copy_text = null,
         public ?string $icon_custom_emoji_id = null,
         public KeyboardButtonStyle|string|null $style = null,
+        public ?DisabledButton $disabled = null,
     )
     {
 
@@ -101,6 +103,9 @@ class InlineKeyboardButton extends Type
                 : null,
             icon_custom_emoji_id: $data['icon_custom_emoji_id'] ?? null,
             style: $data['style'] ?? null,
+            disabled: isset($data['disabled'])
+                ? DisabledButton::makeByArray($data['disabled'])
+                : null,
         );
     }
 
@@ -120,6 +125,7 @@ class InlineKeyboardButton extends Type
             'copy_text' => $this->copy_text,
             'icon_custom_emoji_id' => $this->icon_custom_emoji_id,
             'style' => $this->style,
+            'disabled' => $this->disabled,
         ];
     }
 }

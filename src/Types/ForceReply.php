@@ -18,8 +18,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class ForceReply extends Type
 {
     /**
-     * @param bool $force_reply Shows reply interface to the user, as if they manually selected the bot's message and
-     *     tapped 'Reply'
+     * @param bool $force_reply Shows reply interface to the user, as if they had manually selected the bot's message
+     *     and tapped 'Reply'
      * @param string|null $input_field_placeholder The placeholder to be shown in the input field when the reply is
      *     active; 1-64 characters
      * @param bool|null $selective Use this parameter if you want to force reply from specific users only. Targets: 1)

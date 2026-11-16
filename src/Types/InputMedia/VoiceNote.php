@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Kuvardin\TelegramBotsApi\Types\InputMedia;
+
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
+use Kuvardin\TelegramBotsApi\Types\InputFile;
+use Kuvardin\TelegramBotsApi\Types\InputMedia;
+use Kuvardin\TelegramBotsApi\Types\MessageEntity;
+use RuntimeException;
+
+/**
+ * Represents a voice message file to be sent.
+ *
+ * @package Kuvardin\TelegramBotsApi
+ * @author Maxim Kuvardin <maxim@kuvard.in>
+ */
+class VoiceNote extends InputMedia
+{
+    /**
+     * @param InputFile|string $media File to send. Pass a file_id to send a file that exists on the Telegram servers
+     *     (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass
+     *     "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name.
+     * @param string|null $caption Caption of the voice message to be sent, 0-1024 characters after entities parsing
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the voice message caption. See formatting
+     *     options for more details.
+     * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
+     *     specified instead of "parse_mode"
+     * @param int|null $duration Duration of the voice message in seconds
+     */
+    public function __construct(
+        public InputFile|string $media,
+        public string|null $caption = null,
+        public ParseMode|string|null $parse_mode = null,
+        public array|null $caption_entities = null,
+        public int|null $duration = null,
+    )
+    {
+
+    }
+
+    public static function getType(): string
+    {
+        return 'voice_note';
+    }
+
+    public static function makeByArray(array $data): static
+    {
+        if ($data['type'] !== self::getType()) {
+            throw new RuntimeException("Wrong input media type: {$data['type']}");
+        }
+
+        return new self(
+            media: $data['media'],
+            caption: $data['caption'] ?? null,
+            parse_mode: $data['parse_mode'] ?? null,
+            caption_entities: isset($data['caption_entities'])
+                ? array_map(
+                    static fn(array $caption_entities_data) => MessageEntity::makeByArray($caption_entities_data),
+                    $data['caption_entities'],
+                )
+                : null,
+            duration: $data['duration'] ?? null,
+        );
+    }
+
+    public function getRequestData(): array
+    {
+        return [
+            'type' => self::getType(),
+            'media' => $this->media,
+            'caption' => $this->caption,
+            'parse_mode' => $this->parse_mode,
+            'caption_entities' => $this->caption_entities,
+            'duration' => $this->duration,
+        ];
+    }
+}
+
+
+
+
+

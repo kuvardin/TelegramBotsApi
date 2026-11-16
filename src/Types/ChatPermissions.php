@@ -15,8 +15,8 @@ use Kuvardin\TelegramBotsApi\Type;
 class ChatPermissions extends Type
 {
     /**
-     * @param bool|null $can_send_messages True, if the user is allowed to send text messages, contacts, giveaways,
-     *     giveaway winners, invoices, locations and venues
+     * @param bool|null $can_send_messages True, if the user is allowed to send text messages, rich messages, contacts,
+     *     giveaways, giveaway winners, invoices, locations and venues
      * @param bool|null $can_send_audios True, if the user is allowed to send audios
      * @param bool|null $can_send_documents True, if the user is allowed to send documents
      * @param bool|null $can_send_photos True, if the user is allowed to send photos
@@ -24,16 +24,16 @@ class ChatPermissions extends Type
      * @param bool|null $can_send_video_notes True, if the user is allowed to send video notes
      * @param bool|null $can_send_voice_notes True, if the user is allowed to send voice notes
      * @param bool|null $can_send_polls True, if the user is allowed to send polls and checklists
-     * @param bool|null $can_send_other_messages True, if the user is allowed to send animations, games, stickers and
-     *     use inline bots
+     * @param bool|null $can_send_other_messages True, if the user is allowed to send animations, games, stickers,
+     *     widgets and use inline bots
      * @param bool|null $can_add_web_page_previews True, if the user is allowed to add web page previews to their
      *     messages
      * @param bool|null $can_change_info True, if the user is allowed to change the chat title, photo and other
      *     settings. Ignored in public supergroups
      * @param bool|null $can_invite_users True, if the user is allowed to invite new users to the chat
      * @param bool|null $can_pin_messages True, if the user is allowed to pin messages. Ignored in public supergroups
-     * @param bool|null $can_manage_topics True, if the user is allowed to create forum topics. If omitted defaults to
-     *     the value of can_pin_messages
+     * @param bool|null $can_manage_topics True, if the user is allowed to create forum topics. If omitted, defaults to
+     *     the value of can_pin_messages.
      * @param bool|null $can_edit_tag True, if the user is allowed to edit their own tag
      * @param bool|null $can_react_to_messages True, if the user is allowed to react to messages. If omitted, defaults
      *     to the value of "can_send_messages".

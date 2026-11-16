@@ -16,7 +16,7 @@ class ChecklistTasksDone extends Type
 {
     /**
      * @param Message|null $checklist_message Message containing the checklist whose tasks were marked as done or not
-     *     done. Note that the Message object in this field will not contain the reply_to_message field even if it
+     *     done. Note that the Message object in this field will not contain the "reply_to_message" field even if it
      *     itself is a reply.
      * @param int[]|null $marked_as_done_task_ids Identifiers of the tasks that were marked as done
      * @param int[]|null $marked_as_not_done_task_ids Identifiers of the tasks that were marked as not done

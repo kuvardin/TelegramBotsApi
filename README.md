@@ -1,9 +1,9 @@
-# TelegramBotsApi v.10.0
+# TelegramBotsApi v.10.4
 
 [![Latest Version](https://img.shields.io/github/release/kuvardin/telegrambotsapi.svg?style=flat-square)](https://github.com/kuvardin/TelegramBotsApi/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/kuvardin/telegram-bots-api.svg?style=flat-square)](https://packagist.org/packages/kuvardin/telegram-bots-api)
 
-SDK for latest version of Telegram bots API (from May 8, 2026)
+SDK for latest version of Telegram bots API (from November 9, 2026)
 
 Author: https://t.me/kuvardin
 
@@ -189,6 +189,22 @@ switch ($update->getType()) {
         break;
 
     case Kuvardin\TelegramBotsApi\Enums\UpdateType::ShippingQuery:
+        // ...
+        break;
+
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::WidgetQuery:
+        // ...
+        break;
+
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::SharedWidgetQuery:
+        // ...
+        break;
+
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::Subscription:
+        // ...
+        break;
+
+    case Kuvardin\TelegramBotsApi\Enums\UpdateType::StoppedMessageGeneration:
         // ...
         break;
     

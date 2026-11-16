@@ -72,6 +72,13 @@ class Update extends Type
      *     a managed bot was changed
      * @param Message|null $guest_message New guest message. The bot can use the field "Message.guest_query_id" and the
      *     method answerGuestQuery() to send a message in response.
+     * @param WidgetQuery|null $widget_query New incoming query from a widget in a message sent by the bot or via the
+     *      bot
+     * @param SharedWidgetQuery|null $shared_widget_query New incoming query from a forwarded message with a shared
+     *      widget
+     * @param BotSubscriptionUpdated|null $subscription User payment subscription has changed
+     * @param MessageGenerationStopped|null $stopped_message_generation A user asked the bot to stop the generation of
+     *      a message
      */
     public function __construct(
         public int $update_id,
@@ -100,6 +107,10 @@ class Update extends Type
         public ?PaidMediaPurchased $purchased_paid_media = null,
         public ?ManagedBotUpdated $managed_bot = null,
         public ?Message $guest_message = null,
+        public WidgetQuery|null $widget_query = null,
+        public SharedWidgetQuery|null $shared_widget_query = null,
+        public BotSubscriptionUpdated|null $subscription = null,
+        public MessageGenerationStopped|null $stopped_message_generation = null,
     )
     {
 
@@ -184,6 +195,18 @@ class Update extends Type
             guest_message: isset($data['guest_message'])
                 ? Message::makeByArray($data['guest_message'])
                 : null,
+            widget_query: isset($data['widget_query'])
+                ? WidgetQuery::makeByArray($data['widget_query'])
+                : null,
+            shared_widget_query: isset($data['shared_widget_query'])
+                ? SharedWidgetQuery::makeByArray($data['shared_widget_query'])
+                : null,
+            subscription: isset($data['subscription'])
+                ? BotSubscriptionUpdated::makeByArray($data['subscription'])
+                : null,
+            stopped_message_generation: isset($data['stopped_message_generation'])
+                ? MessageGenerationStopped::makeByArray($data['stopped_message_generation'])
+                : null,
         );
     }
 
@@ -216,6 +239,10 @@ class Update extends Type
             'purchased_paid_media' => $this->purchased_paid_media,
             'managed_bot' => $this->managed_bot,
             'guest_message' => $this->guest_message,
+            'widget_query' => $this->widget_query,
+            'shared_widget_query' => $this->shared_widget_query,
+            'subscription' => $this->subscription,
+            'stopped_message_generation' => $this->stopped_message_generation,
         ];
     }
 
@@ -230,6 +257,8 @@ class Update extends Type
             ?? $this->chat_member?->chat
             ?? $this->chat_join_request?->chat
             ?? $this->chat_boost?->chat
+            ?? $this->widget_query?->chat
+            ?? $this->stopped_message_generation?->chat
             ?? $this->removed_chat_boost?->chat;
     }
 
@@ -248,6 +277,9 @@ class Update extends Type
             ?? $this->chat_member?->from
             ?? $this->chat_join_request?->from
             ?? $this->managed_bot?->user
+            ?? $this->widget_query?->from
+            ?? $this->shared_widget_query?->from
+            ?? $this->subscription?->user
             ?? $this->purchased_paid_media?->from;
     }
 
@@ -294,6 +326,10 @@ class Update extends Type
             $this->purchased_paid_media !== null => UpdateType::PurchasedPaidMedia,
             $this->managed_bot !== null => UpdateType::ManagedBot,
             $this->guest_message !== null => UpdateType::GuestMessage,
+            $this->widget_query !== null => UpdateType::WidgetQuery,
+            $this->shared_widget_query !== null => UpdateType::SharedWidgetQuery,
+            $this->subscription !== null => UpdateType::Subscription,
+            $this->stopped_message_generation !== null => UpdateType::StoppedMessageGeneration,
             default => null,
         };
     }

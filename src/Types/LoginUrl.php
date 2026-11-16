@@ -8,9 +8,11 @@ use Kuvardin\TelegramBotsApi\Type;
 use Kuvardin\TelegramBotsApi\Username;
 
 /**
- * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a
- * great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do is
- * tap/click a button and confirm that they want to log in:
+ * This object represents a parameter of the inline keyboard button used to automatically authorize a user. It serves
+ * as a great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do
+ * is tap/click a button and confirm that they want to log in:
+ * <img src='https://core.telegram.org/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9' /><br>
+ * Sample bot: &#64;DiscussBot
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -24,10 +26,10 @@ class LoginUrl extends Type
      *     data.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to
      *     verify the authentication and the integrity of the data as described in Checking authorization.
      * @param string|null $forward_text New text of the button in forwarded messages.
-     * @param Username|string|null $bot_username Username of a bot, which will be used for user authorization. See
-     *     Setting up a bot for more details. If not specified, the current bot's username will be assumed. The "url"'s
-     *     domain must be the same as the domain linked with the bot. See Linking your domain to the bot for more
-     *     details.
+     * @param Username|string|null $bot_username Username of a bot, which will be used for user authorization; not
+     *     supported in RichMessageButton. See Setting up a bot for more details. If not specified, the current bot's
+     *     username will be assumed. The "url"'s domain must be the same as the domain linked with the bot. See Linking
+     *     your domain to the bot for more details.
      * @param bool|null $request_write_access Pass True to request the permission for your bot to send messages to the
      *     user.
      */

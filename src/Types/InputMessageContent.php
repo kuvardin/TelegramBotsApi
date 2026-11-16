@@ -38,6 +38,18 @@ abstract class InputMessageContent extends Type
             return InputMessageContent\Invoice::makeByArray($data);
         }
 
+        if (isset($data['rich_message'])) {
+            return InputMessageContent\Rich::makeByArray($data);
+        }
+
+        if (isset($data['widget_id'])) {
+            return InputMessageContent\SharedWidget::makeByArray($data);
+        }
+
+        if (isset($data['html'])) {
+            return InputMessageContent\Widget::makeByArray($data);
+        }
+
         throw new RuntimeException('Unknown input message content data: ' . print_r($data, true));
     }
 
