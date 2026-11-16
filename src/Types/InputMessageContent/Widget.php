@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Types\InputMessageContent;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 
@@ -28,8 +29,7 @@ class Widget extends InputMessageContent
      *     widget is shown. If the widget is shared, then all messages with it will have the same public data.
      * @param string|null $chat_data Data of the widget, which is specific to the message, 0-1024 bytes
      * @param string|null $caption Widget caption, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the widget caption. See formatting options for more
-     *     details.
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the widget caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of "parse_mode"
      * @param bool|null $show_caption_above_media Pass True if the caption must be shown above the widget
@@ -46,7 +46,7 @@ class Widget extends InputMessageContent
         public ?string $public_data = null,
         public ?string $chat_data = null,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?bool $show_caption_above_media = null,
         public ?bool $allow_queries = null,

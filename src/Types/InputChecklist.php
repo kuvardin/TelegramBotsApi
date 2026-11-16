@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kuvardin\TelegramBotsApi\Types;
 
 use Kuvardin\TelegramBotsApi\Type;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 
 /**
  * Describes a checklist to create.
@@ -17,7 +18,7 @@ class InputChecklist extends Type
     /**
      * @param string $title Title of the checklist; 1-255 characters after entities parsing
      * @param InputChecklistTask[] $tasks List of 1-30 tasks in the checklist
-     * @param string|null $parse_mode Mode for parsing entities in the title.
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the title.
      * @param MessageEntity[]|null $title_entities List of special entities that appear in the title, which can be
      *     specified instead of parse_mode. Currently, only "bold", "italic", "underline", "strikethrough", "spoiler",
      *     "custom_emoji", and "date_time" entities are allowed.
@@ -28,7 +29,7 @@ class InputChecklist extends Type
     public function __construct(
         public string $title,
         public array $tasks,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $title_entities = null,
         public ?bool $others_can_add_tasks = null,
         public ?bool $others_can_mark_tasks_as_done = null,

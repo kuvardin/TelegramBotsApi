@@ -17,8 +17,8 @@ class InputPollOption extends Type
 {
     /**
      * @param string $text Option text, 1-100 characters
-     * @param ParseMode|string|null $text_parse_mode Mode for parsing entities in the text. See formatting options for
-     *     more details. Currently, only custom emoji entities are allowed
+     * @param ParseMode|string|null $text_parse_mode Mode for parsing entities in the text. Currently, only custom
+     *     emoji entities are allowed
      * @param MessageEntity[]|null $text_entities A JSON-serialized list of special entities that appear in the poll
      *     option text. It can be specified instead of "text_parse_mode"
      * @param InputPollOptionMedia|null $media Media added to the poll option

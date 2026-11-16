@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kuvardin\TelegramBotsApi\Types;
 
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
@@ -28,8 +29,7 @@ class ReplyParameters extends Type
      *     The quote must be an exact substring of the message to be replied to, including 'bold', 'italic',
      *     'underline', 'strikethrough', 'spoiler', 'custom_emoji', and 'date_time' entities. The message will fail to
      *     send if the quote isn't found in the original message. Ignored for ephemeral messages.
-     * @param string|null $quote_parse_mode Mode for parsing entities in the quote. See formatting options for more
-     *     details.
+     * @param ParseMode|string|null $quote_parse_mode Mode for parsing entities in the quote.
      * @param MessageEntity[]|null $quote_entities A JSON-serialized list of special entities that appear in the quote.
      *     It can be specified instead of "quote_parse_mode".
      * @param int|null $quote_position Position of the quote in the original message in UTF-16 code units. For quotes
@@ -61,7 +61,7 @@ class ReplyParameters extends Type
         public int|string|null $chat_id = null,
         public ?bool $allow_sending_without_reply = null,
         public ?string $quote = null,
-        public ?string $quote_parse_mode = null,
+        public ParseMode|string|null $quote_parse_mode = null,
         public ?array $quote_entities = null,
         public ?int $quote_position = null,
         public ?int $checklist_task_id = null,

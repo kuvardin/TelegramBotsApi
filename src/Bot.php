@@ -648,8 +648,7 @@ class Bot
      *     sent; required if the message is sent to a direct messages chat
      * @param string|null $caption Video caption (may also be used when resending videos by "file_id"), 0-1024
      *     characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the video caption. See formatting options for more
-     *     details.
+     * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the video caption.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
      *     the caption, which can be specified instead of "parse_mode"
      * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
@@ -680,7 +679,7 @@ class Bot
         ?int $message_thread_id = null,
         ?int $direct_messages_topic_id = null,
         ?string $caption = null,
-        ?string $parse_mode = null,
+        ?Enums\ParseMode $parse_mode = null,
         ?array $caption_entities = null,
         ?bool $show_caption_above_media = null,
         ?bool $has_spoiler = null,
@@ -702,7 +701,7 @@ class Bot
             'message_thread_id' => $message_thread_id,
             'direct_messages_topic_id' => $direct_messages_topic_id,
             'caption' => $caption,
-            'parse_mode' => $parse_mode,
+            'parse_mode' => $parse_mode ?? $this->parse_mode_default,
             'caption_entities' => $caption_entities,
             'show_caption_above_media' => $show_caption_above_media,
             'has_spoiler' => $has_spoiler,
@@ -838,8 +837,7 @@ class Bot
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the document caption.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the
-     *     caption, which can be specified instead of "parse_mode"
+     *     the caption, which can be specified instead of "parse_mode"
      * @param bool|null $disable_content_type_detection Disables automatic server-side content type detection for files
      *     uploaded using multipart/form-data
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
@@ -940,8 +938,7 @@ class Bot
      *     characters after entities parsing
      * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the video caption.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
-     *     the
-     *     caption, which can be specified instead of "parse_mode"
+     *     the caption, which can be specified instead of "parse_mode"
      * @param bool|null $supports_streaming Pass True if the uploaded video is suitable for streaming
      * @param bool|null $disable_notification Sends the message silently. Users will receive a notification with no
      *     sound.
@@ -1338,7 +1335,7 @@ class Bot
      *     widget is shown. If the widget is shared, then all messages with it will have the same public data.
      * @param string|null $chat_data Data of the widget, which is specific to the message, 0-1024 bytes
      * @param string|null $caption Widget caption, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the widget caption.
+     * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the widget caption.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
      *     the caption, which can be specified instead of "parse_mode"
      * @param bool|null $show_caption_above_media Pass True if the caption must be shown above the widget
@@ -1367,7 +1364,7 @@ class Bot
         ?string $public_data = null,
         ?string $chat_data = null,
         ?string $caption = null,
-        ?string $parse_mode = null,
+        ?Enums\ParseMode $parse_mode = null,
         ?array $caption_entities = null,
         ?bool $show_caption_above_media = null,
         ?bool $allow_queries = null,
@@ -1389,7 +1386,7 @@ class Bot
             'public_data' => $public_data,
             'chat_data' => $chat_data,
             'caption' => $caption,
-            'parse_mode' => $parse_mode,
+            'parse_mode' => $parse_mode ?? $this->parse_mode_default,
             'caption_entities' => $caption_entities,
             'show_caption_above_media' => $show_caption_above_media,
             'allow_queries' => $allow_queries,
@@ -3800,7 +3797,7 @@ class Bot
      * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
      *     if the organization isn't allowed to provide a custom verification description.
      * @param Enums\ParseMode|null $custom_description_parse_mode Mode for parsing entities in the custom description.
-     *     See formatting options for more details. Only “text_link” entities are supported.
+     *     Only “text_link” entities are supported.
      * @param Types\MessageEntity[]|null $custom_description_entities A JSON-serialized list of special entities that
      *     appear in the custom description, which can be specified instead of 'custom_description_parse_mode'. Only
      *     “text_link” entities are supported.
@@ -3828,7 +3825,7 @@ class Bot
      * @param string|null $custom_description Custom description for the verification; 0-70 characters. Must be empty
      *     if the organization isn't allowed to provide a custom verification description.
      * @param Enums\ParseMode|null $custom_description_parse_mode Mode for parsing entities in the custom description.
-     *     See formatting options for more details. Only “text_link” entities are supported.
+     *     Only “text_link” entities are supported.
      * @param Types\MessageEntity[]|null $custom_description_entities A JSON-serialized list of special entities that
      *     appear in the custom description, which can be specified instead of 'custom_description_parse_mode'. Only
      *     “text_link” entities are supported.
@@ -5034,7 +5031,7 @@ class Bot
      * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
      * @param string|null $text New text of the message, 1-4096 characters after entity parsing; required if
      *     "rich_message" isn't specified
-     * @param string|null $parse_mode Mode for parsing entities in the message text.
+     * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message text.
      * @param Types\MessageEntity[]|null $entities A JSON-serialized list of special entities that appear in message
      *     text, which can be specified instead of "parse_mode"
      * @param Types\InputRichMessage|null $rich_message New rich content of the message; required if "text" isn't
@@ -5047,7 +5044,7 @@ class Bot
         int $receiver_user_id,
         int $ephemeral_message_id,
         ?string $text = null,
-        ?string $parse_mode = null,
+        ?Enums\ParseMode $parse_mode = null,
         ?array $entities = null,
         ?Types\InputRichMessage $rich_message = null,
         ?Types\LinkPreviewOptions $link_preview_options = null,
@@ -5059,7 +5056,7 @@ class Bot
             'receiver_user_id' => $receiver_user_id,
             'ephemeral_message_id' => $ephemeral_message_id,
             'text' => $text,
-            'parse_mode' => $parse_mode,
+            'parse_mode' => $parse_mode ?? $this->parse_mode_default,
             'entities' => $entities,
             'rich_message' => $rich_message,
             'link_preview_options' => $link_preview_options,
@@ -5104,7 +5101,7 @@ class Bot
      * @param int $receiver_user_id Identifier of the user who received the message
      * @param int $ephemeral_message_id Identifier of the ephemeral message to edit
      * @param string|null $caption New caption of the message, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the message caption.
+     * @param Enums\ParseMode|null $parse_mode Mode for parsing entities in the message caption.
      * @param Types\MessageEntity[]|null $caption_entities A JSON-serialized list of special entities that appear in
      *     the caption, which can be specified instead of "parse_mode"
      * @param bool|null $show_caption_above_media Pass True if the caption must be shown above the message media.
@@ -5116,7 +5113,7 @@ class Bot
         int $receiver_user_id,
         int $ephemeral_message_id,
         ?string $caption = null,
-        ?string $parse_mode = null,
+        ?Enums\ParseMode $parse_mode = null,
         ?array $caption_entities = null,
         ?bool $show_caption_above_media = null,
         ?InlineKeyboardMarkup $reply_markup = null,
@@ -5127,7 +5124,7 @@ class Bot
             'receiver_user_id' => $receiver_user_id,
             'ephemeral_message_id' => $ephemeral_message_id,
             'caption' => $caption,
-            'parse_mode' => $parse_mode,
+            'parse_mode' => $parse_mode ?? $this->parse_mode_default,
             'caption_entities' => $caption_entities,
             'show_caption_above_media' => $show_caption_above_media,
             'reply_markup' => $reply_markup,

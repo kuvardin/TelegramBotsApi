@@ -10,6 +10,7 @@ use Kuvardin\TelegramBotsApi\Types\InputPollMedia;
 use Kuvardin\TelegramBotsApi\Types\InputPollOptionMedia;
 use Kuvardin\TelegramBotsApi\Types\MessageEntity;
 use RuntimeException;
+use Kuvardin\TelegramBotsApi\Enums\ParseMode;
 
 /**
  * Represents a live photo to be sent.
@@ -24,8 +25,7 @@ class LivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMed
      *     unsupported.
      * @param InputFile|string $photo The static photo to send. Sending live photos by a URL is currently unsupported.
      * @param string|null $caption Caption of the live photo to be sent, 0-1024 characters after entities parsing
-     * @param string|null $parse_mode Mode for parsing entities in the live photo caption. See formatting options for
-     *     more details.
+     * @param ParseMode|string|null $parse_mode Mode for parsing entities in the live photo caption.
      * @param MessageEntity[]|null $caption_entities List of special entities that appear in the caption, which can be
      *     specified instead of "parse_mode"
      * @param bool|null $show_caption_above_media Pass True, if the caption must be shown above the message media
@@ -35,7 +35,7 @@ class LivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMed
         public InputFile|string $media,
         public InputFile|string $photo,
         public ?string $caption = null,
-        public ?string $parse_mode = null,
+        public ParseMode|string|null $parse_mode = null,
         public ?array $caption_entities = null,
         public ?bool $show_caption_above_media = null,
         public ?bool $has_spoiler = null,
