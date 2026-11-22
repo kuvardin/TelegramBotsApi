@@ -46,7 +46,8 @@ class Update extends Type
      * @param InlineQuery|null $inline_query New incoming inline query
      * @param ChosenInlineResult|null $chosen_inline_result The result of an inline query that was chosen by a user and
      *     sent to their chat partner. Please see our documentation on the feedback collecting for details on how to
-     *     enable these updates for your bot.
+     *     enable these updates for your bot. The updates can also be enabled using the parameter
+     *     'inline_feedback_share_denominator' of the method setMySettings().
      * @param CallbackQuery|null $callback_query New incoming callback query
      * @param ShippingQuery|null $shipping_query New incoming shipping query. Only for invoices with flexible price
      * @param PreCheckoutQuery|null $pre_checkout_query New incoming pre-checkout query. Contains full information

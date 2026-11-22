@@ -42,7 +42,8 @@ class KeyboardButton extends Type
      *     (green) or “primary” (blue). If omitted, then an app-specific style is used.
      * @param KeyboardButtonRequestManagedBot|null $request_managed_bot If specified, pressing the button will ask the
      *     user to create and share a bot that will be managed by the current bot. Available for bots that enabled
-     *     management of other bots in the &#64;BotFather Mini App. Available in private chats only.
+     *     management of other bots in the &#64;BotFather Mini App or using the parameter "can_manage_bots" of the
+     *     method setMySettings(). Available in private chats only.
      */
     public function __construct(
         public string $text,

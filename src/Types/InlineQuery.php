@@ -24,7 +24,8 @@ class InlineQuery extends Type
      * @param InlineQueryChatType|string|null $inline_query_chat_type_value Type of the chat from which the inline
      *     query was sent. The chat type should be always known for requests sent from official clients and
      *     most third-party clients, unless the request was sent from a secret chat
-     * @param Location|null $location Sender location, only for bots that request user location
+     * @param Location|null $location Sender location, only for bots that enabled user location requests via
+     *     &#64;BotFather or using the parameter "needs_inline_query_location" of the method setMySettings()
      */
     public function __construct(
         public string $id,

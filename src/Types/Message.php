@@ -155,7 +155,8 @@ class Message extends MaybeInaccessibleMessage
      *     completed
      * @param WriteAccessAllowed|null $write_access_allowed Service message: the user allowed the bot to write messages
      *     after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit
-     *     request from a Web App sent by the method requestWriteAccess()
+     *     request from a Web App sent by the method requestWriteAccess(), or the user was invited to the private chat
+     *     with the bot by the owner of the bot
      * @param DirectMessagesTopic|null $direct_messages_topic Information about the direct messages chat topic that
      *     contains the message
      * @param string|null $sender_tag Tag or custom title of the sender of the message; for supergroups only

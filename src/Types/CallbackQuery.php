@@ -7,10 +7,11 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * This object represents an incoming callback query from a callback button in an inline keyboard. If the button that
- * originated the query was attached to a message sent by the bot, the field "message" will be present. If the button
- * was attached to a message sent via the bot (in inline mode), the field "inline_message_id" will be present. Exactly
- * one of the fields "data" or "game_short_name" will be present.
+ * This object represents an incoming callback query from a callback button in an inline keyboard or in a rich message.
+ * If the button that originated the query belongs to a message sent by the bot, the field 'message' will be present,
+ * unless the field 'inline_message_id' is used instead as specified by the parameter 'callback_query_mode' of the
+ * method setMySettings(). If the button belongs to a message sent via the bot (in inline mode), the field
+ * 'inline_message_id' will be present. Exactly one of the fields 'data' or 'game_short_name' will be present.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -25,7 +26,8 @@ class CallbackQuery extends Type
      * @param MaybeInaccessibleMessage|null $message Message sent by the bot with the callback button that originated
      *     the query
      * @param string|null $inline_message_id Identifier of the message sent via the bot in inline mode, that originated
-     *     the query.
+     *     the query. Can also be present for messages sent by the bot, depending on the parameter
+     *     'callback_query_mode' of the method setMySettings().
      * @param string|null $data Data associated with the callback button. Be aware that the message originated the
      *     query can contain no callback buttons with this data.
      * @param string|null $game_short_name Short name of a Game to be returned, serves as the unique identifier for the

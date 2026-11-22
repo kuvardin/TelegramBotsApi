@@ -17,11 +17,11 @@ use Kuvardin\TelegramBotsApi\Types\RichText;
 class ExpandableBlockQuotation extends RichBlock
 {
     /**
-     * @param RichText $text Content of the block
+     * @param RichBlock[] $blocks Content of the block
      * @param RichText|null $credit Credit of the block
      */
     public function __construct(
-        public RichText $text,
+        public array $blocks,
         public ?RichText $credit = null,
     )
     {
@@ -40,7 +40,10 @@ class ExpandableBlockQuotation extends RichBlock
         }
 
         return new self(
-            text: RichText::makeByInput($data['text']),
+            blocks: array_map(
+                static fn(array $blocks_data) => RichBlock::makeByArray($blocks_data),
+                $data['blocks'],
+            ),
             credit: isset($data['credit'])
                 ? RichText::makeByInput($data['credit'])
                 : null,
@@ -51,7 +54,7 @@ class ExpandableBlockQuotation extends RichBlock
     {
         return [
             'type' => self::getType(),
-            'text' => $this->text,
+            'blocks' => $this->blocks,
             'credit' => $this->credit,
         ];
     }

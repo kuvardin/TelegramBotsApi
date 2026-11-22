@@ -7,7 +7,10 @@ namespace Kuvardin\TelegramBotsApi\Types;
 use Kuvardin\TelegramBotsApi\Type;
 
 /**
- * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
+ * Represents a result of an inline query that was chosen by the user and sent to their chat partner.<br>
+ *
+ * Note: It is necessary to enable inline feedback via @BotFather or using the parameter
+ * inline_feedback_share_denominator of the method setMySettings() in order to receive these objects in updates.
  *
  * @package Kuvardin\TelegramBotsApi
  * @author Maxim Kuvardin <maxim@kuvard.in>
@@ -18,7 +21,8 @@ class ChosenInlineResult extends Type
      * @param string $result_id The unique identifier for the result that was chosen
      * @param User $from The user that chose the result
      * @param string $query The query that was used to obtain the result
-     * @param Location|null $location Sender location, only for bots that require user location
+     * @param Location|null $location Sender location, only for bots that enabled user location requests via
+     *     &#64;BotFather or using the parameter "needs_inline_query_location" of the method setMySettings()
      * @param string|null $inline_message_id Identifier of the sent inline message. Available only if there is an
      *     inline keyboard attached to the message. Will be also received in callback queries and can be used to edit
      *     the message.
